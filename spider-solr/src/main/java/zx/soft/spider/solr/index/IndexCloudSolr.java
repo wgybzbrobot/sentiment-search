@@ -1,7 +1,6 @@
 package zx.soft.spider.solr.index;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,8 +25,6 @@ public class IndexCloudSolr {
 
 	public static final int FETCH_SIZE = 1_0000;
 
-	public static final int COMIIT_SIZE = 1_000;
-
 	// 这里使用集群中的一个结点即可
 	//	private static final String ZOOKEEPER_CLOUD = "hdp321:2181,hdp322:2181,hdp323:2181";
 	private static final String ZOOKEEPER_CLOUD = "hdp322:2181";
@@ -36,16 +33,12 @@ public class IndexCloudSolr {
 	private final CloudSolrServer cloudServer;
 
 	public IndexCloudSolr() {
-		try {
-			cloudServer = new CloudSolrServer(ZOOKEEPER_CLOUD);
-			cloudServer.setDefaultCollection(COLLECTION_NAME);
-			cloudServer.setIdField("id");
-			cloudServer.setParallelUpdates(true);
-			cloudServer.setZkConnectTimeout(3_000);
-			cloudServer.setZkClientTimeout(3_000);
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
+		cloudServer = new CloudSolrServer(ZOOKEEPER_CLOUD);
+		cloudServer.setDefaultCollection(COLLECTION_NAME);
+		cloudServer.setIdField("id");
+		cloudServer.setParallelUpdates(true);
+		cloudServer.setZkConnectTimeout(5_000);
+		cloudServer.setZkClientTimeout(5_000);
 	}
 
 	/**
@@ -76,20 +69,8 @@ public class IndexCloudSolr {
 		}
 		try {
 			cloudServer.add(docs);
-			//			cloudServer.commit();
-		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
-			//			throw new RuntimeException(e);
-		}
-	}
-
-	/**
-	 * 提交数据
-	 */
-	public void commitToSolr() {
-		try {
 			cloudServer.commit();
-		} catch (SolrServerException | IOException e) {
+		} catch (RemoteSolrException | SolrServerException | IOException e) {
 			logger.error("SolrServerException: " + e.getMessage());
 			//			throw new RuntimeException(e);
 		}
@@ -98,7 +79,6 @@ public class IndexCloudSolr {
 	private SolrInputDocument getDoc(Record record) {
 
 		SolrInputDocument doc = new SolrInputDocument();
-		// doc.addField("", record.);
 		doc.addField("id", record.getId());
 		doc.addField("platform", record.getPlatform());
 		if (record.getMid() != "") {

@@ -50,8 +50,9 @@ public class ImportDataMain {
 		for (int i = 0; i < TYPES.length; i++) {
 			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr.");
 			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
-			importData.indexData(TYPES[i]);
+			//			importData.indexData(TYPES[i]);
 		}
+		//		importData.indexData("SJCJ_WBL");
 
 		importData.close();
 	}
@@ -89,16 +90,11 @@ public class ImportDataMain {
 					if (record != null) {
 						records.add(record);
 					}
-					if (records.size() % IndexCloudSolr.COMIIT_SIZE == 0) {
-						indexCloudSolr.addDocsToSolr(records);
-						records = new ArrayList<>();
-					}
 				}
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
 			indexCloudSolr.addDocsToSolr(records);
-			indexCloudSolr.commitToSolr();
 		}
 		dataOJDBC.close();
 
