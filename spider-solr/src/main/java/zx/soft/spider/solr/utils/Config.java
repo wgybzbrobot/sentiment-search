@@ -21,7 +21,7 @@ public class Config {
 		private static final long serialVersionUID = -2493912332089543431L;
 
 		{
-			try (InputStream in = Config.class.getClassLoader().getResourceAsStream("data_db.properties");) {
+			try (InputStream in = Config.class.getClassLoader().getResourceAsStream("oracle_db.properties");) {
 				this.load(in);
 			} catch (IOException e) {
 				throw new RuntimeException(e);

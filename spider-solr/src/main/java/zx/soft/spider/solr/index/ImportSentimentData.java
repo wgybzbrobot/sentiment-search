@@ -22,9 +22,14 @@ import zx.soft.spider.solr.domain.Weibo;
 import zx.soft.spider.solr.oracle.DataOJDBC;
 import zx.soft.spider.solr.utils.ConvertToRecord;
 
-public class ImportDataMain {
+/**
+ * 索引舆情数据到Solr集群中
+ * @author wanggang
+ *
+ */
+public class ImportSentimentData {
 
-	private static Logger logger = LoggerFactory.getLogger(ImportDataMain.class);
+	private static Logger logger = LoggerFactory.getLogger(ImportSentimentData.class);
 
 	private static IndexCloudSolr indexCloudSolr;
 
@@ -33,7 +38,7 @@ public class ImportDataMain {
 	//  "SJCJ_WBL", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_QQQ", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_YJL"
 	public static final String[] TYPES = { "SJCJ_BKL", "SJCJ_LTL", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_WBL" };
 
-	public ImportDataMain() {
+	public ImportSentimentData() {
 		/**
 		 * 添加到CloudSolr
 		 */
@@ -46,7 +51,7 @@ public class ImportDataMain {
 	 */
 	public static void main(String[] args) {
 
-		ImportDataMain importData = new ImportDataMain();
+		ImportSentimentData importData = new ImportSentimentData();
 		for (int i = 0; i < TYPES.length; i++) {
 			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr.");
 			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
@@ -94,7 +99,7 @@ public class ImportDataMain {
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
-			indexCloudSolr.addDocsToSolr(records);
+			indexCloudSolr.addSentimentDocsToSolr(records);
 		}
 		dataOJDBC.close();
 

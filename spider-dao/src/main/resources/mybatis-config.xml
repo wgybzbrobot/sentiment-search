@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="data_db.properties">
+		<property name="db_driver" value="com.mysql.jdbc.Driver" />
+		<property name="db_encoding" value="UTF8" />
+	</properties>
+	<typeAliases>
+		<!-- 新浪微博数据 -->
+		<typeAlias alias="WeiboOldInfo"
+			type="zx.soft.spider.dao.domain.WeiboOldInfo" />
+		<typeAlias alias="WeiboSinaParams"
+			type="zx.soft.spider.dao.domain.WeiboSinaParams" />
+	</typeAliases>
+	<environments default="local">
+		<environment id="local">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="url" value="${db_url_local}" />
+				<property name="username" value="${db_username}" />
+				<property name="password" value="${db_password}" />
+				<property name="driver" value="${db_driver}" />
+				<property name="driver.encoding" value="${db_encoding}" />
+				<property name="poolPingEnabled" value="true" />
+				<property name="poolPingQuery" value="select 1" />
+				<property name="poolPingConnectionsNotUsedFor" value="5000" />
+			</dataSource>
+		</environment>
+		<environment id="production">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="url" value="${db_url_production}" />
+				<property name="username" value="${db_username}" />
+				<property name="password" value="${db_password}" />
+				<property name="driver" value="${db_driver}" />
+				<property name="driver.encoding" value="${db_encoding}" />
+				<property name="poolPingEnabled" value="true" />
+				<property name="poolPingQuery" value="select 1" />
+				<property name="poolPingConnectionsNotUsedFor" value="5000" />
+			</dataSource>
+		</environment>
+		<environment id="test">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="url" value="${db_url_test}" />
+				<property name="username" value="${db_username}" />
+				<property name="password" value="${db_password}" />
+				<property name="driver" value="${db_driver}" />
+				<property name="driver.encoding" value="${db_encoding}" />
+				<property name="poolPingEnabled" value="true" />
+				<property name="poolPingQuery" value="select 1" />
+				<property name="poolPingConnectionsNotUsedFor" value="5000" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="WeiboSinaDaoMapper.xml" />
+	</mappers>
+</configuration>
+	
