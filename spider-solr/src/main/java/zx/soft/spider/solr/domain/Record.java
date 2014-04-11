@@ -46,6 +46,10 @@ public class Record {
 	private final String receive_addr; // 收件人地址
 	private final String append_addr; // 抄送人地址
 	private final String send_addr; // 发送人地址
+	//
+	private final String source_name; // 来源名称
+	private final int country_code; // 国家代码
+	private final int location_code; // 区域编码
 
 	@Override
 	public String toString() {
@@ -59,7 +63,8 @@ public class Record {
 				+ lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id + ",identify_md5="
 				+ identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time + ",update_time=" + update_time
 				+ ",ip=" + ip + ",location=" + location + ",geo=" + geo + ",receive_addr=" + receive_addr
-				+ ",append_addr=" + append_addr + ",send_addr=" + send_addr + "}";
+				+ ",append_addr=" + append_addr + ",send_addr=" + send_addr + ",source_name=" + source_name
+				+ ",country_code=" + country_code + ",location_code" + location_code + "}";
 	}
 
 	public Record(Builder builder) {
@@ -100,6 +105,9 @@ public class Record {
 		this.receive_addr = builder.receive_addr;
 		this.append_addr = builder.append_addr;
 		this.send_addr = builder.send_addr;
+		this.source_name = builder.source_name;
+		this.country_code = builder.country_code;
+		this.location_code = builder.location_code;
 	}
 
 	public static class Builder {
@@ -141,6 +149,9 @@ public class Record {
 		private String receive_addr = "";
 		private String append_addr = "";
 		private String send_addr = "";
+		private String source_name = "";
+		private int country_code;
+		private int location_code;
 
 		public Builder(String id, int platform) {
 			this.id = id;
@@ -322,6 +333,21 @@ public class Record {
 			return this;
 		}
 
+		public Builder setSource_name(String source_name) {
+			this.source_name = source_name;
+			return this;
+		}
+
+		public Builder setCountry_code(int country_code) {
+			this.country_code = country_code;
+			return this;
+		}
+
+		public Builder setLocation_code(int location_code) {
+			this.location_code = location_code;
+			return this;
+		}
+
 		public Record build() {
 			return new Record(this);
 		}
@@ -474,6 +500,18 @@ public class Record {
 
 	public String getSend_addr() {
 		return send_addr;
+	}
+
+	public String getSource_name() {
+		return source_name;
+	}
+
+	public int getCountry_code() {
+		return country_code;
+	}
+
+	public int getLocation_code() {
+		return location_code;
 	}
 
 }

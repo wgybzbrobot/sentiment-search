@@ -21,6 +21,7 @@ import zx.soft.spider.solr.domain.Reply;
 import zx.soft.spider.solr.domain.Weibo;
 import zx.soft.spider.solr.oracle.DataOJDBC;
 import zx.soft.spider.solr.utils.ConvertToRecord;
+import zx.soft.spider.solr.utils.TimeUtils;
 
 /**
  * 索引舆情数据到Solr集群中
@@ -32,6 +33,7 @@ public class ImportSentimentData {
 	private static Logger logger = LoggerFactory.getLogger(ImportSentimentData.class);
 
 	private static IndexCloudSolr indexCloudSolr;
+	private static DataOJDBC dataOJDBC;
 
 	// SJCJ_WBL：微薄，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
 	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据）
@@ -43,6 +45,7 @@ public class ImportSentimentData {
 		 * 添加到CloudSolr
 		 */
 		logger.info("Start importing data to CloudSolr ...");
+		dataOJDBC = new DataOJDBC();
 		indexCloudSolr = new IndexCloudSolr();
 	}
 
@@ -54,21 +57,16 @@ public class ImportSentimentData {
 		ImportSentimentData importData = new ImportSentimentData();
 		for (int i = 0; i < TYPES.length; i++) {
 			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr.");
-			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
-			//			importData.indexData(TYPES[i]);
+			//			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
+			importData.indexData(TYPES[i]);
 		}
 		//		importData.indexData("SJCJ_WBL");
 
 		importData.close();
 	}
 
-	public void close() {
-		indexCloudSolr.close();
-		logger.info("Importing data to CloudSolr finish!");
-	}
-
 	/**
-	 * 索引数据
+	 * 索引数据，按时间段查询
 	 */
 	public void indexData(String table_name) {
 		/**
@@ -80,16 +78,30 @@ public class ImportSentimentData {
 		int count = getRecordsCount(table_name);
 		logger.info("'" + table_name + "' Records' count=" + count);
 
-		DataOJDBC dataOJDBC = new DataOJDBC();
-		ResultSet rs = null;
+		// 获取最大最小时间
+		long max_time = getMaxLasttime(table_name);
+		long min_time = getMinLasttime(table_name);
+
+		// 计算时间间隔等参数
+		int fetch_count = count / IndexCloudSolr.FETCH_SIZE;
+		long lastime_span = (max_time - min_time) / fetch_count;
+		logger.info("fetch_count = " + fetch_count);
+		logger.info("lastime_span = " + lastime_span);
+
+		long low_time, high_time;
+		String sql;
 		Record record = null;
-		for (int i = 0; i <= count / IndexCloudSolr.FETCH_SIZE; i++) {
+		for (int i = 0; i <= fetch_count; i++) {
 			List<Record> records = new ArrayList<>();
-			rs = dataOJDBC.query("SELECT * FROM (SELECT rownum AS no1,t.* FROM " + table_name + " t WHERE rownum < "
-					+ IndexCloudSolr.FETCH_SIZE * (i + 1) + ") WHERE no1>= " + IndexCloudSolr.FETCH_SIZE * i);
 			// 添加文档索引
-			logger.info("Indexing '" + table_name + "' weibo data at: " + IndexCloudSolr.FETCH_SIZE * i);
-			try {
+			logger.info("Indexing '" + table_name + "' data at: " + i + "/" + fetch_count);
+			// sql
+			low_time = min_time + i * lastime_span;
+			high_time = min_time + (i + 1) * lastime_span;
+			sql = "SELECT * FROM " + table_name + " WHERE JCSJ BETWEEN to_date('"
+					+ TimeUtils.transToCommonDateStr(low_time) + "','yyyy-mm-dd hh24:mi:ss') " + "AND to_date('"
+					+ TimeUtils.transToCommonDateStr(high_time) + "','yyyy-mm-dd hh24:mi:ss')";
+			try (ResultSet rs = dataOJDBC.query(sql);) {
 				while (rs.next()) {
 					record = transData(table_name, rs);
 					if (record != null) {
@@ -97,34 +109,102 @@ public class ImportSentimentData {
 					}
 				}
 			} catch (SQLException e) {
+				logger.error("indexData SQLException: " + e.getMessage());
 				throw new RuntimeException(e);
 			}
-			indexCloudSolr.addSentimentDocsToSolr(records);
+			logger.info("records' size=" + records.size());
+			if (records.size() > 0) {
+				indexCloudSolr.addSentimentDocsToSolr(records);
+			}
 		}
-		dataOJDBC.close();
 
 		logger.info("Retriving '" + table_name + "' data finish!");
 	}
 
 	/**
-	 * 获取数据表记录数
+	 * 索引数据，该方式容易导致现有的Oracle数据表查询挂掉
 	 */
-	public int getRecordsCount(String table_name) {
+	@Deprecated
+	public void indexDataOld(String table_name) {
+		/**
+		 * 获取待索引数据
+		 */
+		logger.info("Start retriving '" + table_name + "' data ...");
 
-		DataOJDBC dataOJDBC = new DataOJDBC();
-		ResultSet rscount = dataOJDBC.query("SELECT COUNT(*) as ct FROM " + table_name);
-		int count = 0;
-		try {
-			if (rscount.next()) {
-				count = rscount.getInt("ct");
+		// 获取记录总数
+		int count = getRecordsCount(table_name);
+		logger.info("'" + table_name + "' Records' count=" + count);
+
+		Record record = null;
+		for (int i = 0; i <= count / IndexCloudSolr.FETCH_SIZE; i++) {
+			List<Record> records = new ArrayList<>();
+			// 添加文档索引
+			logger.info("Indexing '" + table_name + "' weibo data at: " + IndexCloudSolr.FETCH_SIZE * i);
+			try (ResultSet rs = dataOJDBC.query("SELECT * FROM (SELECT rownum AS no1,t.* FROM " + table_name
+					+ " t WHERE rownum < " + IndexCloudSolr.FETCH_SIZE * (i + 1) + ") WHERE no1>= "
+					+ IndexCloudSolr.FETCH_SIZE * i);) {
+				while (rs.next()) {
+					record = transData(table_name, rs);
+					if (record != null) {
+						records.add(record);
+					}
+				}
+			} catch (SQLException e) {
+				logger.error("indexDataOld SQLException: " + e.getMessage());
+				throw new RuntimeException(e);
 			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			dataOJDBC.close();
+			indexCloudSolr.addSentimentDocsToSolr(records);
 		}
 
-		return count;
+		logger.info("Retriving '" + table_name + "' data finish!");
+	}
+
+	/**
+	 * 获取最小记录时间
+	 */
+	private long getMinLasttime(String table_name) {
+		try (ResultSet rs = dataOJDBC.query("SELECT MIN(JCSJ) AS min_time FROM " + table_name);) {
+			if (rs.next()) {
+				return rs.getTimestamp("min_time").getTime();
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			logger.error("getMinLasttime SQLException: " + e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 获取最大记录时间
+	 */
+	private long getMaxLasttime(String table_name) {
+		try (ResultSet rs = dataOJDBC.query("SELECT MAX(JCSJ) AS max_time FROM " + table_name);) {
+			if (rs.next()) {
+				return rs.getTimestamp("max_time").getTime();
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			logger.error("getMaxLasttime SQLException: " + e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 获取数据表记录数
+	 */
+	private int getRecordsCount(String table_name) {
+		try (ResultSet rscount = dataOJDBC.query("SELECT COUNT(*) as ct FROM " + table_name);) {
+			if (rscount.next()) {
+				return rscount.getInt("ct");
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			logger.error("getRecordsCount SQLException: " + e.getMessage());
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -368,6 +448,12 @@ public class ImportSentimentData {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void close() {
+		indexCloudSolr.close();
+		dataOJDBC.close();
+		logger.info("Importing data to CloudSolr finish!");
 	}
 
 }

@@ -17,6 +17,10 @@ import zx.soft.spider.solr.domain.Weibo;
  */
 public class ConvertToRecord {
 
+	// 需要添加
+	// private final String source_name; // 来源名称
+	//	private final int country_code; // 国家代码
+	//	private final int location_code; // 区域编码
 	/**
 	 * 0：other——>Record
 	 */

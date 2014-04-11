@@ -14,8 +14,8 @@ import zx.soft.spider.solr.domain.Record;
 import zx.soft.spider.solr.utils.MD5Util;
 
 /**
- * 索引新浪微博数据到Solr集群中
  * @author wanggang
+ * 索引新浪微博数据到Solr集群中
  *
  */
 public class ImportSinaData {
