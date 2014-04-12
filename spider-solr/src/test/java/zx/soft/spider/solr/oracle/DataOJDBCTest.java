@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +26,6 @@ public class DataOJDBCTest {
 	public void doClose() {
 		logger.info("Close DataOJDBC ...");
 		dataOJDBC.close();
-	}
-
-	@Test
-	public void testUpdate() {
-		//
 	}
 
 	@Ignore

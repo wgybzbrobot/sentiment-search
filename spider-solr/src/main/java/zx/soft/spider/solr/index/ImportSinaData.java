@@ -50,7 +50,12 @@ public class ImportSinaData {
 	 */
 	public void indexAllTables() {
 		List<String> tablenames = weiboSina.getAllTablenames();
+		logger.info("tablenames' count=" + tablenames.size());
+		int count = 0; // 续传
 		for (String tablename : tablenames) {
+			if (++count < 83) {
+				continue; // 续传
+			}
 			logger.info("Indexing at tablename=" + tablename);
 			indexOneTable(tablename);
 		}

@@ -10,8 +10,8 @@
 	<modules>
 		<module>spider-parent</module>
 		<module>spider-solr</module>
-		<module>spider-demo</module>
 		<module>spider-dao</module>
+		<module>spider-web</module>
 	</modules>
 
 </project>

@@ -27,15 +27,13 @@ public class IndexCloudSolr {
 
 	public static int FETCH_SIZE = 1_0000;
 
-	private static final String COLLECTION_NAME = "sentiment";
-
 	private final CloudSolrServer cloudServer;
 
 	public IndexCloudSolr() {
 		Properties props = Config.getProps("solr_params.properties");
 		FETCH_SIZE = Integer.parseInt(props.getProperty("fetch_size"));
 		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
-		cloudServer.setDefaultCollection(COLLECTION_NAME);
+		cloudServer.setDefaultCollection(props.getProperty("collection"));
 		cloudServer.setIdField("id");
 		cloudServer.setParallelUpdates(true);
 		cloudServer.setZkConnectTimeout(Integer.parseInt(props.getProperty("zookeeper_connect_timeout")));
@@ -55,6 +53,24 @@ public class IndexCloudSolr {
 		}
 		try {
 			cloudServer.add(docs);
+			cloudServer.commit();
+		} catch (RemoteSolrException | SolrServerException | IOException e) {
+			logger.error("SolrServerException: " + e.getMessage());
+			//			throw new RuntimeException(e);
+		}
+	}
+
+	public void addSentimentDocToSolr(Record record) {
+		try {
+			cloudServer.add(getSentimentDoc(record));
+		} catch (RemoteSolrException | SolrServerException | IOException e) {
+			logger.error("SolrServerException: " + e.getMessage());
+			//			throw new RuntimeException(e);
+		}
+	}
+
+	public void commitToSolr() {
+		try {
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
 			logger.error("SolrServerException: " + e.getMessage());
