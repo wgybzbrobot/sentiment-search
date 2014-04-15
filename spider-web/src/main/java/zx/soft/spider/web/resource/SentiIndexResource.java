@@ -1,6 +1,5 @@
 package zx.soft.spider.web.resource;
 
-import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.restlet.resource.Get;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.spider.web.application.SentiIndexApplication;
 import zx.soft.spider.web.common.ApplyThreadPool;
 import zx.soft.spider.web.common.ErrorResponse;
-import zx.soft.spider.web.common.StringPattern;
+import zx.soft.spider.web.domain.PostData;
 
 public class SentiIndexResource extends ServerResource {
 
@@ -22,26 +21,30 @@ public class SentiIndexResource extends ServerResource {
 
 	private static ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector();
 
-	private String platform;
-
 	@Override
 	public void doInit() {
 		application = (SentiIndexApplication) getApplication();
-		platform = (String) this.getRequest().getAttributes().get("platform");
 	}
 
 	@Post("json")
-	public Object acceptData(final List<Object> datas) {
-		logger.info("Request Url: " + getReference() + ".");
-		if (!StringPattern.isAllNum(platform)) {
+	public Object acceptData(final PostData data) {
+
+		if (getReference().getRemainingPart().length() != 0) {
+			logger.error("query params is illegal, Url=" + getReference());
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();
 		}
+
+		if (data == null) {
+			logger.info("Records' size=0");
+			return new ErrorResponse.Builder(20003, "no post data.").build();
+		}
+		logger.info("Request Url=" + getReference() + ", Records' size=" + data.getRecords().size());
 
 		// 另开一个线程索引数据，以免影响客户端响应时间
 		pool.execute(new Runnable() {
 			@Override
 			public void run() {
-				application.addDatas(Integer.parseInt(platform), datas);
+				application.addDatas(data.getRecords());
 			}
 		});
 

@@ -3,8 +3,8 @@ package zx.soft.spider.web.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.spider.solr.index.ImportSentimentData;
-import zx.soft.spider.solr.index.ImportSinaData;
+import zx.soft.spider.web.server.SentimentIndexServer;
+import zx.soft.spider.web.server.SentimentSearchServer;
 
 /**
  * 驱动类
@@ -27,13 +27,13 @@ public class SpiderWebDriver {
 		System.arraycopy(args, 1, leftArgs, 0, leftArgs.length);
 
 		switch (args[0]) {
-		case "importSentimentData":
-			logger.info("索引舆情数据： ");
-			ImportSentimentData.main(leftArgs);
+		case "sentimentIndexServer":
+			logger.info("索引接口： ");
+			SentimentIndexServer.main(leftArgs);
 			break;
-		case "importSinaData":
-			logger.info("索引新浪微博数据：");
-			ImportSinaData.main(leftArgs);
+		case "sentimentSearchServer":
+			logger.info("搜索接口：");
+			SentimentSearchServer.main(leftArgs);
 			break;
 		default:
 			return;

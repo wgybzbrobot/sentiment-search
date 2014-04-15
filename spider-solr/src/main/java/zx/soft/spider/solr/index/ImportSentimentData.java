@@ -35,7 +35,7 @@ public class ImportSentimentData {
 	private static IndexCloudSolr indexCloudSolr;
 	private static DataOJDBC dataOJDBC;
 
-	// SJCJ_WBL：微薄，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
+	// SJCJ_WBL：微博，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
 	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据）
 	//  "SJCJ_WBL", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_QQQ", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_YJL"
 	public static final String[] TYPES = { "SJCJ_BKL", "SJCJ_LTL", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_WBL" };
@@ -60,7 +60,7 @@ public class ImportSentimentData {
 			//			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
 			importData.indexData(TYPES[i]);
 		}
-		//		importData.indexData("SJCJ_WBL");
+		//		importData.indexData("YHXX_HFXX");
 
 		importData.close();
 	}
@@ -84,6 +84,10 @@ public class ImportSentimentData {
 
 		// 计算时间间隔等参数
 		int fetch_count = count / IndexCloudSolr.FETCH_SIZE;
+		if (fetch_count == 0) {
+			logger.info("AllCount is less than FETCH_SIZE!");
+			return;
+		}
 		long lastime_span = (max_time - min_time) / fetch_count;
 		logger.info("fetch_count = " + fetch_count);
 		logger.info("lastime_span = " + lastime_span);

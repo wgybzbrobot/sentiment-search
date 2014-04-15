@@ -1,21 +1,31 @@
 package zx.soft.spider.web.sentiment;
 
-
+/**
+ * 查询参数类
+ * @author wanggang
+ *
+ */
 public class QueryParams {
 
-	private String q = "";
+	private String q = "*:*";
 	private String fq = "";
 	private String sort = "";
-	private int start = -1;
-	private int rows = -1;
+	private int start = 0;
+	private int rows = 10;
 	private String fl = "";
-	private String wt = "";
+	private String wt = "json";
 	private String hlfl = "";
 	private String facetQuery = "";
 	private String facetField = "";
 
 	public QueryParams() {
 		//
+	}
+
+	@Override
+	public String toString() {
+		return "QueryParams:{q=" + q + ",fq=" + fq + ",sort=" + sort + ",start=" + start + ",rows=" + rows + ",fl="
+				+ fl + ",wt=" + wt + ",hlfl=" + hlfl + ",facetQuery=" + facetQuery + ",facetField=" + facetField + "}";
 	}
 
 	public void setQ(String q) {

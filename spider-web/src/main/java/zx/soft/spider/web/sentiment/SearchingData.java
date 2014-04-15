@@ -1,6 +1,6 @@
 package zx.soft.spider.web.sentiment;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -9,14 +9,17 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrServer;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.spider.solr.err.SpiderSearchException;
-import zx.soft.spider.solr.search.QueryResult;
 import zx.soft.spider.solr.utils.Config;
+import zx.soft.spider.solr.utils.JsonUtils;
+import zx.soft.spider.web.domain.QueryResult;
+import zx.soft.spider.web.domain.SimpleFacetInfo;
 
 /**
  * 搜索舆情数据
@@ -36,41 +39,70 @@ public class SearchingData {
 	}
 
 	/**
+	 * 测试函数
+	 */
+	public static void main(String[] args) {
+
+		SearchingData search = new SearchingData();
+		QueryParams queryParams = new QueryParams();
+		// q:关键词
+		queryParams.setQ(""); // 美食
+		queryParams.setFq("");
+		queryParams.setSort(""); // lasttime:desc
+		queryParams.setStart(0);
+		queryParams.setRows(3);
+		queryParams.setWt("json");
+		queryParams.setFl(""); // nickname,content
+		queryParams.setHlfl(""); // content
+		queryParams.setFacetQuery("");
+		queryParams.setFacetField("platform");
+		QueryResult result = search.queryData(queryParams);
+		System.out.println(JsonUtils.toJson(result));
+	}
+
+	/**
 	 * 查询结果数据
 	 */
 	public QueryResult queryData(QueryParams queryParams) {
-
 		SolrQuery query = getSolrQuery(queryParams);
-		QueryResponse response = null;
+		QueryResponse queryResponse = null;
 		try {
-			response = server.query(query, METHOD.GET);
+			queryResponse = server.query(query, METHOD.GET);
 		} catch (SolrServerException e) {
 			throw new RuntimeException(e);
 		}
-		if (response == null) {
+		if (queryResponse == null) {
 			throw new SpiderSearchException("no response!");
 		}
-		// 数据结果处理
-		QueryResult QueryResult = new QueryResult();
-		/*
-		 * .........................
-		 */
-		Iterator<SolrDocument> iterator = response.getResults().iterator();
-		logger.info("numFound=" + response.getResults().getNumFound());
-		logger.info("QTime=" + response.getQTime());
-		while (iterator.hasNext()) {
-			SolrDocument doc = iterator.next();
-			System.out.println(doc.getFieldValue("nickname"));
-			Object id = doc.getFieldValue("id");
-			if (response.getHighlighting().get(id) != null) {
-				List<String> snippets = response.getHighlighting().get(id).get("content");
-				if (snippets != null) {
-					System.out.println(snippets.toString());
-				}
-			}
-		}
+		QueryResult result = new QueryResult();
+		result.setHeader(queryResponse.getHeader());
+		result.setResults(queryResponse.getResults());
+		result.setSort(queryResponse.getSortValues());
+		result.setHighlighting(queryResponse.getHighlighting());
+		result.setGroup(queryResponse.getGroupResponse());
+		result.setFacetQuery(queryResponse.getFacetQuery());
+		result.setFacetFields(transFacetField(queryResponse.getFacetFields()));
+		result.setFacetDates(transFacetField(queryResponse.getFacetDates()));
+		result.setFacetRanges(queryResponse.getFacetRanges());
+		result.setFacetPivot(queryResponse.getFacetPivot());
 
-		return QueryResult;
+		logger.info("numFound=" + queryResponse.getResults().getNumFound());
+		logger.info("QTime=" + queryResponse.getQTime());
+
+		return result;
+	}
+
+	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets) {
+		List<SimpleFacetInfo> result = new ArrayList<>();
+		for (FacetField facet : facets) {
+			SimpleFacetInfo sfi = new SimpleFacetInfo();
+			sfi.setName(facet.getName());
+			for (Count temp : facet.getValues()) {
+				sfi.getValues().put(temp.getName(), temp.getCount());
+			}
+			result.add(sfi);
+		}
+		return result;
 	}
 
 	/**
@@ -98,10 +130,10 @@ public class SearchingData {
 				query.addSort(sort.split(":")[0], "desc".equalsIgnoreCase(sort.split(":")[1]) ? ORDER.desc : ORDER.asc);
 			}
 		}
-		if (queryParams.getStart() != -1) {
+		if (queryParams.getStart() != 0) {
 			query.setStart(queryParams.getStart());
 		}
-		if (queryParams.getRows() != -1) {
+		if (queryParams.getRows() != 10) {
 			query.setRows(queryParams.getRows());
 		}
 		if (queryParams.getFl() != "") {
