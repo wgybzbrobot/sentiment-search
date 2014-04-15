@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ConfigTest {
@@ -21,7 +22,7 @@ public class ConfigTest {
 		assertNotNull(Config.getProps("data_db.properties"));
 	}
 
-	@Test
+	@Ignore
 	public void testSolrProps() {
 		Properties props = Config.getProps("solr_params.properties");
 		assertTrue(props.getProperty("zookeeper_cloud").length() > 0);

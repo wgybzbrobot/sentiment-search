@@ -13,6 +13,7 @@ import zx.soft.spider.web.application.SentiSearchApplication;
 import zx.soft.spider.web.common.ErrorResponse;
 import zx.soft.spider.web.domain.QueryResult;
 import zx.soft.spider.web.sentiment.QueryParams;
+import zx.soft.spider.web.utils.URLCodecUtils;
 
 public class SentiSearchResource extends ServerResource {
 
@@ -53,7 +54,7 @@ public class SentiSearchResource extends ServerResource {
 
 	@Get("json")
 	public Object getQueryResult() {
-		logger.info("Request Url: " + getReference() + ".");
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		if (getReference().getRemainingPart() == null) {
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();
 		}

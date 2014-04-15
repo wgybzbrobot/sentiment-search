@@ -18,6 +18,7 @@ import org.apache.solr.common.util.NamedList;
 @SuppressWarnings("rawtypes")
 public class QueryResult {
 
+	private long numFound;
 	// Direct pointers to known types
 	private NamedList<Object> header = null;
 	private SolrDocumentList results = null;
@@ -32,6 +33,14 @@ public class QueryResult {
 	private List<SimpleFacetInfo> facetDates = null;
 	private List<RangeFacet> facetRanges = null;
 	private NamedList<List<PivotField>> facetPivot = null;
+
+	public long getNumFound() {
+		return numFound;
+	}
+
+	public void setNumFound(long numFound) {
+		this.numFound = numFound;
+	}
 
 	public NamedList<Object> getHeader() {
 		return header;

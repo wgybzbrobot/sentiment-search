@@ -12,9 +12,8 @@
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<includes>
-				<include>data_db.properties</include>
 				<include>solr_params.properties</include>
-				<include>oracle_db.properties</include>
+				<include>web-server.properties</include>
 			</includes>
 			<outputDirectory>/conf</outputDirectory>
 			<filtered>true</filtered>

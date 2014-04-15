@@ -13,7 +13,9 @@ import zx.soft.spider.web.common.ServerUtils;
  * 舆情搜索Server
  * @author wanggang
  *
- * 索引示例：http://localhost:2222/sentiment/index   POST
+ * 索引示例：
+ * http://localhost:8900/sentiment/index   POST
+ * http://hdp321:8900/sentiment/index   POST
  */
 public class SentimentIndexServer {
 

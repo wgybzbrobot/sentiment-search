@@ -46,7 +46,7 @@ public class SearchingData {
 		SearchingData search = new SearchingData();
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ(""); // 美食
+		queryParams.setQ("*:*"); // 美食
 		queryParams.setFq("");
 		queryParams.setSort(""); // lasttime:desc
 		queryParams.setStart(0);
@@ -85,6 +85,7 @@ public class SearchingData {
 		result.setFacetDates(transFacetField(queryResponse.getFacetDates()));
 		result.setFacetRanges(queryResponse.getFacetRanges());
 		result.setFacetPivot(queryResponse.getFacetPivot());
+		result.setNumFound(queryResponse.getResults().getNumFound());
 
 		logger.info("numFound=" + queryResponse.getResults().getNumFound());
 		logger.info("QTime=" + queryResponse.getQTime());
@@ -94,6 +95,9 @@ public class SearchingData {
 
 	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets) {
 		List<SimpleFacetInfo> result = new ArrayList<>();
+		if (facets == null) {
+			return null;
+		}
 		for (FacetField facet : facets) {
 			SimpleFacetInfo sfi = new SimpleFacetInfo();
 			sfi.setName(facet.getName());

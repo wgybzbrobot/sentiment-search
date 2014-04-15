@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>zx.soft</groupId>
 	<artifactId>spider-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -349,6 +349,15 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -410,16 +419,37 @@
 
 	</build>
 
+	<!-- 依赖包仓库 -->
 	<repositories>
-		<!-- 皮皮仓库 -->
-		<!-- <repository> <id>ppcc-public</id> <name>Nexus Release Repository</name> 
-			<url>http://ops.pp.cc:3305/nexus/content/groups/public/</url> </repository> -->
-		<!-- Restlet 仓库 -->
+		<!-- 中新仓库 -->
+		<repository>
+			<id>zxsoft-public</id>
+			<name>Nexus Release Repository</name>
+			<url>http://192.168.3.23:18081/nexus/content/groups/public/</url>
+		</repository>
+		<!-- Restlet仓库 -->
 		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
 			<url>http://maven.restlet.org</url>
 		</repository>
 	</repositories>
+
+	<!-- 部署仓库 -->
+	<distributionManagement>
+		<repository>
+			<id>zxsoft-releases</id>
+			<name>Nexus Release Repository</name>
+			<url>http://192.168.3.23:18081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>zxsoft-snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://192.168.3.23:18081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<!-- <repository> <id>zxsoft-sentiment</id> <name>Zxsoft Sentiment Repository</name> 
+			<url>http://192.168.3.23:18081/nexus/content/repositories/sentiment/</url> 
+			</repository> -->
+	</distributionManagement>
 
 </project>
