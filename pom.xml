@@ -1,17 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>zx.soft</groupId>
-	<artifactId>spider-search</artifactId>
+	<artifactId>sentiment-search</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Spider Search</name>
+	<name>Sentiment Search</name>
 
 	<modules>
-		<module>spider-parent</module>
-		<module>spider-solr</module>
-		<module>spider-dao</module>
-		<module>spider-web</module>
+		<module>sentiment-parent</module>
+		<module>sentiment-solr</module>
+		<module>sentiment-dao</module>
+		<module>sentiment-web</module>
+		<module>sentiment-cache</module>
 	</modules>
 
 </project>
