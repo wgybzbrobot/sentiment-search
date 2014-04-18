@@ -25,7 +25,8 @@ public class CacheFactory {
 	static {
 		try {
 			instance = (Cache) Proxy.newProxyInstance(Cache.class.getClassLoader(), new Class[] { Cache.class },
-					new RetryHandler<Cache>(new RedisCache(Config.get("redisServers")), 5000, 10) {
+					new RetryHandler<Cache>(new RedisCache(Config.get("redisServers"), Integer.parseInt(Config
+							.get("port")), Config.get("password")), 5000, 10) {
 						@Override
 						protected boolean isRetry(Throwable e) {
 							return e instanceof JedisConnectionException;

@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
+import zx.soft.spider.cache.utils.Config;
 
 public class ValueShardedJedisTest {
 
@@ -28,10 +29,19 @@ public class ValueShardedJedisTest {
 	@Before
 	public void setUp() {
 		shards = new ArrayList<JedisShardInfo>();
-		shards.add(new JedisShardInfo("127.0.0.1", 6381));
-		shards.add(new JedisShardInfo("127.0.0.1", 6382));
-		shards.add(new JedisShardInfo("127.0.0.1", 6383));
-		shards.add(new JedisShardInfo("127.0.0.1", 6384));
+		String password = Config.get("password");
+		JedisShardInfo jsi1 = new JedisShardInfo("127.0.0.1", 6381);
+		jsi1.setPassword(password);
+		JedisShardInfo jsi2 = new JedisShardInfo("127.0.0.1", 6382);
+		jsi1.setPassword(password);
+		JedisShardInfo jsi3 = new JedisShardInfo("127.0.0.1", 6383);
+		jsi1.setPassword(password);
+		JedisShardInfo jsi4 = new JedisShardInfo("127.0.0.1", 6384);
+		jsi1.setPassword(password);
+		shards.add(jsi1);
+		shards.add(jsi2);
+		shards.add(jsi3);
+		shards.add(jsi4);
 		pool = new ValueShardedJedisPool(new JedisPoolConfig(), shards);
 	}
 
@@ -39,7 +49,6 @@ public class ValueShardedJedisTest {
 	@Ignore
 	public void testBalance() {
 		ValueShardedJedis resource = pool.getResource();
-
 		String key = "ValueShardedJedisTest:1";
 		resource.del(key);
 

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import zx.soft.spider.cache.dao.Cache;
-import zx.soft.spider.cache.utils.Config;
 
 public class RedisCache implements Cache {
 
@@ -18,19 +17,26 @@ public class RedisCache implements Cache {
 
 	private final ValueShardedJedisPool pool;
 
-	public RedisCache(String redisServers) {
+	public RedisCache(String redisServers, String password) {
+		this(redisServers, 6379, password);
+	}
+
+	public RedisCache(String redisServers, int redisPort, String password) {
 		List<JedisShardInfo> shards = new ArrayList<JedisShardInfo>();
 		for (String server : redisServers.split(",")) {
 			server = server.trim();
-			int port = Integer.parseInt(Config.get("port"));
+			// 设置访问端口
+			int port = redisPort;
 			if (server.indexOf(":") != -1) {
 				String[] hostAndPort = server.split(":");
 				server = hostAndPort[0];
 				port = Integer.parseInt(hostAndPort[1]);
 			}
 			logger.info("Add redis server: {}:{}", server, port);
-			JedisShardInfo si = new JedisShardInfo(server, port, 600_000);
-			shards.add(si);
+			JedisShardInfo jsi = new JedisShardInfo(server, port, 600_000);
+			// 设置访问密码
+			jsi.setPassword(password);
+			shards.add(jsi);
 		}
 		JedisPoolConfig config = new JedisPoolConfig();
 		pool = new ValueShardedJedisPool(config, shards);
@@ -139,6 +145,11 @@ public class RedisCache implements Cache {
 		} finally {
 			pool.returnResource(jedis);
 		}
+	}
+
+	@Override
+	public void close() {
+		pool.destroy();
 	}
 
 }

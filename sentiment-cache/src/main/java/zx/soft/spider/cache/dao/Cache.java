@@ -88,4 +88,6 @@ public interface Cache {
 	 */
 	Long srem(String key, String... members);
 
+	public void close();
+
 }
