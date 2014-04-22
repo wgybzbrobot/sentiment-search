@@ -10,10 +10,14 @@
 	</parent>
 
 	<artifactId>sentiment-cache</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>Sentiment Cache</name>
 
 	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>sentiment-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>

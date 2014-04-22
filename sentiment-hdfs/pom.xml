@@ -10,7 +10,6 @@
 	</parent>
 
 	<artifactId>sentiment-hdfs</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>Sentiment Hdfs</name>
 
 	<dependencies>

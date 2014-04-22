@@ -10,7 +10,6 @@
 	</parent>
 
 	<artifactId>sentiment-algorithm</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>Sentiment Algorithm</name>
 
 	<dependencies>

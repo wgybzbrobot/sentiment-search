@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zx.soft.sent.dao.sentiment.SentimentRecordDao">
+
+	<!-- 获取最大Id -->
+	<select id="getMaxId" parameterType="SentTablename" resultType="int">
+		SELECT MAX(`id`) FROM ${tablename};
+	</select>
+
+	<!-- 插入数据表名 -->
+	<insert id="insertTablename" parameterType="SentTablename"
+		useGeneratedKeys="true" keyProperty="id" flushCache="true"
+		statementType="PREPARED">
+		INSERT INTO `sentiment_tablenames` (`name`,`lasttime`) VALUES
+		(#{name},UNIX_TIMESTAMP());
+	</insert>
+
+	<!-- 插入Record数据 -->
+	<insert id="insertRecord" parameterType="RecordInsert"
+		useGeneratedKeys="true" keyProperty="id" flushCache="true"
+		statementType="PREPARED">
+		INSERT INTO ${tablename} (`id`,`platform`,`mid`,`username`,`nickname`,`original_uid`,`original_name`,
+		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`content`,`comment_count`,`read_count`,
+		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
+		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
+		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`country_code`,`location_code`,`province_code`,
+		`city_code`) 
+		VALUES (#{id},#{platform},#{mid},#{username},#{nickname},#{original_uid},#{original_name},#{original_title},
+		#{original_url},#{url},#{home_url},#{title},#{type},#{content},#{comment_count},#{read_count},#{favorite_count},
+		#{attitude_count},#{repost_count},#{video_url},#{pic_url},#{voice_url},#{timestamp},#{source_id},#{lasttime},
+		#{server_id},#{identify_id},#{identify_md5},#{keyword},#{first_time},#{update_time},#{ip},#{location},#{geo},
+		#{receive_addr},#{append_addr},#{send_addr},#{source_name},#{country_code},#{location_code},#{province_code},#{city_code});
+	</insert>
+	
+	<!-- 获取Record数据，根据md5的id -->
+	<select id="selectRecordById" SelectParamsById="SelectParamsById" resultType="RecordSelect">
+		SELECT `id`,`platform`,`mid`,`username`,`nickname`,`original_uid`,`original_name`,
+		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`content`,`comment_count`,`read_count`,
+		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
+		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
+		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`country_code`,`location_code`,`province_code`,
+		`city_code`
+		 FROM ${tablename} WHERE `id` = #{id};
+	</select>
+	
+	<!-- 获取Records数据，根据lasttime -->
+	<select id="selectRecordsByLasttime" SelectParamsById="SelectParamsByTime" resultType="RecordSelect">
+		SELECT `id`,`platform`,`mid`,`username`,`nickname`,`original_uid`,`original_name`,
+		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`content`,`comment_count`,`read_count`,
+		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
+		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
+		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`country_code`,`location_code`,`province_code`,
+		`city_code`
+		 FROM ${tablename} WHERE `lasttime` BETWEEN #{low} AND #{high};
+	</select>
+
+	<!-- 删除Record数据，根据md5的id -->
+	<delete id="deleteRecordById" parameterType="SelectParamsById">
+		DELETE FROM ${tablename} WHERE `id` = #{id};
+	</delete>
+
+</mapper>
