@@ -7,7 +7,7 @@ import org.restlet.data.Protocol;
 
 import zx.soft.sent.solr.utils.Config;
 import zx.soft.sent.web.application.SentiIndexApplication;
-import zx.soft.sent.web.common.ServerUtils;
+import zx.soft.sent.web.jackson.ReplaceConvert;
 
 /**
  * 舆情搜索Server
@@ -44,7 +44,7 @@ public class SentimentIndexServer {
 		component.getServers().add(Protocol.HTTP, PORT);
 		try {
 			component.getDefaultHost().attach("/sentiment/index", sentiIndexApplication);
-			ServerUtils.configureJacksonConverter();
+			ReplaceConvert.configureJacksonConverter();
 			component.start();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
