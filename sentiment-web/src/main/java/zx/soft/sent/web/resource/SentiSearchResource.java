@@ -62,4 +62,14 @@ public class SentiSearchResource extends ServerResource {
 		return result;
 	}
 
+	//	@Get("json")
+	//	public Representation getQueryResult() {
+	//		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
+	//		if (getReference().getRemainingPart() == null) {
+	//			return new JsonRepresentation(new ErrorResponse.Builder(20003, "your query params is illegal.").build());
+	//		}
+	//		QueryResult result = application.queryData(queryParams);
+	//		return new JsonRepresentation(result);
+	//	}
+
 }

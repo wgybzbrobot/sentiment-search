@@ -19,39 +19,13 @@
 		<typeAlias alias="SelectParamsById" type="zx.soft.sent.dao.domain.SelectParamsById" />
 		<typeAlias alias="SelectParamsByTime" type="zx.soft.sent.dao.domain.SelectParamsByTime" />
 	</typeAliases>
-	<environments default="local">
-		<environment id="local">
+	<environments default="sentiment">
+		<environment id="sentiment">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
-				<property name="url" value="${db_url_local}" />
-				<property name="username" value="${db_username}" />
-				<property name="password" value="${db_password}" />
-				<property name="driver" value="${db_driver}" />
-				<property name="driver.encoding" value="${db_encoding}" />
-				<property name="poolPingEnabled" value="true" />
-				<property name="poolPingQuery" value="select 1" />
-				<property name="poolPingConnectionsNotUsedFor" value="5000" />
-			</dataSource>
-		</environment>
-		<environment id="production">
-			<transactionManager type="JDBC" />
-			<dataSource type="POOLED">
-				<property name="url" value="${db_url_production}" />
-				<property name="username" value="${db_username}" />
-				<property name="password" value="${db_password}" />
-				<property name="driver" value="${db_driver}" />
-				<property name="driver.encoding" value="${db_encoding}" />
-				<property name="poolPingEnabled" value="true" />
-				<property name="poolPingQuery" value="select 1" />
-				<property name="poolPingConnectionsNotUsedFor" value="5000" />
-			</dataSource>
-		</environment>
-		<environment id="test">
-			<transactionManager type="JDBC" />
-			<dataSource type="POOLED">
-				<property name="url" value="${db_url_test}" />
-				<property name="username" value="${db_username}" />
-				<property name="password" value="${db_password}" />
+				<property name="url" value="${sent.db.url}" />
+				<property name="username" value="${sent.db.username}" />
+				<property name="password" value="${sent.db.password}" />
 				<property name="driver" value="${db_driver}" />
 				<property name="driver.encoding" value="${db_encoding}" />
 				<property name="poolPingEnabled" value="true" />

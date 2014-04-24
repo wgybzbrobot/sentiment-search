@@ -27,7 +27,7 @@ public class ImportSinaData {
 	private static WeiboSina weiboSina;
 
 	public ImportSinaData() {
-		weiboSina = new WeiboSina(MybatisConfig.ServerEnum.production);
+		weiboSina = new WeiboSina(MybatisConfig.ServerEnum.sentiment);
 		/**
 		 * 添加到CloudSolr
 		 */

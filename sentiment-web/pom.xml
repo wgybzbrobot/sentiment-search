@@ -47,6 +47,11 @@
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.slf4j</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

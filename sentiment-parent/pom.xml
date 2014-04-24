@@ -13,7 +13,7 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
 		<hamcrest.all.version>1.3</hamcrest.all.version>
-		<restlet.version>2.1.4</restlet.version>
+		<restlet.version>2.1.0</restlet.version>
 		<mybatis.version>3.2.3</mybatis.version>
 		<solr.version>4.7.0</solr.version>
 		<lucene.version>4.7.0</lucene.version>
@@ -71,6 +71,21 @@
 			<dependency>
 				<groupId>org.restlet.jse</groupId>
 				<artifactId>org.restlet</artifactId>
+				<version>${restlet.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.restlet.jse</groupId>
+				<artifactId>org.restlet.example</artifactId>
+				<version>${restlet.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.restlet.jse</groupId>
+				<artifactId>org.restlet.parent</artifactId>
+				<version>${restlet.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.restlet.jse</groupId>
+				<artifactId>org.restlet.test</artifactId>
 				<version>${restlet.version}</version>
 			</dependency>
 			<dependency>

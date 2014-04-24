@@ -10,7 +10,7 @@ public class MybatisConfigDemo {
 
 	public static void main(String[] args) throws SQLException {
 
-		SqlSessionFactory sqlSessionFactory = MybatisConfig.getSqlSessionFactory(MybatisConfig.ServerEnum.local);
+		SqlSessionFactory sqlSessionFactory = MybatisConfig.getSqlSessionFactory(MybatisConfig.ServerEnum.sentiment);
 		System.out.println(sqlSessionFactory.getConfiguration().getEnvironment().getId());
 
 	}

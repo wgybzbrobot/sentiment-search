@@ -2,7 +2,6 @@ package zx.soft.sent.web.demo;
 
 import java.io.IOException;
 
-import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
@@ -15,15 +14,18 @@ public class ClientCall {
 		// Create the client resource
 		ClientResource resource = new ClientResource("http://localhost:8182/users");
 
-		Form form = new Form();
-		form.add("uid", "123");
-		form.add("uname", "John");
-		System.out.println(JsonUtils.toJsonWithoutPretty(form));
+		//		Form form = new Form();
+		//		form.add("uid", "123");
+		//		form.add("uname", "John");
+		Student s = new Student();
+		s.setId(1234555);
+		s.setName("搜索速度飞快辜负了光谱感光评估苹果派随即宋江的方法光谱感光苹果派...,。。，，。77348595/");
+		System.out.println(JsonUtils.toJsonWithoutPretty(s));
 
 		// Write the response entity on the console
 		try {
 
-			resource.post(form).write(System.out);
+			resource.post(s).write(System.out);
 
 		} catch (ResourceException e) {
 			// TODO Auto-generated catch block

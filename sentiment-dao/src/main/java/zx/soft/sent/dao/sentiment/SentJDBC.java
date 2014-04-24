@@ -22,13 +22,9 @@ public class SentJDBC {
 
 	private BasicDataSource dataSource;
 
-	private String db_driver;
-	private String db_user;
-	private String db_password;
-	private String db_name;
-	private String db_ip;
-	private String db_port;
 	private String db_url;
+	private String db_username;
+	private String db_password;
 
 	public SentJDBC() {
 		dbInit();
@@ -40,12 +36,9 @@ public class SentJDBC {
 	 */
 	private void dbInit() {
 		Properties props = ConfigUtil.getProps("data_db.properties");
-		db_driver = props.getProperty("sent.db.driver");
-		db_user = props.getProperty("sent.db.user");
+		db_url = props.getProperty("sent.db.url");
+		db_username = props.getProperty("sent.db.username");
 		db_password = props.getProperty("sent.db.password");
-		db_name = props.getProperty("sent.db.name");
-		db_ip = props.getProperty("sent.db.ip");
-		db_port = props.getProperty("sent.db.port");
 	}
 
 	/**
@@ -54,9 +47,9 @@ public class SentJDBC {
 	private void dbConnection() {
 		dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUsername(db_user);
-		dataSource.setPassword(db_password);
 		dataSource.setUrl(db_url);
+		dataSource.setUsername(db_username);
+		dataSource.setPassword(db_password);
 		dataSource.setTestOnBorrow(true);
 		dataSource.setValidationQuery("select 1");
 	}
@@ -85,9 +78,7 @@ public class SentJDBC {
 
 	@Override
 	public String toString() {
-		return new StringBuffer().append("Db driver: " + db_driver + "\n").append("Db user: " + db_user + "\n")
-				.append("Db password: " + db_password + "\n").append("Db name: " + db_name + "\n")
-				.append("Db ip: " + db_ip + "\n").append("Db port: " + db_port).toString();
+		return "SentJDBC:[db_url=" + db_url + ",db_username=" + db_username + ",db_password=" + db_password + "]";
 	}
 
 	/**

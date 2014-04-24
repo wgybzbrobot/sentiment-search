@@ -16,7 +16,7 @@ public class MybatisConfig {
 	private static Logger logger = LoggerFactory.getLogger(MybatisConfig.class);
 
 	public enum ServerEnum {
-		local, production, test
+		sentiment
 	}
 
 	private static Map<ServerEnum, SqlSessionFactory> sessionFactorys = new HashMap<>();

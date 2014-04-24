@@ -1,7 +1,7 @@
 package zx.soft.sent.web.demo;
 
-import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
@@ -18,20 +18,25 @@ public class UserResource extends ServerResource {
 	}
 
 	@Post
-	public Representation acceptItem(Representation entity) {
+	public Representation acceptItem(Student entity) {
 		Representation result = null;
 		// Parse the given representation and retrieve data
-		Form form = new Form(entity);
-		String uid = form.getFirstValue("uid");
-		String uname = form.getFirstValue("uname");
 
-		if (uid.equals("123")) { // Assume that user id 123 is existed
-			result = new StringRepresentation("User whose uid=" + uid + " is updated", MediaType.TEXT_PLAIN);
+		System.out.println(entity.getName());
+
+		if (entity.getId() == 123) { // Assume that user id 123 is existed
+			result = new StringRepresentation("User whose uid=" + entity.getId() + " is updated", MediaType.TEXT_PLAIN);
 		} else { // otherwise add user
-			result = new StringRepresentation("User " + uname + " is added", MediaType.TEXT_PLAIN);
+			result = new StringRepresentation("User " + entity.getName() + " is added", MediaType.TEXT_PLAIN);
 		}
 
 		return result;
+	}
+
+	@Get("json")
+	public Representation sendResponse() {
+		Student student = new Student();
+		return new JacksonRepresentation<Student>(student);
 	}
 
 }
