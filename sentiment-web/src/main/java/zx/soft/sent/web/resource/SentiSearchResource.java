@@ -49,6 +49,7 @@ public class SentiSearchResource extends ServerResource {
 		queryParams.setHlfl(params.get("hlfl") == null ? "" : params.get("hlfl"));
 		queryParams.setFacetQuery(params.get("facetQuery") == null ? "" : params.get("facetQuery"));
 		queryParams.setFacetField(params.get("facetField") == null ? "" : params.get("facetField"));
+		queryParams.setHlsimple(params.get("hlsimple") == null ? "" : params.get("hlsimple"));
 		logger.info(queryParams.toString());
 	}
 

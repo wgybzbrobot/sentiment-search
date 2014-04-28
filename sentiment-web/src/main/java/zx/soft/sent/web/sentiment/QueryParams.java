@@ -15,6 +15,7 @@ public class QueryParams {
 	private String fl = "";
 	private String wt = "json";
 	private String hlfl = "";
+	private String hlsimple = "";
 	private String facetQuery = "";
 	private String facetField = "";
 
@@ -25,7 +26,8 @@ public class QueryParams {
 	@Override
 	public String toString() {
 		return "QueryParams:{q=" + q + ",fq=" + fq + ",sort=" + sort + ",start=" + start + ",rows=" + rows + ",fl="
-				+ fl + ",wt=" + wt + ",hlfl=" + hlfl + ",facetQuery=" + facetQuery + ",facetField=" + facetField + "}";
+				+ fl + ",wt=" + wt + ",hlfl=" + hlfl + ",hlsimple=" + hlsimple + ",facetQuery=" + facetQuery
+				+ ",facetField=" + facetField + "}";
 	}
 
 	public void setQ(String q) {
@@ -106,6 +108,14 @@ public class QueryParams {
 
 	public String getFacetField() {
 		return facetField;
+	}
+
+	public String getHlsimple() {
+		return hlsimple;
+	}
+
+	public void setHlsimple(String hlsimple) {
+		this.hlsimple = hlsimple;
 	}
 
 }

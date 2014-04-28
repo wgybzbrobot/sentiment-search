@@ -10,9 +10,9 @@ import zx.soft.sent.web.server.SentimentSearchServer;
  * 驱动类
  *
  */
-public class SpiderWebDriver {
+public class SentWebDriver {
 
-	private static Logger logger = LoggerFactory.getLogger(SpiderWebDriver.class);
+	private static Logger logger = LoggerFactory.getLogger(SentWebDriver.class);
 
 	/**
 	 * 主函数

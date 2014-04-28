@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mainClass=zx.soft.spider.web.driver.SpiderWebDriver
+mainClass=zx.soft.sent.web.driver.SentWebDriver
 
 # resolve links - $0 may be a softlink
 PRG="$0"

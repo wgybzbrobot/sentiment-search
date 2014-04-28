@@ -84,20 +84,22 @@ public class SentJDBC {
 	/**
 	 * 创建舆情数据表名数据表
 	 */
-	public void createTablenameTable(String tablename) throws SQLException {
+	public void createTablenameTable(String tablename) {
 
 		String sql = "CREATE TABLE " + tablename + " (`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '序号',"
-				+ "`name` varchar(50) NOT NULL COMMENT '用户名'," + "`lasttime` int(11) unsigned NOT NULL COMMENT '创建时间',"
+				+ "`name` varchar(50) NOT NULL COMMENT '用户名',`lasttime` int(11) unsigned NOT NULL COMMENT '创建时间',"
 				+ "PRIMARY KEY (`id`)) " + "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='舆情数据表名数据表' AUTO_INCREMENT=1 ;";
 		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
 			pstmt.execute(sql);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException: " + e);
 		}
 	}
 
 	/**
 	 * 创建舆情数据表
 	 */
-	public void createSentimentTable(String tablename) throws SQLException {
+	public void createSentimentTable(String tablename) {
 
 		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " ("
 				+ "`rid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',"
@@ -141,10 +143,12 @@ public class SentJDBC {
 				+ "`location_code` mediumint(9) unsigned NOT NULL COMMENT '区域编码',"
 				+ "`province_code` mediumint(9) unsigned NOT NULL COMMENT '省份编码',"
 				+ "`city_code` mediumint(9) unsigned NOT NULL COMMENT '城市编码',"
-				+ "PRIMARY KEY (`rid`),UNIQUE KEY `id` (`id`)) "
+				+ "PRIMARY KEY (`rid`),UNIQUE KEY `id` (`id`), KEY `timestamp` (`timestamp`)) "
 				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='舆情数据表' AUTO_INCREMENT=1 ;";
 		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
 			pstmt.execute(sql);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException: " + e);
 		}
 	}
 

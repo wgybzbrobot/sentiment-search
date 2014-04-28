@@ -9,8 +9,8 @@
 		<relativePath>../sentiment-parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>sentiment-control</artifactId>
-	<name>Sentiment Control</name>
+	<artifactId>sentiment-core</artifactId>
+	<name>Sentiment Core</name>
 
 	<dependencies>
 		<dependency>

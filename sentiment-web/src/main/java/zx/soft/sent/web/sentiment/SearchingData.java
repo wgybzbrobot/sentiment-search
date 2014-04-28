@@ -128,6 +128,9 @@ public class SearchingData {
 		}
 	}
 
+	/**
+	 * 需要增加排序功能.........
+	 */
 	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets) {
 		List<SimpleFacetInfo> result = new ArrayList<>();
 		if (facets == null) {
@@ -147,7 +150,7 @@ public class SearchingData {
 	/**
 	 * 组合查询类
 	 * @param q:abc或者[1 TO 100]
-	 * @param fq:f1:abc,f2:cde,...
+	 * @param fq:+f1:abc,dec;-f2:cde,fff;...
 	 * @param fl:username,nickname.content,...
 	 * @param hlfl:title,content,...
 	 * @param sort:platform:desc,source_id:asc,...
@@ -161,9 +164,9 @@ public class SearchingData {
 		}
 		// 设置关键词连接逻辑是AND
 		query.set("q.op", "AND");
-		if (queryParams.getFq() != null) {
-			for (String fq : queryParams.getFq().split(",")) {
-				query.addFilterQuery(fq);
+		if (queryParams.getFq() != "") {
+			for (String fq : queryParams.getFq().split(";")) {
+				query.addFilterQuery(transFq(fq));
 			}
 		}
 		if (queryParams.getSort() != "") {
@@ -187,6 +190,10 @@ public class SearchingData {
 			query.setHighlight(true).setHighlightSnippets(1);
 			query.addHighlightField(queryParams.getHlfl());
 		}
+		if (queryParams.getHlsimple() != "") {
+			query.setHighlightSimplePre("<" + queryParams.getHlsimple() + ">");
+			query.setHighlightSimplePost("</" + queryParams.getHlsimple() + ">");
+		}
 		if (queryParams.getFacetQuery() != "") {
 			query.addFacetQuery(queryParams.getFacetQuery());
 		}
@@ -195,6 +202,19 @@ public class SearchingData {
 		}
 
 		return query;
+	}
+
+	public static String transFq(String fqs) {
+		String[] fq = fqs.split(":");
+		String result = "";
+		for (String str : fq[1].split(",")) {
+			result = result + fq[0] + ":" + str + " OR ";
+		}
+		result = result.substring(0, result.length() - 4);
+		if (fqs.contains("-")) {
+			result = result.replace("OR", "AND");
+		}
+		return result;
 	}
 
 	/**

@@ -11,7 +11,7 @@
 	<insert id="insertTablename" parameterType="SentTablename"
 		useGeneratedKeys="true" keyProperty="id" flushCache="true"
 		statementType="PREPARED">
-		INSERT INTO `sentiment_tablenames` (`name`,`lasttime`) VALUES
+		INSERT INTO ${tablename} (`name`,`lasttime`) VALUES
 		(#{name},UNIX_TIMESTAMP());
 	</insert>
 
@@ -33,7 +33,7 @@
 	</insert>
 	
 	<!-- 获取Record数据，根据md5的id -->
-	<select id="selectRecordById" SelectParamsById="SelectParamsById" resultType="RecordSelect">
+	<select id="selectRecordById" parameterType="SelectParamsById" resultType="RecordSelect">
 		SELECT `id`,`platform`,`mid`,`username`,`nickname`,`original_uid`,`original_name`,
 		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`content`,`comment_count`,`read_count`,
 		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
@@ -44,7 +44,7 @@
 	</select>
 	
 	<!-- 获取Records数据，根据lasttime -->
-	<select id="selectRecordsByLasttime" SelectParamsById="SelectParamsByTime" resultType="RecordSelect">
+	<select id="selectRecordsByLasttime" parameterType="SelectParamsByTime" resultType="RecordSelect">
 		SELECT `id`,`platform`,`mid`,`username`,`nickname`,`original_uid`,`original_name`,
 		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`content`,`comment_count`,`read_count`,
 		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,

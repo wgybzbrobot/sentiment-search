@@ -16,6 +16,7 @@
 		<!-- 舆情数据 -->
 		<typeAlias alias="SentTablename" type="zx.soft.sent.dao.domain.SentTablename" />
 		<typeAlias alias="RecordInsert" type="zx.soft.sent.dao.domain.RecordInsert" />
+		<typeAlias alias="RecordSelect" type="zx.soft.sent.dao.domain.RecordSelect" />
 		<typeAlias alias="SelectParamsById" type="zx.soft.sent.dao.domain.SelectParamsById" />
 		<typeAlias alias="SelectParamsByTime" type="zx.soft.sent.dao.domain.SelectParamsByTime" />
 	</typeAliases>
