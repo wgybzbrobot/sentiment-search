@@ -38,7 +38,6 @@ public class RecordInsert {
 	private final long identify_id; // 标志id
 	private final String identify_md5; // 标志md5
 	private final String keyword; // 关键词
-
 	private final long first_time; // 首次发现时间
 	private final long update_time; // 最新更新时间
 	private final String ip; // 该记录发布的ip地址
@@ -48,6 +47,7 @@ public class RecordInsert {
 	private final String append_addr; // 抄送人地址
 	private final String send_addr; // 发送人地址
 	private final String source_name; // 来源名称
+	private final int source_type;
 	private final int country_code; // 国家代码
 	private final int location_code; // 区域编码
 	private final int province_code;
@@ -67,7 +67,7 @@ public class RecordInsert {
 				+ ",ip=" + ip + ",location=" + location + ",geo=" + geo + ",receive_addr=" + receive_addr
 				+ ",append_addr=" + append_addr + ",send_addr=" + send_addr + ",source_name=" + source_name
 				+ ",country_code=" + country_code + ",location_code=" + location_code + ",province_code="
-				+ province_code + ",city_code=" + city_code + "}";
+				+ province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
 	}
 
 	public RecordInsert(Builder builder) {
@@ -114,6 +114,7 @@ public class RecordInsert {
 		this.location_code = builder.location_code;
 		this.province_code = builder.province_code;
 		this.city_code = builder.city_code;
+		this.source_type = builder.source_type;
 	}
 
 	public static class Builder {
@@ -157,6 +158,7 @@ public class RecordInsert {
 		private String append_addr = "";
 		private String send_addr = "";
 		private String source_name = "";
+		private int source_type;
 		private int country_code;
 		private int location_code;
 		private int province_code;
@@ -368,6 +370,11 @@ public class RecordInsert {
 			return this;
 		}
 
+		public Builder setSource_type(int source_type) {
+			this.source_type = source_type;
+			return this;
+		}
+
 		public RecordInsert build() {
 			return new RecordInsert(this);
 		}
@@ -544,6 +551,10 @@ public class RecordInsert {
 
 	public int getCity_code() {
 		return city_code;
+	}
+
+	public int getSource_type() {
+		return source_type;
 	}
 
 }

@@ -30,7 +30,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>sentiment-utils</artifactId>
+			<artifactId>sentiment-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

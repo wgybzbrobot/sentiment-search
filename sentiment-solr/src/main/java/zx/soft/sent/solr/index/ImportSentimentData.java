@@ -21,7 +21,7 @@ import zx.soft.sent.dao.domain.Reply;
 import zx.soft.sent.dao.domain.Weibo;
 import zx.soft.sent.solr.oracle.DataOJDBC;
 import zx.soft.sent.solr.utils.ConvertToRecord;
-import zx.soft.sent.solr.utils.TimeUtils;
+import zx.soft.sent.utils.time.TimeUtils;
 
 /**
  * 索引舆情数据到Solr集群中
@@ -68,6 +68,7 @@ public class ImportSentimentData {
 	/**
 	 * 索引数据，按时间段查询
 	 */
+	@SuppressWarnings("deprecation")
 	public void indexData(String table_name) {
 		/**
 		 * 获取待索引数据
@@ -214,6 +215,7 @@ public class ImportSentimentData {
 	/**
 	 * 根据表名转化数据
 	 */
+	@SuppressWarnings("deprecation")
 	private Record transData(String table_name, ResultSet rs) {
 		switch (table_name) {
 		case "SJCJ_WBL":

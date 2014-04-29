@@ -7,6 +7,7 @@ import java.util.Date;
  * @author wanggang
  *
  */
+@Deprecated
 public class Record {
 
 	private final String id; // 记录id，一般通过记录的url进行md5加密得到
@@ -46,10 +47,12 @@ public class Record {
 	private final String receive_addr; // 收件人地址
 	private final String append_addr; // 抄送人地址
 	private final String send_addr; // 发送人地址
-	//
 	private final String source_name; // 来源名称
+	private final int source_type; // 归属分类，也就是来源id的大分类
 	private final int country_code; // 国家代码
 	private final int location_code; // 区域编码
+	private final int province_code;
+	private final int city_code;
 
 	@Override
 	public String toString() {
@@ -64,7 +67,8 @@ public class Record {
 				+ identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time + ",update_time=" + update_time
 				+ ",ip=" + ip + ",location=" + location + ",geo=" + geo + ",receive_addr=" + receive_addr
 				+ ",append_addr=" + append_addr + ",send_addr=" + send_addr + ",source_name=" + source_name
-				+ ",country_code=" + country_code + ",location_code" + location_code + "}";
+				+ ",country_code=" + country_code + ",location_code=" + location_code + ",province_code="
+				+ province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
 	}
 
 	public Record(Builder builder) {
@@ -106,8 +110,11 @@ public class Record {
 		this.append_addr = builder.append_addr;
 		this.send_addr = builder.send_addr;
 		this.source_name = builder.source_name;
+		this.source_type = builder.source_type;
 		this.country_code = builder.country_code;
 		this.location_code = builder.location_code;
+		this.province_code = builder.province_code;
+		this.city_code = builder.city_code;
 	}
 
 	public static class Builder {
@@ -150,8 +157,11 @@ public class Record {
 		private String append_addr = "";
 		private String send_addr = "";
 		private String source_name = "";
+		private int source_type;
 		private int country_code;
 		private int location_code;
+		private int province_code;
+		private int city_code;
 
 		public Builder(String id, int platform) {
 			this.id = id;
@@ -348,6 +358,21 @@ public class Record {
 			return this;
 		}
 
+		public Builder setSource_type(int source_type) {
+			this.source_type = source_type;
+			return this;
+		}
+
+		public Builder setProvince_code(int province_code) {
+			this.province_code = province_code;
+			return this;
+		}
+
+		public Builder setCity_code(int city_code) {
+			this.city_code = city_code;
+			return this;
+		}
+
 		public Record build() {
 			return new Record(this);
 		}
@@ -512,6 +537,18 @@ public class Record {
 
 	public int getLocation_code() {
 		return location_code;
+	}
+
+	public int getSource_type() {
+		return source_type;
+	}
+
+	public int getProvince_code() {
+		return province_code;
+	}
+
+	public int getCity_code() {
+		return city_code;
 	}
 
 }

@@ -22,7 +22,6 @@ public class ReadFromSolr {
 	public static void main(String[] args) throws SolrServerException, IOException {
 
 		CloudSolrServer server = new CloudSolrServer("ppcc2:2181,ppcc3:2181");
-
 		SolrQuery query = new SolrQuery();
 		query.setQuery("name:ipod");
 		query.setHighlight(true).setHighlightSnippets(1); //set other params as needed

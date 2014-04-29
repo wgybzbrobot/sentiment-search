@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.utils;
+package zx.soft.sent.utils.time;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

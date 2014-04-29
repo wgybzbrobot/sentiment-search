@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.utils;
+package zx.soft.sent.utils.json;
 
 import java.io.IOException;
 import java.text.DateFormat;

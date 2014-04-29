@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
-import zx.soft.sent.solr.utils.JsonUtils;
+import zx.soft.sent.utils.json.JsonUtils;
 
 public class ClientCall {
 

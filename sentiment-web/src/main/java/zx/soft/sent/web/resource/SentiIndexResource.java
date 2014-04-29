@@ -40,11 +40,14 @@ public class SentiIndexResource extends ServerResource {
 		}
 		logger.info("Request Url=" + getReference() + ", Records' size=" + data.getRecords().size());
 
-		// 另开一个线程索引数据，以免影响客户端响应时间
+		// 另开一个线程索引和持久化数据，以免影响客户端响应时间
 		pool.execute(new Runnable() {
 			@Override
 			public void run() {
+				// 添加到Solr
 				application.addDatas(data.getRecords());
+				// 添加到Mysql
+				application.persist(data.getRecords());
 			}
 		});
 

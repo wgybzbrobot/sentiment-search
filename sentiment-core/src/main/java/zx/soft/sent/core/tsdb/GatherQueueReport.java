@@ -1,4 +1,4 @@
-package zx.soft.sent.control.tsdb;
+package zx.soft.sent.core.tsdb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import zx.soft.sent.cache.dao.Cache;
 import zx.soft.sent.cache.tsdb.Reportable;
 import zx.soft.sent.cache.tsdb.Tsdb;
-import zx.soft.sent.control.constant.RecordsConstant;
+import zx.soft.sent.core.constant.RecordsConstant;
 
 /**
  * 统计Redis中的数据条数等实时数据。

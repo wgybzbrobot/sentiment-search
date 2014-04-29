@@ -139,6 +139,7 @@ public class SentJDBC {
 				+ "`append_addr` varchar(200) NOT NULL COMMENT '抄送人地址',"
 				+ "`send_addr` varchar(50) NOT NULL COMMENT '发送人地址',"
 				+ "`source_name` varchar(50) NOT NULL COMMENT '来源名称',"
+				+ "`source_type` mediumint(9) unsigned NOT NULL COMMENT '来源类型',"
 				+ "`country_code` mediumint(9) unsigned NOT NULL COMMENT '国家代码',"
 				+ "`location_code` mediumint(9) unsigned NOT NULL COMMENT '区域编码',"
 				+ "`province_code` mediumint(9) unsigned NOT NULL COMMENT '省份编码',"

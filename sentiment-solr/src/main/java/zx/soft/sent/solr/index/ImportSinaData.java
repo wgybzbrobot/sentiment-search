@@ -11,7 +11,7 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.Record;
 import zx.soft.sent.dao.domain.WeiboOldInfo;
 import zx.soft.sent.dao.sina.WeiboSina;
-import zx.soft.sent.solr.utils.MD5Util;
+import zx.soft.sent.utils.checksum.CheckSumUtils;
 
 /**
  * @author wanggang
@@ -81,7 +81,7 @@ public class ImportSinaData {
 	}
 
 	private Record transWeibo(WeiboOldInfo weibo) {
-		return new Record.Builder(MD5Util.str2MD5(weibo.getWid().toString()), 0).setUsername(weibo.getUsername())
+		return new Record.Builder(CheckSumUtils.getMD5(weibo.getWid().toString()), 0).setUsername(weibo.getUsername())
 				.setRepost_count(weibo.getRepostsCount()).setComment_count(weibo.getCommentsCount())
 				.setContent(weibo.getText()).setTimestamp(new Date(weibo.getCreateat() * 1000))
 				.setOriginal_uid(weibo.getOusername()).setMid(weibo.getOwid().toString()).setGeo(weibo.getGeo())

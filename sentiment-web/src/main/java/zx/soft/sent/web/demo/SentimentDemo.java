@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zx.soft.sent.dao.domain.RecordInfo;
-import zx.soft.sent.solr.utils.JsonUtils;
+import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.web.domain.PostData;
 
 public class SentimentDemo {

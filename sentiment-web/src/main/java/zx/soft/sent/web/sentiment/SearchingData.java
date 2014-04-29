@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.solr.err.SpiderSearchException;
 import zx.soft.sent.solr.utils.Config;
-import zx.soft.sent.solr.utils.JsonUtils;
-import zx.soft.sent.solr.utils.TimeUtils;
+import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.sent.utils.time.TimeUtils;
 import zx.soft.sent.web.domain.QueryResult;
 import zx.soft.sent.web.domain.SimpleFacetInfo;
 
@@ -48,14 +48,15 @@ public class SearchingData {
 		SearchingData search = new SearchingData();
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("*:*"); // 美食
+		queryParams.setQ("美食商业");
 		queryParams.setFq("");
 		queryParams.setSort(""); // lasttime:desc
 		queryParams.setStart(0);
-		queryParams.setRows(3);
+		queryParams.setRows(10);
 		queryParams.setWt("json");
 		queryParams.setFl(""); // nickname,content
-		queryParams.setHlfl(""); // content
+		queryParams.setHlfl("content,title"); // content
+		queryParams.setHlsimple("red");
 		queryParams.setFacetQuery("");
 		queryParams.setFacetField(""); // platform
 		QueryResult result = search.queryData(queryParams);
@@ -79,7 +80,7 @@ public class SearchingData {
 		QueryResult result = new QueryResult();
 		result.setHeader(queryResponse.getHeader());
 		result.setSort(queryResponse.getSortValues());
-		result.setHighlighting(queryResponse.getHighlighting());
+		//		result.setHighlighting(queryResponse.getHighlighting());
 		result.setGroup(queryResponse.getGroupResponse());
 		result.setFacetQuery(queryResponse.getFacetQuery());
 		result.setFacetFields(transFacetField(queryResponse.getFacetFields()));
@@ -90,6 +91,21 @@ public class SearchingData {
 		result.setResults(queryResponse.getResults());
 		// 处理时间timestamp、lasttime、first_time、update_time
 		tackleTime(result);
+		// 将highlight移到result中，减少数据量，同时方便钓调用
+		if (queryResponse.getHighlighting() != null) {
+			for (int i = 0; i < result.getResults().size(); i++) {
+				for (String hl : queryParams.getHlfl().split(",")) {
+					if (queryResponse.getHighlighting().get(result.getResults().get(i).getFieldValue("id")).get(hl) != null) {
+						result.getResults()
+								.get(i)
+								.setField(
+										hl,
+										queryResponse.getHighlighting()
+												.get(result.getResults().get(i).getFieldValue("id")).get(hl).get(0));
+					}
+				}
+			}
+		}
 
 		logger.info("numFound=" + queryResponse.getResults().getNumFound());
 		logger.info("QTime=" + queryResponse.getQTime());
@@ -205,10 +221,10 @@ public class SearchingData {
 	}
 
 	public static String transFq(String fqs) {
-		String[] fq = fqs.split(":");
+		int index = fqs.indexOf(":");
 		String result = "";
-		for (String str : fq[1].split(",")) {
-			result = result + fq[0] + ":" + str + " OR ";
+		for (String str : fqs.substring(index + 1).split(",")) {
+			result = result + fqs.substring(0, index) + ":" + str + " OR ";
 		}
 		result = result.substring(0, result.length() - 4);
 		if (fqs.contains("-")) {

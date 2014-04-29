@@ -13,6 +13,10 @@ public class SearchingDataTest {
 
 		fqs = SearchingData.transFq("-a:b,c,d");
 		assertEquals(fqs, "-a:b AND -a:c AND -a:d");
+
+		fqs = SearchingData.transFq("timestamp:[2014-4-22T13:39:26Z TO 2014-4-29T13:39:26Z]");
+		assertEquals(fqs, "timestamp:[2014-4-22T13:39:26Z TO 2014-4-29T13:39:26Z]");
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package zx.soft.sent.control.constant;
+package zx.soft.sent.core.constant;
 
 /**
  * 数据记录相关常量

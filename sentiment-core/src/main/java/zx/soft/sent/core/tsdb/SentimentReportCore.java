@@ -1,4 +1,4 @@
-package zx.soft.sent.control.tsdb;
+package zx.soft.sent.core.tsdb;
 
 import java.util.Properties;
 
@@ -12,7 +12,7 @@ import zx.soft.sent.utils.config.ConfigUtil;
  * @author wanggang
  *
  */
-public class SentimentReportMain {
+public class SentimentReportCore {
 
 	/**
 	 * 主函数

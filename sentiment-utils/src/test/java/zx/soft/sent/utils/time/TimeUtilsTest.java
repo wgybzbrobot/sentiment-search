@@ -1,11 +1,9 @@
-package zx.soft.sent.solr.utils;
+package zx.soft.sent.utils.time;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import zx.soft.sent.solr.utils.TimeUtils;
 
 public class TimeUtilsTest {
 

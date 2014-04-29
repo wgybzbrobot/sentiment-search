@@ -11,6 +11,7 @@ import org.restlet.routing.Router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.core.persist.PersistCore;
 import zx.soft.sent.dao.domain.RecordInfo;
 import zx.soft.sent.web.resource.SentiIndexResource;
 import zx.soft.sent.web.sentiment.IndexingData;
@@ -21,10 +22,13 @@ public class SentiIndexApplication extends Application {
 
 	private final IndexingData indexingData;
 
+	private final PersistCore persistCore;
+
 	static Thread commitThread;
 
 	public SentiIndexApplication() {
 		indexingData = new IndexingData();
+		persistCore = new PersistCore();
 		/**
 		 * 每分钟定时提交更新
 		 */
@@ -52,6 +56,15 @@ public class SentiIndexApplication extends Application {
 	public void addDatas(List<RecordInfo> records) {
 		for (RecordInfo record : records) {
 			indexingData.addData(record);
+		}
+	}
+
+	/**
+	 * 数据持久化到Mysql
+	 */
+	public void persist(List<RecordInfo> records) {
+		for (RecordInfo record : records) {
+			persistCore.persist(record);
 		}
 	}
 

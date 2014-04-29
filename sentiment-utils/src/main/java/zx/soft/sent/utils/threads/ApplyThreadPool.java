@@ -47,4 +47,30 @@ public class ApplyThreadPool {
 		return result;
 	}
 
+	public static ThreadPoolExecutor getThreadPoolExector(int threadsNum) {
+
+		final ThreadPoolExecutor result = new ThreadPoolExecutor(threadsNum, threadsNum, 0L, TimeUnit.MILLISECONDS,
+				new ArrayBlockingQueue<Runnable>(threadsNum * 2), new ThreadPoolExecutor.CallerRunsPolicy());
+		result.setThreadFactory(new ThreadFactory() {
+
+			@Override
+			public Thread newThread(Runnable r) {
+				Thread t = new Thread(r);
+				t.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+
+					@Override
+					public void uncaughtException(Thread t, Throwable e) {
+						e.printStackTrace();
+						logger.error("Thread exception: " + t.getName(), e);
+						result.shutdown();
+					}
+
+				});
+				return t;
+			}
+		});
+
+		return result;
+	}
+
 }
