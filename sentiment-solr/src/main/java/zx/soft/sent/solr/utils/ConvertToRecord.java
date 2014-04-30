@@ -107,7 +107,7 @@ public class ConvertToRecord {
 				.setOriginal_name(qQGroup.getMC()).setOriginal_title(qQGroup.getGG()).setNickname(qQGroup.getYHNC())
 				.setUsername(qQGroup.getFBYH()).setContent(qQGroup.getFBLR()).setTimestamp(qQGroup.getFBSJ())
 				.setSource_id(qQGroup.getLY()).setServer_id(qQGroup.getLZ()).setLasttime(qQGroup.getJCSJ())
-				.setIdentify_id(qQGroup.getBZ()).build();
+				.setIdentify_id(qQGroup.getBZ()).setMid(qQGroup.getID()).build();
 		return record;
 	}
 
@@ -157,7 +157,7 @@ public class ConvertToRecord {
 				.setTitle(email.getYJBT()).setContent(email.getYJLR()).setTimestamp(email.getFSSJ())
 				.setType(email.getLX()).setFirst_time(email.getFXSJ()).setUpdate_time(email.getGXSJ())
 				.setSource_id(email.getLY()).setLasttime(email.getJCSJ()).setServer_id(email.getLZ())
-				.setIdentify_id(email.getBZ()).build();
+				.setIdentify_id(email.getBZ()).setMid(email.getQJID()).build();
 		return record;
 	}
 
