@@ -39,7 +39,7 @@ public class ConvertToRecord {
 				.setNickname(info.getFBYH()).setSource_id(info.getLY()).setLasttime(info.getJCSJ())
 				.setServer_id(info.getLZ()).setIdentify_id(info.getBZ()).setIp(info.getIP())
 				.setUpdate_time(info.getGXSJ()).setLocation(info.getIPDZ()).setComment_count(info.getPLS())
-				.setRepost_count(info.getZBS()).setRead_count(info.getYDS()).build();
+				.setRepost_count(info.getZBS()).setRead_count(info.getYDS()).setUrl(info.getZXDZ()).build();
 		return record;
 	}
 
@@ -56,7 +56,8 @@ public class ConvertToRecord {
 				.setLocation(forum.getIPDZ()).setType(forum.getBKMC()).setTitle(forum.getWYBT())
 				.setContent(forum.getWYLR()).setVideo_url(forum.getSPURL()).setPic_url(forum.getTPURL())
 				.setVoice_url(forum.getYPURL()).setTimestamp(forum.getFBSJ()).setRead_count(forum.getLLL())
-				.setComment_count(forum.getGTL()).setNickname(forum.getFBYH()).setKeyword(forum.getGJC()).build();
+				.setComment_count(forum.getGTL()).setNickname(forum.getFBYH()).setKeyword(forum.getGJC())
+				.setUrl(forum.getWYDZ()).build();
 		return record;
 	}
 
@@ -73,7 +74,7 @@ public class ConvertToRecord {
 				.setRepost_count(weibo.getZBS()).setRead_count(weibo.getYDS()).setKeyword(weibo.getGJC())
 				.setSource_id(weibo.getLY()).setLasttime(weibo.getJCSJ()).setServer_id(weibo.getLZ())
 				.setIdentify_id(weibo.getBZ()).setIp(weibo.getIP()).setUpdate_time(weibo.getGXSJ())
-				.setLocation(weibo.getIPDZ()).build();
+				.setLocation(weibo.getIPDZ()).setUrl(weibo.getWBDZ()).build();
 		return record;
 	}
 
@@ -91,7 +92,7 @@ public class ConvertToRecord {
 				.setVideo_url(blog.getSPURL()).setPic_url(blog.getTPURL()).setVoice_url(blog.getYPURL())
 				.setTimestamp(blog.getFBSJ()).setSource_id(blog.getLY()).setLasttime(blog.getJCSJ())
 				.setServer_id(blog.getLZ()).setIdentify_id(blog.getBZ()).setIp(blog.getIP()).setKeyword(blog.getGJC())
-				.setUpdate_time(blog.getGXSJ()).setLocation(blog.getIPDZ()).build();
+				.setUpdate_time(blog.getGXSJ()).setLocation(blog.getIPDZ()).setUrl(blog.getBKDZ()).build();
 		return record;
 	}
 
@@ -122,7 +123,7 @@ public class ConvertToRecord {
 				.setVoice_url(autm.getYPURL()).setTimestamp(autm.getFBSJ()).setNickname(autm.getFBYH())
 				.setKeyword(autm.getGJC()).setSource_id(autm.getLY()).setIp(autm.getIP()).setLasttime(autm.getJCSJ())
 				.setServer_id(autm.getLZ()).setIdentify_id(autm.getBZ()).setUpdate_time(autm.getGXSJ())
-				.setLocation(autm.getIPDZ()).build();
+				.setLocation(autm.getIPDZ()).setUrl(autm.getSSDZ()).build();
 		return record;
 	}
 

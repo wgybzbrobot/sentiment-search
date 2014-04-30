@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import redis.clients.jedis.JedisPoolConfig;
@@ -15,6 +16,7 @@ import redis.clients.util.Hashing;
 import redis.clients.util.Sharded;
 import zx.soft.sent.cache.utils.Config;
 
+@Ignore
 public class ShardedJedisPoolTest {
 
 	ShardedJedisPool pool;

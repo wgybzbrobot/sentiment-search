@@ -15,6 +15,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import zx.soft.sent.cache.utils.Config;
 
+@Ignore
 public class ValueShardedJedisTest {
 
 	List<JedisShardInfo> shards;

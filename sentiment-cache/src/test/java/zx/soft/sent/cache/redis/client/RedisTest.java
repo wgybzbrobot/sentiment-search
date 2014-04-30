@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import redis.clients.jedis.Jedis;
@@ -14,6 +15,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.exceptions.JedisDataException;
 import zx.soft.sent.cache.utils.Config;
 
+@Ignore
 public class RedisTest {
 
 	JedisPool pool = new JedisPool(new JedisPoolConfig(), Config.get("redis.servers"), Integer.parseInt(Config

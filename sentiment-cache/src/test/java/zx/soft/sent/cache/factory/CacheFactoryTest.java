@@ -2,10 +2,12 @@ package zx.soft.sent.cache.factory;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import zx.soft.sent.cache.dao.Cache;
 
+@Ignore
 public class CacheFactoryTest {
 
 	@Test

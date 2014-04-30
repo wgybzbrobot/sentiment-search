@@ -10,9 +10,9 @@ import zx.soft.sent.solr.index.ImportSinaData;
  * 驱动类
  *
  */
-public class SpiderSolrDriver {
+public class SentSolrDriver {
 
-	private static Logger logger = LoggerFactory.getLogger(SpiderSolrDriver.class);
+	private static Logger logger = LoggerFactory.getLogger(SentSolrDriver.class);
 
 	/**
 	 * 主函数
