@@ -18,15 +18,15 @@ import zx.soft.sent.utils.checksum.CheckSumUtils;
  * 索引新浪微博数据到Solr集群中
  *
  */
-public class ImportSinaData {
+public class ImportSinaDataToSC {
 
-	private static Logger logger = LoggerFactory.getLogger(ImportSentimentData.class);
+	private static Logger logger = LoggerFactory.getLogger(ImportSentDataToSC.class);
 
 	private static IndexCloudSolr indexCloudSolr;
 
 	private static WeiboSina weiboSina;
 
-	public ImportSinaData() {
+	public ImportSinaDataToSC() {
 		weiboSina = new WeiboSina(MybatisConfig.ServerEnum.sentiment);
 		/**
 		 * 添加到CloudSolr
@@ -40,7 +40,7 @@ public class ImportSinaData {
 	 */
 	public static void main(String[] args) {
 
-		ImportSinaData importSinaData = new ImportSinaData();
+		ImportSinaDataToSC importSinaData = new ImportSinaDataToSC();
 		importSinaData.indexAllTables();
 		importSinaData.close();
 	}

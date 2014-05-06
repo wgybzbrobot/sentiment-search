@@ -2,14 +2,15 @@ package zx.soft.sent.solr.index;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.AutmSearch;
 import zx.soft.sent.dao.domain.Blog;
 import zx.soft.sent.dao.domain.Email;
@@ -17,10 +18,15 @@ import zx.soft.sent.dao.domain.Forum;
 import zx.soft.sent.dao.domain.Information;
 import zx.soft.sent.dao.domain.QQGroup;
 import zx.soft.sent.dao.domain.Record;
+import zx.soft.sent.dao.domain.RecordInsert;
 import zx.soft.sent.dao.domain.Reply;
 import zx.soft.sent.dao.domain.Weibo;
+import zx.soft.sent.dao.sentiment.CreateTables;
+import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.solr.oracle.DataOJDBC;
 import zx.soft.sent.solr.utils.ConvertToRecord;
+import zx.soft.sent.utils.checksum.CheckSumUtils;
+import zx.soft.sent.utils.threads.ApplyThreadPool;
 import zx.soft.sent.utils.time.TimeUtils;
 
 /**
@@ -28,25 +34,55 @@ import zx.soft.sent.utils.time.TimeUtils;
  * @author wanggang
  *
  */
-public class ImportSentimentData {
+public class ImportSentDataToDB {
 
-	private static Logger logger = LoggerFactory.getLogger(ImportSentimentData.class);
+	private static Logger logger = LoggerFactory.getLogger(ImportSentDataToDB.class);
 
-	private static IndexCloudSolr indexCloudSolr;
-	private static DataOJDBC dataOJDBC;
+	public static int FETCH_SIZE = 1_0000;
+
+	private final DataOJDBC dataOJDBC;
+
+	private final ThreadPoolExecutor pool;
+
+	public static class DBRunnable implements Runnable {
+
+		private static final SentimentRecord sentimentRecord = new SentimentRecord(MybatisConfig.ServerEnum.sentiment);
+
+		private final RecordInsert recordInsert;
+
+		public DBRunnable(RecordInsert recordInsert) {
+			this.recordInsert = recordInsert;
+		}
+
+		@Override
+		public void run() {
+
+			try {
+				sentimentRecord.insertRecord(recordInsert);
+			} catch (Exception e) {
+				logger.error("Exception: " + e);
+			}
+
+		}
+
+	}
 
 	// SJCJ_WBL：微博，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
 	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据）
 	//  "SJCJ_WBL", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_QQQ", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_YJL"
 	public static final String[] TYPES = { "SJCJ_BKL", "SJCJ_LTL", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_WBL" };
 
-	public ImportSentimentData() {
-		/**
-		 * 添加到CloudSolr
-		 */
-		logger.info("Start importing data to CloudSolr ...");
+	public ImportSentDataToDB() {
+		logger.info("Start importing data to DB ...");
 		dataOJDBC = new DataOJDBC();
-		indexCloudSolr = new IndexCloudSolr();
+		pool = ApplyThreadPool.getThreadPoolExector();
+
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				pool.shutdown();
+			}
+		}));
 	}
 
 	/**
@@ -54,22 +90,20 @@ public class ImportSentimentData {
 	 */
 	public static void main(String[] args) {
 
-		ImportSentimentData importData = new ImportSentimentData();
+		ImportSentDataToDB importData = new ImportSentDataToDB();
 		for (int i = 0; i < TYPES.length; i++) {
-			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr.");
+			logger.info("Importing '" + TYPES[i] + "' data to DB.");
 			//			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
-			importData.indexData(TYPES[i]);
+			importData.importData(TYPES[i]);
 		}
-		//		importData.indexData("YHXX_HFXX");
 
 		importData.close();
 	}
 
 	/**
-	 * 索引数据，按时间段查询
+	 * 导入数据，按时间段查询
 	 */
-	@SuppressWarnings("deprecation")
-	public void indexData(String table_name) {
+	public void importData(String table_name) {
 		/**
 		 * 获取待索引数据
 		 */
@@ -84,7 +118,7 @@ public class ImportSentimentData {
 		long min_time = getMinLasttime(table_name);
 
 		// 计算时间间隔等参数
-		int fetch_count = count / IndexCloudSolr.FETCH_SIZE;
+		int fetch_count = count / FETCH_SIZE;
 		if (fetch_count == 0) {
 			logger.info("AllCount is less than FETCH_SIZE!");
 			return;
@@ -97,7 +131,6 @@ public class ImportSentimentData {
 		String sql;
 		Record record = null;
 		for (int i = 0; i <= fetch_count; i++) {
-			List<Record> records = new ArrayList<>();
 			// 添加文档索引
 			logger.info("Indexing '" + table_name + "' data at: " + i + "/" + fetch_count);
 			// sql
@@ -106,62 +139,51 @@ public class ImportSentimentData {
 			sql = "SELECT * FROM " + table_name + " WHERE JCSJ BETWEEN to_date('"
 					+ TimeUtils.transToCommonDateStr(low_time) + "','yyyy-mm-dd hh24:mi:ss') " + "AND to_date('"
 					+ TimeUtils.transToCommonDateStr(high_time) + "','yyyy-mm-dd hh24:mi:ss')";
+			int c = 0;
 			try (ResultSet rs = dataOJDBC.query(sql);) {
 				while (rs.next()) {
+					c++;
 					record = transData(table_name, rs);
 					if (record != null) {
-						records.add(record);
+						pool.execute(new DBRunnable(transRecord(record)));
 					}
 				}
 			} catch (SQLException e) {
 				logger.error("indexData SQLException: " + e.getMessage());
 				throw new RuntimeException(e);
 			}
-			logger.info("records' size=" + records.size());
-			if (records.size() > 0) {
-				indexCloudSolr.addSentimentDocsToSolr(records);
-			}
+			logger.info("records' size=" + c);
 		}
 
 		logger.info("Retriving '" + table_name + "' data finish!");
 	}
 
-	/**
-	 * 索引数据，该方式容易导致现有的Oracle数据表查询挂掉
-	 */
-	@Deprecated
-	public void indexDataOld(String table_name) {
-		/**
-		 * 获取待索引数据
-		 */
-		logger.info("Start retriving '" + table_name + "' data ...");
+	private RecordInsert transRecord(Record record) {
 
-		// 获取记录总数
-		int count = getRecordsCount(table_name);
-		logger.info("'" + table_name + "' Records' count=" + count);
-
-		Record record = null;
-		for (int i = 0; i <= count / IndexCloudSolr.FETCH_SIZE; i++) {
-			List<Record> records = new ArrayList<>();
-			// 添加文档索引
-			logger.info("Indexing '" + table_name + "' weibo data at: " + IndexCloudSolr.FETCH_SIZE * i);
-			try (ResultSet rs = dataOJDBC.query("SELECT * FROM (SELECT rownum AS no1,t.* FROM " + table_name
-					+ " t WHERE rownum < " + IndexCloudSolr.FETCH_SIZE * (i + 1) + ") WHERE no1>= "
-					+ IndexCloudSolr.FETCH_SIZE * i);) {
-				while (rs.next()) {
-					record = transData(table_name, rs);
-					if (record != null) {
-						records.add(record);
-					}
-				}
-			} catch (SQLException e) {
-				logger.error("indexDataOld SQLException: " + e.getMessage());
-				throw new RuntimeException(e);
-			}
-			indexCloudSolr.addSentimentDocsToSolr(records);
-		}
-
-		logger.info("Retriving '" + table_name + "' data finish!");
+		return new RecordInsert.Builder(CreateTables.SENT_TABLE + CheckSumUtils.getCRC32(record.getId())
+				% CreateTables.MAX_TABLE_NUM, record.getId(), record.getPlatform()).setMid(record.getMid())
+				.setUsername(record.getUsername()).setNickname(record.getNickname())
+				.setOriginal_id(record.getOriginal_id()).setOriginal_uid(record.getOriginal_uid())
+				.setOriginal_name(record.getOriginal_name()).setOriginal_title(record.getOriginal_title())
+				.setOriginal_url(record.getOriginal_url()).setUrl(record.getUrl()).setHome_url(record.getHome_url())
+				.setTitle(record.getTitle()).setType(record.getType()).setContent(record.getContent())
+				.setComment_count(record.getComment_count()).setRead_count(record.getRead_count())
+				.setFavorite_count(record.getFavorite_count()).setAttitude_count(record.getAttitude_count())
+				.setRepost_count(record.getRepost_count()).setVideo_url(record.getVideo_url())
+				.setPic_url(record.getPic_url()).setVoice_url(record.getVoice_url())
+				.setTimestamp(record.getTimestamp() == null ? 0 : record.getTimestamp().getTime() / 1000)
+				.setSource_id(record.getSource_id())
+				.setLasttime(record.getLasttime() == null ? 0 : record.getLasttime().getTime() / 1000)
+				.setServer_id(record.getServer_id()).setIdentify_id(record.getIdentify_id())
+				.setIdentify_md5(record.getIdentify_md5()).setKeyword(record.getKeyword())
+				.setFirst_time(record.getFirst_time() == null ? 0 : record.getFirst_time().getTime() / 1000)
+				.setUpdate_time(record.getUpdate_time() == null ? 0 : record.getUpdate_time().getTime() / 1000)
+				.setIp(record.getIp()).setLocation(record.getLocation()).setGeo(record.getGeo())
+				.setReceive_addr(record.getReceive_addr()).setAppend_addr(record.getAppend_addr())
+				.setSend_addr(record.getSend_addr()).setSource_name(record.getSource_name())
+				.setSource_type(record.getSource_type()).setCountry_code(record.getCountry_code())
+				.setLocation_code(record.getLocation_code()).setProvince_code(record.getProvince_code())
+				.setCity_code(record.getCity_code()).build();
 	}
 
 	/**
@@ -215,7 +237,6 @@ public class ImportSentimentData {
 	/**
 	 * 根据表名转化数据
 	 */
-	@SuppressWarnings("deprecation")
 	private Record transData(String table_name, ResultSet rs) {
 		switch (table_name) {
 		case "SJCJ_WBL":
@@ -363,8 +384,7 @@ public class ImportSentimentData {
 				return null;
 			}
 			return new QQGroup.Builder(rs.getString("QH") == null ? "" : rs.getString("QH"),
-					rs.getString("FBYH") == null ? "" : rs.getString("FBYH"))
-					.setID(rs.getString("ID"))
+					rs.getString("FBYH") == null ? "" : rs.getString("FBYH")).setID(rs.getString("ID"))
 					.setMC(rs.getString("MC") == null ? "" : rs.getString("MC"))
 					.setGG(rs.getString("GG") == null ? "" : rs.getString("GG"))
 					.setYHNC(rs.getString("YHNC") == null ? "" : rs.getString("YHNC"))
@@ -443,8 +463,7 @@ public class ImportSentimentData {
 				logger.error("Weibo data error at WBDZ=null");
 				return null;
 			}
-			return new Weibo.Builder(rs.getString("WBDZ"),
-					rs.getString("FBYH") == null ? "" : rs.getString("FBYH"))
+			return new Weibo.Builder(rs.getString("WBDZ"), rs.getString("FBYH") == null ? "" : rs.getString("FBYH"))
 					.setWBLR(rs.getString("WBLR") == null ? "" : Jsoup.parse(rs.getString("WBLR"), "UTF-8").text())
 					.setSPURL(rs.getString("SPURL") == null ? "" : rs.getString("SPURL"))
 					.setTPURL(rs.getString("TPURL") == null ? "" : rs.getString("TPURL"))
@@ -462,8 +481,13 @@ public class ImportSentimentData {
 	}
 
 	public void close() {
-		indexCloudSolr.close();
 		dataOJDBC.close();
+		pool.shutdown();
+		try {
+			pool.awaitTermination(30, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 		logger.info("Importing data to CloudSolr finish!");
 	}
 

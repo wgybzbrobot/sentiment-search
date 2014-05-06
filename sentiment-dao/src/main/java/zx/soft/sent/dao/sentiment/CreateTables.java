@@ -7,7 +7,7 @@ package zx.soft.sent.dao.sentiment;
  */
 public class CreateTables {
 
-	public static final int MAX_TABLE_NUM = 32;
+	public static final int MAX_TABLE_NUM = 128;
 
 	public static final String SENT_TABLE_TABLE = "sentiment_tablenames";
 

@@ -3,8 +3,9 @@ package zx.soft.sent.solr.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.solr.index.ImportSentimentData;
-import zx.soft.sent.solr.index.ImportSinaData;
+import zx.soft.sent.solr.index.ImportSentDataToDB;
+import zx.soft.sent.solr.index.ImportSentDataToSC;
+import zx.soft.sent.solr.index.ImportSinaDataToSC;
 
 /**
  * 驱动类
@@ -27,13 +28,16 @@ public class SentSolrDriver {
 		System.arraycopy(args, 1, leftArgs, 0, leftArgs.length);
 
 		switch (args[0]) {
-		case "importSentimentData":
-			logger.info("索引舆情数据： ");
-			ImportSentimentData.main(leftArgs);
+		case "importSentDataToSC":
+			logger.info("导入舆情数据到SolrCloud： ");
+			ImportSentDataToSC.main(leftArgs);
 			break;
-		case "importSinaData":
-			logger.info("索引新浪微博数据：");
-			ImportSinaData.main(leftArgs);
+		case "importSentDataToDB":
+			logger.info("导入舆情数据到DB： ");
+			ImportSentDataToDB.main(leftArgs);
+		case "importSinaDataToSC":
+			logger.info("导入新浪数据到SolrCloud：");
+			ImportSinaDataToSC.main(leftArgs);
 			break;
 		default:
 			return;

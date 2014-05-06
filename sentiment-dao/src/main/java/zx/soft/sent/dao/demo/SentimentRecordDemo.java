@@ -24,7 +24,7 @@ public class SentimentRecordDemo {
 				.setLocation("安徽省合肥市").setGeo("经度:120.2366554,纬度:50.122599").setReceive_addr("wanggang@zxils.com")
 				.setAppend_addr("wanggang@pp.cc").setSend_addr("wgybzb@sina.cn").setSource_name("新浪微博")
 				.setCountry_code(1).setLocation_code(2130123).setProvince_code(34).setCity_code(12).setSource_type(5)
-				.build();
+				.setOriginal_id("abchshdofoe").build();
 		RecordInsert recordInsert2 = new RecordInsert.Builder("sent_records_0", "1234567892665", 7).setMid("123abcdef")
 				.setUsername("987654321").setNickname("wgybzb").setOriginal_uid("5648333").setOriginal_name("owgybzb")
 				.setOriginal_title("原创标题").setOriginal_url("http://www.baidu.com").setUrl("http://www.pp.cc")
@@ -37,7 +37,7 @@ public class SentimentRecordDemo {
 				.setLocation("安徽省合肥市").setGeo("经度:120.2366554,纬度:50.122599").setReceive_addr("wanggang@zxils.com")
 				.setAppend_addr("wanggang@pp.cc").setSend_addr("wgybzb@sina.cn").setSource_name("新浪微博")
 				.setCountry_code(1).setLocation_code(2130123).setProvince_code(34).setCity_code(12).setSource_type(4)
-				.build();
+				.setOriginal_id("djdjfieiofg0").build();
 		sr.insertRecord(recordInsert1);
 		sr.insertRecord(recordInsert2);
 		// 获取Record数据，根据md5的id

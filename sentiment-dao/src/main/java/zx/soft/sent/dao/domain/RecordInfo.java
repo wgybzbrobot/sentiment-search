@@ -1,6 +1,5 @@
 package zx.soft.sent.dao.domain;
 
-
 /**
  * POST的数据类，注意：id需要md5，时间都是10位的数字时间戳，精确到秒的
  * @author wanggang
@@ -13,6 +12,7 @@ public class RecordInfo {
 	private String mid = "";
 	private String username = "";
 	private String nickname = "";
+	private String original_id = "";
 	private String original_uid = "";
 	private String original_name = "";
 	private String original_title = "";
@@ -55,18 +55,18 @@ public class RecordInfo {
 	@Override
 	public String toString() {
 		return "Record:{id=" + id + ",platform=" + platform + ",mid=" + mid + ",username=" + username + ",nickname="
-				+ nickname + ",original_uid=" + original_uid + ",original_name=" + original_name + ",original_title="
-				+ original_title + ",original_url=" + original_url + ",url=" + url + ",home_url=" + home_url
-				+ ",title=" + title + ",type=" + type + ",content=" + content + ",comment_count=" + comment_count
-				+ ",read_count=" + read_count + ",favorite_count=" + favorite_count + ",attitude_count="
-				+ attitude_count + ",repost_count=" + repost_count + ",video_url=" + video_url + ",pic_url=" + pic_url
-				+ ",voice_url=" + voice_url + ",timestamp=" + timestamp + ",source_id=" + source_id + ",lasttime="
-				+ lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id + ",identify_md5="
-				+ identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time + ",update_time=" + update_time
-				+ ",ip=" + ip + ",location=" + location + ",geo=" + geo + ",receive_addr=" + receive_addr
-				+ ",append_addr=" + append_addr + ",send_addr=" + send_addr + ",source_name=" + source_name
-				+ ",country_code=" + country_code + ",location_code=" + location_code + ",province_code="
-				+ province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
+				+ nickname + ",original_id=" + original_id + ",original_uid=" + original_uid + ",original_name="
+				+ original_name + ",original_title=" + original_title + ",original_url=" + original_url + ",url=" + url
+				+ ",home_url=" + home_url + ",title=" + title + ",type=" + type + ",content=" + content
+				+ ",comment_count=" + comment_count + ",read_count=" + read_count + ",favorite_count=" + favorite_count
+				+ ",attitude_count=" + attitude_count + ",repost_count=" + repost_count + ",video_url=" + video_url
+				+ ",pic_url=" + pic_url + ",voice_url=" + voice_url + ",timestamp=" + timestamp + ",source_id="
+				+ source_id + ",lasttime=" + lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id
+				+ ",identify_md5=" + identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time
+				+ ",update_time=" + update_time + ",ip=" + ip + ",location=" + location + ",geo=" + geo
+				+ ",receive_addr=" + receive_addr + ",append_addr=" + append_addr + ",send_addr=" + send_addr
+				+ ",source_name=" + source_name + ",country_code=" + country_code + ",location_code=" + location_code
+				+ ",province_code=" + province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
 	}
 
 	public RecordInfo() {
@@ -111,6 +111,14 @@ public class RecordInfo {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getOriginal_id() {
+		return original_id;
+	}
+
+	public void setOriginal_id(String original_id) {
+		this.original_id = original_id;
 	}
 
 	public String getOriginal_uid() {
@@ -405,8 +413,16 @@ public class RecordInfo {
 		return province_code;
 	}
 
+	public void setProvince_code(int province_code) {
+		this.province_code = province_code;
+	}
+
 	public int getCity_code() {
 		return city_code;
+	}
+
+	public void setCity_code(int city_code) {
+		this.city_code = city_code;
 	}
 
 }

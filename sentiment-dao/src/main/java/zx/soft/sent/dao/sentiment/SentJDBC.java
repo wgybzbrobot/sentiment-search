@@ -107,6 +107,7 @@ public class SentJDBC {
 				+ "`platform` smallint(5) unsigned NOT NULL COMMENT '平台类型，如：博客、微博、论坛等，用数字代替',"
 				+ "`mid` varchar(50) NOT NULL COMMENT '主id'," + "`username` varchar(50) NOT NULL COMMENT '用户id',"
 				+ "`nickname` varchar(50) NOT NULL COMMENT '用户昵称',"
+				+ "`original_id` varchar(50) NOT NULL COMMENT '原创记录id',"
 				+ "`original_uid` varchar(50) NOT NULL COMMENT '原创用户或者父用户id',"
 				+ "`original_name` varchar(50) NOT NULL COMMENT '原创用户或者父用户昵称',"
 				+ "`original_title` varchar(500) NOT NULL COMMENT '原创记录或者记录户标题',"

@@ -1,6 +1,5 @@
 package zx.soft.sent.dao.domain;
 
-
 /**
  * Solr中的每条记录类
  * @author wanggang
@@ -14,6 +13,7 @@ public class RecordInsert {
 	private final String mid; // 主id
 	private final String username; // 用户id
 	private final String nickname; // 用户昵称
+	private final String original_id; // 原创记录id
 	private final String original_uid; // 原创用户或者父用户id
 	private final String original_name; // 原创用户或者父用户昵称
 	private final String original_title; // 原创记录或者记录户标题
@@ -56,18 +56,18 @@ public class RecordInsert {
 	@Override
 	public String toString() {
 		return "Record:{id=" + id + ",platform=" + platform + ",mid=" + mid + ",username=" + username + ",nickname="
-				+ nickname + ",original_uid=" + original_uid + ",original_name=" + original_name + ",original_title="
-				+ original_title + ",original_url=" + original_url + ",url=" + url + ",home_url=" + home_url
-				+ ",title=" + title + ",type=" + type + ",content=" + content + ",comment_count=" + comment_count
-				+ ",read_count=" + read_count + ",favorite_count=" + favorite_count + ",attitude_count="
-				+ attitude_count + ",repost_count=" + repost_count + ",video_url=" + video_url + ",pic_url=" + pic_url
-				+ ",voice_url=" + voice_url + ",timestamp=" + timestamp + ",source_id=" + source_id + ",lasttime="
-				+ lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id + ",identify_md5="
-				+ identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time + ",update_time=" + update_time
-				+ ",ip=" + ip + ",location=" + location + ",geo=" + geo + ",receive_addr=" + receive_addr
-				+ ",append_addr=" + append_addr + ",send_addr=" + send_addr + ",source_name=" + source_name
-				+ ",country_code=" + country_code + ",location_code=" + location_code + ",province_code="
-				+ province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
+				+ nickname + ",original_id=" + original_id + ",original_uid=" + original_uid + ",original_name="
+				+ original_name + ",original_title=" + original_title + ",original_url=" + original_url + ",url=" + url
+				+ ",home_url=" + home_url + ",title=" + title + ",type=" + type + ",content=" + content
+				+ ",comment_count=" + comment_count + ",read_count=" + read_count + ",favorite_count=" + favorite_count
+				+ ",attitude_count=" + attitude_count + ",repost_count=" + repost_count + ",video_url=" + video_url
+				+ ",pic_url=" + pic_url + ",voice_url=" + voice_url + ",timestamp=" + timestamp + ",source_id="
+				+ source_id + ",lasttime=" + lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id
+				+ ",identify_md5=" + identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time
+				+ ",update_time=" + update_time + ",ip=" + ip + ",location=" + location + ",geo=" + geo
+				+ ",receive_addr=" + receive_addr + ",append_addr=" + append_addr + ",send_addr=" + send_addr
+				+ ",source_name=" + source_name + ",country_code=" + country_code + ",location_code=" + location_code
+				+ ",province_code=" + province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
 	}
 
 	public RecordInsert(Builder builder) {
@@ -77,6 +77,7 @@ public class RecordInsert {
 		this.mid = builder.mid;
 		this.username = builder.username;
 		this.nickname = builder.nickname;
+		this.original_id = builder.original_id;
 		this.original_uid = builder.original_uid;
 		this.original_name = builder.original_name;
 		this.original_title = builder.original_title;
@@ -125,6 +126,7 @@ public class RecordInsert {
 		private String mid = "";
 		private String username = "";
 		private String nickname = "";
+		private String original_id = "";
 		private String original_uid = "";
 		private String original_name = "";
 		private String original_title = "";
@@ -182,6 +184,11 @@ public class RecordInsert {
 
 		public Builder setNickname(String nickname) {
 			this.nickname = nickname;
+			return this;
+		}
+
+		public Builder setOriginal_id(String original_id) {
+			this.original_id = original_id;
 			return this;
 		}
 
@@ -399,6 +406,10 @@ public class RecordInsert {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	public String getOriginal_id() {
+		return original_id;
 	}
 
 	public String getOriginal_uid() {

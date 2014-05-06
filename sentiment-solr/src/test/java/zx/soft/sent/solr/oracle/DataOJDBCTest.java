@@ -4,13 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.ResultSet;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import zx.soft.sent.solr.oracle.DataOJDBC;
 
 public class DataOJDBCTest {
 
@@ -18,13 +16,13 @@ public class DataOJDBCTest {
 
 	private static DataOJDBC dataOJDBC;
 
-	@Before
+	@BeforeClass
 	public void doInit() {
 		logger.info("Start DataOJDBC ...");
 		dataOJDBC = new DataOJDBC();
 	}
 
-	@After
+	@AfterClass
 	public void doClose() {
 		logger.info("Close DataOJDBC ...");
 		dataOJDBC.close();

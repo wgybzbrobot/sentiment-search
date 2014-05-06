@@ -20,7 +20,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>sentiment-dao</artifactId>
+			<artifactId>sentiment-solr</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

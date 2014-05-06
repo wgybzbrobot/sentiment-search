@@ -141,7 +141,8 @@ public class ConvertToRecord {
 				.setTimestamp(reply.getJCSJ()).setGeo(reply.getGSD()).setSource_id(reply.getLY())
 				.setLasttime(reply.getJCSJ()).setServer_id(reply.getLZ()).setIdentify_id(reply.getBZ())
 				.setUpdate_time(reply.getGXSJ()).setIdentify_md5(reply.getMD5()).setIp(reply.getIP())
-				.setLocation(reply.getIPDZ()).build();
+				.setLocation(reply.getIPDZ())
+				.setOriginal_id(reply.getURL() != "" ? CheckSumUtils.getMD5(reply.getURL()) : "").build();
 		return record;
 	}
 
