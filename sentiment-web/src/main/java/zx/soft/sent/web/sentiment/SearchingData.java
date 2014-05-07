@@ -1,6 +1,8 @@
 package zx.soft.sent.web.sentiment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -32,6 +34,8 @@ public class SearchingData {
 
 	private static Logger logger = LoggerFactory.getLogger(SearchingData.class);
 
+	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类" };
+
 	final CloudSolrServer server;
 
 	public SearchingData() {
@@ -48,9 +52,9 @@ public class SearchingData {
 		SearchingData search = new SearchingData();
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("美食商业");
-		queryParams.setFq("");
-		queryParams.setSort(""); // lasttime:desc
+		queryParams.setQ("习近平");
+		queryParams.setFq("timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]");
+		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		queryParams.setStart(0);
 		queryParams.setRows(1);
 		queryParams.setWt("json");
@@ -58,7 +62,7 @@ public class SearchingData {
 		//		queryParams.setHlfl("content,title"); // content
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		//		queryParams.setFacetField(""); // platform
+		queryParams.setFacetField("platform"); // 
 		QueryResult result = search.queryData(queryParams);
 		System.out.println(JsonUtils.toJson(result));
 	}
@@ -78,7 +82,7 @@ public class SearchingData {
 			throw new SpiderSearchException("no response!");
 		}
 
-		System.out.println(JsonUtils.toJson(queryResponse));
+		//		System.out.println(JsonUtils.toJson(queryResponse));
 
 		QueryResult result = new QueryResult();
 		result.setHeader(queryResponse.getHeader());
@@ -158,9 +162,18 @@ public class SearchingData {
 		for (FacetField facet : facets) {
 			SimpleFacetInfo sfi = new SimpleFacetInfo();
 			sfi.setName(facet.getName());
+			HashMap<String, Long> t = new LinkedHashMap<>();
+			int c = 0;
 			for (Count temp : facet.getValues()) {
-				sfi.getValues().put(temp.getName(), temp.getCount());
+				if ("platform".equalsIgnoreCase(facet.getName())) {
+					t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+				} else {
+					if (c++ < 10) {
+						t.put(temp.getName(), temp.getCount());
+					}
+				}
 			}
+			sfi.setValues(t);
 			result.add(sfi);
 		}
 		return result;
@@ -218,7 +231,8 @@ public class SearchingData {
 			query.addFacetQuery(queryParams.getFacetQuery());
 		}
 		if (queryParams.getFacetField() != "") {
-			query.addFacetField(queryParams.getFacetField());
+			//			query.setFacet(true);
+			query.addFacetField(queryParams.getFacetField().split(","));
 		}
 
 		return query;

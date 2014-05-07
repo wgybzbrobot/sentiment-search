@@ -22,10 +22,6 @@ public class CompanyQuery {
 
 	private static Logger logger = LoggerFactory.getLogger(CompanyQuery.class);
 
-	private static final String GOOD_NEWS = "盈利、景气、受益、回暖、增长、突破、优化、转型、扩张、利好、优势、核心技术、政策倾斜、需求旺盛、前景广阔";
-
-	private static final String BAD_NEWS = "亏损、淡季、低迷、风险、损失、差距、下跌、低谷、过剩、回落、萧条、疲软、复苏乏力、增速放缓、业绩下滑";
-
 	final CloudSolrServer server;
 
 	public CompanyQuery() {
@@ -34,33 +30,7 @@ public class CompanyQuery {
 		server.setDefaultCollection(props.getProperty("collection"));
 	}
 
-	public long queryData(String keywords, int type) {
-		SolrQuery query = new SolrQuery();
-		query.setQuery("*:*");
-		if (type == 1) { // 好消息
-			query.addFilterQuery("content:" + keywords + " AND content:" + GOOD_NEWS);
-		} else if (type == 2) { // 坏消息
-			query.addFilterQuery("content:" + keywords + " AND content:" + BAD_NEWS);
-		} else { // 总数
-			query.addFilterQuery("content:" + keywords);
-		}
-		query.setRows(0);
-		//		query.set("q.op", "AND");
-
-		// 按照年份统计
-		//		query.setFacet(true);
-		//		String[] fq = { "{!key=\"2013\"}timestamp:[NOW/YEAR-1YEAR TO NOW/YEAR]",
-		//				"{!key=\"2012\"}timestamp:[NOW/YEAR-2YEAR TO NOW/YEAR-1YEAR]",
-		//				"{!key=\"2011\"}timestamp:[NOW/YEAR-3YEAR TO NOW/YEAR-2YEAR]",
-		//				"{!key=\"2010\"}timestamp:[NOW/YEAR-4YEAR TO NOW/YEAR-3YEAR]",
-		//				"{!key=\"2009\"}timestamp:[NOW/YEAR-5YEAR TO NOW/YEAR-4YEAR]" };
-		//		query.addFilterQuery(fq);
-
-		// 按照季度统计
-		// facet=true
-		// facet.query=timestamp:[NOW-30MONTH%20TO%20NOW-20MONTH]
-		// facet.query=timestamp:[NOW-20MONTH%20TO%20NOW]
-
+	public QueryResponse queryData(SolrQuery query) {
 		QueryResponse response = null;
 		try {
 			response = server.query(query, METHOD.GET);
@@ -74,7 +44,7 @@ public class CompanyQuery {
 		//		logger.info("QTime=" + response.getQTime());
 		//		logger.info(JsonUtils.toJson(response));
 
-		return response.getResults().getNumFound();
+		return response;
 	}
 
 	public void close() {
