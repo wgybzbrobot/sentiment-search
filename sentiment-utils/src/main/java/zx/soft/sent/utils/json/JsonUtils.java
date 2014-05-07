@@ -13,7 +13,8 @@ public class JsonUtils {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
 
-	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+	//	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
 	static {
 		mapper.setDateFormat(dateFormat);
@@ -44,9 +45,11 @@ public class JsonUtils {
 	 */
 	public static void main(String[] args) throws ParseException {
 
-		System.out.println(dateFormat.format(new Date()));
-		Date parse = dateFormat.parse("Wed Oct 23 16:58:17 +0800 2013");
-		System.out.println(parse);
+		//		System.out.println(dateFormat.format(new Date()));
+		// Wed Oct 23 16:58:17 +0800 2013
+		// Wed Oct 23 16:58:17 CST 2013
+		Date parse = dateFormat.parse("Thu Apr 10 11:40:56 CST 2014");
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(parse));
 	}
 
 }

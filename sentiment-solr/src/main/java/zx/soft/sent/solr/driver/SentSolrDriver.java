@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.solr.index.ImportSentDataToDB;
 import zx.soft.sent.solr.index.ImportSentDataToSC;
 import zx.soft.sent.solr.index.ImportSinaDataToSC;
+import zx.soft.sent.solr.statistic.CompanyMain;
 
 /**
  * 驱动类
@@ -39,6 +40,9 @@ public class SentSolrDriver {
 			logger.info("导入新浪数据到SolrCloud：");
 			ImportSinaDataToSC.main(leftArgs);
 			break;
+		case "companyMain":
+			logger.info("微博数据统计：");
+			CompanyMain.main(leftArgs);
 		default:
 			return;
 		}

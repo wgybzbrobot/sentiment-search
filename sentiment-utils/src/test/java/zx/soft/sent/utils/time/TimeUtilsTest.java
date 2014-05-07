@@ -21,6 +21,8 @@ public class TimeUtilsTest {
 		assertTrue(str.length() == 19);
 		assertFalse(str.contains("T"));
 		assertFalse(str.contains("Z"));
+
+		assertTrue(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014").contains("10 11:40:56"));
 	}
 
 	@Test

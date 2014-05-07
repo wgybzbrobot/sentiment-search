@@ -52,13 +52,13 @@ public class SearchingData {
 		queryParams.setFq("");
 		queryParams.setSort(""); // lasttime:desc
 		queryParams.setStart(0);
-		queryParams.setRows(10);
+		queryParams.setRows(1);
 		queryParams.setWt("json");
-		queryParams.setFl(""); // nickname,content
-		queryParams.setHlfl("content,title"); // content
-		queryParams.setHlsimple("red");
-		queryParams.setFacetQuery("");
-		queryParams.setFacetField(""); // platform
+		//		queryParams.setFl(""); // nickname,content
+		//		queryParams.setHlfl("content,title"); // content
+		//		queryParams.setHlsimple("red");
+		//		queryParams.setFacetQuery("");
+		//		queryParams.setFacetField(""); // platform
 		QueryResult result = search.queryData(queryParams);
 		System.out.println(JsonUtils.toJson(result));
 	}
@@ -77,6 +77,9 @@ public class SearchingData {
 		if (queryResponse == null) {
 			throw new SpiderSearchException("no response!");
 		}
+
+		System.out.println(JsonUtils.toJson(queryResponse));
+
 		QueryResult result = new QueryResult();
 		result.setHeader(queryResponse.getHeader());
 		result.setSort(queryResponse.getSortValues());
