@@ -3,6 +3,7 @@ package zx.soft.sent.web.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.web.sentiment.SearchingData;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
 
@@ -35,6 +36,9 @@ public class SentWebDriver {
 			logger.info("搜索接口：");
 			SentimentSearchServer.main(leftArgs);
 			break;
+		case "searchingData":
+			logger.info("搜索测试: ");
+			SearchingData.main(leftArgs);
 		default:
 			return;
 		}

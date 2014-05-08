@@ -82,7 +82,7 @@ public class SearchingData {
 			throw new SpiderSearchException("no response!");
 		}
 
-		//		System.out.println(JsonUtils.toJson(queryResponse));
+		//		System.out.println(JsonUtils.toJson(queryResponse.getResponse()));
 
 		QueryResult result = new QueryResult();
 		result.setHeader(queryResponse.getHeader());
@@ -98,7 +98,7 @@ public class SearchingData {
 		result.setResults(queryResponse.getResults());
 		// 处理时间timestamp、lasttime、first_time、update_time
 		tackleTime(result);
-		// 将highlight移到result中，减少数据量，同时方便钓调用
+		// 将highlight移到result中，减少数据量，同时方便调用
 		if (queryResponse.getHighlighting() != null) {
 			for (int i = 0; i < result.getResults().size(); i++) {
 				for (String hl : queryParams.getHlfl().split(",")) {
