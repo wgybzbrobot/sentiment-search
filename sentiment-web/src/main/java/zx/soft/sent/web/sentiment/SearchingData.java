@@ -186,6 +186,7 @@ public class SearchingData {
 	 * @param fl:username,nickname.content,...
 	 * @param hlfl:title,content,...
 	 * @param sort:platform:desc,source_id:asc,...
+	 * @param facetQuery={!key="day1"}timestamp:[NOW/MONTH-12MONTH TO NOW/MONTH-6MONTH],{!key="day2"}timestamp:[NOW/MONTH-18MONTH TO NOW/MONTH-12MONTH],...   
 	 * @param facetField:nickname,platform,source_id,... 默认platform全返回，其他域只返回前10
 	 * @return
 	 */
@@ -228,7 +229,9 @@ public class SearchingData {
 			query.setHighlightSimplePost("</" + queryParams.getHlsimple() + ">");
 		}
 		if (queryParams.getFacetQuery() != "") {
-			query.addFacetQuery(queryParams.getFacetQuery());
+			for (String fq : queryParams.getFacetQuery().split(",")) {
+				query.addFacetQuery(fq);
+			}
 		}
 		if (queryParams.getFacetField() != "") {
 			//			query.setFacet(true);
