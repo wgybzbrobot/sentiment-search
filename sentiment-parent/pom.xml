@@ -113,6 +113,11 @@
 				<artifactId>org.restlet.ext.slf4j</artifactId>
 				<version>${restlet.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.restlet.jse</groupId>
+				<artifactId>org.restlet.ext.httpclient</artifactId>
+				<version>${restlet.version}</version>
+			</dependency>
 			<!-- Mybatis 相关 -->
 			<dependency>
 				<groupId>org.mybatis</groupId>

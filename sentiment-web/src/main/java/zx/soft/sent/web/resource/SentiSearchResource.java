@@ -27,7 +27,7 @@ public class SentiSearchResource extends ServerResource {
 	public void doInit() {
 		queryParams = new QueryParams();
 		application = (SentiSearchApplication) getApplication();
-		HashMap<String,String> params = new HashMap<>();
+		HashMap<String, String> params = new HashMap<>();
 		Form form = getRequest().getResourceRef().getQueryAsForm();
 		for (Parameter p : form) {
 			if (params.get(p.getName()) == null) {
@@ -47,9 +47,9 @@ public class SentiSearchResource extends ServerResource {
 		queryParams.setFl(params.get("fl") == null ? "" : params.get("fl"));
 		queryParams.setWt(params.get("wt") == null ? "json" : params.get("wt"));
 		queryParams.setHlfl(params.get("hlfl") == null ? "" : params.get("hlfl"));
+		queryParams.setHlsimple(params.get("hlsimple") == null ? "" : params.get("hlsimple"));
 		queryParams.setFacetQuery(params.get("facetQuery") == null ? "" : params.get("facetQuery"));
 		queryParams.setFacetField(params.get("facetField") == null ? "" : params.get("facetField"));
-		queryParams.setHlsimple(params.get("hlsimple") == null ? "" : params.get("hlsimple"));
 		logger.info(queryParams.toString());
 	}
 

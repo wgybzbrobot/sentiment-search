@@ -13,9 +13,8 @@ import zx.soft.sent.web.jackson.ReplaceConvert;
  *  从Mysql中根据id获取记录数据
  * @author wanggang
  *  示例：
- *       1、根据单个id查询记录：
- *       2、根据多个id查询记录：
- *       3、根据lasttime时间段查询记录：
+ *       1、根据多个id查询记录：http://localhost:7900/sentiment/retrive/ids/{ids}
+ *       2、根据lasttime时间段查询记录：
  *
  */
 public class RetriveRecordServer {

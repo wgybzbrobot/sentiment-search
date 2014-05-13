@@ -82,6 +82,10 @@ public class IndexCloudSolr {
 
 	private SolrInputDocument getSentimentDoc(RecordInfo record) {
 
+		if (record.getId() == null || record.getId() == "" || record.getId().length() == 0) {
+			logger.error("Record's id is null.");
+			throw new RuntimeException("Record's id is null.");
+		}
 		SolrInputDocument doc = new SolrInputDocument();
 		doc.addField("id", record.getId());
 		doc.addField("platform", record.getPlatform());

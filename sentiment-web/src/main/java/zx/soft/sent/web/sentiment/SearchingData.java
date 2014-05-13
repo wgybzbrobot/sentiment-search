@@ -1,5 +1,6 @@
 package zx.soft.sent.web.sentiment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -48,23 +49,35 @@ public class SearchingData {
 	 * 测试函数
 	 */
 	public static void main(String[] args) {
-
 		SearchingData search = new SearchingData();
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("习近平");
-		queryParams.setFq("timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]");
+		queryParams.setQ("*:*");
+		queryParams.setFq("platform:8"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		queryParams.setSort("timestamp:desc"); // lasttime:desc
-		queryParams.setStart(0);
-		queryParams.setRows(1);
-		queryParams.setWt("json");
+		//		queryParams.setStart(0);
+		//		queryParams.setRows(10);
+		//		queryParams.setWt("json");
 		//		queryParams.setFl(""); // nickname,content
-		//		queryParams.setHlfl("content,title"); // content
+		queryParams.setHlfl("title,content");
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		queryParams.setFacetField("platform"); // 
+		//		queryParams.setFacetField("platform"); 
 		QueryResult result = search.queryData(queryParams);
 		System.out.println(JsonUtils.toJson(result));
+		//		search.deleteQuery();
+		search.close();
+	}
+
+	public void deleteQuery() {
+		try {
+			server.deleteByQuery("platform:8");
+			server.commit();
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -166,7 +179,9 @@ public class SearchingData {
 			int c = 0;
 			for (Count temp : facet.getValues()) {
 				if ("platform".equalsIgnoreCase(facet.getName())) {
-					t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+					if (temp.getCount() > 0) {
+						t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+					}
 				} else {
 					if (c++ < 10) {
 						t.put(temp.getName(), temp.getCount());
@@ -181,13 +196,13 @@ public class SearchingData {
 
 	/**
 	 * 组合查询类
-	 * @param q:abc或者[1 TO 100]
-	 * @param fq:+f1:abc,dec;-f2:cde,fff;...
-	 * @param fl:username,nickname.content,...
-	 * @param hlfl:title,content,...
-	 * @param sort:platform:desc,source_id:asc,...
+	 * @param q=abc或者[1 TO 100]
+	 * @param fq=+f1:abc,dec;-f2:cde,fff;...
+	 * @param fl=username,nickname.content,...
+	 * @param hlfl=title,content,...
+	 * @param sort=platform:desc,source_id:asc,...
 	 * @param facetQuery={!key="day1"}timestamp:[NOW/MONTH-12MONTH TO NOW/MONTH-6MONTH],{!key="day2"}timestamp:[NOW/MONTH-18MONTH TO NOW/MONTH-12MONTH],...   
-	 * @param facetField:nickname,platform,source_id,... 默认platform全返回，其他域只返回前10
+	 * @param facetField=nickname,platform,source_id,... 默认platform全返回，其他域只返回前10
 	 * @return
 	 */
 	private SolrQuery getSolrQuery(QueryParams queryParams) {

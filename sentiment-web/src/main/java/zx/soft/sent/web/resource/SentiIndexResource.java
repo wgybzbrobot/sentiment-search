@@ -50,6 +50,7 @@ public class SentiIndexResource extends ServerResource {
 				application.persist(data.getRecords());
 			}
 		});
+		//		System.out.println(JsonUtils.toJson(data));
 
 		return new ErrorResponse.Builder(0, "ok").build();
 	}

@@ -38,7 +38,8 @@ public class ImportSentDataToSC {
 	// SJCJ_WBL：微博，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
 	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据）
 	//  "SJCJ_WBL", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_QQQ", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_YJL"
-	public static final String[] TYPES = { "SJCJ_BKL", "SJCJ_LTL", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_WBL" };
+	public static final String[] TYPES = { "SJCJ_YJL", "SJCJ_QQQ", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_YSSL", "SJCJ_ZXL",
+			"YHXX_HFXX", "SJCJ_WBL" };
 
 	public ImportSentDataToSC() {
 		/**
@@ -60,7 +61,6 @@ public class ImportSentDataToSC {
 			//			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
 			importData.indexData(TYPES[i]);
 		}
-		//		importData.indexData("YHXX_HFXX");
 
 		importData.close();
 	}
