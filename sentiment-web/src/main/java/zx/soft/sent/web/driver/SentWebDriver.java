@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.sentiment.SearchingData;
+import zx.soft.sent.web.server.RetriveRecordServer;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
 
@@ -39,6 +40,9 @@ public class SentWebDriver {
 		case "searchingData":
 			logger.info("搜索测试: ");
 			SearchingData.main(leftArgs);
+		case "retriveRecordServer":
+			logger.info("查库接口：");
+			RetriveRecordServer.main(leftArgs);
 		default:
 			return;
 		}

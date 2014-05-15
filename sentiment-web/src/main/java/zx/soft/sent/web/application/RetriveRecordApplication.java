@@ -25,10 +25,10 @@ public class RetriveRecordApplication extends Application {
 	}
 
 	@Override
-	public Restlet createInboundRoot() {
+	public synchronized Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		// 1、根据多个id查询记录：
-		router.attach("/retrive/ids/{ids}", RetriveRecordResource.class);
+		router.attach("/ids/{ids}", RetriveRecordResource.class);
 		// 2、根据lasttime时间段查询记录：
 		//		router.attach("/get", RetriveRecordResource.class);
 		return router;
@@ -37,7 +37,6 @@ public class RetriveRecordApplication extends Application {
 	public List<RecordSelect> getRecords(String ids) {
 		List<RecordSelect> result = new ArrayList<>();
 		for (String id : ids.split(",")) {
-			System.out.println(id);
 			result.add(getRecord(id));
 		}
 		return result;

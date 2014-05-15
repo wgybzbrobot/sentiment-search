@@ -13,8 +13,9 @@ import zx.soft.sent.web.jackson.ReplaceConvert;
  *  从Mysql中根据id获取记录数据
  * @author wanggang
  *  示例：
- *       1、根据多个id查询记录：http://localhost:7900/sentiment/retrive/ids/{ids}
+ *       1、根据多个id查询记录：http://localhost:7900/sentiment/ids/{ids}
  *       2、根据lasttime时间段查询记录：
+ *       3、根据多个id、关键词、高亮标签查询数据：http://localhost:7900/sentiment/ids/{ids}?keyword=XXXX&hlsimple=red
  *
  */
 public class RetriveRecordServer {
@@ -36,8 +37,9 @@ public class RetriveRecordServer {
 	 */
 	public static void main(String[] args) {
 
-		SentimentSearchServer server = new SentimentSearchServer();
+		RetriveRecordServer server = new RetriveRecordServer();
 		server.start();
+
 	}
 
 	public void start() {
