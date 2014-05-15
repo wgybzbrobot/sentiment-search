@@ -41,7 +41,7 @@
 > **备注:** 框架持续更新中。
 
 ### API文档
-http://wiki.dev.zx.soft/doku.php
+[项目wiki](http://192.168.3.23/wiki)
 
 > **备注:** API文档统一放在公司的wiki上。
 
@@ -63,7 +63,7 @@ Util      |  工具
 
 ### 示例代码
 
-```
+```java
     ** Redis层调用 **      
         // 对象申明      
 	RedisCache redisCache = new RedisCache("hdp321", 6379, "zxsoft");
