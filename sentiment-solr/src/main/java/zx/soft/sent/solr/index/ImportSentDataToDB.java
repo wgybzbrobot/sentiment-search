@@ -21,9 +21,9 @@ import zx.soft.sent.dao.domain.Record;
 import zx.soft.sent.dao.domain.RecordInsert;
 import zx.soft.sent.dao.domain.Reply;
 import zx.soft.sent.dao.domain.Weibo;
+import zx.soft.sent.dao.oracle.OracleJDBC;
 import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
-import zx.soft.sent.solr.oracle.DataOJDBC;
 import zx.soft.sent.solr.utils.ConvertToRecord;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
 import zx.soft.sent.utils.threads.ApplyThreadPool;
@@ -40,7 +40,7 @@ public class ImportSentDataToDB {
 
 	public static int FETCH_SIZE = 1_0000;
 
-	private final DataOJDBC dataOJDBC;
+	private final OracleJDBC dataOJDBC;
 
 	private final ThreadPoolExecutor pool;
 
@@ -74,7 +74,7 @@ public class ImportSentDataToDB {
 
 	public ImportSentDataToDB() {
 		logger.info("Start importing data to DB ...");
-		dataOJDBC = new DataOJDBC();
+		dataOJDBC = new OracleJDBC();
 		pool = ApplyThreadPool.getThreadPoolExector();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {

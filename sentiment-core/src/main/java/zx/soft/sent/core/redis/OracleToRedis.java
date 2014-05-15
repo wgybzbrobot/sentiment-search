@@ -1,0 +1,70 @@
+package zx.soft.sent.core.redis;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import zx.soft.sent.cache.dao.Cache;
+import zx.soft.sent.cache.factory.CacheFactory;
+import zx.soft.sent.dao.oracle.OracleJDBC;
+
+public class OracleToRedis {
+
+	private static Logger logger = LoggerFactory.getLogger(OracleToRedis.class);
+
+	public static final String SITE_MAP = "sent:site:map";
+
+	public OracleToRedis() {
+		//
+	}
+
+	/**
+	 * 主函数
+	 */
+	public static void main(String[] args) {
+
+		Timer timer = new Timer();
+		timer.schedule(new OracleToRedisTask(), 0, 1000 * 86400);
+	}
+
+	/**
+	 * 定时执行任务
+	 *
+	 */
+	public static class OracleToRedisTask extends TimerTask {
+
+		public OracleToRedisTask() {
+			//
+		}
+
+		@Override
+		public void run() {
+			OracleToRedis oracleToRedis = new OracleToRedis();
+			oracleToRedis.siteMapToRedis();
+		}
+	}
+
+	public void siteMapToRedis() {
+		logger.info("Start importing data ...");
+		Cache cache = CacheFactory.getInstance();
+		OracleJDBC oracleJDBC = new OracleJDBC();
+		ResultSet rs = oracleJDBC.query("SELECT ID,ZDMC FROM FLLB_CJLB");
+		try {
+			while (rs.next()) {
+				cache.hset(SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
+			}
+		} catch (SQLException e) {
+			logger.error("SQLException at OracleToRedis: " + e.getMessage());
+			//			throw new RuntimeException(e);
+		} finally {
+			oracleJDBC.close();
+			cache.close();
+		}
+		logger.info("Finish importing data ...");
+	}
+
+}

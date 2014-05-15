@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-import zx.soft.sent.solr.utils.Config;
+import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.web.application.SentiSearchApplication;
 import zx.soft.sent.web.jackson.ReplaceConvert;
 
@@ -26,7 +26,7 @@ public class SentimentSearchServer {
 	private final int PORT;
 
 	public SentimentSearchServer() {
-		Properties props = Config.getProps("web-server.properties");
+		Properties props = ConfigUtil.getProps("web-server.properties");
 		PORT = Integer.parseInt(props.getProperty("api.port"));
 		component = new Component();
 		sentiSearchApplication = new SentiSearchApplication();

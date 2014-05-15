@@ -19,7 +19,7 @@ import zx.soft.sent.dao.domain.QQGroup;
 import zx.soft.sent.dao.domain.Record;
 import zx.soft.sent.dao.domain.Reply;
 import zx.soft.sent.dao.domain.Weibo;
-import zx.soft.sent.solr.oracle.DataOJDBC;
+import zx.soft.sent.dao.oracle.OracleJDBC;
 import zx.soft.sent.solr.utils.ConvertToRecord;
 import zx.soft.sent.utils.time.TimeUtils;
 
@@ -33,7 +33,7 @@ public class ImportSentDataToSC {
 	private static Logger logger = LoggerFactory.getLogger(ImportSentDataToSC.class);
 
 	private static IndexCloudSolr indexCloudSolr;
-	private static DataOJDBC dataOJDBC;
+	private static OracleJDBC dataOJDBC;
 
 	// SJCJ_WBL：微博，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
 	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据）
@@ -46,7 +46,7 @@ public class ImportSentDataToSC {
 		 * 添加到CloudSolr
 		 */
 		logger.info("Start importing data to CloudSolr ...");
-		dataOJDBC = new DataOJDBC();
+		dataOJDBC = new OracleJDBC();
 		indexCloudSolr = new IndexCloudSolr();
 	}
 

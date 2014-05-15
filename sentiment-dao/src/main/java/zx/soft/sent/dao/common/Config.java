@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.utils;
+package zx.soft.sent.dao.common;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.solr.err.SpiderSearchException;
-import zx.soft.sent.solr.utils.Config;
+import zx.soft.sent.utils.config.ConfigUtil;
 
 /**
  * 搜索舆情数据
@@ -28,7 +28,7 @@ public class SearchData {
 	final CloudSolrServer server;
 
 	public SearchData() {
-		Properties props = Config.getProps("solr_params.properties");
+		Properties props = ConfigUtil.getProps("solr_params.properties");
 		server = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
 		server.setDefaultCollection(props.getProperty("collection"));
 	}

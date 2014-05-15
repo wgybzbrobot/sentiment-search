@@ -19,8 +19,11 @@ import org.apache.solr.common.SolrDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.cache.dao.Cache;
+import zx.soft.sent.cache.factory.CacheFactory;
+import zx.soft.sent.core.redis.OracleToRedis;
 import zx.soft.sent.solr.err.SpiderSearchException;
-import zx.soft.sent.solr.utils.Config;
+import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.utils.time.TimeUtils;
 import zx.soft.sent.web.domain.QueryResult;
@@ -38,9 +41,11 @@ public class SearchingData {
 	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类" };
 
 	final CloudSolrServer server;
+	final Cache cache;
 
 	public SearchingData() {
-		Properties props = Config.getProps("solr_params.properties");
+		cache = CacheFactory.getInstance();
+		Properties props = ConfigUtil.getProps("solr_params.properties");
 		server = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
 		server.setDefaultCollection(props.getProperty("collection"));
 	}
@@ -164,9 +169,6 @@ public class SearchingData {
 		}
 	}
 
-	/**
-	 * 需要增加排序功能.........
-	 */
 	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets) {
 		List<SimpleFacetInfo> result = new ArrayList<>();
 		if (facets == null) {
@@ -176,14 +178,18 @@ public class SearchingData {
 			SimpleFacetInfo sfi = new SimpleFacetInfo();
 			sfi.setName(facet.getName());
 			HashMap<String, Long> t = new LinkedHashMap<>();
-			int c = 0;
 			for (Count temp : facet.getValues()) {
 				if ("platform".equalsIgnoreCase(facet.getName())) {
 					if (temp.getCount() > 0) {
 						t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
 					}
+				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
+					if (t.size() < 10) {
+						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),
+								temp.getCount());
+					}
 				} else {
-					if (c++ < 10) {
+					if (t.size() < 10) {
 						t.put(temp.getName(), temp.getCount());
 					}
 				}
@@ -274,6 +280,7 @@ public class SearchingData {
 	 */
 	public void close() {
 		server.shutdown();
+		cache.close();
 	}
 
 }

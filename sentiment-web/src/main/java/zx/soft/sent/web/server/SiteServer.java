@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-import zx.soft.sent.solr.utils.Config;
+import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.web.application.SiteApplication;
 import zx.soft.sent.web.jackson.ReplaceConvert;
 
@@ -25,7 +25,7 @@ public class SiteServer {
 	private final int PORT;
 
 	public SiteServer() {
-		Properties props = Config.getProps("web-server.properties");
+		Properties props = ConfigUtil.getProps("web-server.properties");
 		PORT = Integer.parseInt(props.getProperty("api.port"));
 		component = new Component();
 		siteApplication = new SiteApplication();

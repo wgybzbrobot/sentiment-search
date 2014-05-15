@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.oracle;
+package zx.soft.sent.dao.oracle;
 
 import static org.junit.Assert.assertTrue;
 
@@ -10,16 +10,16 @@ import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DataOJDBCTest {
+public class OracleJDBCTest {
 
-	private static Logger logger = LoggerFactory.getLogger(DataOJDBCTest.class);
+	private static Logger logger = LoggerFactory.getLogger(OracleJDBCTest.class);
 
-	private static DataOJDBC dataOJDBC;
+	private static OracleJDBC dataOJDBC;
 
 	@BeforeClass
 	public void doInit() {
 		logger.info("Start DataOJDBC ...");
-		dataOJDBC = new DataOJDBC();
+		dataOJDBC = new OracleJDBC();
 	}
 
 	@AfterClass

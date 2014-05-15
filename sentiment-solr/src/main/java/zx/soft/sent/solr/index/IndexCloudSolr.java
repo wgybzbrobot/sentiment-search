@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.Record;
 import zx.soft.sent.dao.domain.RecordInfo;
-import zx.soft.sent.solr.utils.Config;
+import zx.soft.sent.utils.config.ConfigUtil;
 
 /**
  * 通过HTTP方式索引数据到单台机器上。
@@ -32,7 +32,7 @@ public class IndexCloudSolr {
 	private final CloudSolrServer cloudServer;
 
 	public IndexCloudSolr() {
-		Properties props = Config.getProps("solr_params.properties");
+		Properties props = ConfigUtil.getProps("solr_params.properties");
 		FETCH_SIZE = Integer.parseInt(props.getProperty("fetch_size"));
 		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
 		cloudServer.setDefaultCollection(props.getProperty("collection"));

@@ -3,6 +3,8 @@ package zx.soft.sent.core.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.core.redis.OracleToRedis;
+
 /**
  * 驱动类
  *
@@ -24,8 +26,9 @@ public class SentCoreDriver {
 		System.arraycopy(args, 1, leftArgs, 0, leftArgs.length);
 
 		switch (args[0]) {
-		case "persistCore":
-			logger.info("持久化数据到Mysql： ");
+		case "oracleToRedis":
+			logger.info("将站点数据定时导入Redis中： ");
+			OracleToRedis.main(leftArgs);
 			break;
 		default:
 			return;
