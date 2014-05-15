@@ -147,6 +147,26 @@ public class RedisCache implements Cache {
 	}
 
 	@Override
+	public Long hset(String key, String field, String value) {
+		ValueShardedJedis jedis = pool.getResource();
+		try {
+			return jedis.hset(key, field, value);
+		} finally {
+			pool.returnResource(jedis);
+		}
+	}
+
+	@Override
+	public String hget(String key, String field) {
+		ValueShardedJedis jedis = pool.getResource();
+		try {
+			return jedis.hget(key, field);
+		} finally {
+			pool.returnResource(jedis);
+		}
+	}
+
+	@Override
 	public void close() {
 		pool.destroy();
 	}

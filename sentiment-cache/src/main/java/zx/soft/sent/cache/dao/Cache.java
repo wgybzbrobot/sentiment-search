@@ -88,6 +88,25 @@ public interface Cache {
 	 */
 	Long srem(String key, String... members);
 
+	/**
+	 * 将哈希表 key 中的域 field 的值设为 value 。
+	 * 如果 key 不存在，一个新的哈希表被创建并进行 HSET 操作。
+	 * 如果域 field 已经存在于哈希表中，旧值将被覆盖。
+	 * @param key
+	 * @param field
+	 * @param value
+	 * @return
+	 */
+	Long hset(String key, String field, String value);
+
+	/**
+	 * 返回哈希表 key 中给定域 field 的值。
+	 * @param key
+	 * @param field
+	 * @return
+	 */
+	String hget(String key, String field);
+
 	public void close();
 
 }

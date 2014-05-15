@@ -7,6 +7,7 @@ import zx.soft.sent.web.sentiment.SearchingData;
 import zx.soft.sent.web.server.RetriveRecordServer;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
+import zx.soft.sent.web.server.SiteServer;
 
 /**
  * 驱动类
@@ -43,6 +44,9 @@ public class SentWebDriver {
 		case "retriveRecordServer":
 			logger.info("查库接口：");
 			RetriveRecordServer.main(leftArgs);
+		case "siteServer":
+			logger.info("写入站点数据组合到Redis中：");
+			SiteServer.main(leftArgs);
 		default:
 			return;
 		}

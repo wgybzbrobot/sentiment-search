@@ -137,7 +137,14 @@ public class ValueShardedJedis extends Sharded<Jedis, JedisShardInfo> implements
 
 	@Override
 	public String hget(String key, String field) {
-		throw new UnsupportedOperationException();
+		String result = null;
+		for (Jedis jedis : allShards) {
+			result = jedis.hget(key, field);
+			if (result != null) {
+				break;
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -172,7 +179,7 @@ public class ValueShardedJedis extends Sharded<Jedis, JedisShardInfo> implements
 
 	@Override
 	public Long hset(String key, String field, String value) {
-		throw new UnsupportedOperationException();
+		return getShard(value).hset(key, field, value);
 	}
 
 	@Override
