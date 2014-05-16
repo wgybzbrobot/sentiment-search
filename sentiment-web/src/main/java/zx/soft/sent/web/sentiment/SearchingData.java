@@ -26,6 +26,7 @@ import zx.soft.sent.solr.err.SpiderSearchException;
 import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.sent.web.application.SiteApplication;
 import zx.soft.sent.web.domain.QueryResult;
 import zx.soft.sent.web.domain.SimpleFacetInfo;
 
@@ -180,17 +181,19 @@ public class SearchingData {
 			HashMap<String, Long> t = new LinkedHashMap<>();
 			for (Count temp : facet.getValues()) {
 				if ("platform".equalsIgnoreCase(facet.getName())) {
-					if (temp.getCount() > 0) {
-						t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
-					}
+					t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
-					if (t.size() < 10) {
+					if ((t.size() < 10) && (temp.getCount() > 0)) {
 						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),
 								temp.getCount());
+					} else {
+						break;
 					}
 				} else {
-					if (t.size() < 10) {
+					if ((t.size() < 10) && (temp.getCount() > 0)) {
 						t.put(temp.getName(), temp.getCount());
+					} else {
+						break;
 					}
 				}
 			}
@@ -221,7 +224,11 @@ public class SearchingData {
 		query.set("q.op", "AND");
 		if (queryParams.getFq() != "") {
 			for (String fq : queryParams.getFq().split(";")) {
-				query.addFilterQuery(transFq(fq));
+				if (fq.contains("source_id")) {
+					query.addFilterQuery(transCacheFq(fq));
+				} else {
+					query.addFilterQuery(transFq(fq));
+				}
 			}
 		}
 		if (queryParams.getSort() != "") {
@@ -260,6 +267,28 @@ public class SearchingData {
 		}
 
 		return query;
+	}
+
+	public String transCacheFq(String fqs) {
+		String result = "";
+		String sites = fqs.split(":")[1];
+		if ((sites.indexOf(",") < 0) && (sites.length() == 32)) {
+			sites = cache.hget(SiteApplication.SITE_GROUPS, sites);
+			if (sites == null) {
+				sites = "";
+			}
+		}
+		if (sites == null || sites.length() == 0) {
+			return "platform:*";
+		}
+		for (String site : sites.split(",")) {
+			result = result + fqs.split(":")[0] + ":" + site + " OR ";
+		}
+		result = result.substring(0, result.length() - 4);
+		if (fqs.contains("-")) {
+			result = result.replace("OR", "AND");
+		}
+		return result;
 	}
 
 	public static String transFq(String fqs) {
