@@ -59,16 +59,16 @@ public class SearchingData {
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
 		queryParams.setQ("*:*");
-		queryParams.setFq("platform:8"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
+		queryParams.setFq("platform:2"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		//		queryParams.setStart(0);
 		//		queryParams.setRows(10);
 		//		queryParams.setWt("json");
 		//		queryParams.setFl(""); // nickname,content
 		queryParams.setHlfl("title,content");
-		//		queryParams.setHlsimple("red");
-		//		queryParams.setFacetQuery("");
-		//		queryParams.setFacetField("platform"); 
+		queryParams.setHlsimple("red");
+		queryParams.setFacetQuery("");
+		queryParams.setFacetField("platform");
 		QueryResult result = search.queryData(queryParams);
 		System.out.println(JsonUtils.toJson(result));
 		//		search.deleteQuery();
@@ -129,6 +129,14 @@ public class SearchingData {
 										queryResponse.getHighlighting()
 												.get(result.getResults().get(i).getFieldValue("id")).get(hl).get(0));
 					}
+				}
+				if (result.getResults().get(i).getFieldValue("source_id") != null) {
+					result.getResults()
+							.get(i)
+							.setField(
+									"source_name",
+									cache.hget(OracleToRedis.SITE_MAP,
+											result.getResults().get(i).getFieldValue("source_id").toString()));
 				}
 			}
 		}
@@ -225,7 +233,11 @@ public class SearchingData {
 		if (queryParams.getFq() != "") {
 			for (String fq : queryParams.getFq().split(";")) {
 				if (fq.contains("source_id")) {
-					query.addFilterQuery(transCacheFq(fq));
+					if (transCacheFq(fq) != "") {
+						query.addFilterQuery(transCacheFq(fq));
+					} else {
+						logger.error("fq=" + fq + " is null.");
+					}
 				} else {
 					query.addFilterQuery(transFq(fq));
 				}
@@ -275,13 +287,14 @@ public class SearchingData {
 		if ((sites.indexOf(",") < 0) && (sites.length() == 32)) {
 			sites = cache.hget(SiteApplication.SITE_GROUPS, sites);
 			if (sites == null) {
-				sites = "";
+				return "";
 			}
 		}
-		if (sites == null || sites.length() == 0) {
-			return "platform:*";
-		}
+		int count = 0;
 		for (String site : sites.split(",")) {
+			if (count++ > 250) {
+				break;
+			}
 			result = result + fqs.split(":")[0] + ":" + site + " OR ";
 		}
 		result = result.substring(0, result.length() - 4);
