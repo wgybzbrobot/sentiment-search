@@ -16,6 +16,7 @@ public class RecordSelect {
 	private String original_url; // 原创记录或者父记录url
 	private String home_url; // 用户首页url
 	private String type; // 该记录所属类别
+	private boolean isharmful; // 是否是有害信息
 	private String content; // 该记录内容
 	private int comment_count; // 评论数
 	private int read_count; // 阅读数
@@ -397,6 +398,14 @@ public class RecordSelect {
 
 	public void setOriginal_id(String original_id) {
 		this.original_id = original_id;
+	}
+
+	public boolean isIsharmful() {
+		return isharmful;
+	}
+
+	public void setIsharmful(boolean isharmful) {
+		this.isharmful = isharmful;
 	}
 
 }

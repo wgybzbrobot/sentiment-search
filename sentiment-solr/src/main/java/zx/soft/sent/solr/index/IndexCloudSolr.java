@@ -80,6 +80,11 @@ public class IndexCloudSolr {
 		}
 	}
 
+	/**
+	 * 每次更改字段的时候，这里也需要更改
+	 * @param record
+	 * @return
+	 */
 	private SolrInputDocument getSentimentDoc(RecordInfo record) {
 
 		if (record.getId() == null || record.getId() == "" || record.getId().length() == 0) {
@@ -122,6 +127,7 @@ public class IndexCloudSolr {
 		if (record.getType() != "") {
 			doc.addField("type", record.getType().trim());
 		}
+		doc.addField("isharmful", record.isIsharmful());
 		if (record.getContent() != "") {
 			doc.addField("content", record.getContent().trim());
 		}
@@ -193,6 +199,24 @@ public class IndexCloudSolr {
 		}
 		if (record.getSend_addr() != "") {
 			doc.addField("send_addr", record.getSend_addr().trim());
+		}
+		if (record.getSource_name() != "") {
+			doc.addField("source_name", record.getSource_name());
+		}
+		if (record.getSource_type() != 0) {
+			doc.addField("source_type", record.getSource_type());
+		}
+		if (record.getCountry_code() != 0) {
+			doc.addField("country_code", record.getCountry_code());
+		}
+		if (record.getLocation_code() != 0) {
+			doc.addField("location_code", record.getLocation_code());
+		}
+		if (record.getProvince_code() != 0) {
+			doc.addField("province_code", record.getProvince_code());
+		}
+		if (record.getCity_code() != 0) {
+			doc.addField("city_code", record.getCity_code());
 		}
 
 		return doc;

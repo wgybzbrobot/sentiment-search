@@ -115,6 +115,7 @@ public class SentJDBC {
 				+ "`url` varchar(500) NOT NULL COMMENT '该记录url',"
 				+ "`home_url` varchar(500) NOT NULL COMMENT '用户首页url',"
 				+ "`title` varchar(500) NOT NULL COMMENT '该记录标题'," + "`type` varchar(50) NOT NULL COMMENT '该记录所属类别',"
+				+ "`isharmful` tinyint(4) NOT NULL COMMENT '该记录是否有害，0--无害，1--有害',"
 				+ "`content` varchar(10000) NOT NULL COMMENT '该记录内容',"
 				+ "`comment_count` mediumint(8) unsigned NOT NULL COMMENT '评论数',"
 				+ "`read_count` mediumint(8) unsigned NOT NULL COMMENT '阅读数',"

@@ -39,7 +39,7 @@ public class SearchingData {
 
 	private static Logger logger = LoggerFactory.getLogger(SearchingData.class);
 
-	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类" };
+	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类", "图片类" };
 
 	final CloudSolrServer server;
 	final Cache cache;
@@ -109,8 +109,8 @@ public class SearchingData {
 		//		result.setHighlighting(queryResponse.getHighlighting());
 		result.setGroup(queryResponse.getGroupResponse());
 		result.setFacetQuery(queryResponse.getFacetQuery());
-		result.setFacetFields(transFacetField(queryResponse.getFacetFields()));
-		result.setFacetDates(transFacetField(queryResponse.getFacetDates()));
+		result.setFacetFields(transFacetField(queryResponse.getFacetFields(), queryParams));
+		result.setFacetDates(transFacetField(queryResponse.getFacetDates(), queryParams));
 		result.setFacetRanges(queryResponse.getFacetRanges());
 		result.setFacetPivot(queryResponse.getFacetPivot());
 		result.setNumFound(queryResponse.getResults().getNumFound());
@@ -178,10 +178,16 @@ public class SearchingData {
 		}
 	}
 
-	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets) {
+	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets, QueryParams queryParams) {
 		List<SimpleFacetInfo> result = new ArrayList<>();
 		if (facets == null) {
 			return null;
+		}
+		String fqPlatform = "";
+		for (String str : queryParams.getFq().split(";")) {
+			if (str.contains("platform")) {
+				fqPlatform = str;
+			}
 		}
 		for (FacetField facet : facets) {
 			SimpleFacetInfo sfi = new SimpleFacetInfo();
@@ -189,7 +195,13 @@ public class SearchingData {
 			HashMap<String, Long> t = new LinkedHashMap<>();
 			for (Count temp : facet.getValues()) {
 				if ("platform".equalsIgnoreCase(facet.getName())) {
-					t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+					if (fqPlatform.contains("platform")) {
+						if (fqPlatform.contains(temp.getName())) {
+							t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+						}
+					} else {
+						t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+					}
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
 					if ((t.size() < 10) && (temp.getCount() > 0)) {
 						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),

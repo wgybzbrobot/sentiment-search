@@ -7,7 +7,6 @@ import java.util.Date;
  * @author wanggang
  *
  */
-//@Deprecated
 public class Record {
 
 	private final String id; // 记录id，一般通过记录的url进行md5加密得到
@@ -24,6 +23,7 @@ public class Record {
 	private final String home_url; // 用户首页url
 	private final String title; // 该记录标题
 	private final String type; // 该记录所属类别
+	private final boolean isharmful; // 是否是有害信息
 	private final String content; // 该记录内容
 	private final int comment_count; // 评论数
 	private final int read_count; // 阅读数
@@ -60,16 +60,17 @@ public class Record {
 		return "Record:{id=" + id + ",platform=" + platform + ",mid=" + mid + ",username=" + username + ",nickname="
 				+ nickname + ",original_id=" + original_id + ",original_uid=" + original_uid + ",original_name="
 				+ original_name + ",original_title=" + original_title + ",original_url=" + original_url + ",url=" + url
-				+ ",home_url=" + home_url + ",title=" + title + ",type=" + type + ",content=" + content
-				+ ",comment_count=" + comment_count + ",read_count=" + read_count + ",favorite_count=" + favorite_count
-				+ ",attitude_count=" + attitude_count + ",repost_count=" + repost_count + ",video_url=" + video_url
-				+ ",pic_url=" + pic_url + ",voice_url=" + voice_url + ",timestamp=" + timestamp + ",source_id="
-				+ source_id + ",lasttime=" + lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id
-				+ ",identify_md5=" + identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time
-				+ ",update_time=" + update_time + ",ip=" + ip + ",location=" + location + ",geo=" + geo
-				+ ",receive_addr=" + receive_addr + ",append_addr=" + append_addr + ",send_addr=" + send_addr
-				+ ",source_name=" + source_name + ",country_code=" + country_code + ",location_code=" + location_code
-				+ ",province_code=" + province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
+				+ ",home_url=" + home_url + ",title=" + title + ",type=" + type + ",isharmful=" + isharmful
+				+ ",content=" + content + ",comment_count=" + comment_count + ",read_count=" + read_count
+				+ ",favorite_count=" + favorite_count + ",attitude_count=" + attitude_count + ",repost_count="
+				+ repost_count + ",video_url=" + video_url + ",pic_url=" + pic_url + ",voice_url=" + voice_url
+				+ ",timestamp=" + timestamp + ",source_id=" + source_id + ",lasttime=" + lasttime + ",server_id="
+				+ server_id + ",identify_id=" + identify_id + ",identify_md5=" + identify_md5 + ",keyword=" + keyword
+				+ ",first_time=" + first_time + ",update_time=" + update_time + ",ip=" + ip + ",location=" + location
+				+ ",geo=" + geo + ",receive_addr=" + receive_addr + ",append_addr=" + append_addr + ",send_addr="
+				+ send_addr + ",source_name=" + source_name + ",country_code=" + country_code + ",location_code="
+				+ location_code + ",province_code=" + province_code + ",city_code=" + city_code + ",source_type="
+				+ source_type + "}";
 	}
 
 	public Record(Builder builder) {
@@ -87,6 +88,7 @@ public class Record {
 		this.home_url = builder.home_url;
 		this.title = builder.title;
 		this.type = builder.type;
+		this.isharmful = builder.isharmful;
 		this.content = builder.content;
 		this.comment_count = builder.comment_count;
 		this.read_count = builder.read_count;
@@ -135,6 +137,7 @@ public class Record {
 		private String home_url = "";
 		private String title = "";
 		private String type = "";
+		private boolean isharmful = Boolean.TRUE;
 		private String content = "";
 		private int comment_count;
 		private int read_count;
@@ -228,6 +231,11 @@ public class Record {
 
 		public Builder setType(String type) {
 			this.type = type;
+			return this;
+		}
+
+		public Builder setIsharmful(boolean isharmful) {
+			this.isharmful = isharmful;
 			return this;
 		}
 
@@ -441,6 +449,10 @@ public class Record {
 
 	public String getType() {
 		return type;
+	}
+
+	public boolean isIsharmful() {
+		return isharmful;
 	}
 
 	public String getContent() {

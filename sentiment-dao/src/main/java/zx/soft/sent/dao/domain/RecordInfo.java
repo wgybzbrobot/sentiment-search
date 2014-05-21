@@ -21,6 +21,7 @@ public class RecordInfo {
 	private String home_url = "";
 	private String title = "";
 	private String type = "";
+	private boolean isharmful = Boolean.TRUE;
 	private String content = "";
 	private int comment_count;
 	private int read_count;
@@ -57,16 +58,17 @@ public class RecordInfo {
 		return "Record:{id=" + id + ",platform=" + platform + ",mid=" + mid + ",username=" + username + ",nickname="
 				+ nickname + ",original_id=" + original_id + ",original_uid=" + original_uid + ",original_name="
 				+ original_name + ",original_title=" + original_title + ",original_url=" + original_url + ",url=" + url
-				+ ",home_url=" + home_url + ",title=" + title + ",type=" + type + ",content=" + content
-				+ ",comment_count=" + comment_count + ",read_count=" + read_count + ",favorite_count=" + favorite_count
-				+ ",attitude_count=" + attitude_count + ",repost_count=" + repost_count + ",video_url=" + video_url
-				+ ",pic_url=" + pic_url + ",voice_url=" + voice_url + ",timestamp=" + timestamp + ",source_id="
-				+ source_id + ",lasttime=" + lasttime + ",server_id=" + server_id + ",identify_id=" + identify_id
-				+ ",identify_md5=" + identify_md5 + ",keyword=" + keyword + ",first_time=" + first_time
-				+ ",update_time=" + update_time + ",ip=" + ip + ",location=" + location + ",geo=" + geo
-				+ ",receive_addr=" + receive_addr + ",append_addr=" + append_addr + ",send_addr=" + send_addr
-				+ ",source_name=" + source_name + ",country_code=" + country_code + ",location_code=" + location_code
-				+ ",province_code=" + province_code + ",city_code=" + city_code + ",source_type=" + source_type + "}";
+				+ ",home_url=" + home_url + ",title=" + title + ",type=" + type + ",isharmful=" + isharmful
+				+ ",content=" + content + ",comment_count=" + comment_count + ",read_count=" + read_count
+				+ ",favorite_count=" + favorite_count + ",attitude_count=" + attitude_count + ",repost_count="
+				+ repost_count + ",video_url=" + video_url + ",pic_url=" + pic_url + ",voice_url=" + voice_url
+				+ ",timestamp=" + timestamp + ",source_id=" + source_id + ",lasttime=" + lasttime + ",server_id="
+				+ server_id + ",identify_id=" + identify_id + ",identify_md5=" + identify_md5 + ",keyword=" + keyword
+				+ ",first_time=" + first_time + ",update_time=" + update_time + ",ip=" + ip + ",location=" + location
+				+ ",geo=" + geo + ",receive_addr=" + receive_addr + ",append_addr=" + append_addr + ",send_addr="
+				+ send_addr + ",source_name=" + source_name + ",country_code=" + country_code + ",location_code="
+				+ location_code + ",province_code=" + province_code + ",city_code=" + city_code + ",source_type="
+				+ source_type + "}";
 	}
 
 	public RecordInfo() {
@@ -179,6 +181,14 @@ public class RecordInfo {
 
 	public String getType() {
 		return type;
+	}
+
+	public void setIsharmful(boolean isharmful) {
+		this.isharmful = isharmful;
+	}
+
+	public boolean isIsharmful() {
+		return isharmful;
 	}
 
 	public void setType(String type) {
