@@ -23,6 +23,7 @@
 		<module>sentiment-solr</module>
 		<module>sentiment-es</module>
 		<module>sentiment-hs</module>
+		<module>sentiment-spider</module>
 		<module>sentiment-core</module>
 		<module>sentiment-web</module>
 	</modules>
