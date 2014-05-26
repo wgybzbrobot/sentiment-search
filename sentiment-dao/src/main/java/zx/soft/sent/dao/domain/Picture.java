@@ -11,7 +11,7 @@ public class Picture {
 	content=TPLR
 	pic_url=TPLJ
 	isharmful=SFYH
-	identify_id=TPLJ
+	identify_id=BZ
 	*/
 
 	private final String TPMD5; // 图片MD5
@@ -19,7 +19,7 @@ public class Picture {
 	private final String TPLR; // 图片内容
 	private final String TPLJ; // 图片路径
 	private final boolean SFYH; // 是否有害信息，false–否，true–是
-	private final long BZ; // 图片路径
+	private final long BZ; // 图片标识
 
 	@Override
 	public String toString() {

@@ -15,6 +15,7 @@ import zx.soft.sent.dao.domain.Blog;
 import zx.soft.sent.dao.domain.Email;
 import zx.soft.sent.dao.domain.Forum;
 import zx.soft.sent.dao.domain.Information;
+import zx.soft.sent.dao.domain.Picture;
 import zx.soft.sent.dao.domain.QQGroup;
 import zx.soft.sent.dao.domain.Record;
 import zx.soft.sent.dao.domain.Reply;
@@ -36,10 +37,10 @@ public class ImportSentDataToSC {
 	private static OracleJDBC dataOJDBC;
 
 	// SJCJ_WBL：微博，SJCJ_BKL:博客，SJCJ_LTL：论坛，SJCJ_QQQ：QQ群
-	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据），图片类
+	// SJCJ_YSSL：元搜索，SJCJ_ZXL：资讯，YHXX_HFXX：回复信息, SJCJ_YJL：邮件（暂无数据），FLLB_TPDB:图片类
 	//  "SJCJ_WBL", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_QQQ", "SJCJ_YSSL", "SJCJ_ZXL", "YHXX_HFXX", "SJCJ_YJL"
 	public static final String[] TYPES = { "SJCJ_YJL", "SJCJ_QQQ", "SJCJ_BKL", "SJCJ_LTL", "SJCJ_YSSL", "SJCJ_ZXL",
-			"YHXX_HFXX", "SJCJ_WBL" };
+			"YHXX_HFXX", "SJCJ_WBL", "FLLB_TPDB" };
 
 	public ImportSentDataToSC() {
 		/**
@@ -56,11 +57,14 @@ public class ImportSentDataToSC {
 	public static void main(String[] args) {
 
 		ImportSentDataToSC importData = new ImportSentDataToSC();
-		for (int i = 0; i < TYPES.length; i++) {
-			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr......");
-			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
-			importData.indexData(TYPES[i]);
-		}
+		//		for (int i = 0; i < TYPES.length; i++) {
+		//			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr......");
+		//			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
+		//			importData.indexData(TYPES[i]);
+		//		}
+
+		logger.info("data size=" + importData.getRecordsCount("FLLB_TPDB"));
+		importData.indexPicData("FLLB_TPDB");
 
 		importData.close();
 	}
@@ -83,7 +87,7 @@ public class ImportSentDataToSC {
 		long min_time = getMinLasttime(table_name);
 
 		// 计算时间间隔等参数
-		int fetch_count = count / IndexCloudSolr.FETCH_SIZE;
+		int fetch_count = count / IndexCloudSolr.FETCH_SIZE + 1;
 		if (fetch_count == 0) {
 			logger.info("AllCount is less than FETCH_SIZE!");
 			return;
@@ -120,6 +124,40 @@ public class ImportSentDataToSC {
 			if (records.size() > 0) {
 				indexCloudSolr.addSentimentDocsToSolr(records);
 			}
+		}
+
+		logger.info("Retriving '" + table_name + "' data finish!");
+	}
+
+	/**
+	 * 索引图片数据
+	 */
+	public void indexPicData(String table_name) {
+		/**
+		 * 获取待索引数据
+		 */
+		logger.info("Start retriving '" + table_name + "' data ...");
+
+		// 获取记录总数
+		int count = getRecordsCount(table_name);
+		logger.info("'" + table_name + "' Records' count=" + count);
+
+		Record record = null;
+		List<Record> records = new ArrayList<>();
+		try (ResultSet rs = dataOJDBC.query("SELECT * FROM " + table_name);) {
+			while (rs.next()) {
+				record = transData(table_name, rs);
+				if (record != null) {
+					records.add(record);
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("indexData SQLException: " + e.getMessage());
+			throw new RuntimeException(e);
+		}
+		logger.info("records' size=" + records.size());
+		if (records.size() > 0) {
+			indexCloudSolr.addSentimentDocsToSolr(records);
 		}
 
 		logger.info("Retriving '" + table_name + "' data finish!");
@@ -232,6 +270,8 @@ public class ImportSentDataToSC {
 			return ConvertToRecord.replyToRecord(getReplyData(rs));
 		case "SJCJ_YJL":
 			return ConvertToRecord.emailToRecord(getEmailData(rs));
+		case "FLLB_TPDB":
+			return ConvertToRecord.pictureToRecord(getPictureData(rs));
 		default:
 			return null;
 		}
@@ -243,7 +283,7 @@ public class ImportSentDataToSC {
 	private Email getEmailData(ResultSet rs) {
 		try {
 			if (rs.getString("QJID") == null) {
-				logger.error("Email data error at QJID=null");
+				logger.error("Email data error at QJID=null.");
 				return null;
 			}
 			return new Email.Builder(rs.getString("QJID"), rs.getString("FJRDZ") == null ? "" : rs.getString("FJRDZ"))
@@ -269,7 +309,7 @@ public class ImportSentDataToSC {
 	private Reply getReplyData(ResultSet rs) {
 		try {
 			if (rs.getString("MD5") == null) {
-				logger.error("Reply data error at MD5=null");
+				logger.error("Reply data error at MD5=null.");
 				return null;
 			}
 			return new Reply.Builder(rs.getString("HFID") == null ? "" : rs.getString("HFID"),
@@ -302,7 +342,7 @@ public class ImportSentDataToSC {
 	private Information getInformationData(ResultSet rs) {
 		try {
 			if (rs.getString("ZXDZ") == null) {
-				logger.error("Information data error at ZXDZ=null");
+				logger.error("Information data error at ZXDZ=null.");
 				return null;
 			}
 			return new Information.Builder(rs.getString("ZXDZ"), rs.getString("FBYH") == null ? ""
@@ -331,7 +371,7 @@ public class ImportSentDataToSC {
 	private AutmSearch getAutmSearchData(ResultSet rs) {
 		try {
 			if (rs.getString("SSDZ") == null) {
-				logger.error("AutmSearch data error at SSDZ=null");
+				logger.error("AutmSearch data error at SSDZ=null.");
 				return null;
 			}
 			return new AutmSearch.Builder(rs.getString("SSDZ"), rs.getString("FBYH") == null ? ""
@@ -357,7 +397,7 @@ public class ImportSentDataToSC {
 	private QQGroup getQQGroupData(ResultSet rs) {
 		try {
 			if (rs.getString("ID") == null) {
-				logger.error("QQGroup data error at ID=null");
+				logger.error("QQGroup data error at ID=null.");
 				return null;
 			}
 			return new QQGroup.Builder(rs.getString("QH") == null ? "" : rs.getString("QH"),
@@ -379,7 +419,7 @@ public class ImportSentDataToSC {
 	private Forum getForumData(ResultSet rs) {
 		try {
 			if (rs.getString("WYDZ") == null) {
-				logger.error("Forum data error at WYDZ=null");
+				logger.error("Forum data error at WYDZ=null.");
 				return null;
 			}
 			return new Forum.Builder(rs.getString("WYDZ"), rs.getString("FBYH") == null ? "" : rs.getString("FBYH"))
@@ -408,7 +448,7 @@ public class ImportSentDataToSC {
 	private Blog getBlogData(ResultSet rs) {
 		try {
 			if (rs.getString("BKDZ") == null) {
-				logger.error("Blog data error at BKDZ=null");
+				logger.error("Blog data error at BKDZ=null.");
 				return null;
 			}
 			return new Blog.Builder(rs.getString("BKID") == null ? "" : rs.getString("BKID"), rs.getString("BKDZ"))
@@ -432,12 +472,12 @@ public class ImportSentDataToSC {
 	}
 
 	/**
-	 * 返回微薄数据
+	 * 返回微博数据
 	 */
 	private Weibo getWeiboData(ResultSet rs) {
 		try {
 			if (rs.getString("WBDZ") == null) {
-				logger.error("Weibo data error at WBDZ=null");
+				logger.error("Weibo data error at WBDZ=null.");
 				return null;
 			}
 			return new Weibo.Builder(rs.getString("WBDZ"), rs.getString("FBYH") == null ? "" : rs.getString("FBYH"))
@@ -452,6 +492,24 @@ public class ImportSentDataToSC {
 					.setIP(rs.getString("IP") == null ? "" : rs.getString("IP"))
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime()))
 					.setIPDZ(rs.getString("IPDZ") == null ? "" : rs.getString("IPDZ")).build();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 返回图片数据
+	 */
+	private Picture getPictureData(ResultSet rs) {
+		try {
+			if (rs.getString("URL") == null) {
+				logger.error("Picture data error at URL=null.");
+				return null;
+			}
+			return new Picture.Builder(rs.getString("TPMD5") == null ? "" : rs.getString("TPMD5"), rs.getString("URL"))
+					.setTPLR(rs.getString("TPLR") == null ? "" : rs.getString("TPLR"))
+					.setTPLJ(rs.getString("TPLJ") == null ? "" : rs.getString("TPLJ"))
+					.setSFYH(rs.getInt("SFYH") == 0 ? Boolean.FALSE : Boolean.TRUE).setBZ(rs.getLong("BZ")).build();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

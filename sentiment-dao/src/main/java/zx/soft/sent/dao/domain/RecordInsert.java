@@ -138,7 +138,7 @@ public class RecordInsert {
 		private String home_url = "";
 		private String title = "";
 		private String type = "";
-		private boolean isharmful = Boolean.TRUE;
+		private boolean isharmful = Boolean.FALSE;
 		private String content = "";
 		private int comment_count;
 		private int read_count;

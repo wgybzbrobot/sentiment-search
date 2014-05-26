@@ -5,6 +5,7 @@ import zx.soft.sent.dao.domain.Blog;
 import zx.soft.sent.dao.domain.Email;
 import zx.soft.sent.dao.domain.Forum;
 import zx.soft.sent.dao.domain.Information;
+import zx.soft.sent.dao.domain.Picture;
 import zx.soft.sent.dao.domain.QQGroup;
 import zx.soft.sent.dao.domain.Record;
 import zx.soft.sent.dao.domain.Reply;
@@ -159,6 +160,19 @@ public class ConvertToRecord {
 				.setType(email.getLX()).setFirst_time(email.getFXSJ()).setUpdate_time(email.getGXSJ())
 				.setSource_id(email.getLY()).setLasttime(email.getJCSJ()).setServer_id(email.getLZ())
 				.setIdentify_id(email.getBZ()).setMid(email.getQJID()).build();
+		return record;
+	}
+
+	/**
+	 * 9: Picture——>Record
+	 */
+	public static Record pictureToRecord(Picture pic) {
+		if (pic == null) {
+			return null;
+		}
+		Record record = new Record.Builder(CheckSumUtils.getMD5(pic.getURL()), 9).setIdentify_md5(pic.getTPMD5())
+				.setUrl(pic.getURL()).setContent(pic.getTPLR()).setPic_url(pic.getTPLJ()).setIsharmful(pic.isSFYH())
+				.setIdentify_id(pic.getBZ()).build();
 		return record;
 	}
 
