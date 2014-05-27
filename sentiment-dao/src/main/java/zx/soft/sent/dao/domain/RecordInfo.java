@@ -48,7 +48,7 @@ public class RecordInfo {
 	private String send_addr = "";
 	private String source_name = "";
 	private int source_type;
-	private int country_code;
+	private int country_code = 1;
 	private int location_code;
 	private int province_code;
 	private int city_code;

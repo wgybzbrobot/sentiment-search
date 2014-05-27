@@ -206,9 +206,7 @@ public class IndexCloudSolr {
 		if (record.getSource_type() != 0) {
 			doc.addField("source_type", record.getSource_type());
 		}
-		if (record.getCountry_code() != 0) {
-			doc.addField("country_code", record.getCountry_code());
-		}
+		doc.addField("country_code", record.getCountry_code());
 		if (record.getLocation_code() != 0) {
 			doc.addField("location_code", record.getLocation_code());
 		}

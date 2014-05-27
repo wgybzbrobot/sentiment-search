@@ -29,11 +29,17 @@ public class HttpUtils {
 		// 创建一个GET方法，类似于在浏览器地址栏中输入一个地址
 		HttpGet httpGet = new HttpGet(url);
 		// 类似于在浏览器中输入回车，获得网页内容
-		HttpResponse response = httpClient.execute(httpGet);
+		HttpResponse response = null;
+		try {
+			response = httpClient.execute(httpGet);
+		} catch (IOException e) {
+			logger.error("IOException in HttpUtils: ", e);
+		}
 		// 查看返回内容，类似于在浏览器中查看网页源码
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
-			//
+			// 读入内容流，并以字符串形式返回，这里指定网页编码是UTF-8
+			//			System.out.println(EntityUtils.toString(entity));
 		}
 
 		return null;
@@ -60,7 +66,6 @@ public class HttpUtils {
 				method.setQueryString(URIUtil.encodeQuery(queryString));
 			}
 			client.executeMethod(method);
-			System.out.println(method.getStatusCode());
 			if (method.getStatusCode() == HttpStatus.SC_OK) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(),
 						charset));
