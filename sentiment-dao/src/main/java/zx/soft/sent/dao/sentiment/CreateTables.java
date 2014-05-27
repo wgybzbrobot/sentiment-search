@@ -23,6 +23,7 @@ public class CreateTables {
 		sentJDBC.createTablenameTable(CreateTables.SENT_TABLE_TABLE);
 		// 创建舆情数据表
 		for (int i = 0; i < CreateTables.MAX_TABLE_NUM; i++) {
+			System.out.println(i);
 			sentJDBC.createSentimentTable(CreateTables.SENT_TABLE + i);
 		}
 
