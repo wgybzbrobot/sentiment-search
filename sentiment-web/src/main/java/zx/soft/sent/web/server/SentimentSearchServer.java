@@ -43,7 +43,7 @@ public class SentimentSearchServer {
 	public void start() {
 		component.getServers().add(Protocol.HTTP, PORT);
 		try {
-			component.getDefaultHost().attach("/sentiment/search", sentiSearchApplication);
+			component.getDefaultHost().attach("/sentiment", sentiSearchApplication);
 			ReplaceConvert.configureJacksonConverter();
 			component.start();
 		} catch (Exception e) {

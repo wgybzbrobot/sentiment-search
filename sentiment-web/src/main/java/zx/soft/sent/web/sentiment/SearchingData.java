@@ -59,25 +59,25 @@ public class SearchingData {
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
 		queryParams.setQ("*:*");
-		queryParams.setFq("platform:2"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
-		queryParams.setSort("timestamp:desc"); // lasttime:desc
+		queryParams.setFq("id:beb7488c7fef91654fc1a7ea4ad522b6"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
+		//		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		//		queryParams.setStart(0);
 		//		queryParams.setRows(10);
 		//		queryParams.setWt("json");
 		//		queryParams.setFl(""); // nickname,content
-		queryParams.setHlfl("title,content");
-		queryParams.setHlsimple("red");
-		queryParams.setFacetQuery("");
-		queryParams.setFacetField("platform");
+		//		queryParams.setHlfl("title,content");
+		//		queryParams.setHlsimple("red");
+		//		queryParams.setFacetQuery("");
+		//		queryParams.setFacetField("platform");
 		QueryResult result = search.queryData(queryParams);
 		System.out.println(JsonUtils.toJson(result));
 		//		search.deleteQuery();
 		search.close();
 	}
 
-	public void deleteQuery() {
+	public void deleteQuery(String q) {
 		try {
-			server.deleteByQuery("platform:8");
+			server.deleteByQuery(q);
 			server.commit();
 		} catch (SolrServerException e) {
 			e.printStackTrace();
@@ -87,7 +87,7 @@ public class SearchingData {
 	}
 
 	/**
-	 * 查询结果数据
+	 * 根据多条件查询结果数据
 	 */
 	public QueryResult queryData(QueryParams queryParams) {
 		SolrQuery query = getSolrQuery(queryParams);
@@ -118,8 +118,8 @@ public class SearchingData {
 		// 处理时间timestamp、lasttime、first_time、update_time
 		tackleTime(result);
 		// 将highlight移到result中，减少数据量，同时方便调用
-		if (queryResponse.getHighlighting() != null) {
-			for (int i = 0; i < result.getResults().size(); i++) {
+		for (int i = 0; i < result.getResults().size(); i++) {
+			if (queryResponse.getHighlighting() != null) {
 				for (String hl : queryParams.getHlfl().split(",")) {
 					if (queryResponse.getHighlighting().get(result.getResults().get(i).getFieldValue("id")).get(hl) != null) {
 						result.getResults()
@@ -130,14 +130,14 @@ public class SearchingData {
 												.get(result.getResults().get(i).getFieldValue("id")).get(hl).get(0));
 					}
 				}
-				if (result.getResults().get(i).getFieldValue("source_id") != null) {
-					result.getResults()
-							.get(i)
-							.setField(
-									"source_name",
-									cache.hget(OracleToRedis.SITE_MAP,
-											result.getResults().get(i).getFieldValue("source_id").toString()));
-				}
+			}
+			if (result.getResults().get(i).getFieldValue("source_id") != null) {
+				result.getResults()
+						.get(i)
+						.setField(
+								"source_name",
+								cache.hget(OracleToRedis.SITE_MAP, result.getResults().get(i)
+										.getFieldValue("source_id").toString()));
 			}
 		}
 

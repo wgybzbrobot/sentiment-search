@@ -13,9 +13,9 @@ import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.domain.PostData;
 
-public class SentiIndexResource extends ServerResource {
+public class SentIndexResource extends ServerResource {
 
-	private static Logger logger = LoggerFactory.getLogger(SentiIndexResource.class);
+	private static Logger logger = LoggerFactory.getLogger(SentIndexResource.class);
 
 	private static SentiIndexApplication application;
 

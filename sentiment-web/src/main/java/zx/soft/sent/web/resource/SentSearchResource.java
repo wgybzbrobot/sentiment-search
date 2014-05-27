@@ -15,9 +15,9 @@ import zx.soft.sent.web.domain.QueryResult;
 import zx.soft.sent.web.sentiment.QueryParams;
 import zx.soft.sent.web.utils.URLCodecUtils;
 
-public class SentiSearchResource extends ServerResource {
+public class SentSearchResource extends ServerResource {
 
-	private static Logger logger = LoggerFactory.getLogger(SentiSearchResource.class);
+	private static Logger logger = LoggerFactory.getLogger(SentSearchResource.class);
 
 	private static SentiSearchApplication application;
 

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.core.persist.PersistCore;
 import zx.soft.sent.dao.domain.RecordInfo;
-import zx.soft.sent.web.resource.SentiIndexResource;
+import zx.soft.sent.web.resource.SentIndexResource;
 import zx.soft.sent.web.sentiment.IndexingData;
 
 public class SentiIndexApplication extends Application {
@@ -46,7 +46,7 @@ public class SentiIndexApplication extends Application {
 	@Override
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
-		router.attach("", SentiIndexResource.class);
+		router.attach("", SentIndexResource.class);
 		return router;
 	}
 
