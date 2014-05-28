@@ -14,15 +14,20 @@ import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 public class HttpUtils {
 
 	private static Logger logger = Logger.getLogger(HttpUtils.class);
 
+	/**
+	 * 新工具
+	 */
 	public static String doGet(String url) {
 		// 创建一个客户端，类似于打开一个浏览器
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -37,13 +42,24 @@ public class HttpUtils {
 		}
 		// 查看返回内容，类似于在浏览器中查看网页源码
 		HttpEntity entity = response.getEntity();
+		String result = null;
 		if (entity != null) {
 			// 读入内容流，并以字符串形式返回，这里指定网页编码是UTF-8
-			//			System.out.println(EntityUtils.toString(entity));
+			try {
+				result = EntityUtils.toString(entity);
+				// 网页的Meta标签中指定了编码
+				EntityUtils.consume(entity); // 关闭内容流
+			} catch (ParseException | IOException e) {
+				//				throw new RuntimeException(e);
+			}
+		}
+		try {
+			httpClient.close();
+		} catch (IOException e) {
+			//			
 		}
 
-		return null;
-
+		return result;
 	}
 
 	/**
@@ -85,6 +101,7 @@ public class HttpUtils {
 			logger.error("执行HTTP Get请求" + url + "时，发生异常！", e);
 		} finally {
 			method.releaseConnection();
+			//			client.getHttpConnectionManager().closeIdleConnections(1000);
 		}
 		return response.toString();
 	}
@@ -106,7 +123,7 @@ public class HttpUtils {
 
 		//		System.out.println(HttpUtils.doGet("http://114.112.65.13:8111/sina/users/2161358634/basic", "utf-8"));
 		//		System.out.println(HttpUtils.doGet(" http://60.169.74.26:8111/sina/users/2039654561/fromapi", "utf-8"));
-		System.out.println(HttpUtils.doGet("http://qun.594sgk.com/s/?wd=1010437118", "gb2312"));
+		System.out.println(HttpUtils.doGet("http://114.112.65.13:8111/sina/users/2161358634/basic"));
 
 	}
 

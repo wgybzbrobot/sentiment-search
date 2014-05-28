@@ -1,4 +1,4 @@
-package zx.soft.sent.spider.parser;
+package zx.soft.sent.spider.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,8 +40,13 @@ public class RetrivePage {
 		URL url = null;
 		try {
 			url = new URL(path);
+			// 设置代理
+			//			url.openConnection(SocketProxy.getProxy());
 		} catch (MalformedURLException e) {
 			logger.error("MalformedURLException in RetrivePage: " + e);
+			throw new RuntimeException(e);
+		} catch (@SuppressWarnings("hiding") IOException e) {
+			logger.error("IOException in RetrivePage: " + e);
 			throw new RuntimeException(e);
 		}
 		// 创建网络流
@@ -107,6 +112,8 @@ public class RetrivePage {
 				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 			// 发送GET命令
 			pw.print("GET " + filePath + " HTTP/1.0\r\n");
+			// 检查是否修改
+			//			pw.print("If-Modified-Since:Tue May 07 17:24:37 CST 2013\r\n");
 			pw.print("Accept:text/plain,text/html,text/*\r\n");
 			pw.print("\r\n");
 			pw.flush();
