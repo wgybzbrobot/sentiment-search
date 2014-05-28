@@ -68,7 +68,7 @@ public class SentJDBC {
 	/**
 	 * 关闭数据库
 	 */
-	public void dbClose() {
+	public void close() {
 		try {
 			dataSource.close();
 		} catch (SQLException e) {
@@ -148,6 +148,24 @@ public class SentJDBC {
 				+ "`city_code` mediumint(9) unsigned NOT NULL COMMENT '城市编码',"
 				+ "PRIMARY KEY (`rid`),UNIQUE KEY `id` (`id`), KEY `timestamp` (`timestamp`)) "
 				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='舆情数据表' AUTO_INCREMENT=1 ;";
+		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
+			pstmt.execute(sql);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQLException: " + e);
+		}
+	}
+
+	/**
+	 * 创建缓存数据表
+	 */
+	public void createQueryCacheTable(String tablename) {
+		String sql = "CREATE TABLE  " + tablename + " ("
+				+ "`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT  '自增id',"
+				+ "`query_id` CHAR (50) NOT NULL COMMENT  '查询ID',"
+				+ "`query_url` VARCHAR( 1000 ) NOT NULL COMMENT  '查询URL',"
+				+ "`query_result` MEDIUMTEXT NOT NULL COMMENT  '查询结果',"
+				+ "`lasttime` INT UNSIGNED NOT NULL COMMENT  '记录时间',"
+				+ "UNIQUE (`query_id`)) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  '查询缓存'";
 		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
 			pstmt.execute(sql);
 		} catch (SQLException e) {

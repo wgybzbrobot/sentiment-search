@@ -19,6 +19,8 @@
 		<typeAlias alias="RecordSelect" type="zx.soft.sent.dao.domain.RecordSelect" />
 		<typeAlias alias="SelectParamsById" type="zx.soft.sent.dao.domain.SelectParamsById" />
 		<typeAlias alias="SelectParamsByTime" type="zx.soft.sent.dao.domain.SelectParamsByTime" />
+		<typeAlias alias="InsertCacheQuery" type="zx.soft.sent.dao.domain.InsertCacheQuery" />
+		<typeAlias alias="SelectCacheQuery" type="zx.soft.sent.dao.domain.SelectCacheQuery" />
 	</typeAliases>
 	<environments default="sentiment">
 		<environment id="sentiment">

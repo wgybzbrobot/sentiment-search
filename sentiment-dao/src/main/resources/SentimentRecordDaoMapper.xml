@@ -19,44 +19,81 @@
 	<insert id="insertRecord" parameterType="RecordInsert"
 		useGeneratedKeys="true" keyProperty="id" flushCache="true"
 		statementType="PREPARED">
-		INSERT INTO ${tablename} (`id`,`platform`,`mid`,`username`,`nickname`,`original_id`,`original_uid`,`original_name`,
+		INSERT INTO ${tablename}
+		(`id`,`platform`,`mid`,`username`,`nickname`,`original_id`,`original_uid`,`original_name`,
 		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`isharmful`,`content`,`comment_count`,`read_count`,
 		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
 		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
 		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`source_type`,`country_code`,`location_code`,`province_code`,
-		`city_code`) 
-		VALUES (#{id},#{platform},#{mid},#{username},#{nickname},#{original_id},#{original_uid},#{original_name},#{original_title},
+		`city_code`)
+		VALUES
+		(#{id},#{platform},#{mid},#{username},#{nickname},#{original_id},#{original_uid},#{original_name},#{original_title},
 		#{original_url},#{url},#{home_url},#{title},#{type},#{isharmful},#{content},#{comment_count},#{read_count},#{favorite_count},
 		#{attitude_count},#{repost_count},#{video_url},#{pic_url},#{voice_url},#{timestamp},#{source_id},#{lasttime},
 		#{server_id},#{identify_id},#{identify_md5},#{keyword},#{first_time},#{update_time},#{ip},#{location},#{geo},
 		#{receive_addr},#{append_addr},#{send_addr},#{source_name},#{source_type},#{country_code},#{location_code},#{province_code},#{city_code});
 	</insert>
-	
+
 	<!-- 获取Record数据，根据md5的id -->
-	<select id="selectRecordById" parameterType="SelectParamsById" resultType="RecordSelect">
-		SELECT `id`,`platform`,`mid`,`username`,`nickname`,`original_id`,`original_uid`,`original_name`,
+	<select id="selectRecordById" parameterType="SelectParamsById"
+		resultType="RecordSelect">
+		SELECT
+		`id`,`platform`,`mid`,`username`,`nickname`,`original_id`,`original_uid`,`original_name`,
 		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`isharmful`,`content`,`comment_count`,`read_count`,
 		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
 		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
 		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`source_type`,`country_code`,`location_code`,`province_code`,
 		`city_code`
-		 FROM ${tablename} WHERE `id` = #{id};
+		FROM ${tablename} WHERE `id` = #{id};
 	</select>
-	
+
 	<!-- 获取Records数据，根据lasttime -->
-	<select id="selectRecordsByLasttime" parameterType="SelectParamsByTime" resultType="RecordSelect">
-		SELECT `id`,`platform`,`mid`,`username`,`nickname`,`original_id`,`original_uid`,`original_name`,
+	<select id="selectRecordsByLasttime" parameterType="SelectParamsByTime"
+		resultType="RecordSelect">
+		SELECT
+		`id`,`platform`,`mid`,`username`,`nickname`,`original_id`,`original_uid`,`original_name`,
 		`original_title`,`original_url`,`url`,`home_url`,`title`,`type`,`isharmful`,`content`,`comment_count`,`read_count`,
 		`favorite_count`,`attitude_count`,`repost_count`,`video_url`,`pic_url`,`voice_url`,`timestamp`,`source_id`,
 		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
 		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`source_type`,`country_code`,`location_code`,`province_code`,
 		`city_code`
-		 FROM ${tablename} WHERE `lasttime` BETWEEN #{low} AND #{high};
+		FROM ${tablename} WHERE `lasttime` BETWEEN #{low} AND
+		#{high};
 	</select>
 
 	<!-- 删除Record数据，根据md5的id -->
 	<delete id="deleteRecordById" parameterType="SelectParamsById">
-		DELETE FROM ${tablename} WHERE `id` = #{id};
+		DELETE FROM
+		${tablename} WHERE `id` = #{id};
+	</delete>
+
+	<!-- 插入查询缓存数据 -->
+	<insert id="insertCacheQuery" parameterType="InsertCacheQuery"
+		useGeneratedKeys="true" keyProperty="id" flushCache="true"
+		statementType="PREPARED">
+		INSERT INTO ${tablename}
+		(`query_id`,`query_url`,`query_result`,`lasttime`) VALUES
+		(#{query_id},#{query_url},#{query_result},UNIX_TIMESTAMP());
+	</insert>
+
+	<!-- 查询查询缓存数据 -->
+	<select id="selectCacheQuery" parameterType="InsertCacheQuery"
+		resultType="string">
+		SELECT `query_result` FROM ${tablename} WHERE `query_id` =
+		#{query_id};
+	</select>
+
+	<!-- 更新查询缓存数据 -->
+	<select id="updateCacheQuery" parameterType="InsertCacheQuery">
+		UPDATE ${tablename}
+		SET
+		`query_result`=#{query_result},`lasttime`=UNIX_TIMESTAMP() WHERE
+		`query_id` = #{query_id};
+	</select>
+
+	<!-- 删除查询缓存数据 -->
+	<delete id="deleteCacheQuery" parameterType="InsertCacheQuery">
+		DELETE FROM ${tablename} WHERE `query_id` = #{query_id};
 	</delete>
 
 </mapper>

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
+import zx.soft.sent.dao.domain.InsertCacheQuery;
 import zx.soft.sent.dao.domain.RecordInsert;
 import zx.soft.sent.dao.domain.RecordSelect;
 import zx.soft.sent.dao.domain.SelectParamsById;
@@ -86,6 +87,46 @@ public class SentimentRecord {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
 			sentimentRecordDao.deleteRecordById(new SelectParamsById(tablename, id));
+		}
+	}
+
+	/**
+	 * 插入查询缓存数据
+	 */
+	public void insertCacheQuery(String tablename, String query_id, String query_url, String query_result) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
+			sentimentRecordDao.insertCacheQuery(new InsertCacheQuery(tablename, query_id, query_url, query_result));
+		}
+	}
+
+	/**
+	 * 更新查询缓存数据
+	 */
+	public void updateCacheQuery(String tablename, String query_id, String query_url, String query_result) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
+			sentimentRecordDao.updateCacheQuery(new InsertCacheQuery(tablename, query_id, query_url, query_result));
+		}
+	}
+
+	/**
+	 * 查询查询缓存数据
+	 */
+	public String selectCacheQuery(String tablename, String query_id) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
+			return sentimentRecordDao.selectCacheQuery(new InsertCacheQuery(tablename, query_id, "", ""));
+		}
+	}
+
+	/**
+	 * 删除查询缓存数据
+	 */
+	public void deleteCacheQuery(String tablename, String query_id) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
+			sentimentRecordDao.deleteCacheQuery(new InsertCacheQuery(tablename, query_id, "", ""));
 		}
 	}
 

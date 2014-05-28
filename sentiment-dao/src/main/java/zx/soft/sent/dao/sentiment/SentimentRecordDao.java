@@ -2,12 +2,12 @@ package zx.soft.sent.dao.sentiment;
 
 import java.util.List;
 
+import zx.soft.sent.dao.domain.InsertCacheQuery;
 import zx.soft.sent.dao.domain.RecordInsert;
 import zx.soft.sent.dao.domain.RecordSelect;
 import zx.soft.sent.dao.domain.SelectParamsById;
 import zx.soft.sent.dao.domain.SelectParamsByTime;
 import zx.soft.sent.dao.domain.SentTablename;
-
 
 /**
  * 舆情数据接口
@@ -45,5 +45,25 @@ public interface SentimentRecordDao {
 	 * 删除Record数据，根据md5的id
 	 */
 	public void deleteRecordById(SelectParamsById selectParamsById);
+
+	/**
+	 * 插入查询缓存数据
+	 */
+	public void insertCacheQuery(InsertCacheQuery insertCacheQuery);
+
+	/**
+	 * 更新查询缓存数据
+	 */
+	public void updateCacheQuery(InsertCacheQuery insertCacheQuery);
+
+	/**
+	 * 查询查询缓存数据
+	 */
+	public String selectCacheQuery(InsertCacheQuery insertCacheQuery);
+
+	/**
+	 * 删除查询缓存数据
+	 */
+	public void deleteCacheQuery(InsertCacheQuery insertCacheQuery);
 
 }
