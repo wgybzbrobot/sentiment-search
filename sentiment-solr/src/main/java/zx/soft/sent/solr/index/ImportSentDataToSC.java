@@ -57,14 +57,11 @@ public class ImportSentDataToSC {
 	public static void main(String[] args) {
 
 		ImportSentDataToSC importData = new ImportSentDataToSC();
-		//		for (int i = 0; i < TYPES.length; i++) {
-		//			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr......");
-		//			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
-		//			importData.indexData(TYPES[i]);
-		//		}
-
-		logger.info("data size=" + importData.getRecordsCount("FLLB_TPDB"));
-		importData.indexPicData("FLLB_TPDB");
+		for (int i = 0; i < TYPES.length; i++) {
+			logger.info("Importing '" + TYPES[i] + "' data to CloudSolr......");
+			logger.info("data size=" + importData.getRecordsCount(TYPES[i]));
+			importData.indexData(TYPES[i]);
+		}
 
 		importData.close();
 	}
