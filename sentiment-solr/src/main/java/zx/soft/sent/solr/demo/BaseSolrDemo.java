@@ -21,7 +21,7 @@ public class BaseSolrDemo {
 	 */
 	public static void main(String[] args) throws SolrServerException, IOException {
 
-		CloudSolrServer server = new CloudSolrServer("test1:2181,test3:2181");
+		CloudSolrServer server = new CloudSolrServer("hefei04:2181");
 		server.setDefaultCollection("sentiment");
 		SolrInputDocument doc1 = new SolrInputDocument();
 		doc1.addField("id", "637jf9dde49", 1.0f);
