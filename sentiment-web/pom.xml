@@ -125,6 +125,7 @@
 				<version>2.4</version>
 				<configuration>
 					<excludes>
+						<exclude>data_db.properties</exclude>
 						<exclude>solr_params.properties</exclude>
 						<exclude>web-server.properties</exclude>
 					</excludes>
