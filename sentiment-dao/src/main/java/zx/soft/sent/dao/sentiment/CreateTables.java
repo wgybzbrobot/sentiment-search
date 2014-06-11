@@ -24,12 +24,12 @@ public class CreateTables {
 		// 创建查询缓存数据表
 		sentJDBC.createQueryCacheTable(CreateTables.CACHE_QUERY_TABLE);
 		// 创建舆情数据表表名表
-		//		sentJDBC.createTablenameTable(CreateTables.SENT_TABLE_TABLE);
+		sentJDBC.createTablenameTable(CreateTables.SENT_TABLE_TABLE);
 		// 创建舆情数据表
-		//		for (int i = 0; i < CreateTables.MAX_TABLE_NUM; i++) {
-		//			System.out.println(i);
-		//			sentJDBC.createSentimentTable(CreateTables.SENT_TABLE + i);
-		//		}
+		for (int i = 0; i < CreateTables.MAX_TABLE_NUM; i++) {
+			System.out.println(i);
+			sentJDBC.createSentimentTable(CreateTables.SENT_TABLE + i);
+		}
 		sentJDBC.close();
 		System.out.println("Finish!");
 
