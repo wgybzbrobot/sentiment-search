@@ -240,6 +240,8 @@ public class SearchingData {
 		if (queryParams.getQ() != "") {
 			query.setQuery(queryParams.getQ());
 		}
+		// 分片失效忽略
+		query.set("shards.tolerant", true);
 		// 设置关键词连接逻辑是AND
 		query.set("q.op", "AND");
 		if (queryParams.getFq() != "") {
