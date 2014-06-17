@@ -1,5 +1,6 @@
 package zx.soft.sent.solr.search;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -9,12 +10,14 @@ import org.apache.solr.client.solrj.SolrRequest.METHOD;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.solr.err.SpiderSearchException;
 import zx.soft.sent.utils.config.ConfigUtil;
+import zx.soft.sent.utils.json.JsonUtils;
 
 /**
  * 搜索舆情数据
@@ -39,11 +42,24 @@ public class SearchData {
 	public static void main(String[] args) {
 
 		SearchData searchData = new SearchData();
-		String[] keywords = { "微博新浪腾讯", "工作好辛苦", "医疗制度体系", "中国的教育需要改革", "政府制度助理房地产行业" };
-		for (String keyword : keywords) {
-			searchData.queryData(keyword);
-		}
+		//		String[] keywords = { "微博新浪腾讯", "工作好辛苦", "医疗制度体系", "中国的教育需要改革", "政府制度助理房地产行业" };
+		//		for (String keyword : keywords) {
+		//			searchData.queryData(keyword);
+		//		}
+		searchData.deleteData();
 		searchData.close();
+	}
+
+	public void deleteData() {
+		try {
+			UpdateResponse response = server.deleteByQuery("lasttime:[2013-05-15T06:30:34Z TO 2014-03-15T06:30:34Z]",
+					100);
+			System.out.println(JsonUtils.toJson(response));
+		} catch (SolrServerException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void queryData(String keywords) {
