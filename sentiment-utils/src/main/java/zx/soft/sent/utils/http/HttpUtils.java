@@ -21,6 +21,12 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * HTTP工具类
+ * 
+ * @author wanggang
+ *
+ */
 public class HttpUtils {
 
 	private static Logger logger = Logger.getLogger(HttpUtils.class);

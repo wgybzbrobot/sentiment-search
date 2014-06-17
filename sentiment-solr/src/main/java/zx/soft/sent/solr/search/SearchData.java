@@ -21,6 +21,7 @@ import zx.soft.sent.utils.json.JsonUtils;
 
 /**
  * 搜索舆情数据
+ * 
  * @author wanggang
  *
  */

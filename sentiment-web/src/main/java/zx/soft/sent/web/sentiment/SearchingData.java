@@ -32,6 +32,7 @@ import zx.soft.sent.web.domain.SimpleFacetInfo;
 
 /**
  * 搜索舆情数据
+ * 
  * @author wanggang
  *
  */

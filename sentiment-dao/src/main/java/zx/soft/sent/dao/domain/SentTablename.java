@@ -2,6 +2,7 @@ package zx.soft.sent.dao.domain;
 
 /**
  * 舆情数据表
+ * 
  * @author wanggang
  *
  */

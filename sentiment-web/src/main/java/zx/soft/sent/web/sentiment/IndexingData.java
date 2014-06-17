@@ -5,6 +5,7 @@ import zx.soft.sent.solr.index.IndexCloudSolr;
 
 /**
  * 索引舆情数据到Solr集群中
+ * 
  * @author wanggang
  *
  */

@@ -12,6 +12,12 @@ import org.apache.hadoop.io.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 简单的HDFS写数据实现类
+ * 
+ * @author wanggang
+ *
+ */
 public class HdfsWriterSimpleImpl implements HdfsWriter {
 
 	private final Logger logger = LoggerFactory.getLogger(HdfsWriterSimpleImpl.class);

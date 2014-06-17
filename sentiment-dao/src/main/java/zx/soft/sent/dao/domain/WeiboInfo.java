@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 微博信息
+ * 
+ * @author wanggang
+ *
+ */
 public class WeiboInfo {
 
 	private Long wid;

@@ -1,7 +1,8 @@
 package zx.soft.sent.dao.domain;
 
 /**
- * 查询参数类
+ * 新浪微博查询参数类
+ * 
  * @author wanggang
  *
  */

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 下载网页，并解析。
  * 该类中提供了三种资源提取方式，但不能提供全面灵活性和套接字连接池等开发爬虫需要的功能，因而建议使用HttpClient较好。
+ * 
  * @author wanggang
  *
  */

@@ -8,7 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 配置文件信息读取类
+ * 配置文件信息读取类，读取特定
+ * 
  * @author wanggang
  *
  */
@@ -30,10 +31,20 @@ public class Config {
 
 	};
 
+	/**
+	 * 获取属性值
+	 * @param key
+	 * @return
+	 */
 	public static String get(String key) {
 		return conf.getProperty(key);
 	}
 
+	/**
+	 * 读取指定配置文件
+	 * @param confFileName：配置文件名
+	 * @return
+	 */
 	public static Properties getProps(String confFileName) {
 		Properties result = new Properties();
 		logger.info("Load resource: " + confFileName);

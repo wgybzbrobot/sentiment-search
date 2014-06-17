@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.bdb;
+package zx.soft.sent.dao.demo;
 
 import java.io.File;
 
@@ -45,4 +45,5 @@ public class BerkeleyDemo {
 		}
 
 	}
+
 }

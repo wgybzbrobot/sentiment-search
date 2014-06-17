@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * getContentType等方法的错误指出在于只识别头信息中小写的字符串，需要修改成大小写不敏感。
+ * 
  * @author wanggang
  *
  */

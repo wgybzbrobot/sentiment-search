@@ -2,6 +2,7 @@ package zx.soft.sent.dao.domain;
 
 /**
  * 查询缓存结果
+ * 
  * @author wanggang
  *
  */

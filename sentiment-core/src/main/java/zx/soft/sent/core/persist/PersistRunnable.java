@@ -12,6 +12,7 @@ import zx.soft.sent.utils.checksum.CheckSumUtils;
 
 /**
  * 持久化线程类
+ * 
  * @author wanggang
  *
  */
@@ -37,7 +38,7 @@ public class PersistRunnable implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 
 		try {
 			if (!cache.sismember(SENT_KEY_INSERTED, record.getId())) {

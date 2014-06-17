@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 记录查询类
+ * 
+ * @author wanggang
+ *
+ */
 public class RecordSelect {
 
 	private String id; // 记录id，一般通过记录的url进行md5加密得到

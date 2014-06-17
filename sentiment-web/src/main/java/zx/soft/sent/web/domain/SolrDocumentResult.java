@@ -11,6 +11,12 @@ import java.util.Set;
 
 import org.apache.solr.common.util.NamedList;
 
+/**
+ * 动态Domain类
+ * 
+ * @author wanggang
+ *
+ */
 public class SolrDocumentResult implements Map<String, Object>, Iterable<Map.Entry<String, Object>>, Serializable {
 
 	private static final long serialVersionUID = -2083654392208323215L;
@@ -393,4 +399,3 @@ public class SolrDocumentResult implements Map<String, Object>, Iterable<Map.Ent
 	}
 
 }
-

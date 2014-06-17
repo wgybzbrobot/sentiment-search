@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 新浪微博
+ * 
+ * @author wanggang
+ *
+ */
 public class SinaWeibo {
 
 	private final Long wid;

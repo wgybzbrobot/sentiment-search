@@ -6,6 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * 时间工具类
+ * 
+ * @author wanggang
+ *
+ */
 public class TimeUtils {
 
 	//	private static DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);

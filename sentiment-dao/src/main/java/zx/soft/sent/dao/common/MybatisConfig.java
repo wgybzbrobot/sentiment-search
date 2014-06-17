@@ -11,6 +11,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Mybatis配置类
+ * 
+ * @author wanggang
+ *
+ */
 public class MybatisConfig {
 
 	private static Logger logger = LoggerFactory.getLogger(MybatisConfig.class);

@@ -5,7 +5,6 @@ package zx.soft.sent.solr.profile;
  * @author wanggang
  *
  */
-@Deprecated
 public class ThreadsProfle {
 
 	public static void main(String[] args) {

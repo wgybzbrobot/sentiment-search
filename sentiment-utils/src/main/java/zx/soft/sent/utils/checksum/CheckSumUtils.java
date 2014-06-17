@@ -6,6 +6,7 @@ import java.util.zip.Checksum;
 
 /**
  * 校验工具类
+ * 
  * @author wanggang
  *
  */

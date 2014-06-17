@@ -2,6 +2,12 @@ package zx.soft.sent.web.domain;
 
 import java.util.HashMap;
 
+/**
+ * 简单的分片信息
+ * 
+ * @author wanggang
+ *
+ */
 public class SimpleFacetInfo {
 
 	private String name;

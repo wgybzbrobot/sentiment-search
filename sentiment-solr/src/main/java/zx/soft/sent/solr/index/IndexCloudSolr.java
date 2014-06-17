@@ -20,6 +20,7 @@ import zx.soft.sent.utils.config.ConfigUtil;
 
 /**
  * 通过HTTP方式索引数据到单台机器上。
+ * 
  * @author wgybzb
  *
  */

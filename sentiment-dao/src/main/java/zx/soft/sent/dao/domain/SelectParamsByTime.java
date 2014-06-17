@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 根据时间查询参数类
+ * 
+ * @author wanggang
+ *
+ */
 public class SelectParamsByTime {
 
 	private String tablename;

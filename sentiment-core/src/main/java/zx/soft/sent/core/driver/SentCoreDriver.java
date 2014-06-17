@@ -7,6 +7,8 @@ import zx.soft.sent.core.redis.OracleToRedis;
 
 /**
  * 驱动类
+ * 
+ * @author wanggang
  *
  */
 public class SentCoreDriver {

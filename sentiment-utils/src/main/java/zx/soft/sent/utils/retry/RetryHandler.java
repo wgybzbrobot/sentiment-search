@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 /**
  * 自动重试的动态代理
+ * 
  * @author wanggang
  * @param <T>
  *

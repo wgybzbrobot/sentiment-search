@@ -9,6 +9,12 @@ import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 
+/**
+ * 修复后的Jackson转换器
+ * 
+ * @author wanggang
+ *
+ */
 public class FixedJacksonConverter extends JacksonConverter {
 
 	private static final VariantInfo VARIANT_JSON = new VariantInfo(MediaType.APPLICATION_JSON);
@@ -18,7 +24,7 @@ public class FixedJacksonConverter extends JacksonConverter {
 		return new FixedJacksonRepresentation<T>(mediaType, source);
 	}
 
-  @Override
+	@Override
 	protected <T> JacksonRepresentation<T> create(Representation source, Class<T> objectClass) {
 		return new FixedJacksonRepresentation<T>(source, objectClass);
 	}
@@ -32,4 +38,5 @@ public class FixedJacksonConverter extends JacksonConverter {
 		}
 		return result;
 	}
+
 }

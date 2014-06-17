@@ -14,6 +14,12 @@ import zx.soft.sent.web.application.RetriveRecordApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.utils.URLCodecUtils;
 
+/**
+ * 提取记录资源类
+ * 
+ * @author wanggang
+ *
+ */
 public class RetriveRecordResource extends ServerResource {
 
 	private static Logger logger = LoggerFactory.getLogger(RetriveRecordResource.class);

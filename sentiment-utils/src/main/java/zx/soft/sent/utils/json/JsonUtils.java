@@ -9,6 +9,12 @@ import java.util.Locale;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+/**
+ * JSON工具类
+ * 
+ * @author wanggang
+ *
+ */
 public class JsonUtils {
 
 	private static final ObjectMapper mapper = new ObjectMapper();

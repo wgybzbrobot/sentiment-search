@@ -13,14 +13,19 @@ import redis.clients.jedis.JedisShardInfo;
 import redis.clients.util.Hashing;
 import redis.clients.util.Pool;
 
+/**
+ * 基于值分片的Redis池
+ * 
+ * @author wanggang
+ *
+ */
 public class ValueShardedJedisPool extends Pool<ValueShardedJedis> {
 
 	public ValueShardedJedisPool(final GenericObjectPoolConfig poolConfig, List<JedisShardInfo> shards) {
 		this(poolConfig, shards, Hashing.MURMUR_HASH);
 	}
 
-	public ValueShardedJedisPool(final GenericObjectPoolConfig poolConfig, List<JedisShardInfo> shards,
-			Hashing algo) {
+	public ValueShardedJedisPool(final GenericObjectPoolConfig poolConfig, List<JedisShardInfo> shards, Hashing algo) {
 		this(poolConfig, shards, algo, null);
 	}
 
@@ -29,8 +34,8 @@ public class ValueShardedJedisPool extends Pool<ValueShardedJedis> {
 		this(poolConfig, shards, Hashing.MURMUR_HASH, keyTagPattern);
 	}
 
-	public ValueShardedJedisPool(final GenericObjectPoolConfig poolConfig, List<JedisShardInfo> shards,
-			Hashing algo, Pattern keyTagPattern) {
+	public ValueShardedJedisPool(final GenericObjectPoolConfig poolConfig, List<JedisShardInfo> shards, Hashing algo,
+			Pattern keyTagPattern) {
 		super(poolConfig, new ValueShardedJedisFactory(shards, algo, keyTagPattern));
 	}
 

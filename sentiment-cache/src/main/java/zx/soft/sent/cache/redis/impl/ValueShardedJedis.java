@@ -27,6 +27,7 @@ import redis.clients.util.Sharded;
  *     这里的Redis主要是存放舆情数据的id，所以基本上在少量集和中，
  *     也就是每个集和的数据量很大，而不是集和很多，所以应该针对每个
  *     集和的value进行分片。
+ *     
  * @author wanggang
  *
  */

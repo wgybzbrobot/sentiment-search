@@ -12,6 +12,12 @@ import zx.soft.sent.web.resource.SentSearchResource;
 import zx.soft.sent.web.sentiment.QueryParams;
 import zx.soft.sent.web.sentiment.SearchingData;
 
+/**
+ * 與请搜索应用类
+ * 
+ * @author wanggang
+ *
+ */
 public class SentiSearchApplication extends Application {
 
 	private final SearchingData searchingData;

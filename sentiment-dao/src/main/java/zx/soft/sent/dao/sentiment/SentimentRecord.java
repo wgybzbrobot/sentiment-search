@@ -15,6 +15,12 @@ import zx.soft.sent.dao.domain.SelectParamsById;
 import zx.soft.sent.dao.domain.SelectParamsByTime;
 import zx.soft.sent.dao.domain.SentTablename;
 
+/**
+ * 與请数据CURD类
+ * 
+ * @author wanggang
+ *
+ */
 public class SentimentRecord {
 
 	private static Logger logger = LoggerFactory.getLogger(SentimentRecord.class);

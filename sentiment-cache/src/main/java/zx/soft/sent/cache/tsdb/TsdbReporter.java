@@ -13,6 +13,12 @@ import java.util.TimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 数据统计报表类
+ * 
+ * @author wanggang
+ *
+ */
 public class TsdbReporter {
 
 	private static final Logger logger = LoggerFactory.getLogger(TsdbReporter.class);

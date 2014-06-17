@@ -13,6 +13,12 @@ import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.domain.PostData;
 
+/**
+ * 與请索引资源类
+ * 
+ * @author wanggang
+ *
+ */
 public class SentIndexResource extends ServerResource {
 
 	private static Logger logger = LoggerFactory.getLogger(SentIndexResource.class);

@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 查询缓存类
+ * 
+ * @author wanggang
+ *
+ */
 public class SelectCacheQuery {
 
 	private String query_id; // 查询ID

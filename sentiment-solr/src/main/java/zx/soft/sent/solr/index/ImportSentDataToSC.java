@@ -26,6 +26,7 @@ import zx.soft.sent.utils.time.TimeUtils;
 
 /**
  * 索引舆情数据到Solr集群中
+ * 
  * @author wanggang
  *
  */

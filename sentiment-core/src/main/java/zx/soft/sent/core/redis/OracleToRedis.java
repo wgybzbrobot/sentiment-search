@@ -12,6 +12,12 @@ import zx.soft.sent.cache.dao.Cache;
 import zx.soft.sent.cache.factory.CacheFactory;
 import zx.soft.sent.dao.oracle.OracleJDBC;
 
+/**
+ * 将Oracle中的站点数据读取到Redis中
+ * 
+ * @author wanggang
+ *
+ */
 public class OracleToRedis {
 
 	private static Logger logger = LoggerFactory.getLogger(OracleToRedis.class);

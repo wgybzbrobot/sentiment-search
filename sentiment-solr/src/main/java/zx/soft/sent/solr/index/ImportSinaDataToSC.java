@@ -14,8 +14,9 @@ import zx.soft.sent.dao.sina.WeiboSina;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
 
 /**
- * @author wanggang
  * 索引新浪微博数据到Solr集群中
+ * 
+ * @author wanggang
  *
  */
 public class ImportSinaDataToSC {
@@ -67,7 +68,7 @@ public class ImportSinaDataToSC {
 	private void indexOneTable(String tablename) {
 		int maxId = weiboSina.getMaxId(tablename);
 		List<WeiboOldInfo> weibos = null;
-		for (int i = 0; i <= maxId/IndexCloudSolr.FETCH_SIZE; i++) {
+		for (int i = 0; i <= maxId / IndexCloudSolr.FETCH_SIZE; i++) {
 			logger.info("Indexing '" + tablename + "' at count=" + i * IndexCloudSolr.FETCH_SIZE);
 			List<Record> records = new ArrayList<>();
 			weibos = weiboSina.getBatchWeibos(tablename, IndexCloudSolr.FETCH_SIZE * i, IndexCloudSolr.FETCH_SIZE

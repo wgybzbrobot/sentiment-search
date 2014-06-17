@@ -2,9 +2,9 @@ package zx.soft.sent.dao.domain;
 
 import java.util.Date;
 
-
 /**
  * 博客类
+ * 
  * @author wanggang
  *
  */

@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * 微薄类
+ * 
  * @author wanggang
  *
  */

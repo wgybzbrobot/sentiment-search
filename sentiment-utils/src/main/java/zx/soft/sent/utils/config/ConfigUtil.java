@@ -6,6 +6,12 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 配置文件读取类
+ * 
+ * @author wanggang
+ *
+ */
 public class ConfigUtil {
 
 	private static Logger logger = LoggerFactory.getLogger(ConfigUtil.class);

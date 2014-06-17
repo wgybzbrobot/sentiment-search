@@ -15,6 +15,12 @@ import zx.soft.sent.web.domain.QueryResult;
 import zx.soft.sent.web.sentiment.QueryParams;
 import zx.soft.sent.web.utils.URLCodecUtils;
 
+/**
+ * 與请搜索资源类
+ * 
+ * @author wanggang
+ *
+ */
 public class SentSearchResource extends ServerResource {
 
 	private static Logger logger = LoggerFactory.getLogger(SentSearchResource.class);

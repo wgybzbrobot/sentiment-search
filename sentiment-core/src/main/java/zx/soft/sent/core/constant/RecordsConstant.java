@@ -2,6 +2,7 @@ package zx.soft.sent.core.constant;
 
 /**
  * 数据记录相关常量
+ * 
  * @author wanggang
  *
  */

@@ -10,6 +10,12 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.restlet.engine.Engine;
 import org.restlet.engine.converter.ConverterHelper;
 
+/**
+ * 替代转换工具
+ * 
+ * @author wanggang
+ *
+ */
 public class ReplaceConvert {
 
 	private static DateFormat sinaDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
@@ -21,12 +27,9 @@ public class ReplaceConvert {
 	}
 
 	/**
-	* Registers a new converter with the Restlet engine, after removing the first
-	* registered converter of the given class.
-	*
-	* Taken from:
-	* http://restlet.tigris.org/ds/viewMessage.do?dsForumId=4447&dsMessageId=2716118
-	*/
+	 * 移除给定类的第一个注册的converter后，使用Restlet引擎注册一个converter类
+	 * 参考:http://restlet.tigris.org/ds/viewMessage.do?dsForumId=4447&dsMessageId=2716118
+	 */
 	static void replaceConverter(Class<? extends ConverterHelper> converterClass, ConverterHelper newConverter) {
 
 		ConverterHelper oldConverter = null;

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 配置文件信息读取类
+ * 
  * @author wanggang
  *
  */

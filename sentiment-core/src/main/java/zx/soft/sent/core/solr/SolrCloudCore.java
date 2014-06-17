@@ -19,6 +19,7 @@ import zx.soft.sent.utils.config.ConfigUtil;
 
 /**
  * 索引到SolrCloud
+ * 
  * @author wanggang
  *
  */

@@ -11,10 +11,11 @@ import zx.soft.sent.web.jackson.ReplaceConvert;
 
 /**
  * 舆情搜索Server
- * @author wanggang
- *
+ * 
  * 搜索示例：
  * http://localhost:8901/sentiment/search?q=美食&fq=platform:7&sort=lasttime:desc&start=10&rows=50&fl=username,nickname&wt=xml&hlfl=content&facetQuery=abc&facetField=nickname
+ *
+ * @author wanggang
  *
  */
 public class SentimentSearchServer {

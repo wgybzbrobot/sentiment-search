@@ -16,6 +16,12 @@ import zx.soft.sent.dao.domain.RecordInfo;
 import zx.soft.sent.web.resource.SentIndexResource;
 import zx.soft.sent.web.sentiment.IndexingData;
 
+/**
+ * 與请索引应用类
+ * 
+ * @author wanggang
+ *
+ */
 public class SentiIndexApplication extends Application {
 
 	private static Logger logger = LoggerFactory.getLogger(SentiIndexApplication.class);

@@ -7,6 +7,7 @@ import zx.soft.sent.dao.domain.WeiboSinaParams;
 
 /**
  * 新浪微薄数据接口
+ * 
  * @author wanggang
  *
  */

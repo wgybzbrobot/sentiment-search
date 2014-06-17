@@ -12,6 +12,12 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Date;
 
+/**
+ * HTTP信息工具类
+ * 
+ * @author wanggang
+ *
+ */
 public class HttpInfoUtils {
 
 	public static void main(String[] args) {

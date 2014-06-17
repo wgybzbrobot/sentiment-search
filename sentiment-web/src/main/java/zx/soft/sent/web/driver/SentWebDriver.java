@@ -11,6 +11,8 @@ import zx.soft.sent.web.server.SiteServer;
 
 /**
  * 驱动类
+ * 
+ * @author wanggang
  *
  */
 public class SentWebDriver {

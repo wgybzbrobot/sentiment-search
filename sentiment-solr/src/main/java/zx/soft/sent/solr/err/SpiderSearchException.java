@@ -2,6 +2,7 @@ package zx.soft.sent.solr.err;
 
 /**
  * 舆情搜索异常处理
+ * 
  * @author wanggang
  *
  */

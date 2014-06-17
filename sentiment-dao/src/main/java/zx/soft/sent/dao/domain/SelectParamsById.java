@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 根据ID查询类
+ * 
+ * @author wanggang
+ *
+ */
 public class SelectParamsById {
 
 	private String tablename;

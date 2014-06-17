@@ -4,6 +4,7 @@ import java.util.Set;
 
 /**
  * 缓存接口
+ * 
  * @author wanggang
  *
  */

@@ -16,21 +16,24 @@ import org.restlet.representation.Representation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 /**
- * A local extension of Restlet's {@link JacksonConverter}.
- * Uses an extension of {@link JacksonRepresentation}
- * that gets its {@link ObjectMapper} via dependency injection.
- * Singleton must be eagerly created or it won't be used!
+ * Restlet的{@link JacksonConverter}本地化扩展。
+ * 使用{@link JacksonRepresentation}的一个扩展，通过独立的注入获取它的{@link ObjectMapper}。
+ * Singleton（单例模式）首先被创建，否则不会被应用。
+ * 
+ * @author wanggang
+ *
  */
 @Singleton
 public class LocalJacksonConverter extends JacksonConverter {
 
-	@Override protected <T> JacksonRepresentation<T> create(MediaType mediaType, T source) {
+	@Override
+	protected <T> JacksonRepresentation<T> create(MediaType mediaType, T source) {
 		return new Rep<T>(mediaType, source);
 	}
 
-	@Override protected <T> JacksonRepresentation<T> create(Representation source, Class<T> objectClass) {
+	@Override
+	protected <T> JacksonRepresentation<T> create(Representation source, Class<T> objectClass) {
 		return new Rep<T>(source, objectClass);
 	}
 
@@ -54,18 +57,17 @@ public class LocalJacksonConverter extends JacksonConverter {
 		 *
 		 * @return The wrapped object.
 		 */
-		@Override public T getObject() {
+		@Override
+		public T getObject() {
 			T result = null;
 
 			if (this.object != null) {
 				result = this.object;
 			} else if (this.jsonRepresentation != null) {
 				try {
-					result = objectMapper
-							.readValue(this.jsonRepresentation.getStream(), getObjectClass());
+					result = objectMapper.readValue(this.jsonRepresentation.getStream(), getObjectClass());
 				} catch (IOException e) {
-					Context.getCurrentLogger().log(Level.WARNING,
-							"Unable to parse the object with Jackson.", e);
+					Context.getCurrentLogger().log(Level.WARNING, "Unable to parse the object with Jackson.", e);
 				}
 			}
 
@@ -83,13 +85,12 @@ public class LocalJacksonConverter extends JacksonConverter {
 			this.object = object;
 		}
 
-		@Override public void write(Writer writer) throws IOException {
+		@Override
+		public void write(Writer writer) throws IOException {
 			if (jsonRepresentation != null) {
 				jsonRepresentation.write(writer);
 			} else if (object != null) {
-				objectMapper
-				.writerWithView(Object.class)
-				.writeValue(writer, object);
+				objectMapper.writerWithView(Object.class).writeValue(writer, object);
 			}
 		}
 
@@ -100,12 +101,13 @@ public class LocalJacksonConverter extends JacksonConverter {
 		private final Representation jsonRepresentation;
 	}
 
-
-	@Inject public LocalJacksonConverter(ObjectMapper objectMapper) {
+	@Inject
+	public LocalJacksonConverter(ObjectMapper objectMapper) {
 		this.objectMapper = objectMapper;
 	}
 
-	@Inject void registerWithEngine() {
+	@Inject
+	void registerWithEngine() {
 		Engine.getInstance().getRegisteredConverters().add(this);
 		// XXX Not shown here: Remove default JacksonConverter, if present.
 	}

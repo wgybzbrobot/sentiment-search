@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 旧的微博类
+ * 
+ * @author wanggang
+ *
+ */
 public class WeiboOld {
 
 	private final Long wid;
@@ -18,6 +24,7 @@ public class WeiboOld {
 	private final String originalpic;
 	private final String source;
 	private final String visible;
+
 	//	private final int mlevel;
 
 	public WeiboOld(Builder builder) {

@@ -6,6 +6,7 @@ import zx.soft.sent.dao.domain.RecordInfo;
 
 /**
  * POST的索引数据
+ * 
  * @author wanggang
  *
  */

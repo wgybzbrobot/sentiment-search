@@ -10,6 +10,8 @@ import zx.soft.sent.solr.statistic.CompanyMain;
 
 /**
  * 驱动类
+ * 
+ * @author wanggang
  *
  */
 public class SentSolrDriver {

@@ -14,6 +14,7 @@ import zx.soft.sent.utils.checksum.CheckSumUtils;
 
 /**
  * 其他数据类型转换成Record工具类
+ * 
  * @author wanggang
  *
  */

@@ -11,6 +11,12 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.WeiboOldInfo;
 import zx.soft.sent.dao.domain.WeiboSinaParams;
 
+/**
+ * 新浪微薄数据CURD类
+ * 
+ * @author wanggang
+ *
+ */
 public class WeiboSina {
 
 	private static Logger logger = LoggerFactory.getLogger(WeiboSina.class);

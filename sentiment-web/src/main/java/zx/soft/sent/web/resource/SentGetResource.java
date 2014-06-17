@@ -13,6 +13,12 @@ import zx.soft.sent.utils.http.HttpUtils;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.utils.URLCodecUtils;
 
+/**
+ * 與请数据获取资源类
+ * 
+ * @author wanggang
+ *
+ */
 public class SentGetResource extends ServerResource {
 
 	private static Logger logger = LoggerFactory.getLogger(SentGetResource.class);

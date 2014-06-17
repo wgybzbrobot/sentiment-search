@@ -3,6 +3,12 @@ package zx.soft.sent.utils.demo;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+/**
+ * 字符集处理测试类
+ * 
+ * @author wanggang
+ *
+ */
 public class CharsDemo {
 
 	public static void main(String[] args) throws UnsupportedEncodingException {

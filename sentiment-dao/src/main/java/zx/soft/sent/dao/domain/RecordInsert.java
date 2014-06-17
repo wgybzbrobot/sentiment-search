@@ -2,6 +2,7 @@ package zx.soft.sent.dao.domain;
 
 /**
  * Solr中的每条记录类
+ * 
  * @author wanggang
  *
  */

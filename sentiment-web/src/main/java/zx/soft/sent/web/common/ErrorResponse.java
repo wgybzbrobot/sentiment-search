@@ -1,5 +1,11 @@
 package zx.soft.sent.web.common;
 
+/**
+ * 错误相应类
+ * 
+ * @author wanggang
+ *
+ */
 public class ErrorResponse {
 
 	private final int errorCode;

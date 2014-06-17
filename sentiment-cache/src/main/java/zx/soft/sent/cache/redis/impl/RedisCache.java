@@ -12,6 +12,12 @@ import redis.clients.jedis.JedisShardInfo;
 import zx.soft.sent.cache.constant.RedisProtocol;
 import zx.soft.sent.cache.dao.Cache;
 
+/**
+ * Redis缓存功能实现
+ * 
+ * @author wanggang
+ *
+ */
 public class RedisCache implements Cache {
 
 	private static Logger logger = LoggerFactory.getLogger(RedisCache.class);

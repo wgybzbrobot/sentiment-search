@@ -12,6 +12,12 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 公司统计主类
+ * 
+ * @author wanggang
+ *
+ */
 public class CompanyMain {
 
 	private static Logger logger = LoggerFactory.getLogger(CompanyMain.class);

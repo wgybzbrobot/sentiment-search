@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * 转换各种字符串的编码
+ * 
  * @author wanggang
  *
  */

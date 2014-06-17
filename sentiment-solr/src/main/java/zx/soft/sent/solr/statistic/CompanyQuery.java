@@ -15,6 +15,7 @@ import zx.soft.sent.utils.config.ConfigUtil;
 
 /**
  * 搜索舆情数据
+ * 
  * @author wanggang
  *
  */

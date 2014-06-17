@@ -2,6 +2,7 @@ package zx.soft.sent.web.sentiment;
 
 /**
  * 查询参数类
+ * 
  * @author wanggang
  *
  */

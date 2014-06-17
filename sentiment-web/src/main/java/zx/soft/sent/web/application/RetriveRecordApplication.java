@@ -14,6 +14,12 @@ import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
 import zx.soft.sent.web.resource.RetriveRecordResource;
 
+/**
+ * MySQL数据提取应用类
+ * 
+ * @author wanggang
+ *
+ */
 public class RetriveRecordApplication extends Application {
 
 	//	private static Logger logger = LoggerFactory.getLogger(RetriveRecordApplication.class);

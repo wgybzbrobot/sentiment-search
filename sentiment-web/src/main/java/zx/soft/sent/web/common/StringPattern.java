@@ -2,6 +2,7 @@ package zx.soft.sent.web.common;
 
 /**
  * 字符处理工具类
+ * 
  * @author wanggang
  *
  */

@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 图片类
+ * 
+ * @author wanggang
+ *
+ */
 public class Picture {
 
 	/*

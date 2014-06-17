@@ -1,5 +1,11 @@
 package zx.soft.sent.dao.domain;
 
+/**
+ * 旧的微博信息类
+ * 
+ * @author wanggang
+ *
+ */
 public class WeiboOldInfo {
 
 	private String wid;

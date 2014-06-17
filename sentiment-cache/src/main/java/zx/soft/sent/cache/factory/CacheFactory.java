@@ -13,6 +13,7 @@ import zx.soft.sent.utils.retry.RetryHandler;
 
 /**
  * 缓存工厂类
+ * 
  * @author wanggang
  *
  */
@@ -24,7 +25,9 @@ public class CacheFactory {
 
 	static {
 		try {
-			instance = (Cache) Proxy.newProxyInstance(Cache.class.getClassLoader(), new Class[] { Cache.class },
+			instance = (Cache) Proxy.newProxyInstance(
+					Cache.class.getClassLoader(),
+					new Class[] { Cache.class },
 					new RetryHandler<Cache>(new RedisCache(Config.get("redis.servers"), Integer.parseInt(Config
 							.get("redis.port")), Config.get("redis.password")), 5000, 10) {
 						@Override

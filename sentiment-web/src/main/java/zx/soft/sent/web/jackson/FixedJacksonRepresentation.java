@@ -6,6 +6,13 @@ import org.restlet.representation.Representation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 修复后的Jackson表达类
+ * 
+ * @author wanggang
+ *
+ * @param <T>
+ */
 public class FixedJacksonRepresentation<T> extends JacksonRepresentation<T> {
 
 	public FixedJacksonRepresentation(MediaType mediaType, T object) {
@@ -34,6 +41,3 @@ public class FixedJacksonRepresentation<T> extends JacksonRepresentation<T> {
 	}
 
 }
-
-
-

@@ -29,4 +29,5 @@ public class CacheQueryDemo {
 		 */
 		sr.deleteCacheQuery("cache_query", "123546987ddfeff");
 	}
+
 }

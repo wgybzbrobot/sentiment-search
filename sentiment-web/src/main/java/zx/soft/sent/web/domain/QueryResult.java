@@ -12,6 +12,7 @@ import org.apache.solr.common.util.NamedList;
 
 /**
  * 查询结果类
+ * 
  * @author wanggang
  *
  */

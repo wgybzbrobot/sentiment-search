@@ -1,8 +1,8 @@
 package zx.soft.sent.dao.domain;
 
 /**
- *  分类列表，采集站点 
- * FLLB_CJLB
+ * 分类列表，采集站点 
+ * 
  * @author wanggang
  *
  */

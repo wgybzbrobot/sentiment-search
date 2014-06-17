@@ -11,6 +11,12 @@ import zx.soft.sent.cache.factory.CacheFactory;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
 import zx.soft.sent.web.resource.SiteResource;
 
+/**
+ * 站点应用类
+ * 
+ * @author wanggang
+ *
+ */
 public class SiteApplication extends Application {
 
 	private static Cache cache;
