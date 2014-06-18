@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">  
+<properties>  
+	<!--配置本地索引库目录 -->
+	<entry key="index_pathlocal">/home/xiayun/tmp/index/Local/</entry> 
+	<!--配置同步索引库目录，多点用;分割为实现 -->
+	<entry key="index_pathout">D:\Index\out\hefei\</entry> 
+	<!--配置提交索引周期(秒)-->
+	<entry key="index_commitsecond">10</entry> 
+		<!--查询历史天数-->
+	<entry key="maxsearch_days">90</entry> 
+</properties>

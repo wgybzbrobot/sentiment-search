@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.yqjk.com/" targetNamespace="http://service.yqjk.com/" version="1.0">
+
+  <xs:element name="CreateIndexServer" type="tns:CreateIndexServer"/>
+
+  <xs:element name="CreateIndexServerResponse" type="tns:CreateIndexServerResponse"/>
+
+  <xs:element name="GetIndexModel" type="tns:GetIndexModel"/>
+
+  <xs:element name="GetIndexModelResponse" type="tns:GetIndexModelResponse"/>
+
+  <xs:element name="GetMessageSearchAll" type="tns:GetMessageSearchAll"/>
+
+  <xs:element name="GetMessageSearchAllResponse" type="tns:GetMessageSearchAllResponse"/>
+
+  <xs:element name="GetNetSearchAll" type="tns:GetNetSearchAll"/>
+
+  <xs:element name="GetNetSearchAllResponse" type="tns:GetNetSearchAllResponse"/>
+
+  <xs:element name="GetZhuanTiCountGroupModel" type="tns:GetZhuanTiCountGroupModel"/>
+
+  <xs:element name="GetZhuanTiCountGroupModelResponse" type="tns:GetZhuanTiCountGroupModelResponse"/>
+
+  <xs:element name="GetZhuanTiCountModel" type="tns:GetZhuanTiCountModel"/>
+
+  <xs:element name="GetZhuanTiCountModelResponse" type="tns:GetZhuanTiCountModelResponse"/>
+
+  <xs:element name="GetZhuanTiGroup" type="tns:GetZhuanTiGroup"/>
+
+  <xs:element name="GetZhuanTiGroupResponse" type="tns:GetZhuanTiGroupResponse"/>
+
+  <xs:element name="GetZhuanTiSearchAll" type="tns:GetZhuanTiSearchAll"/>
+
+  <xs:element name="GetZhuanTiSearchAllResponse" type="tns:GetZhuanTiSearchAllResponse"/>
+
+  <xs:element name="HistoryExist" type="tns:HistoryExist"/>
+
+  <xs:element name="HistoryExistResponse" type="tns:HistoryExistResponse"/>
+
+  <xs:element name="SearchAll" type="tns:SearchAll"/>
+
+  <xs:element name="SearchAllResponse" type="tns:SearchAllResponse"/>
+
+  <xs:complexType name="GetIndexModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetIndexModelResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:indexModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="indexModel">
+    <xs:complexContent>
+      <xs:extension base="tns:indexModelExt">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="url" type="xs:string"/>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+          <xs:element minOccurs="0" name="coutent" type="xs:string"/>
+          <xs:element minOccurs="0" name="auther" type="xs:string"/>
+          <xs:element minOccurs="0" name="releasetime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="zdbs" type="xs:string"/>
+          <xs:element minOccurs="0" name="zdmc" type="xs:string"/>
+          <xs:element minOccurs="0" name="lzid" type="xs:string"/>
+          <xs:element minOccurs="0" name="qqgroupno" type="xs:string"/>
+          <xs:element minOccurs="0" name="jingnei" type="xs:string"/>
+          <xs:element minOccurs="0" name="quyucode" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="indexModelExt">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fetchTime" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SearchAll">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+      <xs:element name="arg5" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element name="arg7" type="xs:int"/>
+      <xs:element name="arg8" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SearchAllResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:returnModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="returnModel">
+    <xs:sequence>
+      <xs:element name="allcount" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="modle" nillable="true" type="tns:searchModel"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="analyzerlist" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="searchModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="url" type="xs:string"/>
+      <xs:element minOccurs="0" name="tabletype" type="xs:string"/>
+      <xs:element minOccurs="0" name="sqltype" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiCountModel">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element name="arg1" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg5" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg7" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg8" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg9" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg10" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg11" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg12" type="xs:string"/>
+      <xs:element name="arg13" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg14" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg15" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiCountModelResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:dayCountModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dayCountModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="date" type="xs:string"/>
+      <xs:element name="count" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiSearchAll">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element name="arg1" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg5" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg7" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg8" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg9" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg10" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg11" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg12" type="xs:string"/>
+      <xs:element name="arg13" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg14" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg15" type="xs:string"/>
+      <xs:element name="arg16" type="xs:int"/>
+      <xs:element name="arg17" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiSearchAllResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:returnModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetMessageSearchAll">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element name="arg1" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg5" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg7" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg8" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg9" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg10" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg11" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg12" type="xs:string"/>
+      <xs:element name="arg13" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg14" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg15" type="xs:string"/>
+      <xs:element name="arg16" type="xs:int"/>
+      <xs:element name="arg17" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetMessageSearchAllResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:returnModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiGroup">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg4" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg5" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg7" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg8" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg9" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg10" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg11" type="xs:string"/>
+      <xs:element name="arg12" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg13" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg14" type="xs:string"/>
+      <xs:element name="arg15" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiGroupResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:nameKeySort"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="nameKeySort">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element name="count" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiCountGroupModel">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg4" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg5" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg7" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg8" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg9" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg10" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg11" type="xs:string"/>
+      <xs:element name="arg12" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg13" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg14" type="xs:string"/>
+      <xs:element name="arg15" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetZhuanTiCountGroupModelResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:dayCountGroupModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dayCountGroupModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="date" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="modellist" nillable="true" type="tns:nameKeySort"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CreateIndexServer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:indexModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CreateIndexServerResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetNetSearchAll">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg4" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg5" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg6" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg7" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg8" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg9" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg10" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg11" type="xs:string"/>
+      <xs:element name="arg12" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg13" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg14" type="xs:string"/>
+      <xs:element name="arg15" type="xs:int"/>
+      <xs:element name="arg16" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetNetSearchAllResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:returnModel"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HistoryExist">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HistoryExistResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

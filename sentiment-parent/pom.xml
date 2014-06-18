@@ -369,6 +369,12 @@
 				<scope>test</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+			</dependency>
+
 			<!-- Oracle相关 -->
 			<dependency>
 				<groupId>oracle.jdbc</groupId>
