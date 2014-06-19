@@ -41,13 +41,23 @@ public class PersistRunnable implements Runnable {
 	public synchronized void run() {
 
 		try {
-			if (!cache.sismember(SENT_KEY_INSERTED, record.getId())) {
+			RecordInsert tRecord = transRecord(record);
+			// 记录存在的情况下
+			if (cache.sismember(SENT_KEY_INSERTED, record.getId())) {
+				// 更新的时候存在线程安全，但是问题不太大
+				try {
+					sentRecord.updateRecord(tRecord);
+				} catch (Exception e) {
+					logger.error("Updating record=" + record.getId() + " occurs Exception=" + e);
+				}
+				// 记录不存在的情况下
+			} else {
 				// 下面两句顺序不可改变，否则会导致线程安全
 				cache.sadd(SENT_KEY_INSERTED, record.getId());
 				try {
-					sentRecord.insertRecord(transRecord(record));
+					sentRecord.insertRecord(tRecord);
 				} catch (Exception e) {
-					logger.error("Insert record=" + record.getId() + " occurs Exception=" + e);
+					logger.error("Inserting record=" + record.getId() + " occurs Exception=" + e);
 				}
 			}
 		} catch (Exception e) {

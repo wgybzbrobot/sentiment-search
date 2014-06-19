@@ -43,6 +43,12 @@ public interface SentimentRecordDao {
 	public List<RecordSelect> selectRecordsByLasttime(SelectParamsByTime selectParamsByTime);
 
 	/**
+	 * 更新Record数据
+	 *     注意：更新数据的时候id要一样
+	 */
+	public void updateRecord(RecordInsert recordInsert);
+
+	/**
 	 * 删除Record数据，根据md5的id
 	 */
 	public void deleteRecordById(SelectParamsById selectParamsById);

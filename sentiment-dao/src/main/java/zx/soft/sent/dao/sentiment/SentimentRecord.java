@@ -87,6 +87,16 @@ public class SentimentRecord {
 	}
 
 	/**
+	 * 更新Record数据
+	 */
+	public void updateRecord(RecordInsert recordInsert) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
+			sentimentRecordDao.updateRecord(recordInsert);
+		}
+	}
+
+	/**
 	 * 删除Record数据，根据md5的id
 	 */
 	public void deleteRecordById(String tablename, String id) {

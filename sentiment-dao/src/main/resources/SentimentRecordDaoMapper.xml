@@ -57,9 +57,18 @@
 		`lasttime`,`server_id`,`identify_id`,`identify_md5`,`keyword`,`first_time`,`update_time`,`ip`,`location`,
 		`geo`,`receive_addr`,`append_addr`,`send_addr`,`source_name`,`source_type`,`country_code`,`location_code`,`province_code`,
 		`city_code`
-		FROM ${tablename} WHERE `lasttime` BETWEEN #{low} AND
-		#{high};
+		FROM ${tablename} WHERE `lasttime` BETWEEN #{low} AND #{high};
 	</select>
+
+	<!-- 更新Record数据 -->
+	<update id="updateRecord" parameterType="RecordInsert">
+		UPDATE ${tablename} SET
+		`comment_count` = #{comment_count},`read_count` =
+		#{read_count},`favorite_count` = #{favorite_count},`attitude_count` =
+		#{attitude_count},`repost_count` = #{repost_count},`lasttime` =
+		#{lasttime},`update_time` = #{update_time}
+		WHERE `id` = #{id};
+	</update>
 
 	<!-- 删除Record数据，根据md5的id -->
 	<delete id="deleteRecordById" parameterType="SelectParamsById">
@@ -93,7 +102,8 @@
 
 	<!-- 删除查询缓存数据 -->
 	<delete id="deleteCacheQuery" parameterType="InsertCacheQuery">
-		DELETE FROM ${tablename} WHERE `query_id` = #{query_id};
+		DELETE FROM
+		${tablename} WHERE `query_id` = #{query_id};
 	</delete>
 
 </mapper>
