@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.RecordSelect;
-import zx.soft.sent.web.application.RetriveRecordApplication;
+import zx.soft.sent.web.application.PullRecordApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.utils.URLCodecUtils;
 
@@ -20,11 +20,11 @@ import zx.soft.sent.web.utils.URLCodecUtils;
  * @author wanggang
  *
  */
-public class RetriveRecordResource extends ServerResource {
+public class PullRecordResource extends ServerResource {
 
-	private static Logger logger = LoggerFactory.getLogger(RetriveRecordResource.class);
+	private static Logger logger = LoggerFactory.getLogger(PullRecordResource.class);
 
-	private static RetriveRecordApplication application;
+	private static PullRecordApplication application;
 
 	private String ids;
 	private String keyword = ""; // 逗号分割
@@ -33,7 +33,7 @@ public class RetriveRecordResource extends ServerResource {
 	@Override
 	public void doInit() {
 		ids = (String) getRequest().getAttributes().get("ids");
-		application = (RetriveRecordApplication) getApplication();
+		application = (PullRecordApplication) getApplication();
 		for (Parameter p : getRequest().getResourceRef().getQueryAsForm()) {
 			if ("keyword".equalsIgnoreCase(p.getName())) {
 				keyword = p.getValue();

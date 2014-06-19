@@ -12,7 +12,7 @@ import zx.soft.sent.dao.domain.RecordSelect;
 import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
-import zx.soft.sent.web.resource.RetriveRecordResource;
+import zx.soft.sent.web.resource.PullRecordResource;
 
 /**
  * MySQL数据提取应用类
@@ -20,13 +20,13 @@ import zx.soft.sent.web.resource.RetriveRecordResource;
  * @author wanggang
  *
  */
-public class RetriveRecordApplication extends Application {
+public class PullRecordApplication extends Application {
 
-	//	private static Logger logger = LoggerFactory.getLogger(RetriveRecordApplication.class);
+	//	private static Logger logger = LoggerFactory.getLogger(PullRecordApplication.class);
 
 	private final SentimentRecord sentRecord;
 
-	public RetriveRecordApplication() {
+	public PullRecordApplication() {
 		sentRecord = new SentimentRecord(MybatisConfig.ServerEnum.sentiment);
 	}
 
@@ -34,9 +34,9 @@ public class RetriveRecordApplication extends Application {
 	public synchronized Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		// 1、根据多个id查询记录：
-		router.attach("/ids/{ids}", RetriveRecordResource.class);
+		router.attach("/pull/ids/{ids}", PullRecordResource.class);
 		// 2、根据lasttime时间段查询记录：
-		//		router.attach("/get", RetriveRecordResource.class);
+		//		router.attach("/get", PullRecordResource.class);
 		return router;
 	}
 
