@@ -16,21 +16,25 @@ public class CreateTables {
 
 	public static final String SENT_TABLE = "sent_records_";
 
+	public static final String SENT_SITE_TABLE = "sent_site_info";
+
 	/**
 	 * 主函数
 	 */
 	public static void main(String[] args) {
 
 		SentJDBC sentJDBC = new SentJDBC();
+		// 创建站点数据表
+		sentJDBC.createSiteTable(SENT_SITE_TABLE);
 		// 创建查询缓存数据表
-		sentJDBC.createQueryCacheTable(CreateTables.CACHE_QUERY_TABLE);
+		//		sentJDBC.createQueryCacheTable(CreateTables.CACHE_QUERY_TABLE);
 		// 创建舆情数据表表名表
-		sentJDBC.createTablenameTable(CreateTables.SENT_TABLE_TABLE);
+		//		sentJDBC.createTablenameTable(CreateTables.SENT_TABLE_TABLE);
 		// 创建舆情数据表
-		for (int i = 0; i < CreateTables.MAX_TABLE_NUM; i++) {
-			System.out.println(i);
-			sentJDBC.createSentimentTable(CreateTables.SENT_TABLE + i);
-		}
+		//		for (int i = 0; i < CreateTables.MAX_TABLE_NUM; i++) {
+		//			System.out.println(i);
+		//			sentJDBC.createSentimentTable(CreateTables.SENT_TABLE + i);
+		//		}
 		sentJDBC.close();
 		System.out.println("Finish!");
 

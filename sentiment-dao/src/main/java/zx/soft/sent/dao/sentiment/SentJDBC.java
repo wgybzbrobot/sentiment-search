@@ -86,22 +86,16 @@ public class SentJDBC {
 	 * 创建舆情数据表名数据表
 	 */
 	public void createTablenameTable(String tablename) {
-
 		String sql = "CREATE TABLE " + tablename + " (`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '序号',"
 				+ "`name` varchar(50) NOT NULL COMMENT '用户名',`lasttime` int(11) unsigned NOT NULL COMMENT '创建时间',"
 				+ "PRIMARY KEY (`id`)) " + "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='舆情数据表名数据表' AUTO_INCREMENT=1 ;";
-		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
-			pstmt.execute(sql);
-		} catch (SQLException e) {
-			throw new RuntimeException("SQLException: " + e);
-		}
+		execSQL(sql);
 	}
 
 	/**
 	 * 创建舆情数据表
 	 */
 	public void createSentimentTable(String tablename) {
-
 		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " ("
 				+ "`rid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',"
 				+ "`id` char(40) NOT NULL COMMENT '记录id，一般通过记录的url进行md5加密得到',"
@@ -149,11 +143,7 @@ public class SentJDBC {
 				+ "`city_code` mediumint(9) unsigned NOT NULL COMMENT '城市编码',"
 				+ "PRIMARY KEY (`rid`),UNIQUE KEY `id` (`id`), KEY `timestamp` (`timestamp`)) "
 				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='舆情数据表' AUTO_INCREMENT=1 ;";
-		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
-			pstmt.execute(sql);
-		} catch (SQLException e) {
-			throw new RuntimeException("SQLException: " + e);
-		}
+		execSQL(sql);
 	}
 
 	/**
@@ -167,6 +157,41 @@ public class SentJDBC {
 				+ "`query_result` MEDIUMTEXT NOT NULL COMMENT  '查询结果',"
 				+ "`lasttime` INT UNSIGNED NOT NULL COMMENT  '记录时间',"
 				+ "UNIQUE (`query_id`)) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  '查询缓存'";
+		execSQL(sql);
+	}
+
+	/**
+	 * 创建站点数据表
+	 */
+	public void createSiteTable(String tablename) {
+		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " ("
+				+ "`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',`url` char(250) NOT NULL COMMENT '站点主页',"
+				+ "`zone` tinyint(3) unsigned NOT NULL COMMENT '站点区域(1境内2境外)',"
+				+ "`description` varchar(500) NOT NULL COMMENT '站点描述',"
+				+ "`source_name` char(100) NOT NULL COMMENT '站点名称',"
+				+ "`platform` tinyint(3) unsigned NOT NULL COMMENT '站点标识(1资讯2论坛3微博4博客5QQ6搜索7回复8邮件)',"
+				+ "`status` tinyint(3) unsigned NOT NULL COMMENT '审核状态',"
+				+ "`spider_id` mediumint(8) unsigned NOT NULL COMMENT '爬虫信息ID',"
+				+ "`spider_type` char(250) NOT NULL COMMENT '爬虫类型',"
+				+ "`source_id` mediumint(8) unsigned NOT NULL COMMENT '采集站点ID',"
+				+ "`source_type` tinyint(3) unsigned NOT NULL COMMENT '归属分类(1全网搜索2网络巡检4重点关注)',"
+				+ "`source_code` int(10) unsigned NOT NULL COMMENT '站点归属地(市级代码)',"
+				+ "`contact` char(100) NOT NULL COMMENT '站点联系方式',`admin` char(50) NOT NULL COMMENT '站点负责人',"
+				+ "`root` int(10) unsigned NOT NULL COMMENT '父节点',"
+				+ "`params` varchar(500) NOT NULL COMMENT '参数名键值对列表',"
+				+ "`uid` int(10) unsigned NOT NULL COMMENT '创建人ID',"
+				+ "`timestamp` int(10) unsigned NOT NULL COMMENT '创建时间',"
+				+ "`identify` int(10) unsigned NOT NULL COMMENT '标识',"
+				+ "`lasttime` int(10) unsigned NOT NULL COMMENT '记录时间',"
+				+ "PRIMARY KEY (`id`),UNIQUE KEY `source_id` (`source_id`), KEY `source_name` (`source_name`)) "
+				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='與请站点数据表' AUTO_INCREMENT=1 ;";
+		execSQL(sql);
+	}
+
+	/**
+	 * 执行sql语句
+	 */
+	private void execSQL(String sql) {
 		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
 			pstmt.execute(sql);
 		} catch (SQLException e) {

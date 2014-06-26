@@ -8,6 +8,27 @@ package zx.soft.sent.dao.domain;
  */
 public class SiteInfo {
 
+	/*
+	ZDZY——>	url
+	ZDQY——>	zone
+	ZDMS——>	description
+	ZDMC——>	source_name
+	ZDBS——>platform
+	SHZT——>	status
+	PCXXID——>spider_id
+	PCLX——>	spider_type
+	ID——>source_id
+	GSFL——>source_type
+	GSD——>source_code
+	GLYDH——>contact
+	GLY——>admin
+	FJD——>root
+	CSLB——>	params
+	CJZID——>uid
+	CJSJ——>	timestamp
+	BZ——>identify
+	*/
+
 	private String url; // 站点主页
 	private int zone; // 站点区域(1境内2境外)
 	private String description; // 站点描述
@@ -16,14 +37,25 @@ public class SiteInfo {
 	private int status; // 审核状态
 	private int spider_id; // 爬虫信息ID
 	private String spider_type; // 爬虫类型
+	private int source_id; // 采集站点ID
 	private int source_type; // 归属分类(1全网搜索2网络巡检4重点关注)
 	private int source_code; // 站点归属地(市级代码)
 	private String contact; // 站点联系方式
 	private String admin; // 站点负责人
-	private int root; // 父节点
+	private long root; // 父节点
 	private String params; // 参数名键值对列表
+	private long uid; // 创建人ID
 	private long timestamp; // 创建时间
 	private int identify; // 标识
+
+	@Override
+	public String toString() {
+		return "SiteInfo:[url=" + url + ",zone=" + zone + ",description=" + description + ",source_name=" + source_name
+				+ ",platform=" + platform + ",status=" + status + ",spider_id=" + spider_id + ",spider_type="
+				+ spider_type + ",source_id=" + source_id + ",source_type=" + source_type + ",source_code="
+				+ source_code + ",contact=" + contact + ",admin=" + admin + ",root=" + root + ",params=" + params
+				+ ",uid=" + uid + ",timestamp=" + timestamp + ",identify=" + identify + "]";
+	}
 
 	public String getUrl() {
 		return url;
@@ -89,6 +121,14 @@ public class SiteInfo {
 		this.spider_type = spider_type;
 	}
 
+	public int getSource_id() {
+		return source_id;
+	}
+
+	public void setSource_id(int source_id) {
+		this.source_id = source_id;
+	}
+
 	public int getSource_type() {
 		return source_type;
 	}
@@ -121,11 +161,11 @@ public class SiteInfo {
 		this.admin = admin;
 	}
 
-	public int getRoot() {
+	public long getRoot() {
 		return root;
 	}
 
-	public void setRoot(int root) {
+	public void setRoot(long root) {
 		this.root = root;
 	}
 
@@ -135,6 +175,14 @@ public class SiteInfo {
 
 	public void setParams(String params) {
 		this.params = params;
+	}
+
+	public long getUid() {
+		return uid;
+	}
+
+	public void setUid(long uid) {
+		this.uid = uid;
 	}
 
 	public long getTimestamp() {
