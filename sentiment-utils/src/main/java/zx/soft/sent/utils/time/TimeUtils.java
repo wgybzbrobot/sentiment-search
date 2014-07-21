@@ -24,6 +24,7 @@ public class TimeUtils {
 
 	public static void main(String[] args) {
 		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014"));
+		System.out.println(TimeUtils.transStrToCommonDateStr("Thu Apr 10 11:40:56 CST 2014", 8));
 	}
 
 	/**
@@ -52,11 +53,23 @@ public class TimeUtils {
 
 	/**
 	 * 将Solr返回的时间串转换成可读性较好的格式
-	 * 如：SThu Apr 10 11:40:56 CST 2014——>2014-04-10 10:07:14
+	 * 如：Thu Apr 10 11:40:56 CST 2014——>2014-04-10 10:07:14
 	 */
 	public static String transStrToCommonDateStr(String str) {
 		try {
 			return LONG_FORMAT.format(dateFormat.parse(str));
+		} catch (ParseException e) {
+			return "";
+			//			throw new RuntimeException();
+		}
+	}
+
+	/**
+	 * 将Solr返回的时间串转换成可读性较好的格式，并提前N小时
+	 */
+	public static String transStrToCommonDateStr(String str, int hours) {
+		try {
+			return LONG_FORMAT.format(dateFormat.parse(str).getTime() - 8 * 3600 * 1000);
 		} catch (ParseException e) {
 			return "";
 			//			throw new RuntimeException();

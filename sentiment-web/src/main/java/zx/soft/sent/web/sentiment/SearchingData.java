@@ -117,6 +117,7 @@ public class SearchingData {
 		result.setNumFound(queryResponse.getResults().getNumFound());
 		result.setResults(queryResponse.getResults());
 		// 处理时间timestamp、lasttime、first_time、update_time
+		// 同时，查询出来的结果比原先的晚8小时，所以需要将得到的时间减少8小时
 		tackleTime(result);
 		// 将highlight移到result中，减少数据量，同时方便调用
 		for (int i = 0; i < result.getResults().size(); i++) {
@@ -155,26 +156,32 @@ public class SearchingData {
 			if (str.getFieldValueMap().get("timestamp") != null) {
 				result.getResults()
 						.get(i)
-						.setField("timestamp",
-								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("timestamp").toString()));
+						.setField(
+								"timestamp",
+								TimeUtils
+										.transStrToCommonDateStr(str.getFieldValueMap().get("timestamp").toString(), 8));
 			}
 			if (str.getFieldValueMap().get("lasttime") != null) {
 				result.getResults()
 						.get(i)
 						.setField("lasttime",
-								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("lasttime").toString()));
+								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("lasttime").toString(), 8));
 			}
 			if (str.getFieldValueMap().get("first_time") != null) {
 				result.getResults()
 						.get(i)
-						.setField("first_time",
-								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("first_time").toString()));
+						.setField(
+								"first_time",
+								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("first_time").toString(),
+										8));
 			}
 			if (str.getFieldValueMap().get("update_time") != null) {
 				result.getResults()
 						.get(i)
-						.setField("update_time",
-								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("update_time").toString()));
+						.setField(
+								"update_time",
+								TimeUtils.transStrToCommonDateStr(str.getFieldValueMap().get("update_time").toString(),
+										8));
 			}
 		}
 	}
