@@ -59,8 +59,8 @@ public class SearchingData {
 		SearchingData search = new SearchingData();
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("*:*");
-		queryParams.setFq("id:beb7488c7fef91654fc1a7ea4ad522b6"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
+		queryParams.setQ("德国");
+		queryParams.setFq("timestamp:[2014-07-22T00:00:00Z TO 2014-07-22T23:59:59Z]"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		//		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		//		queryParams.setStart(0);
 		//		queryParams.setRows(10);
@@ -69,7 +69,7 @@ public class SearchingData {
 		//		queryParams.setHlfl("title,content");
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		//		queryParams.setFacetField("platform");
+		queryParams.setFacetField("nickname");
 		QueryResult result = search.queryData(queryParams);
 		System.out.println(JsonUtils.toJson(result));
 		//		search.deleteQuery();
@@ -110,6 +110,7 @@ public class SearchingData {
 		//		result.setHighlighting(queryResponse.getHighlighting());
 		result.setGroup(queryResponse.getGroupResponse());
 		result.setFacetQuery(queryResponse.getFacetQuery());
+		//		System.out.println(queryResponse.getFacetFields());
 		result.setFacetFields(transFacetField(queryResponse.getFacetFields(), queryParams));
 		result.setFacetDates(transFacetField(queryResponse.getFacetDates(), queryParams));
 		result.setFacetRanges(queryResponse.getFacetRanges());
@@ -248,6 +249,8 @@ public class SearchingData {
 		if (queryParams.getQ() != "") {
 			query.setQuery(queryParams.getQ());
 		}
+		// 忽略版本信息，否则会对分类统计产生影响
+		query.add("version", null);
 		// 分片失效忽略
 		query.set("shards.tolerant", true);
 		// 设置关键词连接逻辑是AND

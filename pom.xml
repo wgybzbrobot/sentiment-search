@@ -21,7 +21,9 @@
 		<module>sentiment-cache</module>
 		<module>sentiment-hdfs</module>
 		<module>sentiment-solr</module>
+		<!--  
 		<module>sentiment-lucene</module>
+		-->
 		<module>sentiment-es</module>
 		<module>sentiment-hs</module>
 		<module>sentiment-spider</module>
