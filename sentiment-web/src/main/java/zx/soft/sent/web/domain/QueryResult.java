@@ -21,6 +21,7 @@ public class QueryResult {
 
 	private long numFound;
 	// Direct pointers to known types
+	private int QTime;
 	private NamedList<Object> header = null;
 	private SolrDocumentList results = null;
 	private NamedList<ArrayList> sort = null;
@@ -34,6 +35,14 @@ public class QueryResult {
 	private List<SimpleFacetInfo> facetDates = null;
 	private List<RangeFacet> facetRanges = null;
 	private NamedList<List<PivotField>> facetPivot = null;
+
+	public int getQTime() {
+		return QTime;
+	}
+
+	public void setQTime(int qTime) {
+		QTime = qTime;
+	}
 
 	public long getNumFound() {
 		return numFound;

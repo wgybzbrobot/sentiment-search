@@ -105,7 +105,9 @@ public class SearchingData {
 		//		System.out.println(JsonUtils.toJson(queryResponse.getResponse()));
 
 		QueryResult result = new QueryResult();
-		result.setHeader(queryResponse.getHeader());
+		result.setQTime(queryResponse.getQTime());
+		// header数据太长，暂时不需要
+		//				result.setHeader(queryResponse.getHeader());
 		result.setSort(queryResponse.getSortValues());
 		//		result.setHighlighting(queryResponse.getHighlighting());
 		result.setGroup(queryResponse.getGroupResponse());
