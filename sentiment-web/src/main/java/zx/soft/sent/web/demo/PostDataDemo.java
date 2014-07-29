@@ -12,7 +12,7 @@ public class PostDataDemo {
 	public static void main(String[] args) {
 
 		RecordInfo recordInfo1 = new RecordInfo();
-		recordInfo1.setId("123456789");
+		recordInfo1.setId("128");
 		recordInfo1.setPlatform(7);
 		recordInfo1.setMid("123abcdef");
 		recordInfo1.setUsername("987654321");
@@ -59,7 +59,7 @@ public class PostDataDemo {
 		recordInfo1.setCity_code(12);
 
 		RecordInfo recordInfo2 = new RecordInfo();
-		recordInfo2.setId("987654321");
+		recordInfo2.setId("256");
 		recordInfo2.setPlatform(7);
 		recordInfo2.setMid("456jdjdkff");
 		recordInfo2.setUsername("2564788");

@@ -8,6 +8,7 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.dao.domain.RecordInfo;
 import zx.soft.sent.utils.threads.ApplyThreadPool;
 import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.common.ErrorResponse;
@@ -46,6 +47,9 @@ public class SentIndexResource extends ServerResource {
 		}
 		logger.info("Request Url=" + getReference() + ", Records' size=" + data.getRecords().size());
 
+		for (RecordInfo d : data.getRecords()) {
+			logger.info("Indexing data's ID = " + d.getId());
+		}
 		// 另开一个线程索引和持久化数据，以免影响客户端响应时间
 		pool.execute(new Runnable() {
 			@Override
