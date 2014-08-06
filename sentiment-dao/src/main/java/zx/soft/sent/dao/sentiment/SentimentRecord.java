@@ -58,6 +58,9 @@ public class SentimentRecord {
 
 	/**
 	 * 插入Record数据
+	 * 
+	 * 注意：加上synchronized在同一时刻只有一个线程可以访问，但是效率等同于单线程
+	 * 
 	 */
 	public void insertRecord(RecordInsert recordInsert) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
