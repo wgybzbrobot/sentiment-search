@@ -4,11 +4,13 @@
 
 	<groupId>zx.soft</groupId>
 	<artifactId>sentiment-parent</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>Sentiment Parent[Dependency Jar]</name>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<junit.version>4.11</junit.version>
@@ -369,7 +371,6 @@
 				<artifactId>ojdbc</artifactId>
 				<version>1.0.0</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
@@ -448,7 +449,7 @@
 			</testResource>
 		</testResources>
 
-		<finalName>sentiment-parent</finalName>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 
 	</build>
 
@@ -470,18 +471,19 @@
 
 	<!-- 部署仓库 -->
 	<distributionManagement>
-		<repository>
-			<id>zxsoft-releases</id>
-			<name>Nexus Release Repository</name>
-			<url>http://192.168.3.23:18081/nexus/content/repositories/releases/</url>
-		</repository>
-		<!-- <snapshotRepository> <id>zxsoft-snapshots</id> <name>Nexus Snapshot 
-			Repository</name> <url>http://192.168.3.23:18081/nexus/content/repositories/snapshots/</url> 
-			</snapshotRepository> -->
+		<!-- <repository> <id>zxsoft-releases</id> <name>Nexus Release Repository</name> 
+			<url>http://192.168.3.23:18081/nexus/content/repositories/releases/</url> 
+			</repository> -->
 		<snapshotRepository>
-			<id>sentiment</id>
-			<url>http://hdp323:18081/nexus/content/repositories/sentiment</url>
+			<id>zxsoft-snapshots</id>
+			<name>Nexus 
+			Snapshot Repository</name>
+			<url>http://192.168.3.23:18081/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
+		<repository>
+			<id>sentiment</id>
+			<url>http://192.168.3.23:18081/nexus/content/repositories/sentiment</url>
+		</repository>
 	</distributionManagement>
 
 </project>

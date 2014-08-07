@@ -4,7 +4,7 @@
 
 	<parent>
 		<groupId>zx.soft</groupId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<artifactId>sentiment-parent</artifactId>
 		<relativePath>sentiment-parent/pom.xml</relativePath>
 	</parent>
@@ -21,9 +21,7 @@
 		<module>sentiment-cache</module>
 		<module>sentiment-hdfs</module>
 		<module>sentiment-solr</module>
-		<!--  
-		<module>sentiment-lucene</module>
-		-->
+		<!-- <module>sentiment-lucene</module> -->
 		<module>sentiment-es</module>
 		<module>sentiment-hs</module>
 		<module>sentiment-spider</module>
