@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain;
+package zx.soft.sent.dao.domain.platform;
 
 /**
  * 图片类

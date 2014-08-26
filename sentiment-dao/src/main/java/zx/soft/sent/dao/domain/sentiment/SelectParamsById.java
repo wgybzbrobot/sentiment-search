@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain;
+package zx.soft.sent.dao.domain.sentiment;
 
 /**
  * 根据ID查询类

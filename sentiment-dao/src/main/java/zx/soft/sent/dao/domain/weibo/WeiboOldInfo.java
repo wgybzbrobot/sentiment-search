@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain;
+package zx.soft.sent.dao.domain.weibo;
 
 /**
  * 旧的微博信息类

@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain;
+package zx.soft.sent.dao.domain.platform;
 
 /**
  * POST的数据类，注意：id需要md5，时间都是10位的数字时间戳，精确到秒的

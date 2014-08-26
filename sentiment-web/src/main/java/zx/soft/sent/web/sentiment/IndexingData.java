@@ -1,6 +1,6 @@
 package zx.soft.sent.web.sentiment;
 
-import zx.soft.sent.dao.domain.RecordInfo;
+import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.solr.index.IndexCloudSolr;
 
 /**

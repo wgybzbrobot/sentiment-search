@@ -1,18 +1,18 @@
-package zx.soft.sent.dao.domain;
+package zx.soft.sent.dao.domain.weibo;
 
 /**
- * 旧的微博类
+ * 新浪微博
  * 
  * @author wanggang
  *
  */
-public class WeiboOld {
+public class SinaWeibo {
 
 	private final Long wid;
 	private final Long username;
 	private final int repostsCount;
 	private final int commentsCount;
-	//	private final int attitudesCount;
+	private final int attitudesCount;
 	private final String text;
 	private final Long createat;
 	private final Long owid;
@@ -24,15 +24,14 @@ public class WeiboOld {
 	private final String originalpic;
 	private final String source;
 	private final String visible;
+	private final int mlevel;
 
-	//	private final int mlevel;
-
-	public WeiboOld(Builder builder) {
+	public SinaWeibo(Builder builder) {
 		this.wid = builder.wid;
 		this.username = builder.username;
 		this.repostsCount = builder.repostsCount;
 		this.commentsCount = builder.commentsCount;
-		//		this.attitudesCount = builder.attitudesCount;
+		this.attitudesCount = builder.attitudesCount;
 		this.text = builder.text;
 		this.createat = builder.createat;
 		this.owid = builder.owid;
@@ -44,7 +43,7 @@ public class WeiboOld {
 		this.originalpic = builder.originalpic;
 		this.source = builder.source;
 		this.visible = builder.visible;
-		//		this.mlevel = builder.mlevel;
+		this.mlevel = builder.mlevel;
 	}
 
 	public static class Builder {
@@ -53,7 +52,7 @@ public class WeiboOld {
 		private final Long username;
 		private int repostsCount;
 		private int commentsCount;
-		//		private int attitudesCount;
+		private int attitudesCount;
 		private String text;
 		private Long createat;
 		private Long owid;
@@ -65,8 +64,7 @@ public class WeiboOld {
 		private String originalpic;
 		private String source;
 		private String visible;
-
-		//		private int mlevel;
+		private int mlevel;
 
 		public Builder(Long wid, Long username) {
 			this.wid = wid;
@@ -83,10 +81,10 @@ public class WeiboOld {
 			return this;
 		}
 
-		//		public Builder setAttitudesCount(int attitudesCount) {
-		//			this.attitudesCount = attitudesCount;
-		//			return this;
-		//		}
+		public Builder setAttitudesCount(int attitudesCount) {
+			this.attitudesCount = attitudesCount;
+			return this;
+		}
 
 		public Builder setText(String text) {
 			this.text = text;
@@ -143,13 +141,13 @@ public class WeiboOld {
 			return this;
 		}
 
-		//		public Builder setMlevel(int mlevel) {
-		//			this.mlevel = mlevel;
-		//			return this;
-		//		}
+		public Builder setMlevel(int mlevel) {
+			this.mlevel = mlevel;
+			return this;
+		}
 
-		public WeiboOld build() {
-			return new WeiboOld(this);
+		public SinaWeibo build() {
+			return new SinaWeibo(this);
 		}
 
 	}
@@ -170,9 +168,9 @@ public class WeiboOld {
 		return commentsCount;
 	}
 
-	//	public int getAttitudesCount() {
-	//		return attitudesCount;
-	//	}
+	public int getAttitudesCount() {
+		return attitudesCount;
+	}
 
 	public String getText() {
 		return text;
@@ -218,8 +216,8 @@ public class WeiboOld {
 		return visible;
 	}
 
-	//	public int getMlevel() {
-	//		return mlevel;
-	//	}
+	public int getMlevel() {
+		return mlevel;
+	}
 
 }

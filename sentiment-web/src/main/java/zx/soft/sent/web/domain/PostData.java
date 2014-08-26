@@ -2,7 +2,7 @@ package zx.soft.sent.web.domain;
 
 import java.util.List;
 
-import zx.soft.sent.dao.domain.RecordInfo;
+import zx.soft.sent.dao.domain.platform.RecordInfo;
 
 /**
  * POST的索引数据

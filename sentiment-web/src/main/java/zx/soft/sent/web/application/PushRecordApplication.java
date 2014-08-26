@@ -7,7 +7,7 @@ import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import zx.soft.sent.core.persist.PersistCore;
-import zx.soft.sent.dao.domain.RecordInfo;
+import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.web.resource.PushRecordResource;
 
 /**

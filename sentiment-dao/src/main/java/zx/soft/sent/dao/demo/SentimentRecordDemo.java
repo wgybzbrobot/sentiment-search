@@ -1,7 +1,7 @@
 package zx.soft.sent.dao.demo;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.RecordInsert;
+import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 
 public class SentimentRecordDemo {

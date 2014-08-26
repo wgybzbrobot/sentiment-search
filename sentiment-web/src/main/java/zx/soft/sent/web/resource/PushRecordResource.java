@@ -7,7 +7,7 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.dao.domain.RecordInfo;
+import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.web.application.PushRecordApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.utils.URLCodecUtils;

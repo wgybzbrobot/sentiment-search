@@ -1,15 +1,15 @@
 package zx.soft.sent.solr.utils;
 
-import zx.soft.sent.dao.domain.AutmSearch;
-import zx.soft.sent.dao.domain.Blog;
-import zx.soft.sent.dao.domain.Email;
-import zx.soft.sent.dao.domain.Forum;
-import zx.soft.sent.dao.domain.Information;
-import zx.soft.sent.dao.domain.Picture;
-import zx.soft.sent.dao.domain.QQGroup;
-import zx.soft.sent.dao.domain.Record;
-import zx.soft.sent.dao.domain.Reply;
-import zx.soft.sent.dao.domain.Weibo;
+import zx.soft.sent.dao.domain.platform.AutmSearch;
+import zx.soft.sent.dao.domain.platform.Blog;
+import zx.soft.sent.dao.domain.platform.Email;
+import zx.soft.sent.dao.domain.platform.Forum;
+import zx.soft.sent.dao.domain.platform.Information;
+import zx.soft.sent.dao.domain.platform.Picture;
+import zx.soft.sent.dao.domain.platform.QQGroup;
+import zx.soft.sent.dao.domain.platform.Record;
+import zx.soft.sent.dao.domain.platform.Reply;
+import zx.soft.sent.dao.domain.weibo.Weibo;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
 
 /**

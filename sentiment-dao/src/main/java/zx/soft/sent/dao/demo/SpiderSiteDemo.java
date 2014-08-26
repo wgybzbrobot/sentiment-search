@@ -1,7 +1,7 @@
 package zx.soft.sent.dao.demo;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.SiteInfo;
+import zx.soft.sent.dao.domain.platform.SiteInfo;
 import zx.soft.sent.dao.spidersite.SpiderSite;
 
 public class SpiderSiteDemo {

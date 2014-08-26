@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.WeiboOldInfo;
-import zx.soft.sent.dao.domain.WeiboSinaParams;
+import zx.soft.sent.dao.domain.weibo.WeiboOldInfo;
+import zx.soft.sent.dao.domain.weibo.WeiboSinaParams;
 
 /**
  * 新浪微薄数据CURD类

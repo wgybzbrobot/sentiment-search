@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.core.persist.PersistCore;
-import zx.soft.sent.dao.domain.RecordInfo;
+import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.web.resource.SentIndexResource;
 import zx.soft.sent.web.sentiment.IndexingData;
 

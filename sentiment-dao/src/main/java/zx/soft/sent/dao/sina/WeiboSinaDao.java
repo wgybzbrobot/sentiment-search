@@ -2,8 +2,8 @@ package zx.soft.sent.dao.sina;
 
 import java.util.List;
 
-import zx.soft.sent.dao.domain.WeiboOldInfo;
-import zx.soft.sent.dao.domain.WeiboSinaParams;
+import zx.soft.sent.dao.domain.weibo.WeiboOldInfo;
+import zx.soft.sent.dao.domain.weibo.WeiboSinaParams;
 
 /**
  * 新浪微薄数据接口

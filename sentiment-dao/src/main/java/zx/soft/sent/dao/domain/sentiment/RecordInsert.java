@@ -1,6 +1,4 @@
-package zx.soft.sent.dao.domain;
-
-import java.util.Date;
+package zx.soft.sent.dao.domain.sentiment;
 
 /**
  * Solr中的每条记录类
@@ -8,8 +6,9 @@ import java.util.Date;
  * @author wanggang
  *
  */
-public class Record {
+public class RecordInsert {
 
+	private final String tablename;
 	private final String id; // 记录id，一般通过记录的url进行md5加密得到
 	private final int platform; // 平台类型，如：博客、微博、论坛等，用数字代替
 	private final String mid; // 主id
@@ -34,15 +33,15 @@ public class Record {
 	private final String video_url; // 视频url
 	private final String pic_url; // 图片url
 	private final String voice_url; // 音频url
-	private final Date timestamp; // 该记录发布时间
+	private final long timestamp; // 该记录发布时间
 	private final int source_id; // 来源网站名
-	private final Date lasttime; // 最新监测时间
+	private final long lasttime; // 最新监测时间
 	private final int server_id; // 来自前置机编号
 	private final long identify_id; // 标志id
 	private final String identify_md5; // 标志md5
 	private final String keyword; // 关键词
-	private final Date first_time; // 首次发现时间
-	private final Date update_time; // 最新更新时间
+	private final long first_time; // 首次发现时间
+	private final long update_time; // 最新更新时间
 	private final String ip; // 该记录发布的ip地址
 	private final String location; // 该记录发布的区域地址
 	private final String geo; // 该记录发布的地理位置信息
@@ -50,7 +49,7 @@ public class Record {
 	private final String append_addr; // 抄送人地址
 	private final String send_addr; // 发送人地址
 	private final String source_name; // 来源名称
-	private final int source_type; // 归属分类，也就是来源id的大分类
+	private final int source_type;
 	private final int country_code; // 国家代码
 	private final int location_code; // 区域编码
 	private final int province_code;
@@ -74,7 +73,8 @@ public class Record {
 				+ source_type + "}";
 	}
 
-	public Record(Builder builder) {
+	public RecordInsert(Builder builder) {
+		this.tablename = builder.tablename;
 		this.id = builder.id;
 		this.platform = builder.platform;
 		this.mid = builder.mid;
@@ -115,15 +115,16 @@ public class Record {
 		this.append_addr = builder.append_addr;
 		this.send_addr = builder.send_addr;
 		this.source_name = builder.source_name;
-		this.source_type = builder.source_type;
 		this.country_code = builder.country_code;
 		this.location_code = builder.location_code;
 		this.province_code = builder.province_code;
 		this.city_code = builder.city_code;
+		this.source_type = builder.source_type;
 	}
 
 	public static class Builder {
 
+		private final String tablename;
 		private final String id;
 		private final int platform;
 		private String mid = "";
@@ -148,15 +149,15 @@ public class Record {
 		private String video_url = "";
 		private String pic_url = "";
 		private String voice_url = "";
-		private Date timestamp = null;
+		private long timestamp;
 		private int source_id;
-		private Date lasttime = null;
+		private long lasttime;
 		private int server_id;
 		private long identify_id;
 		private String identify_md5 = "";
 		private String keyword = "";
-		private Date first_time = null;
-		private Date update_time = null;
+		private long first_time;
+		private long update_time;
 		private String ip = "";
 		private String location = "";
 		private String geo = "";
@@ -170,7 +171,8 @@ public class Record {
 		private int province_code;
 		private int city_code;
 
-		public Builder(String id, int platform) {
+		public Builder(String tablename, String id, int platform) {
+			this.tablename = tablename;
 			this.id = id;
 			this.platform = platform;
 		}
@@ -285,7 +287,7 @@ public class Record {
 			return this;
 		}
 
-		public Builder setTimestamp(Date timestamp) {
+		public Builder setTimestamp(long timestamp) {
 			this.timestamp = timestamp;
 			return this;
 		}
@@ -295,7 +297,7 @@ public class Record {
 			return this;
 		}
 
-		public Builder setLasttime(Date lasttime) {
+		public Builder setLasttime(long lasttime) {
 			this.lasttime = lasttime;
 			return this;
 		}
@@ -320,12 +322,12 @@ public class Record {
 			return this;
 		}
 
-		public Builder setFirst_time(Date first_time) {
+		public Builder setFirst_time(long first_time) {
 			this.first_time = first_time;
 			return this;
 		}
 
-		public Builder setUpdate_time(Date update_time) {
+		public Builder setUpdate_time(long update_time) {
 			this.update_time = update_time;
 			return this;
 		}
@@ -375,11 +377,6 @@ public class Record {
 			return this;
 		}
 
-		public Builder setSource_type(int source_type) {
-			this.source_type = source_type;
-			return this;
-		}
-
 		public Builder setProvince_code(int province_code) {
 			this.province_code = province_code;
 			return this;
@@ -390,8 +387,13 @@ public class Record {
 			return this;
 		}
 
-		public Record build() {
-			return new Record(this);
+		public Builder setSource_type(int source_type) {
+			this.source_type = source_type;
+			return this;
+		}
+
+		public RecordInsert build() {
+			return new RecordInsert(this);
 		}
 
 	}
@@ -492,7 +494,7 @@ public class Record {
 		return voice_url;
 	}
 
-	public Date getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
@@ -500,7 +502,7 @@ public class Record {
 		return source_id;
 	}
 
-	public Date getLasttime() {
+	public long getLasttime() {
 		return lasttime;
 	}
 
@@ -520,11 +522,11 @@ public class Record {
 		return keyword;
 	}
 
-	public Date getFirst_time() {
+	public long getFirst_time() {
 		return first_time;
 	}
 
-	public Date getUpdate_time() {
+	public long getUpdate_time() {
 		return update_time;
 	}
 
@@ -564,8 +566,8 @@ public class Record {
 		return location_code;
 	}
 
-	public int getSource_type() {
-		return source_type;
+	public String getTablename() {
+		return tablename;
 	}
 
 	public int getProvince_code() {
@@ -574,6 +576,10 @@ public class Record {
 
 	public int getCity_code() {
 		return city_code;
+	}
+
+	public int getSource_type() {
+		return source_type;
 	}
 
 }

@@ -8,7 +8,7 @@ import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.RecordSelect;
+import zx.soft.sent.dao.domain.sentiment.RecordSelect;
 import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.utils.checksum.CheckSumUtils;
@@ -31,7 +31,7 @@ public class PullRecordApplication extends Application {
 	}
 
 	@Override
-	public synchronized Restlet createInboundRoot() {
+	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		// 1、根据多个id查询记录：
 		router.attach("/pull/ids/{ids}", PullRecordResource.class);

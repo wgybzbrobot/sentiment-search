@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.cache.dao.Cache;
 import zx.soft.sent.cache.factory.CacheFactory;
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.RecordInfo;
+import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.utils.threads.ApplyThreadPool;
 

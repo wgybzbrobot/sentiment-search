@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain;
+package zx.soft.sent.dao.domain.weibo;
 
 /**
  * 新浪微博查询参数类

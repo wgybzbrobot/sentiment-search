@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import zx.soft.sent.dao.domain.SiteInfo;
+import zx.soft.sent.dao.domain.platform.SiteInfo;
 
 /**
  * 站点信息Mapper

@@ -2,12 +2,12 @@ package zx.soft.sent.dao.sentiment;
 
 import java.util.List;
 
-import zx.soft.sent.dao.domain.InsertCacheQuery;
-import zx.soft.sent.dao.domain.RecordInsert;
-import zx.soft.sent.dao.domain.RecordSelect;
-import zx.soft.sent.dao.domain.SelectParamsById;
-import zx.soft.sent.dao.domain.SelectParamsByTime;
-import zx.soft.sent.dao.domain.SentTablename;
+import zx.soft.sent.dao.domain.sentiment.InsertCacheQuery;
+import zx.soft.sent.dao.domain.sentiment.RecordInsert;
+import zx.soft.sent.dao.domain.sentiment.RecordSelect;
+import zx.soft.sent.dao.domain.sentiment.SelectParamsById;
+import zx.soft.sent.dao.domain.sentiment.SelectParamsByTime;
+import zx.soft.sent.dao.domain.sentiment.SentTablename;
 
 /**
  * 舆情数据接口

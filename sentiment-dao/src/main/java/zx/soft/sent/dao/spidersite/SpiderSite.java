@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.SiteInfo;
+import zx.soft.sent.dao.domain.platform.SiteInfo;
 
 public class SpiderSite {
 
