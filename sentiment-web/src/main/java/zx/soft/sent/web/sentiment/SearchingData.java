@@ -252,7 +252,8 @@ public class SearchingData {
 			query.setQuery(queryParams.getQ());
 		}
 		// 忽略版本信息，否则会对分类统计产生影响
-		query.add("version", null);
+		String[] vinfo = null;
+		query.add("version", vinfo);
 		// 分片失效忽略
 		query.set("shards.tolerant", true);
 		// 设置关键词连接逻辑是AND
