@@ -18,7 +18,7 @@ public class SpiderSite {
 		try {
 			sqlSessionFactory = MybatisConfig.getSqlSessionFactory(server);
 		} catch (RuntimeException e) {
-			logger.error("SentimentRecord RuntimeException: " + e);
+			logger.error("SpiderSite RuntimeException: " + e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -46,7 +46,7 @@ public class SpiderSite {
 	/**
 	 * 根据站点名称返回站点Id
 	 */
-	public String getSourceId(String source_name) {
+	public int getSourceId(String source_name) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpiderSiteMapper spiderSiteMapper = session.getMapper(SpiderSiteMapper.class);
 			return spiderSiteMapper.getSourceId(source_name);

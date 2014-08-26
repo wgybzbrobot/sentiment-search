@@ -38,7 +38,7 @@ public interface SpiderSiteMapper {
 	 */
 	@Select("SELECT `source_id` FROM `sent_site_info` WHERE `source_name` = #{source_name}")
 	@ConstructorArgs(value = { @Arg(column = "source_id", javaType = int.class) })
-	public String getSourceId(String source_name);
+	public int getSourceId(String source_name);
 
 	/**
 	 * 根据站点Id删除站点信息
