@@ -41,6 +41,7 @@
 		<mapper resource="WeiboSinaDaoMapper.xml" />
 		<mapper resource="SentimentRecordDaoMapper.xml"/>
 		<package name="zx.soft.sent.dao.spidersite"/>
+		<package name="zx.soft.sent.dao.special"/>
 	</mappers>
 </configuration>
 	
