@@ -19,7 +19,7 @@ import zx.soft.sent.dao.domain.platform.Picture;
 import zx.soft.sent.dao.domain.platform.QQGroup;
 import zx.soft.sent.dao.domain.platform.Record;
 import zx.soft.sent.dao.domain.platform.Reply;
-import zx.soft.sent.dao.domain.weibo.Weibo;
+import zx.soft.sent.dao.domain.platform.Weibo;
 import zx.soft.sent.dao.oracle.OracleJDBC;
 import zx.soft.sent.solr.utils.ConvertToRecord;
 import zx.soft.sent.utils.time.TimeUtils;

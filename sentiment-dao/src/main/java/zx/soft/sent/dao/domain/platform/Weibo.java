@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain.weibo;
+package zx.soft.sent.dao.domain.platform;
 
 import java.util.Date;
 
