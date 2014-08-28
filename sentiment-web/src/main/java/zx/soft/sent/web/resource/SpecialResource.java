@@ -25,9 +25,12 @@ public class SpecialResource extends ServerResource {
 
 	private SpecialApplication application;
 
+	private String identify = "";
+
 	@Override
 	public void doInit() {
 		application = (SpecialApplication) getApplication();
+		identify = (String) this.getRequest().getAttributes().get("identify");
 	}
 
 	@Post("json")
@@ -38,8 +41,12 @@ public class SpecialResource extends ServerResource {
 	}
 
 	@Delete
-	public Object rmSpecialTopic(String identify) {
+	public Object rmSpecialTopic() {
 		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
+		if (identify == null || identify.length() == 0) {
+			logger.error("Identify is null.");
+			return null;
+		}
 		application.deleteSpecialInfo(identify);
 		return new ErrorResponse.Builder(0, "ok").build();
 	}
