@@ -9,6 +9,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.restlet.engine.Engine;
 import org.restlet.engine.converter.ConverterHelper;
+import org.restlet.engine.converter.DefaultConverter;
+import org.restlet.ext.jackson.JacksonConverter;
 
 /**
  * 替代转换工具
@@ -21,9 +23,20 @@ public class ReplaceConvert {
 	private static DateFormat sinaDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
 
 	public static void configureJacksonConverter() {
+		replaceConverter(DefaultConverter.class, new JacksonConverter());
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setDateFormat(sinaDateFormat);
 		objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+	}
+
+	static JacksonConverter getRegisteredJacksonConverter() {
+		List<ConverterHelper> converters = Engine.getInstance().getRegisteredConverters();
+		for (ConverterHelper converterHelper : converters) {
+			if (converterHelper instanceof JacksonConverter) {
+				return (JacksonConverter) converterHelper;
+			}
+		}
+		throw new RuntimeException("Can not find JacksonCOnverter.");
 	}
 
 	/**

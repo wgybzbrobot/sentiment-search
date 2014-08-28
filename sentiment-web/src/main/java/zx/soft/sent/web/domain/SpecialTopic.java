@@ -8,10 +8,23 @@ package zx.soft.sent.web.domain;
  */
 public class SpecialTopic {
 
+	private String identify;
 	private String keywords; // （合肥 and 警察） not 打人
 	private String start; // '2014-08-25 00:00:00'
 	private String end; // '2014-08-25 23:59:59'
 	private int hometype; // 0代表全部 1代表境内 2代表境外
+
+	public SpecialTopic() {
+		//
+	}
+
+	public String getIdentify() {
+		return identify;
+	}
+
+	public void setIdentify(String identify) {
+		this.identify = identify;
+	}
 
 	public String getKeywords() {
 		return keywords;
