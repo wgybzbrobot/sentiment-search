@@ -34,6 +34,8 @@ public class SpecialApplication extends Application {
 		Router router = new Router(getContext());
 		// POST专题信息
 		router.attach("/add", SpecialResource.class);
+		// GET专题信息
+		router.attach("/{identify}/{type}", SpecialResource.class);
 		// DELETE专题信息
 		router.attach("/{identify}/remove", SpecialResource.class);
 		return router;
@@ -63,6 +65,13 @@ public class SpecialApplication extends Application {
 	 */
 	public void deleteSpecialInfo(String identify) {
 		specialQuery.deleteSpecialInfo(identify);
+	}
+
+	/**
+	 * 获取专题查询结果，根据identify+type
+	 */
+	public String selectSpecialResult(String identify, String type) {
+		return specialQuery.selectSpecialResult(identify, type);
 	}
 
 }

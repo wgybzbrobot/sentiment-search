@@ -3,6 +3,7 @@ package zx.soft.sent.web.resource;
 import java.util.ArrayList;
 
 import org.restlet.resource.Delete;
+import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
@@ -26,25 +27,35 @@ public class SpecialResource extends ServerResource {
 	private SpecialApplication application;
 
 	private String identify = "";
+	private String type = "";
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application = (SpecialApplication) getApplication();
 		identify = (String) this.getRequest().getAttributes().get("identify");
+		type = (String) this.getRequest().getAttributes().get("type");
 	}
 
 	@Post("json")
 	public Object addSpecialTopics(final SpecialTopics specialTopics) {
-		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application.insertSpecialInfos(specialTopics);
 		return new ErrorResponse.Builder(0, "ok").build();
 	}
 
+	@Get
+	public String getSpecialResult() {
+		if (identify == null || identify.length() == 0 || type == null || type.length() == 0) {
+			logger.error("Params `identify` or `type` is null.");
+			return null;
+		}
+		return application.selectSpecialResult(identify, type);
+	}
+
 	@Delete
 	public Object rmSpecialTopic() {
-		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		if (identify == null || identify.length() == 0) {
-			logger.error("Identify is null.");
+			logger.error("Param `identify` is null.");
 			return null;
 		}
 		application.deleteSpecialInfo(identify);
