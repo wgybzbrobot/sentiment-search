@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zx.soft.sent.dao.special.SpecialQueryMapper">
+
+	<!-- 获取所有数据表名 -->
+	<select id="selectSpecialInfo" resultType="InsertSpecialInfo" parameterType="string">
+		SELECT `identify`,`keywords`,`start`,`end`,`hometype` FROM `oa_special_info` WHERE `identify` = #{identify}
+	</select>
+
+</mapper>

@@ -1,5 +1,7 @@
 package zx.soft.sent.dao.special;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
@@ -41,6 +43,16 @@ public class SpecialQuery {
 	}
 
 	/**
+	 * 查询专题信息
+	 */
+	public InsertSpecialInfo selectSpecialInfo(String identify) {
+		try (SqlSession session = sqlSessionFactory.openSession();) {
+			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
+			return specialQueryMapper.selectSpecialInfo(identify);
+		}
+	}
+
+	/**
 	 * 删除专题信息
 	 */
 	public void deleteSpecialInfo(String identify) {
@@ -57,6 +69,16 @@ public class SpecialQuery {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
 			specialQueryMapper.insertSpecialResult(new InsertSpecialResult(identify, result));
+		}
+	}
+
+	/**
+	 * 查询专题identify，按时间查询
+	 */
+	public List<String> selectSpecialIdentifyByTime(long lasttime) {
+		try (SqlSession session = sqlSessionFactory.openSession();) {
+			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
+			return specialQueryMapper.selectSpecialIdentifyByTime(lasttime);
 		}
 	}
 

@@ -21,6 +21,8 @@
 		<typeAlias alias="SelectParamsByTime" type="zx.soft.sent.dao.domain.sentiment.SelectParamsByTime" />
 		<typeAlias alias="InsertCacheQuery" type="zx.soft.sent.dao.domain.sentiment.InsertCacheQuery" />
 		<typeAlias alias="SelectCacheQuery" type="zx.soft.sent.dao.domain.sentiment.SelectCacheQuery" />
+		<!-- OA专题数据缓存 -->
+		<typeAlias alias="InsertSpecialInfo" type="zx.soft.sent.dao.domain.special.InsertSpecialInfo"/>
 	</typeAliases>
 	<environments default="sentiment">
 		<environment id="sentiment">
@@ -40,8 +42,8 @@
 	<mappers>
 		<mapper resource="WeiboSinaDaoMapper.xml" />
 		<mapper resource="SentimentRecordDaoMapper.xml"/>
+		<mapper resource="SpecialQueryMapper.xml"/>
 		<package name="zx.soft.sent.dao.spidersite"/>
-		<package name="zx.soft.sent.dao.special"/>
 	</mappers>
 </configuration>
 	

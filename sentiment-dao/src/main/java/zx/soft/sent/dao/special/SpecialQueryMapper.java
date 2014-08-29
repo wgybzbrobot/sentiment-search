@@ -1,5 +1,7 @@
 package zx.soft.sent.dao.special;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Arg;
 import org.apache.ibatis.annotations.ConstructorArgs;
 import org.apache.ibatis.annotations.Delete;
@@ -26,6 +28,11 @@ public interface SpecialQueryMapper {
 	public void insertSpecialInfo(InsertSpecialInfo insertSpecialInfo);
 
 	/**
+	 * 查询专题信息
+	 */
+	public InsertSpecialInfo selectSpecialInfo(String identify);
+
+	/**
 	 * 删除专题信息
 	 */
 	@Delete("DELETE FROM `oa_special_info` WHERE `identify` = #{identify}")
@@ -37,6 +44,13 @@ public interface SpecialQueryMapper {
 	@Insert("INSERT INTO `oa_special_query_cache` (`identify`,`result`,`lasttime`) "
 			+ "VALUES (#{identify},#{result},UNIX_TIMESTAMP())")
 	public void insertSpecialResult(InsertSpecialResult insertSpecialResult);
+
+	/**
+	 * 查询专题identify，按时间查询
+	 */
+	@Select("SELECT `identify` FROM `oa_special_query_cache` WHERE `lasttime` > #{lasttime}")
+	@ConstructorArgs(value = { @Arg(column = "identify", javaType = String.class) })
+	public List<String> selectSpecialIdentifyByTime(long lasttime);
 
 	/**
 	 * 查询专题查询结果

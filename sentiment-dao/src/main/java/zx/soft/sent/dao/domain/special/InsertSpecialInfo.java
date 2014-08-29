@@ -1,11 +1,13 @@
 package zx.soft.sent.dao.domain.special;
 
+
 /**
  * 插入的专题参数数据
  * 
  * @author wanggang
  *
  */
+
 public class InsertSpecialInfo {
 
 	private String identify; // 唯一标识
