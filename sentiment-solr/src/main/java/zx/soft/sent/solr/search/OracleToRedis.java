@@ -1,4 +1,4 @@
-package zx.soft.sent.core.redis;
+package zx.soft.sent.solr.search;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +23,8 @@ public class OracleToRedis {
 	private static Logger logger = LoggerFactory.getLogger(OracleToRedis.class);
 
 	public static final String SITE_MAP = "sent:site:map";
+
+	public static final String SITE_GROUPS = "sent:site:groups";
 
 	public OracleToRedis() {
 		//

@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import zx.soft.sent.dao.domain.special.InsertSpecialInfo;
-import zx.soft.sent.dao.domain.special.InsertSpecialResult;
+import zx.soft.sent.dao.domain.special.SpecialResult;
+import zx.soft.sent.dao.domain.special.SpecialTopic;
 
 /**
  * OA专题模块Mapper
@@ -25,12 +25,12 @@ public interface SpecialQueryMapper {
 	 */
 	@Insert("INSERT INTO `oa_special_info` (`identify`,`name`,`keywords`,`start`,`end`,`hometype`,`lasttime`) "
 			+ "VALUES (#{identify},#{name},#{keywords},#{start},#{end},#{hometype},UNIX_TIMESTAMP())")
-	public void insertSpecialInfo(InsertSpecialInfo insertSpecialInfo);
+	public void insertSpecialInfo(SpecialTopic specialTopic);
 
 	/**
 	 * 查询专题信息
 	 */
-	public InsertSpecialInfo selectSpecialInfo(String identify);
+	public SpecialTopic selectSpecialInfo(String identify);
 
 	/**
 	 * 删除专题信息
@@ -43,7 +43,7 @@ public interface SpecialQueryMapper {
 	 */
 	@Insert("INSERT INTO `oa_special_query_cache` (`identify`,`result`,`lasttime`) "
 			+ "VALUES (#{identify},#{result},UNIX_TIMESTAMP())")
-	public void insertSpecialResult(InsertSpecialResult insertSpecialResult);
+	public void insertSpecialResult(SpecialResult specialResult);
 
 	/**
 	 * 查询专题identify，按时间查询
@@ -70,7 +70,7 @@ public interface SpecialQueryMapper {
 	 */
 	@Update("UPDATE `oa_special_query_cache` SET `result` = #{result},`lasttime` = UNIX_TIMESTAMP() "
 			+ "WHERE `identify` = #{identify}")
-	public void updateSpecialResult(InsertSpecialResult insertSpecialResult);
+	public void updateSpecialResult(SpecialResult insertSpecialResult);
 
 	/**
 	 * 删除专题查询结果

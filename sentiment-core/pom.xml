@@ -15,11 +15,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>sentiment-cache</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>sentiment-solr</artifactId>
 			<version>${project.version}</version>
 		</dependency>

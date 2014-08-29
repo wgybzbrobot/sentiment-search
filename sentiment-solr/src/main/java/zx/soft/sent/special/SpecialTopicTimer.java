@@ -1,11 +1,13 @@
 package zx.soft.sent.special;
 
+import java.util.List;
 import java.util.TimerTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
+import zx.soft.sent.dao.domain.special.SpecialTopic;
 import zx.soft.sent.dao.special.SpecialQuery;
 
 /**
@@ -59,8 +61,22 @@ public class SpecialTopicTimer {
 		@Override
 		public void run() {
 			// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
-			// 在这里认为，如果
-
+			// 在这里认为，如果一个月内没有查询就不更新
+			long start = System.currentTimeMillis() / 1000 - 30 * 86400;
+			List<String> identifys = specialQuery.selectSpecialIdentifyByTime(start);
+			// 循环更新每个专题的查询结果
+			SpecialTopic specialInfo = null;
+			String result = "";
+			for (String identify : identifys) {
+				// 查询专题信息
+				specialInfo = specialQuery.selectSpecialInfo(identify);
+				if (specialInfo != null) {
+					// 从solr集群中查询结果
+					result = "";//
+					// 更新结果到数据库中
+					specialQuery.updateSpecialResult(identify, result);
+				}
+			}
 		}
 
 	}

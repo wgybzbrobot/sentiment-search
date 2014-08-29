@@ -3,8 +3,6 @@ package zx.soft.sent.core.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.core.redis.OracleToRedis;
-
 /**
  * 驱动类
  * 
@@ -29,8 +27,7 @@ public class SentCoreDriver {
 
 		switch (args[0]) {
 		case "oracleToRedis":
-			logger.info("将站点数据定时导入Redis中： ");
-			OracleToRedis.main(leftArgs);
+			logger.info("xxx");
 			break;
 		default:
 			return;

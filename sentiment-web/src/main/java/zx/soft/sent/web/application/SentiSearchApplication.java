@@ -6,10 +6,10 @@ import org.restlet.routing.Router;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
-import zx.soft.sent.web.domain.QueryResult;
+import zx.soft.sent.solr.domain.QueryParams;
+import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.web.resource.SentGetResource;
 import zx.soft.sent.web.resource.SentSearchResource;
-import zx.soft.sent.web.sentiment.QueryParams;
 import zx.soft.sent.web.sentiment.SearchingData;
 
 /**

@@ -1,4 +1,4 @@
-package zx.soft.sent.web.sentiment;
+package zx.soft.sent.solr.search;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,11 +25,9 @@ import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.err.SpiderSearchException;
-import zx.soft.sent.solr.search.OracleToRedis;
 import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.utils.time.TimeUtils;
-import zx.soft.sent.web.application.SiteApplication;
 
 /**
  * 搜索舆情数据
@@ -314,7 +312,7 @@ public class SearchingData {
 		String result = "";
 		String sites = fqs.split(":")[1];
 		if ((sites.indexOf(",") < 0) && (sites.length() == 32)) {
-			sites = cache.hget(SiteApplication.SITE_GROUPS, sites);
+			sites = cache.hget(OracleToRedis.SITE_GROUPS, sites);
 			if (sites == null) {
 				return "";
 			}

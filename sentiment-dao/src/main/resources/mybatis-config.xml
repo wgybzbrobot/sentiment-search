@@ -22,7 +22,7 @@
 		<typeAlias alias="InsertCacheQuery" type="zx.soft.sent.dao.domain.sentiment.InsertCacheQuery" />
 		<typeAlias alias="SelectCacheQuery" type="zx.soft.sent.dao.domain.sentiment.SelectCacheQuery" />
 		<!-- OA专题数据缓存 -->
-		<typeAlias alias="InsertSpecialInfo" type="zx.soft.sent.dao.domain.special.InsertSpecialInfo"/>
+		<typeAlias alias="SpecialTopic" type="zx.soft.sent.dao.domain.special.SpecialTopic"/>
 	</typeAliases>
 	<environments default="sentiment">
 		<environment id="sentiment">

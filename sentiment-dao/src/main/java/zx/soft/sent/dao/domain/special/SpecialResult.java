@@ -6,23 +6,23 @@ package zx.soft.sent.dao.domain.special;
  * @author wanggang
  *
  */
-public class InsertSpecialResult {
+public class SpecialResult {
 
 	private String identify; // 唯一标识
 	private String result; // 查询结果
 
-	public InsertSpecialResult() {
+	public SpecialResult() {
 		//
 	}
 
-	public InsertSpecialResult(String identify, String result) {
+	public SpecialResult(String identify, String result) {
 		this.identify = identify;
 		this.result = result;
 	}
 
 	@Override
 	public String toString() {
-		return "InsertSpecialResult:[identify=" + identify + ",result=" + result + "]";
+		return "SpecialResult:[identify=" + identify + ",result=" + result + "]";
 	}
 
 	public String getIdentify() {

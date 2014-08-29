@@ -8,9 +8,9 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.dao.domain.special.SpecialTopic;
 import zx.soft.sent.web.application.SpecialApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.domain.SpecialTopic;
 import zx.soft.sent.web.utils.URLCodecUtils;
 
 /**

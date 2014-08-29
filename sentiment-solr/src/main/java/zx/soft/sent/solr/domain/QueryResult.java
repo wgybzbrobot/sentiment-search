@@ -1,4 +1,4 @@
-package zx.soft.sent.web.domain;
+package zx.soft.sent.solr.domain;
 
 import java.util.ArrayList;
 import java.util.List;

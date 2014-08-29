@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.special.InsertSpecialInfo;
-import zx.soft.sent.dao.domain.special.InsertSpecialResult;
+import zx.soft.sent.dao.domain.special.SpecialTopic;
+import zx.soft.sent.dao.domain.special.SpecialResult;
 
 /**
  * 专题信息查询缓存类
@@ -38,14 +38,14 @@ public class SpecialQuery {
 	public void insertSpecialInfo(String identify, String name, String keywords, String start, String end, int hometype) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			specialQueryMapper.insertSpecialInfo(new InsertSpecialInfo(identify, name, keywords, start, end, hometype));
+			specialQueryMapper.insertSpecialInfo(new SpecialTopic(identify, name, keywords, start, end, hometype));
 		}
 	}
 
 	/**
 	 * 查询专题信息
 	 */
-	public InsertSpecialInfo selectSpecialInfo(String identify) {
+	public SpecialTopic selectSpecialInfo(String identify) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
 			return specialQueryMapper.selectSpecialInfo(identify);
@@ -68,7 +68,7 @@ public class SpecialQuery {
 	public void insertSpecialResult(String identify, String result) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			specialQueryMapper.insertSpecialResult(new InsertSpecialResult(identify, result));
+			specialQueryMapper.insertSpecialResult(new SpecialResult(identify, result));
 		}
 	}
 
@@ -108,7 +108,7 @@ public class SpecialQuery {
 	public void updateSpecialResult(String identify, String result) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			specialQueryMapper.updateSpecialResult(new InsertSpecialResult(identify, result));
+			specialQueryMapper.updateSpecialResult(new SpecialResult(identify, result));
 		}
 	}
 

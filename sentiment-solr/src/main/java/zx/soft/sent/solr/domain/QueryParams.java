@@ -1,4 +1,4 @@
-package zx.soft.sent.web.sentiment;
+package zx.soft.sent.solr.domain;
 
 /**
  * 查询参数类

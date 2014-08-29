@@ -7,20 +7,20 @@ package zx.soft.sent.dao.domain.special;
  *
  */
 
-public class InsertSpecialInfo {
+public class SpecialTopic {
 
 	private String identify; // 专题唯一标识
 	private String name; // 专题名称
-	private String keywords;
-	private String start;
-	private String end;
-	private int hometype;
+	private String keywords; // （合肥 and 警察） not 打人
+	private String start; // '2014-08-25 00:00:00'
+	private String end; // '2014-08-25 23:59:59'
+	private int hometype; // 0代表全部 1代表境内 2代表境外
 
-	public InsertSpecialInfo() {
+	public SpecialTopic() {
 		//		
 	}
 
-	public InsertSpecialInfo(String identify, String name, String keywords, String start, String end, int hometype) {
+	public SpecialTopic(String identify, String name, String keywords, String start, String end, int hometype) {
 		this.name = name;
 		this.identify = identify;
 		this.keywords = keywords;
@@ -31,7 +31,7 @@ public class InsertSpecialInfo {
 
 	@Override
 	public String toString() {
-		return "InsertSpecialInfo:[identify=" + identify + ",name=" + name + ",keywords=" + keywords + ",start="
+		return "SpecialTopic:[identify=" + identify + ",name=" + name + ",keywords=" + keywords + ",start="
 				+ start + ",end=" + end + ",hometype=" + hometype + "]";
 	}
 
