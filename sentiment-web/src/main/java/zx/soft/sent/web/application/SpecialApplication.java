@@ -46,8 +46,9 @@ public class SpecialApplication extends Application {
 		if (specialTopic.getIdentify() == null || specialTopic.getIdentify().length() == 0) {
 			logger.error("SpecialTopic has null Identify.");
 		} else {
-			specialQuery.insertSpecialInfo(specialTopic.getIdentify(), specialTopic.getKeywords(),
-					specialTopic.getStart(), specialTopic.getEnd(), specialTopic.getHometype());
+			specialQuery.insertSpecialInfo(specialTopic.getIdentify(), specialTopic.getName(),
+					specialTopic.getKeywords(), specialTopic.getStart(), specialTopic.getEnd(),
+					specialTopic.getHometype());
 		}
 	}
 

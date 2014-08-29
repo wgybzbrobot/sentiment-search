@@ -9,6 +9,7 @@ package zx.soft.sent.web.domain;
 public class SpecialTopic {
 
 	private String identify;
+	private String name;
 	private String keywords; // （合肥 and 警察） not 打人
 	private String start; // '2014-08-25 00:00:00'
 	private String end; // '2014-08-25 23:59:59'
@@ -24,6 +25,14 @@ public class SpecialTopic {
 
 	public void setIdentify(String identify) {
 		this.identify = identify;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getKeywords() {
