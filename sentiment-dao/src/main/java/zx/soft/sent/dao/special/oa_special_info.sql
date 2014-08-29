@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2014-08-29 06:29:54
+-- Generation Time: 2014-08-29 09:09:53
 -- 服务器版本： 5.5.37-MariaDB-log
 -- PHP Version: 5.5.12
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `oa_special_info` (
 -- Indexes for table `oa_special_info`
 --
 ALTER TABLE `oa_special_info`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `identify` (`identify`);
+ ADD PRIMARY KEY (`id`), ADD KEY `identify` (`identify`);
 
 --
 -- AUTO_INCREMENT for dumped tables

@@ -38,13 +38,13 @@ public class SpecialQueryDemo {
 		/**
 		 * 插入专题查询结果
 		 */
-		specialQuery.insertSpecialResult(identify, "solr-query-result-insert1");
+		specialQuery.insertSpecialResult(identify, "pie", "solr-query-result-insert1");
 		try {
 			Thread.sleep(10 * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		specialQuery.insertSpecialResult(identify2, "solr-query-result-insert2");
+		specialQuery.insertSpecialResult(identify2, "trend", "solr-query-result-insert2");
 		/**
 		 * 查询专题identify，按时间查询
 		 */
@@ -54,7 +54,8 @@ public class SpecialQueryDemo {
 		/**
 		 * 查询专题查询结果
 		 */
-		System.out.println(specialQuery.selectSpecialResult(identify));
+		System.out.println(specialQuery.selectSpecialResult(identify, "pie"));
+		System.out.println(specialQuery.selectSpecialResult(identify2, "trend"));
 		/**
 		 * 更新专题查询结果的时间，在每次查询后更新时间
 		 */
@@ -64,12 +65,12 @@ public class SpecialQueryDemo {
 			e.printStackTrace();
 		}
 		specialQuery.updateSpecialResultLasttime(identify);
-		System.out.println(specialQuery.selectSpecialResult(identify));
+		System.out.println(specialQuery.selectSpecialResult(identify, "pie"));
 		/**
 		 * 更新专题查询结果
 		 */
-		specialQuery.updateSpecialResult(identify, "solr-query-result-update");
-		System.out.println(specialQuery.selectSpecialResult(identify));
+		specialQuery.updateSpecialResult(identify, "pie", "solr-query-result-update");
+		System.out.println(specialQuery.selectSpecialResult(identify, "pie"));
 		/**
 		 * 删除专题查询结果
 		 */

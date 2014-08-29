@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Arg;
 import org.apache.ibatis.annotations.ConstructorArgs;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -41,8 +42,8 @@ public interface SpecialQueryMapper {
 	/**
 	 * 插入专题查询结果
 	 */
-	@Insert("INSERT INTO `oa_special_query_cache` (`identify`,`result`,`lasttime`) "
-			+ "VALUES (#{identify},#{result},UNIX_TIMESTAMP())")
+	@Insert("INSERT INTO `oa_special_query_cache` (`identify`,`type`,`result`,`lasttime`) "
+			+ "VALUES (#{identify},#{type},#{result},UNIX_TIMESTAMP())")
 	public void insertSpecialResult(SpecialResult specialResult);
 
 	/**
@@ -55,9 +56,9 @@ public interface SpecialQueryMapper {
 	/**
 	 * 查询专题查询结果
 	 */
-	@Select("SELECT `result` FROM `oa_special_query_cache` WHERE `identify` = #{identify}")
+	@Select("SELECT `result` FROM `oa_special_query_cache` WHERE `identify` = #{identify} AND `type` = #{type}")
 	@ConstructorArgs(value = { @Arg(column = "result", javaType = String.class) })
-	public String selectSpecialResult(String identify);
+	public String selectSpecialResult(@Param("identify") String p1, @Param("type") String p2);
 
 	/**
 	 * 更新专题查询结果的时间，在每次查询后更新时间

@@ -66,15 +66,19 @@ public class SpecialTopicTimer {
 			List<String> identifys = specialQuery.selectSpecialIdentifyByTime(start);
 			// 循环更新每个专题的查询结果
 			SpecialTopic specialInfo = null;
-			String result = "";
+			String pieResult = "";
+			String trandResult = "";
 			for (String identify : identifys) {
 				// 查询专题信息
 				specialInfo = specialQuery.selectSpecialInfo(identify);
 				if (specialInfo != null) {
 					// 从solr集群中查询结果
-					result = "";//
-					// 更新结果到数据库中
-					specialQuery.updateSpecialResult(identify, result);
+					pieResult = "";//
+					trandResult = "";//
+					// 更新饼状图结果到数据库中
+					specialQuery.updateSpecialResult(identify, "", pieResult);
+					// 更新趋势图结果到数据库中
+					specialQuery.updateSpecialResult(identify, "", trandResult);
 				}
 			}
 		}

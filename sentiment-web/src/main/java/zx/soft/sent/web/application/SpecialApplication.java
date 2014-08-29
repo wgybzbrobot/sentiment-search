@@ -65,32 +65,4 @@ public class SpecialApplication extends Application {
 		specialQuery.deleteSpecialInfo(identify);
 	}
 
-	/**
-	 * 插入专题查询结果
-	 */
-	public void insertSpecialResult(String identify, String result) {
-		specialQuery.insertSpecialResult(identify, result);
-	}
-
-	/**
-	 * 查询专题查询结果
-	 */
-	public String selectSpecialResult(String identify) {
-		return specialQuery.selectSpecialResult(identify);
-	}
-
-	/**
-	 * 更新专题查询结果
-	 */
-	public void updateSpecialResult(String identify, String result) {
-		specialQuery.updateSpecialResult(identify, result);
-	}
-
-	/**
-	 * 删除专题查询结果
-	 */
-	public void deleteSpecialResult(String identify) {
-		specialQuery.deleteSpecialResult(identify);
-	}
-
 }

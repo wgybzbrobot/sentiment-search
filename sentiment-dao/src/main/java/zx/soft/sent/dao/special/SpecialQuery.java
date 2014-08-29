@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.domain.special.SpecialTopic;
 import zx.soft.sent.dao.domain.special.SpecialResult;
+import zx.soft.sent.dao.domain.special.SpecialTopic;
 
 /**
  * 专题信息查询缓存类
@@ -65,10 +65,10 @@ public class SpecialQuery {
 	/**
 	 * 插入专题查询结果
 	 */
-	public void insertSpecialResult(String identify, String result) {
+	public void insertSpecialResult(String identify, String type, String result) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			specialQueryMapper.insertSpecialResult(new SpecialResult(identify, result));
+			specialQueryMapper.insertSpecialResult(new SpecialResult(identify, type, result));
 		}
 	}
 
@@ -85,10 +85,10 @@ public class SpecialQuery {
 	/**
 	 * 查询专题查询结果
 	 */
-	public String selectSpecialResult(String identify) {
+	public String selectSpecialResult(String identify, String type) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			return specialQueryMapper.selectSpecialResult(identify);
+			return specialQueryMapper.selectSpecialResult(identify, type);
 		}
 	}
 
@@ -105,10 +105,10 @@ public class SpecialQuery {
 	/**
 	 * 更新专题查询结果
 	 */
-	public void updateSpecialResult(String identify, String result) {
+	public void updateSpecialResult(String identify, String type, String result) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			specialQueryMapper.updateSpecialResult(new SpecialResult(identify, result));
+			specialQueryMapper.updateSpecialResult(new SpecialResult(identify, type, result));
 		}
 	}
 
