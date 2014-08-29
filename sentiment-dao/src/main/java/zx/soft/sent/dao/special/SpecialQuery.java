@@ -35,10 +35,10 @@ public class SpecialQuery {
 	/**
 	 * 插入专题信息
 	 */
-	public void insertSpecialInfo(String identify, String keywords, String start, String end, int hometype) {
+	public void insertSpecialInfo(String identify, String name, String keywords, String start, String end, int hometype) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
-			specialQueryMapper.insertSpecialInfo(new InsertSpecialInfo(identify, keywords, start, end, hometype));
+			specialQueryMapper.insertSpecialInfo(new InsertSpecialInfo(identify, name, keywords, start, end, hometype));
 		}
 	}
 

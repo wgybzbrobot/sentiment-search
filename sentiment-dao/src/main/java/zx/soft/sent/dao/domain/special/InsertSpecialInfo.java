@@ -1,6 +1,5 @@
 package zx.soft.sent.dao.domain.special;
 
-
 /**
  * 插入的专题参数数据
  * 
@@ -10,7 +9,8 @@ package zx.soft.sent.dao.domain.special;
 
 public class InsertSpecialInfo {
 
-	private String identify; // 唯一标识
+	private String identify; // 专题唯一标识
+	private String name; // 专题名称
 	private String keywords;
 	private String start;
 	private String end;
@@ -20,7 +20,8 @@ public class InsertSpecialInfo {
 		//		
 	}
 
-	public InsertSpecialInfo(String identify, String keywords, String start, String end, int hometype) {
+	public InsertSpecialInfo(String identify, String name, String keywords, String start, String end, int hometype) {
+		this.name = name;
 		this.identify = identify;
 		this.keywords = keywords;
 		this.start = start;
@@ -30,8 +31,16 @@ public class InsertSpecialInfo {
 
 	@Override
 	public String toString() {
-		return "InsertSpecialInfo:[identify=" + identify + ",keywords=" + keywords + ",start=" + start + ",end=" + end
-				+ ",hometype=" + hometype + "]";
+		return "InsertSpecialInfo:[identify=" + identify + ",name=" + name + ",keywords=" + keywords + ",start="
+				+ start + ",end=" + end + ",hometype=" + hometype + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getIdentify() {

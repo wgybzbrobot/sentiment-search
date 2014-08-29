@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2014-08-27 03:07:19
+-- Generation Time: 2014-08-29 06:29:54
 -- 服务器版本： 5.5.37-MariaDB-log
 -- PHP Version: 5.5.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `oa_special_info` (
 `id` int(10) unsigned NOT NULL COMMENT '自增',
   `identify` char(50) NOT NULL COMMENT '唯一标识',
+  `name` char(100) NOT NULL COMMENT '专题名称',
   `keywords` char(100) NOT NULL COMMENT '关键词',
   `start` char(20) NOT NULL COMMENT '起始查询时间',
   `end` char(20) NOT NULL COMMENT '结束查询时间',

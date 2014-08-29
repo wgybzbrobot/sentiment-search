@@ -23,8 +23,8 @@ public interface SpecialQueryMapper {
 	/**
 	 * 插入专题信息
 	 */
-	@Insert("INSERT INTO `oa_special_info` (`identify`,`keywords`,`start`,`end`,`hometype`,`lasttime`) "
-			+ "VALUES (#{identify},#{keywords},#{start},#{end},#{hometype},UNIX_TIMESTAMP())")
+	@Insert("INSERT INTO `oa_special_info` (`identify`,`name`,`keywords`,`start`,`end`,`hometype`,`lasttime`) "
+			+ "VALUES (#{identify},#{name},#{keywords},#{start},#{end},#{hometype},UNIX_TIMESTAMP())")
 	public void insertSpecialInfo(InsertSpecialInfo insertSpecialInfo);
 
 	/**

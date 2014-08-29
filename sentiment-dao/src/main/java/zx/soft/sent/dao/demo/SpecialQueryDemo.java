@@ -17,6 +17,7 @@ public class SpecialQueryDemo {
 
 		SpecialQuery specialQuery = new SpecialQuery(MybatisConfig.ServerEnum.sentiment);
 		String keywords = "(合肥 OR 学校) AND 开学";
+		String name = "专题名称";
 		String start = "2014-08-27 00:00:00";
 		String end = "2014-08-27 23:59:59";
 		int hometype = 1;
@@ -25,7 +26,7 @@ public class SpecialQueryDemo {
 		/**
 		 * 插入专题信息
 		 */
-		specialQuery.insertSpecialInfo(identify, keywords, start, end, hometype);
+		specialQuery.insertSpecialInfo(identify, name, keywords, start, end, hometype);
 		/**
 		 * 查询专题信息
 		 */

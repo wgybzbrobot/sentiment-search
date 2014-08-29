@@ -4,7 +4,7 @@
 
 	<!-- 获取所有数据表名 -->
 	<select id="selectSpecialInfo" resultType="InsertSpecialInfo" parameterType="string">
-		SELECT `identify`,`keywords`,`start`,`end`,`hometype` FROM `oa_special_info` WHERE `identify` = #{identify}
+		SELECT `identify`,`name`,`keywords`,`start`,`end`,`hometype` FROM `oa_special_info` WHERE `identify` = #{identify}
 	</select>
 
 </mapper>
