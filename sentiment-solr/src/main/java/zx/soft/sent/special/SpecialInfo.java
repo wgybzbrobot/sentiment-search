@@ -10,8 +10,15 @@ public class SpecialInfo {
 
 	private int specialId; // 专题ID
 	private String specialName; // 专题名称
-	private String createTime; // 创建时间:"2014/3/24 13:12"
-	private int identify; // 标识
+
+	public SpecialInfo() {
+		//		
+	}
+
+	public SpecialInfo(int specialId, String specialName) {
+		this.specialId = specialId;
+		this.specialName = specialName;
+	}
 
 	public int getSpecialId() {
 		return specialId;
@@ -27,22 +34,6 @@ public class SpecialInfo {
 
 	public void setSpecialName(String specialName) {
 		this.specialName = specialName;
-	}
-
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
-	public int getIdentify() {
-		return identify;
-	}
-
-	public void setIdentify(int identify) {
-		this.identify = identify;
 	}
 
 }
