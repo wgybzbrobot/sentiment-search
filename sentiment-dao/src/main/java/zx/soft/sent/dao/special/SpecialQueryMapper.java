@@ -60,6 +60,12 @@ public interface SpecialQueryMapper {
 	public String selectSpecialResult(String identify);
 
 	/**
+	 * 更新专题查询结果的时间，在每次查询后更新时间
+	 */
+	@Update("UPDATE `oa_special_query_cache` SET `lasttime` = UNIX_TIMESTAMP() WHERE `identify` = #{identify}")
+	public void updateSpecialResultLasttime(String identify);
+
+	/**
 	 * 更新专题查询结果
 	 */
 	@Update("UPDATE `oa_special_query_cache` SET `result` = #{result},`lasttime` = UNIX_TIMESTAMP() "

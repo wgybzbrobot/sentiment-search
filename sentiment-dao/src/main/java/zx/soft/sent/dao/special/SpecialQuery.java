@@ -93,6 +93,16 @@ public class SpecialQuery {
 	}
 
 	/**
+	 * 更新专题查询结果的时间，在每次查询后更新时间
+	 */
+	public void updateSpecialResultLasttime(String identify) {
+		try (SqlSession session = sqlSessionFactory.openSession();) {
+			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
+			specialQueryMapper.updateSpecialResultLasttime(identify);
+		}
+	}
+
+	/**
 	 * 更新专题查询结果
 	 */
 	public void updateSpecialResult(String identify, String result) {

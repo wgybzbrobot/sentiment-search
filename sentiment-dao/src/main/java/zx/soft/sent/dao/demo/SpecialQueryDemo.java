@@ -56,6 +56,16 @@ public class SpecialQueryDemo {
 		 */
 		System.out.println(specialQuery.selectSpecialResult(identify));
 		/**
+		 * 更新专题查询结果的时间，在每次查询后更新时间
+		 */
+		try {
+			Thread.sleep(2 * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		specialQuery.updateSpecialResultLasttime(identify);
+		System.out.println(specialQuery.selectSpecialResult(identify));
+		/**
 		 * 更新专题查询结果
 		 */
 		specialQuery.updateSpecialResult(identify, "solr-query-result-update");
