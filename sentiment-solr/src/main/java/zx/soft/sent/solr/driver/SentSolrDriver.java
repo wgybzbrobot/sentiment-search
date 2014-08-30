@@ -8,6 +8,7 @@ import zx.soft.sent.solr.index.ImportSentDataToSC;
 import zx.soft.sent.solr.index.ImportSinaDataToSC;
 import zx.soft.sent.solr.search.OracleToRedis;
 import zx.soft.sent.solr.statistic.CompanyMain;
+import zx.soft.sent.special.SpecialTopicTimer;
 
 /**
  * 驱动类
@@ -51,6 +52,10 @@ public class SentSolrDriver {
 		case "oracleToRedis":
 			logger.info("将站点数据定时导入Redis中： ");
 			OracleToRedis.main(leftArgs);
+			break;
+		case "specialTopicTimer":
+			logger.info("OA专题数据统计——定时分析:");
+			SpecialTopicTimer.main(leftArgs);
 			break;
 		default:
 			return;

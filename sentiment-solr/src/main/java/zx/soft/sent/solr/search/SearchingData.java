@@ -308,7 +308,7 @@ public class SearchingData {
 		return query;
 	}
 
-	public String transCacheFq(String fqs) {
+	private String transCacheFq(String fqs) {
 		String result = "";
 		String sites = fqs.split(":")[1];
 		if ((sites.indexOf(",") < 0) && (sites.length() == 32)) {
@@ -331,7 +331,7 @@ public class SearchingData {
 		return result;
 	}
 
-	public static String transFq(String fqs) {
+	private static String transFq(String fqs) {
 		int index = fqs.indexOf(":");
 		String result = "";
 		for (String str : fqs.substring(index + 1).split(",")) {
