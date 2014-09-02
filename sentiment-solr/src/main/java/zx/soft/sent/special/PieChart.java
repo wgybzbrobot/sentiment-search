@@ -20,7 +20,7 @@ public class PieChart {
 	 * 0-其他,1-资讯类,2-论坛类,3-微博类,4-博客类,5-QQ群类,
 	 * 6-元搜索类,7-回复信息（其他），8-邮件类,9-图片识别类
 	 */
-	private HashMap<Integer, String> platformCount = new HashMap<>();
+	private HashMap<String, Long> platformCount = new HashMap<>();
 
 	public SpecialInfo getSpecialInfo() {
 		return specialInfo;
@@ -30,11 +30,11 @@ public class PieChart {
 		this.specialInfo = specialInfo;
 	}
 
-	public HashMap<Integer, String> getPlatformCount() {
+	public HashMap<String, Long> getPlatformCount() {
 		return platformCount;
 	}
 
-	public void setPlatformCount(HashMap<Integer, String> platformCount) {
+	public void setPlatformCount(HashMap<String, Long> platformCount) {
 		this.platformCount = platformCount;
 	}
 

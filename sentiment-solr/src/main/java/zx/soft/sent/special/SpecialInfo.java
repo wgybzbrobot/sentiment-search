@@ -8,24 +8,24 @@ package zx.soft.sent.special;
  */
 public class SpecialInfo {
 
-	private int specialId; // 专题ID
+	private String identify; // 专题ID
 	private String specialName; // 专题名称
 
 	public SpecialInfo() {
 		//		
 	}
 
-	public SpecialInfo(int specialId, String specialName) {
-		this.specialId = specialId;
+	public SpecialInfo(String identify, String specialName) {
+		this.identify = identify;
 		this.specialName = specialName;
 	}
 
-	public int getSpecialId() {
-		return specialId;
+	public String getIdentify() {
+		return identify;
 	}
 
-	public void setSpecialId(int specialId) {
-		this.specialId = specialId;
+	public void setIdentify(String identify) {
+		this.identify = identify;
 	}
 
 	public String getSpecialName() {

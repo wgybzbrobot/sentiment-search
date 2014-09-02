@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -69,7 +70,7 @@ public class SearchingData {
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
 		queryParams.setFacetField("nickname");
-		QueryResult result = search.queryData(queryParams);
+		QueryResult result = search.queryData(queryParams, true);
 		System.out.println(JsonUtils.toJson(result));
 		//		search.deleteQuery();
 		search.close();
@@ -89,7 +90,7 @@ public class SearchingData {
 	/**
 	 * 根据多条件查询结果数据
 	 */
-	public QueryResult queryData(QueryParams queryParams) {
+	public QueryResult queryData(QueryParams queryParams, boolean isPlatformTrans) {
 		SolrQuery query = getSolrQuery(queryParams);
 		QueryResponse queryResponse = null;
 		try {
@@ -101,7 +102,8 @@ public class SearchingData {
 			throw new SpiderSearchException("no response!");
 		}
 
-		//		System.out.println(JsonUtils.toJson(queryResponse.getResponse()));
+		System.out.println(JsonUtils.toJson(queryResponse.getFacetDate("timestamp")));
+		System.out.println(queryResponse.getFacetDates());
 
 		QueryResult result = new QueryResult();
 		result.setQTime(queryResponse.getQTime());
@@ -112,8 +114,8 @@ public class SearchingData {
 		result.setGroup(queryResponse.getGroupResponse());
 		result.setFacetQuery(queryResponse.getFacetQuery());
 		//		System.out.println(queryResponse.getFacetFields());
-		result.setFacetFields(transFacetField(queryResponse.getFacetFields(), queryParams));
-		result.setFacetDates(transFacetField(queryResponse.getFacetDates(), queryParams));
+		result.setFacetFields(transFacetField(queryResponse.getFacetFields(), queryParams, isPlatformTrans));
+		result.setFacetDates(transFacetField(queryResponse.getFacetDates(), queryParams, isPlatformTrans));
 		result.setFacetRanges(queryResponse.getFacetRanges());
 		result.setFacetPivot(queryResponse.getFacetPivot());
 		result.setNumFound(queryResponse.getResults().getNumFound());
@@ -188,7 +190,8 @@ public class SearchingData {
 		}
 	}
 
-	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets, QueryParams queryParams) {
+	private List<SimpleFacetInfo> transFacetField(List<FacetField> facets, QueryParams queryParams,
+			boolean isPlatformTrans) {
 		List<SimpleFacetInfo> result = new ArrayList<>();
 		if (facets == null) {
 			return null;
@@ -207,10 +210,18 @@ public class SearchingData {
 				if ("platform".equalsIgnoreCase(facet.getName())) {
 					if (fqPlatform.contains("platform")) {
 						if (fqPlatform.contains(temp.getName())) {
-							t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+							if (isPlatformTrans) {
+								t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+							} else {
+								t.put(temp.getName(), temp.getCount());
+							}
 						}
 					} else {
-						t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+						if (isPlatformTrans) {
+							t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+						} else {
+							t.put(temp.getName(), temp.getCount());
+						}
 					}
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
 					if ((t.size() < 10) && (temp.getCount() > 0)) {
@@ -303,6 +314,13 @@ public class SearchingData {
 		if (queryParams.getFacetField() != "") {
 			//			query.setFacet(true);
 			query.addFacetField(queryParams.getFacetField().split(","));
+		}
+
+		// 按日期分类查询
+		if (queryParams.getFacetDate().size() == 4) {
+			for (Entry<String, String> facetDate : queryParams.getFacetDate().entrySet()) {
+				query.set(facetDate.getKey(), facetDate.getValue());
+			}
 		}
 
 		return query;

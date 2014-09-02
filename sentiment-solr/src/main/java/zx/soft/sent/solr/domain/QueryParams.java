@@ -1,5 +1,7 @@
 package zx.soft.sent.solr.domain;
 
+import java.util.HashMap;
+
 /**
  * 查询参数类
  * 
@@ -19,6 +21,10 @@ public class QueryParams {
 	private String hlsimple = "";
 	private String facetQuery = "";
 	private String facetField = "";
+	// 增加按日期分类统计，主要有以下4个参数
+	// facet.date，facet.date.start，facet.date.end，facet.date.gap
+	// 默认，facet=true
+	private HashMap<String, String> facetDate = new HashMap<>();
 
 	public QueryParams() {
 		//
@@ -117,6 +123,14 @@ public class QueryParams {
 
 	public void setHlsimple(String hlsimple) {
 		this.hlsimple = hlsimple;
+	}
+
+	public HashMap<String, String> getFacetDate() {
+		return facetDate;
+	}
+
+	public void setFacetDate(HashMap<String, String> facetDate) {
+		this.facetDate = facetDate;
 	}
 
 }

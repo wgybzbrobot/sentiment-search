@@ -13,6 +13,7 @@ import zx.soft.sent.dao.domain.special.SpecialTopic;
 import zx.soft.sent.dao.special.SpecialQuery;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
+import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.search.SearchingData;
 import zx.soft.sent.solr.utils.TimeConvert;
 import zx.soft.sent.utils.json.JsonUtils;
@@ -96,7 +97,10 @@ public class SpecialTopicTimer {
 					queryParams.setFq(getTimestampFilterQuery(specialInfo.getStart(), specialInfo.getEnd())
 							+ ";country_code:" + specialInfo.getHometype());
 					queryParams.setFacetField("platform");
-					pieResult = search.queryData(queryParams);
+					pieResult = search.queryData(queryParams, false);
+					// 更新饼状图结果到数据库中
+					specialQuery.updateSpecialResult(identify, "",
+							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
 					// 从solr集群中查询趋势图结果
 					// 在某个时间段内按天统计
 					// facet=true&facet.date=timestamp
@@ -110,14 +114,24 @@ public class SpecialTopicTimer {
 							+ TimeConvert.transTimeStr(specialInfo.getEnd() + "facet.date.gap=%2B1DAY"));
 					queryParams.setFq(getTimestampFilterQuery(specialInfo.getStart(), specialInfo.getEnd())
 							+ ";country_code:" + specialInfo.getHometype());
-					trandResult = search.queryData(queryParams);
-					// 更新饼状图结果到数据库中
-					specialQuery.updateSpecialResult(identify, "", JsonUtils.toJsonWithoutPretty(pieResult));
+					trandResult = search.queryData(queryParams, false);
 					// 更新趋势图结果到数据库中
 					specialQuery.updateSpecialResult(identify, "", JsonUtils.toJsonWithoutPretty(trandResult));
 				}
 			}
 			search.close();
+		}
+
+		private PieChart getPieChart(SpecialTopic specialInfo, QueryResult result) {
+			PieChart pieChart = new PieChart();
+			pieChart.setSpecialInfo(new SpecialInfo(specialInfo.getIdentify(), specialInfo.getName()));
+			List<SimpleFacetInfo> facetFields = result.getFacetFields();
+			for (SimpleFacetInfo facetField : facetFields) {
+				if ("platform".equalsIgnoreCase(facetField.getName())) {
+					pieChart.setPlatformCount(facetField.getValues());
+				}
+			}
+			return pieChart;
 		}
 
 		public static String getTimestampFilterQuery(String start, String end) {
