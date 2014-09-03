@@ -40,11 +40,12 @@ public class TrendChart {
 
 	public static void main(String[] args) {
 		TrendChart trandChart = new TrendChart();
-		trandChart.setSpecialInfo(new SpecialInfo("addfeff", "合肥测试"));
+		trandChart.setSpecialInfo(new SpecialInfo("405", "冰桶挑战"));
 		trandChart.getCountByDay().put("2014-04-10", 1292728L);
 		trandChart.getCountByDay().put("2014-04-11", 1512505L);
 		trandChart.getCountByDay().put("2014-04-12", 80221L);
 		trandChart.getCountByDay().put("2014-04-13", 1430429L);
-		System.out.println(JsonUtils.toJson(trandChart));
+		System.out.println(JsonUtils.toJsonWithoutPretty(trandChart));
 	}
+
 }

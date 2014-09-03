@@ -2,6 +2,8 @@ package zx.soft.sent.solr.special;
 
 import java.util.HashMap;
 
+import zx.soft.sent.utils.json.JsonUtils;
+
 /**
  * 與请专题统计数据——饼状图
  * 
@@ -36,6 +38,22 @@ public class PieChart {
 
 	public void setPlatformCount(HashMap<String, Long> platformCount) {
 		this.platformCount = platformCount;
+	}
+
+	public static void main(String[] args) {
+		PieChart pieChart = new PieChart();
+		pieChart.setSpecialInfo(new SpecialInfo("405", "冰桶挑战"));
+		pieChart.getPlatformCount().put("0", 3200L);
+		pieChart.getPlatformCount().put("1", 12265L);
+		pieChart.getPlatformCount().put("2", 568L);
+		pieChart.getPlatformCount().put("3", 3866L);
+		pieChart.getPlatformCount().put("4", 1235L);
+		pieChart.getPlatformCount().put("5", 86L);
+		pieChart.getPlatformCount().put("6", 793L);
+		pieChart.getPlatformCount().put("7", 17889L);
+		pieChart.getPlatformCount().put("8", 3556L);
+		pieChart.getPlatformCount().put("9", 30L);
+		System.out.println(JsonUtils.toJsonWithoutPretty(pieChart));
 	}
 
 }

@@ -28,7 +28,7 @@ public class TimeUtils {
 	}
 
 	/**
-	 * 将时间戳转换成Solr标准的Date格式
+	 * 将时间戳转换成Solr标准的Date格式，注意：该转换快8小时
 	 * 如：2014-04-10T10:07:14Z
 	 */
 	public static String transToSolrDateStr(long timestamp) {
