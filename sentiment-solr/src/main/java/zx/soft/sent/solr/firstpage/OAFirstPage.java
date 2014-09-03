@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.oafirstpage;
+package zx.soft.sent.solr.firstpage;
 
 import java.util.HashMap;
 
