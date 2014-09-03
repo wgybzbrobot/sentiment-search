@@ -44,6 +44,7 @@
 		<mapper resource="SentimentRecordDaoMapper.xml"/>
 		<mapper resource="SpecialQueryMapper.xml"/>
 		<package name="zx.soft.sent.dao.spidersite"/>
+		<package name="zx.soft.sent.dao.firstpage"/>
 	</mappers>
 </configuration>
 	
