@@ -102,8 +102,7 @@ public class SearchingData {
 			throw new SpiderSearchException("no response!");
 		}
 
-		System.out.println(JsonUtils.toJson(queryResponse.getFacetDate("timestamp")));
-		System.out.println(queryResponse.getFacetDates());
+		System.out.println(queryResponse.getFacetDates().size());
 
 		QueryResult result = new QueryResult();
 		result.setQTime(queryResponse.getQTime());

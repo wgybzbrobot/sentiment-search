@@ -13,10 +13,11 @@ public class SpecialTopicDemo {
 		queryParams.setQ("*:*");
 		queryParams.setRows(0);
 		queryParams.getFacetDate().put("facet.date", "timestamp");
-		queryParams.getFacetDate().put("facet.date.start", "2014-04-10T19:18:00Z");
-		queryParams.getFacetDate().put("facet.date.end", "2014-04-14T19:18:00Z");
+		queryParams.getFacetDate().put("facet.date.start", "2014-04-10T00:00:00Z");
+		queryParams.getFacetDate().put("facet.date.end", "2014-04-14T00:00:00Z");
 		queryParams.getFacetDate().put("facet.date.gap", "%2B1DAY");
-		queryParams.setFq("timestamp:[2014-04-10T19:18:00Z TO 2014-04-14T19:18:00Z]");
+		queryParams.setFq("timestamp:[2014-04-10T00:00:00Z TO 2014-04-14T00:00:00Z]");
+
 		QueryResult result = search.queryData(queryParams, false);
 		//		TrendChart trandChart = new TrendChart();
 		//		trandChart.setSpecialInfo(new SpecialInfo("shshfkfl", "合肥测试"));

@@ -7,8 +7,8 @@ import zx.soft.sent.solr.index.ImportSentDataToDB;
 import zx.soft.sent.solr.index.ImportSentDataToSC;
 import zx.soft.sent.solr.index.ImportSinaDataToSC;
 import zx.soft.sent.solr.search.OracleToRedis;
+import zx.soft.sent.solr.special.SpecialTopicTimer;
 import zx.soft.sent.solr.statistic.CompanyMain;
-import zx.soft.sent.special.SpecialTopicTimer;
 
 /**
  * 驱动类

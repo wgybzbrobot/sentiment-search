@@ -1,8 +1,10 @@
-package zx.soft.sent.special;
+package zx.soft.sent.solr.special;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import zx.soft.sent.solr.special.SpecialTopicTimer;
 
 public class SpecialTopicTimerTest {
 

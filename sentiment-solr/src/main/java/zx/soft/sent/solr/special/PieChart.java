@@ -1,4 +1,4 @@
-package zx.soft.sent.special;
+package zx.soft.sent.solr.special;
 
 import java.util.HashMap;
 

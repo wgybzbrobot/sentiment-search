@@ -1,4 +1,4 @@
-package zx.soft.sent.special;
+package zx.soft.sent.solr.special;
 
 /**
  * 专题数据统计——专题信息
