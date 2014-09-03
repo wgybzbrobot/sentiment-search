@@ -102,7 +102,7 @@ public class SearchingData {
 			throw new SpiderSearchException("no response!");
 		}
 
-		System.out.println(queryResponse.getFacetDates().size());
+		//		System.out.println(queryResponse.getFacetDates().size());
 
 		QueryResult result = new QueryResult();
 		result.setQTime(queryResponse.getQTime());
