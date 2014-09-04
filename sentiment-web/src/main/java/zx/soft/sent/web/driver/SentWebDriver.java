@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.sentiment.SearchingData;
+import zx.soft.sent.web.server.FirstPageServer;
 import zx.soft.sent.web.server.PullRecordServer;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
@@ -56,6 +57,10 @@ public class SentWebDriver {
 		case "specialServer":
 			logger.info("OA专题查询缓存服务，专题信息写入和删除：");
 			SpecialServer.main(leftArgs);
+			break;
+		case "firstPageServer":
+			logger.info("OA首页信息缓存服务：");
+			FirstPageServer.main(leftArgs);
 			break;
 		default:
 			return;
