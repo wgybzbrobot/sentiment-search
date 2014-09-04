@@ -53,9 +53,12 @@ public class SpecialResource extends ServerResource {
 	public Object getSpecialResult() {
 		if (identify == null || identify.length() == 0 || type == null || type.length() == 0) {
 			logger.error("Params `identify` or `type` is null.");
-			return null;
+			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
 		String queryResult = application.selectSpecialResult(identify, type);
+		if (queryResult == null) {
+			return new ErrorResponse.Builder(-1, "params error!").build();
+		}
 		if (queryResult.contains("platformCount")) {
 			return strToPieChart(queryResult);
 		} else if (queryResult.contains("countByDay")) {
