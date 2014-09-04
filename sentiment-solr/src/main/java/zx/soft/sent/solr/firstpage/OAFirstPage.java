@@ -138,6 +138,10 @@ public class OAFirstPage {
 	}
 
 	/**
+	 * 对当天的论坛和微博进入数据进行负面评分，并按照分值推送最大的签20条内容，每小时推送一次。
+	 */
+
+	/**
 	 * 初始化四大微博统计结果
 	 */
 	private HashMap<String, Long> initWeibosResult() {
