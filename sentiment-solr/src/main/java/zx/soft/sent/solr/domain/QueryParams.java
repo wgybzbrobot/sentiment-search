@@ -21,6 +21,8 @@ public class QueryParams {
 	private String hlsimple = "";
 	private String facetQuery = "";
 	private String facetField = "";
+	// 设置关键词连接逻辑是AND
+	private String qop = "AND";
 	// 增加按日期分类统计，主要有以下4个参数
 	// facet.date，facet.date.start，facet.date.end，facet.date.gap
 	// 默认，facet=true
@@ -34,7 +36,7 @@ public class QueryParams {
 	public String toString() {
 		return "QueryParams:{q=" + q + ",fq=" + fq + ",sort=" + sort + ",start=" + start + ",rows=" + rows + ",fl="
 				+ fl + ",wt=" + wt + ",hlfl=" + hlfl + ",hlsimple=" + hlsimple + ",facetQuery=" + facetQuery
-				+ ",facetField=" + facetField + "}";
+				+ ",facetField=" + facetField + ",qop=" + qop + "}";
 	}
 
 	public void setQ(String q) {
@@ -131,6 +133,14 @@ public class QueryParams {
 
 	public void setFacetDate(HashMap<String, String> facetDate) {
 		this.facetDate = facetDate;
+	}
+
+	public String getQop() {
+		return qop;
+	}
+
+	public void setQop(String qop) {
+		this.qop = qop;
 	}
 
 }

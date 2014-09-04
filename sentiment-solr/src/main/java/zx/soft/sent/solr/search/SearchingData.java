@@ -104,6 +104,7 @@ public class SearchingData {
 		}
 
 		//		System.out.println(queryResponse.getFacetFields());
+		//		System.out.println(JsonUtils.toJson(queryResponse.getResults()));
 
 		QueryResult result = new QueryResult();
 		result.setQTime(queryResponse.getQTime());
@@ -266,8 +267,8 @@ public class SearchingData {
 		query.add("version", vinfo);
 		// 分片失效忽略
 		query.set("shards.tolerant", true);
-		// 设置关键词连接逻辑是AND
-		query.set("q.op", "AND");
+		// 设置关键词连接逻辑，默认是AND
+		query.set("q.op", queryParams.getQop());
 		if (queryParams.getFq() != "") {
 			for (String fq : queryParams.getFq().split(";")) {
 				if (fq.contains("source_id")) {
