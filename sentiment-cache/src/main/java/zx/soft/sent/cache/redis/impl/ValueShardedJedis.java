@@ -150,7 +150,17 @@ public class ValueShardedJedis extends Sharded<Jedis, JedisShardInfo> implements
 
 	@Override
 	public Map<String, String> hgetAll(String key) {
-		throw new UnsupportedOperationException();
+		Map<String, String> result = new HashMap<>();
+		Map<String, String> one = null;
+		for (Jedis jedis : allShards) {
+			one = jedis.hgetAll(key);
+			if (one != null) {
+				for (Entry<String, String> temp : one.entrySet()) {
+					result.put(temp.getKey(), temp.getValue());
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -102,7 +103,7 @@ public class SearchingData {
 			throw new SpiderSearchException("no response!");
 		}
 
-		//		System.out.println(queryResponse.getFacetDates().size());
+		//		System.out.println(queryResponse.getFacetFields());
 
 		QueryResult result = new QueryResult();
 		result.setQTime(queryResponse.getQTime());
@@ -359,6 +360,13 @@ public class SearchingData {
 			result = result.replace("OR", "AND");
 		}
 		return result;
+	}
+
+	/**
+	 * 获取资源站点和名称列表
+	 */
+	public Map<String, String> getSourceIdAndNames() {
+		return cache.hgetAll(OracleToRedis.SITE_MAP);
 	}
 
 	/**

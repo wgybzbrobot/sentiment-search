@@ -2,6 +2,7 @@ package zx.soft.sent.cache.redis.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -167,6 +168,16 @@ public class RedisCache implements Cache {
 		ValueShardedJedis jedis = pool.getResource();
 		try {
 			return jedis.hget(key, field);
+		} finally {
+			pool.returnResource(jedis);
+		}
+	}
+
+	@Override
+	public Map<String, String> hgetAll(String key) {
+		ValueShardedJedis jedis = pool.getResource();
+		try {
+			return jedis.hgetAll(key);
 		} finally {
 			pool.returnResource(jedis);
 		}

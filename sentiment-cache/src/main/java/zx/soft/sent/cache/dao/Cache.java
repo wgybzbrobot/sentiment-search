@@ -1,5 +1,6 @@
 package zx.soft.sent.cache.dao;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -107,6 +108,13 @@ public interface Cache {
 	 * @return
 	 */
 	String hget(String key, String field);
+
+	/**
+	 * 返回Hash表中的所有键值
+	 * @param key：键名
+	 * @return
+	 */
+	Map<String, String> hgetAll(String key);
 
 	public void close();
 
