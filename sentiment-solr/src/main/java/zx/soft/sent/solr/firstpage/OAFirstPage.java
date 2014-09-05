@@ -52,8 +52,11 @@ public class OAFirstPage {
 		OAFirstPage firstPage = new OAFirstPage();
 		//		HashMap<String, Long> todayWeibos = firstPage.getTodayWeibosSum(147, 9);
 		//		System.out.println(todayWeibos);
-		List<SolrDocument> negativeRecords = firstPage.getNegativeRecords(2, 147, 20);
-		System.out.println(JsonUtils.toJson(negativeRecords));
+		//		List<SolrDocument> negativeRecords = firstPage.getNegativeRecords(2, 147, 20);
+		//		System.out.println(JsonUtils.toJson(negativeRecords));
+		HashMap<String, Long> currentPlatformSum = firstPage.getCurrentPlatformSum();
+		System.out.println(currentPlatformSum.toString());
+		System.out.println(JsonUtils.toJson(currentPlatformSum));
 		firstPage.close();
 
 	}
@@ -128,8 +131,6 @@ public class OAFirstPage {
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);
 		queryParams.setFacetField("source_id");
-		//		System.out.println("update_time:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
-		//				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
 		queryParams.setFq("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
 		QueryResult queryResult = search.queryData(queryParams, false);
