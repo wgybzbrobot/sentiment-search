@@ -34,7 +34,11 @@ public class FirstPageResource extends ServerResource {
 			logger.error("Params `type` or `datestr` is null.");
 			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
-		return application.selectFirstPage(Integer.parseInt(type), datestr);
+		String result = application.selectFirstPage(Integer.parseInt(type), datestr);
+		if (result == null) {
+			return new ErrorResponse.Builder(-1, "params error!").build();
+		}
+		return result;
 	}
 
 }

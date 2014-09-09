@@ -1,7 +1,9 @@
 package zx.soft.sent.web.resource;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import org.codehaus.jackson.JsonNode;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -10,6 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.special.SpecialTopic;
+import zx.soft.sent.solr.special.PieChart;
+import zx.soft.sent.solr.special.SpecialInfo;
+import zx.soft.sent.solr.special.TrendChart;
+import zx.soft.sent.utils.json.JsonNodeUtils;
 import zx.soft.sent.web.application.SpecialApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.utils.URLCodecUtils;
@@ -50,17 +56,16 @@ public class SpecialResource extends ServerResource {
 			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
 		String queryResult = application.selectSpecialResult(identify, type);
-		return queryResult;
-		//		if (queryResult == null) {
-		//			return new ErrorResponse.Builder(-1, "params error!").build();
-		//		}
-		//		if (queryResult.contains("platformCount")) {
-		//			return strToPieChart(queryResult);
-		//		} else if (queryResult.contains("countByDay")) {
-		//			return strToTrendChart(queryResult);
-		//		} else {
-		//			return new ErrorResponse.Builder(-1, "params error!").build();
-		//		}
+		if (queryResult == null) {
+			return new ErrorResponse.Builder(-1, "params error!").build();
+		}
+		if (queryResult.contains("platformCount")) {
+			return strToPieChart(queryResult);
+		} else if (queryResult.contains("countByDay")) {
+			return strToTrendChart(queryResult);
+		} else {
+			return new ErrorResponse.Builder(-1, "params error!").build();
+		}
 	}
 
 	@Delete
@@ -83,7 +88,6 @@ public class SpecialResource extends ServerResource {
 
 	}
 
-	/**
 	private TrendChart strToTrendChart(String queryResult) {
 		TrendChart trendChart = new TrendChart();
 		JsonNode specialInfo = JsonNodeUtils.getJsonNode(queryResult, "specialInfo");
@@ -110,6 +114,5 @@ public class SpecialResource extends ServerResource {
 		}
 		return pieChart;
 	}
-	*/
 
 }
