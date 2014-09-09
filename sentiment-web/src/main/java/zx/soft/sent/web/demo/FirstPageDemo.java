@@ -44,8 +44,8 @@ public class FirstPageDemo {
 		 * 5、对当天的论坛和微博进入数据进行负面评分，并按照分值推送最大的签20条内容，每小时推送一次。
 		 * @param platform:论坛-2,微博-3
 		 */
-		List<SolrDocument> negativeRecordsForum = oafirstPage.getNegativeRecords(2, 147, 20);
-		List<SolrDocument> negativeRecordsWeibo = oafirstPage.getNegativeRecords(3, 147, 20);
+		List<SolrDocument> negativeRecordsForum = oafirstPage.getNegativeRecords(2, 147, 10);
+		List<SolrDocument> negativeRecordsWeibo = oafirstPage.getNegativeRecords(3, 147, 10);
 		firstPage.insertFirstPage(52, timeStr, JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 		firstPage.insertFirstPage(53, timeStr, JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
 		// 关闭资源
