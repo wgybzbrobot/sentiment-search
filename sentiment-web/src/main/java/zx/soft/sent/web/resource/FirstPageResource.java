@@ -17,24 +17,24 @@ public class FirstPageResource extends ServerResource {
 	private FirstPageApplication application;
 
 	private String type = "";
-	private String timestr = "";
+	private String datestr = "";
 
 	@Override
 	public void doInit() {
 		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application = (FirstPageApplication) getApplication();
 		type = (String) this.getRequest().getAttributes().get("type");
-		timestr = (String) this.getRequest().getAttributes().get("day");
+		datestr = (String) this.getRequest().getAttributes().get("datestr");
 	}
 
 	@Get("json")
 	public Object getSpecialResult() {
-		if (type == null || type.length() == 0 || timestr == null || timestr.length() == 0
+		if (type == null || type.length() == 0 || datestr == null || datestr.length() == 0
 				|| !JavaPattern.isAllNum(type)) {
-			logger.error("Params `type` or `timestr` is null.");
+			logger.error("Params `type` or `datestr` is null.");
 			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
-		return application.selectFirstPage(Integer.parseInt(type), timestr);
+		return application.selectFirstPage(Integer.parseInt(type), datestr);
 	}
 
 }

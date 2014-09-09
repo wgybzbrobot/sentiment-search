@@ -25,7 +25,7 @@ public class FirstPageApplication extends Application {
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		// POST专题信息
-		router.attach("/{type}/{day}", FirstPageResource.class);
+		router.attach("/{type}/{datestr}", FirstPageResource.class);
 		return router;
 	}
 
