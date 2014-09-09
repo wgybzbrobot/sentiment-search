@@ -1,7 +1,5 @@
 package zx.soft.sent.web.resource;
 
-import java.util.concurrent.ThreadPoolExecutor;
-
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -9,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.utils.threads.ApplyThreadPool;
 import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.domain.PostData;
@@ -26,7 +23,7 @@ public class SentIndexResource extends ServerResource {
 
 	private static SentiIndexApplication application;
 
-	private static ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector();
+	//	private static ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector();
 
 	@Override
 	public void doInit() {
@@ -51,18 +48,26 @@ public class SentIndexResource extends ServerResource {
 			logger.info("Indexing data's ID = " + d.getId());
 		}
 		// 另开一个线程索引和持久化数据，以免影响客户端响应时间
-		pool.execute(new Runnable() {
-			@Override
-			public void run() {
-				// 添加到Solr
-				application.addDatas(data.getRecords());
-				// 添加到Mysql
-				application.persist(data.getRecords());
-			}
-		});
-		//		System.out.println(JsonUtils.toJson(data));
-
-		return new ErrorResponse.Builder(0, "ok").build();
+		//		pool.execute(new Runnable() {
+		//			@Override
+		//			public void run() {
+		//				// 添加到Solr
+		//				application.addDatas(data.getRecords());
+		//				// 添加到Mysql
+		//				application.persist(data.getRecords());
+		//			}
+		//		});
+		try {
+			// 添加到Solr
+			application.addDatas(data.getRecords());
+			// 添加到Mysql
+			application.persist(data.getRecords());
+			//		System.out.println(JsonUtils.toJson(data));
+			return new ErrorResponse.Builder(0, "ok").build();
+		} catch (Exception e) {
+			logger.error("Indexing error,e=" + e.getMessage());
+			return new ErrorResponse.Builder(-1, "persist error!").build();
+		}
 	}
 
 	@Get("json")

@@ -17,7 +17,7 @@ public class FirstPageDemo {
 		System.out.println("Starting query OA-FirstPage data...");
 		FirstPage firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 		OAFirstPage oafirstPage = new OAFirstPage();
-		String timeStr = "2014-09-05,14";
+		String timeStr = "2014-09-08,13";
 		/**
 		 * 1、统计当前时间各类数据的总量
 		 */
@@ -29,10 +29,10 @@ public class FirstPageDemo {
 		HashMap<String, Long> todayPlatformInputSum = oafirstPage.getTodayPlatformInputSum(147);
 		firstPage.insertFirstPage(2, timeStr, JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
 		/**
-		 * 3、根据发布人username获取他最新的N条信息
+		 * 3、根据发布人username获取他最新的N条信息，通过solr搜索接口获取
 		 */
-		List<SolrDocument> topNRecordsByUsername = oafirstPage.getTopNRecordsByUsername(20, "452962");
-		firstPage.insertFirstPage(3, timeStr, JsonUtils.toJsonWithoutPretty(topNRecordsByUsername));
+		//		List<SolrDocument> topNRecordsByUsername = oafirstPage.getTopNRecordsByUsername(20, "452962");
+		//		firstPage.insertFirstPage(3, timeStr, JsonUtils.toJsonWithoutPretty(topNRecordsByUsername));
 		/**
 		 * 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
 		 * 即从0点开始，每隔3个小时统计以下，如果当前的小时在这几个时刻内就统计，否则不统计。
