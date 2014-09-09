@@ -48,9 +48,9 @@ public class SpecialTopicTimer {
 	public static void main(String[] args) {
 
 		/**
-		 * 设置30分钟跑一次
+		 * 设置60分钟跑一次
 		 */
-		SpecialTopicTimer tasker = new SpecialTopicTimer(30 * 60 * 1000);
+		SpecialTopicTimer tasker = new SpecialTopicTimer(60 * 60 * 1000);
 		tasker.run();
 	}
 
@@ -60,7 +60,7 @@ public class SpecialTopicTimer {
 	public void run() {
 		Timer timer = new Timer();
 		timer.schedule(new SpecialTopicTasker(specialQuery), 0, timeInterval);
-		timer.cancel();
+		//		timer.cancel();
 	}
 
 	/**
@@ -103,19 +103,34 @@ public class SpecialTopicTimer {
 					queryParams.setFacetField("platform");
 					pieResult = search.queryData(queryParams, false);
 					// 更新饼状图结果到数据库中
-					specialQuery.updateSpecialResult(identify, "",
-							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+					if (specialQuery.selectSpecialResult(identify, "pie") == null) {
+						specialQuery.insertSpecialResult(identify, "pie",
+								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+					} else {
+						specialQuery.updateSpecialResult(identify, "",
+								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+					}
 					// 从solr集群中查询趋势图结果
 					fdp = new FacetDateParams();
 					fdp.setQ(specialInfo.getKeywords());
 					fdp.setFacetDate("timestamp");
-					fdp.setFacetDateStart("NOW-7DAYS");
-					fdp.setFacetDateEnd("NOW");
+					if (TimeUtils.transTimeLong(specialInfo.getEnd()) < System.currentTimeMillis()) {
+						fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getEnd()) + "-7DAYS");
+						fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
+					} else {
+						fdp.setFacetDateStart("NOW-7DAYS");
+						fdp.setFacetDateEnd("NOW");
+					}
 					fdp.setFacetDateGap("%2B1DAY");
 					trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
 					// 更新趋势图结果到数据库中
-					specialQuery.updateSpecialResult(identify, "",
-							JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+					if (specialQuery.selectSpecialResult(identify, "trend") == null) {
+						specialQuery.insertSpecialResult(identify, "trend",
+								JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+					} else {
+						specialQuery.updateSpecialResult(identify, "trend",
+								JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+					}
 				}
 			}
 			search.close();

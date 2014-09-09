@@ -30,8 +30,6 @@ public class FacetSearch {
 	private static final String FACET_DATE_END = "facet.date.end";
 	private static final String FACET_DATE_GAP = "facet.date.gap";
 
-	private static final String CHARSET = "utf-8";
-
 	public static String getURL(FacetDateParams fdp) {
 		String url = BASE_URL + "&" + Q + "=" + fdp.getQ() + "&" + FACET_DATE + "=" + fdp.getFacetDate() + "&"
 				+ FACET_DATE_START + "=" + fdp.getFacetDateStart() + "&" + FACET_DATE_END + "=" + fdp.getFacetDateEnd()
@@ -41,7 +39,7 @@ public class FacetSearch {
 	}
 
 	public static String getFacetDateResult(FacetDateParams fdp) {
-		String result = HttpUtils.doGet(getURL(fdp), CHARSET);
+		String result = HttpUtils.doGet(getURL(fdp));
 		return result;
 	}
 

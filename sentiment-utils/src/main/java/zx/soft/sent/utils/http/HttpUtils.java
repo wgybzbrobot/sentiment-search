@@ -56,13 +56,13 @@ public class HttpUtils {
 				// 网页的Meta标签中指定了编码
 				EntityUtils.consume(entity); // 关闭内容流
 			} catch (ParseException | IOException e) {
-				//				throw new RuntimeException(e);
+				logger.error("ParseException or IOException e=" + e.getMessage());
 			}
 		}
 		try {
 			httpClient.close();
 		} catch (IOException e) {
-			//			
+			logger.error("IOException" + e.getMessage());
 		}
 
 		return result;

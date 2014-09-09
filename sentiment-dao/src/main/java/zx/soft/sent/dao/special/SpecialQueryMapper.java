@@ -49,7 +49,7 @@ public interface SpecialQueryMapper {
 	/**
 	 * 查询专题identify，按时间查询
 	 */
-	@Select("SELECT `identify` FROM `oa_special_query_cache` WHERE `lasttime` > #{lasttime}")
+	@Select("SELECT `identify` FROM `oa_special_info` WHERE `lasttime` > #{lasttime}")
 	@ConstructorArgs(value = { @Arg(column = "identify", javaType = String.class) })
 	public List<String> selectSpecialIdentifyByTime(long lasttime);
 
@@ -63,7 +63,7 @@ public interface SpecialQueryMapper {
 	/**
 	 * 更新专题查询结果的时间，在每次查询后更新时间
 	 */
-	@Update("UPDATE `oa_special_query_cache` SET `lasttime` = UNIX_TIMESTAMP() WHERE `identify` = #{identify}")
+	@Update("UPDATE `oa_special_info` SET `lasttime` = UNIX_TIMESTAMP() WHERE `identify` = #{identify}")
 	public void updateSpecialResultLasttime(String identify);
 
 	/**

@@ -68,10 +68,12 @@ public class SpecialApplication extends Application {
 	}
 
 	/**
-	 * 获取专题查询结果，根据identify+type
+	 * 获取专题查询结果，根据identify+type，查询结束后更新时间
 	 */
 	public String selectSpecialResult(String identify, String type) {
-		return specialQuery.selectSpecialResult(identify, type);
+		String result = specialQuery.selectSpecialResult(identify, type);
+		specialQuery.updateSpecialResultLasttime(identify);
+		return result;
 	}
 
 }
