@@ -25,6 +25,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>sentiment-algorithm</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 		</dependency>
@@ -83,7 +88,11 @@
 			<groupId>oracle.jdbc</groupId>
 			<artifactId>ojdbc</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>zx.soft</groupId>
+			<artifactId>negative-sentiment</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -3,6 +3,7 @@ package zx.soft.sent.solr.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.solr.firstpage.FirstPageTimer;
 import zx.soft.sent.solr.index.ImportSentDataToDB;
 import zx.soft.sent.solr.index.ImportSentDataToSC;
 import zx.soft.sent.solr.index.ImportSinaDataToSC;
@@ -54,8 +55,12 @@ public class SentSolrDriver {
 			OracleToRedis.main(leftArgs);
 			break;
 		case "specialTopicTimer":
-			logger.info("OA专题数据统计——定时分析:");
+			logger.info("OA专题数据统计——定时分析：");
 			SpecialTopicTimer.main(leftArgs);
+			break;
+		case "firstPageTimer":
+			logger.info("OA首页数据统计——定时分析：");
+			FirstPageTimer.main(leftArgs);
 			break;
 		default:
 			return;

@@ -1,5 +1,6 @@
 package zx.soft.sent.solr.firstpage;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,8 @@ import org.apache.solr.common.SolrDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.negative.sentiment.core.NegativeClassify;
+import zx.soft.sent.arith.sort.InsertSort;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.sent.utils.json.JsonUtils;
@@ -30,13 +33,9 @@ public class FirstPageTimer {
 	// 定时分析的时间间隔,秒
 	private final long timeInterval;
 
-	// 发布人username
-	private final String username;
-
-	public FirstPageTimer(long timeInterval, String username) {
+	public FirstPageTimer(long timeInterval) {
 		firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 		this.timeInterval = timeInterval;
-		this.username = username;
 	}
 
 	/**
@@ -47,8 +46,10 @@ public class FirstPageTimer {
 		/**
 		 * 设置1小时跑一次
 		 */
-		FirstPageTimer tasker = new FirstPageTimer(60 * 60 * 1000, "123456");
-		tasker.run();
+		//		FirstPageTimer tasker = new FirstPageTimer(60 * 60 * 1000);
+		//		tasker.run();
+		String[] dateStr = Calendar.getInstance().getTime().toLocaleString().split("\\s");
+		System.out.println(dateStr[0] + "," + dateStr[1].split(":")[0]);
 	}
 
 	/**
@@ -56,8 +57,7 @@ public class FirstPageTimer {
 	 */
 	public void run() {
 		Timer timer = new Timer();
-		timer.schedule(new FirstPageTasker(firstPage, username), 0, timeInterval);
-		timer.cancel();
+		timer.schedule(new FirstPageTasker(firstPage), 0, timeInterval);
 	}
 
 	/**
@@ -66,18 +66,17 @@ public class FirstPageTimer {
 	static class FirstPageTasker extends TimerTask {
 
 		private final FirstPage firstPage;
-		private final String username;
 
-		public FirstPageTasker(FirstPage firstPage, String username) {
+		public FirstPageTasker(FirstPage firstPage) {
 			super();
 			this.firstPage = firstPage;
-			this.username = username;
 		}
 
 		@Override
 		public void run() {
 			logger.info("Starting query OA-FirstPage data...");
 			OAFirstPage oafirstPage = new OAFirstPage();
+			NegativeClassify negativeClassify = new NegativeClassify();
 			/**
 			 * 1、统计当前时间各类数据的总量
 			 */
@@ -89,11 +88,6 @@ public class FirstPageTimer {
 			HashMap<String, Long> todayPlatformInputSum = oafirstPage.getTodayPlatformInputSum(0);
 			firstPage.insertFirstPage(2, timeStrByHour(), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
 			/**
-			 * 3、根据发布人username获取他最新的N条信息
-			 */
-			List<SolrDocument> topNRecordsByUsername = oafirstPage.getTopNRecordsByUsername(20, username);
-			firstPage.insertFirstPage(3, timeStrByHour(), JsonUtils.toJsonWithoutPretty(topNRecordsByUsername));
-			/**
 			 * 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
 			 * 即从0点开始，每隔3个小时统计以下，如果当前的小时在这几个时刻内就统计，否则不统计。
 			 */
@@ -102,16 +96,18 @@ public class FirstPageTimer {
 				HashMap<String, Long> todayWeibosSum = oafirstPage.getTodayWeibosSum(0, hour);
 				firstPage.insertFirstPage(4, timeStrByHour(), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
 			}
-
 			/**
 			 * 5、对当天的论坛和微博进入数据进行负面评分，并按照分值推送最大的签20条内容，每小时推送一次。
 			 * @param platform:论坛-2,微博-3
 			 */
-			List<SolrDocument> negativeRecordsForum = oafirstPage.getNegativeRecords(2, 0, 20);
-			List<SolrDocument> negativeRecordsWeibo = oafirstPage.getNegativeRecords(3, 0, 20);
+			List<SolrDocument> negativeRecordsForum = oafirstPage.getNegativeRecords(2, 0, 10);
+			List<SolrDocument> negativeRecordsWeibo = oafirstPage.getNegativeRecords(3, 0, 10);
+			negativeRecordsForum = getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 20);
+			negativeRecordsWeibo = getTopNNegativeRecords(negativeClassify, negativeRecordsWeibo, 20);
 			firstPage.insertFirstPage(52, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 			firstPage.insertFirstPage(53, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
 			// 关闭资源
+			negativeClassify.cleanup();
 			oafirstPage.close();
 			logger.info("Finishing query OA-FirstPage data...");
 		}
@@ -123,6 +119,44 @@ public class FirstPageTimer {
 			@SuppressWarnings("deprecation")
 			String[] dateStr = Calendar.getInstance().getTime().toLocaleString().split("\\s");
 			return dateStr[0] + "," + dateStr[1].split(":")[0];
+		}
+
+		/**
+		 * 排序计算，得到前20负面信息
+		 * @param records
+		 * @param N
+		 * @return
+		 */
+		private List<SolrDocument> getTopNNegativeRecords(NegativeClassify negativeClassify,
+				List<SolrDocument> records, int N) {
+			List<SolrDocument> result = new ArrayList<>();
+			String[] insertTables = new String[records.size()];
+			for (int i = 0; i < records.size(); i++) {
+				String str = "";
+				if (records.get(i).get("title") != null) {
+					str += records.get(i).get("title").toString();
+				}
+				if (records.get(i).get("content") != null) {
+					str += records.get(i).get("content").toString();
+				}
+				insertTables[i] = i + "=" + (int) (negativeClassify.getTextScore(str));
+			}
+			String[] table = new String[records.size()];
+			for (int i = 0; i < table.length; i++) {
+				table[i] = "0=0";
+			}
+			for (int i = 0; i < table.length; i++) {
+				table = InsertSort.toptable(table, insertTables[i]);
+			}
+			String[] keyvalue = null;
+			for (int i = 0; i < Math.min(table.length, N); i++) {
+				keyvalue = table[i].split("=");
+				SolrDocument doc = records.get(Integer.parseInt(keyvalue[0]));
+				doc.setField("score", keyvalue[1]);
+				result.add(doc);
+			}
+
+			return result;
 		}
 
 	}
