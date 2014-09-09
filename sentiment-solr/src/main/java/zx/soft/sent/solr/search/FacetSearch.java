@@ -1,10 +1,15 @@
 package zx.soft.sent.solr.search;
 
+import java.util.Iterator;
+
+import org.codehaus.jackson.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.solr.domain.FacetDateParams;
+import zx.soft.sent.solr.domain.FacetDateResult;
 import zx.soft.sent.utils.http.HttpUtils;
+import zx.soft.sent.utils.json.JsonNodeUtils;
 
 /**
  * 分类搜索，目前solrj中对时间分类搜索不支持，搜索不出结果，
@@ -38,6 +43,30 @@ public class FacetSearch {
 	public static String getFacetDateResult(FacetDateParams fdp) {
 		String result = HttpUtils.doGet(getURL(fdp), CHARSET);
 		return result;
+	}
+
+	public static FacetDateResult getFacetDates(String fieldName, String str) {
+		FacetDateResult facetDateResult = new FacetDateResult();
+		JsonNode result = JsonNodeUtils.getJsonNode(str, "facet_counts");
+		result = JsonNodeUtils.getJsonNode(result, "facet_dates");
+		result = JsonNodeUtils.getJsonNode(result, fieldName);
+		Iterator<String> keys = result.getFieldNames();
+		String key = "";
+		while (keys.hasNext()) {
+			key = keys.next();
+			if ("start".equalsIgnoreCase(key)) {
+				facetDateResult.setStart(result.get(key).toString().replaceAll("\"", ""));
+			} else if ("end".equalsIgnoreCase(key)) {
+				facetDateResult.setEnd(result.get(key).toString().replaceAll("\"", ""));
+			} else if ("gap".equalsIgnoreCase(key)) {
+				facetDateResult.setGap(result.get(key).toString().replaceAll("\"", ""));
+			} else {
+				facetDateResult.getDateCounts().put(key.split("T")[0],
+						Long.parseLong(result.get(key).toString().replaceAll("\"", "")));
+			}
+
+		}
+		return facetDateResult;
 	}
 
 	public static void main(String[] args) {

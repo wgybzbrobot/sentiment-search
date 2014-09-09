@@ -76,4 +76,32 @@ public class TimeUtils {
 		}
 	}
 
+	/**
+	 * 将"2014-08-25 00:00:00"转换为"2014-08-25T00:00:00Z"
+	 * @param str
+	 * @return
+	 */
+	public static String transTimeStr(String str) {
+		String[] strs = str.split("\\s");
+		if (strs.length != 2) {
+			throw new RuntimeException("TimeStr=" + str + " converted error!");
+		} else {
+			return strs[0] + "T" + strs[1] + "Z";
+		}
+	}
+
+	/**
+	 * 将"2014-08-25 00:00:00"转换为long型时间戳
+	 * @param str
+	 * @return
+	 */
+	public static long transTimeLong(String str) {
+		try {
+			Date date = LONG_FORMAT.parse("2014-08-25 12:31:45");
+			return date.getTime();
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

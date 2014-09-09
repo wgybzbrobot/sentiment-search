@@ -11,12 +11,15 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.special.SpecialTopic;
 import zx.soft.sent.dao.special.SpecialQuery;
+import zx.soft.sent.solr.domain.FacetDateParams;
+import zx.soft.sent.solr.domain.FacetDateResult;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
+import zx.soft.sent.solr.search.FacetSearch;
 import zx.soft.sent.solr.search.SearchingData;
-import zx.soft.sent.solr.utils.TimeConvert;
 import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.sent.utils.time.TimeUtils;
 
 /**
  * OA专题数据统计——定时分析
@@ -84,8 +87,9 @@ public class SpecialTopicTimer {
 			// 循环更新每个专题的查询结果
 			QueryParams queryParams = null;
 			SpecialTopic specialInfo = null;
+			FacetDateParams fdp = null;
 			QueryResult pieResult = null;
-			QueryResult trandResult = null;
+			FacetDateResult trandResult = null;
 			for (String identify : identifys) {
 				logger.info("Updating identify=" + identify + " at:" + new Date().toLocaleString());
 				// 查询专题信息
@@ -102,21 +106,16 @@ public class SpecialTopicTimer {
 					specialQuery.updateSpecialResult(identify, "",
 							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
 					// 从solr集群中查询趋势图结果
-					// 在某个时间段内按天统计
-					// facet=true&facet.date=timestamp
-					// facet.date.start=2014-04-10T19:18:00Z
-					// facet.date.end=2014-04-14T19:18:00Z
-					// facet.date.gap=%2B1DAY
-					queryParams = new QueryParams();
-					queryParams.setQ(specialInfo.getKeywords() + "&facet=true&facet.date=timestamp"
-							+ "&facet.date.start=" + TimeConvert.transTimeStr(specialInfo.getStart())
-							+ "&facet.date.end="
-							+ TimeConvert.transTimeStr(specialInfo.getEnd() + "facet.date.gap=%2B1DAY"));
-					queryParams.setFq(getTimestampFilterQuery(specialInfo.getStart(), specialInfo.getEnd())
-							+ ";country_code:" + specialInfo.getHometype());
-					trandResult = search.queryData(queryParams, false);
+					fdp = new FacetDateParams();
+					fdp.setQ(specialInfo.getKeywords());
+					fdp.setFacetDate("timestamp");
+					fdp.setFacetDateStart("NOW-7DAYS");
+					fdp.setFacetDateEnd("NOW");
+					fdp.setFacetDateGap("%2B1DAY");
+					trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
 					// 更新趋势图结果到数据库中
-					specialQuery.updateSpecialResult(identify, "", JsonUtils.toJsonWithoutPretty(trandResult));
+					specialQuery.updateSpecialResult(identify, "",
+							JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
 				}
 			}
 			search.close();
@@ -134,8 +133,15 @@ public class SpecialTopicTimer {
 			return pieChart;
 		}
 
+		private TrendChart getTrendChart(SpecialTopic specialInfo, FacetDateResult result) {
+			TrendChart trendChart = new TrendChart();
+			trendChart.setSpecialInfo(new SpecialInfo(specialInfo.getIdentify(), specialInfo.getName()));
+			trendChart.setCountByDay(result.getDateCounts());
+			return trendChart;
+		}
+
 		public static String getTimestampFilterQuery(String start, String end) {
-			return "timestamp:[" + TimeConvert.transTimeStr(start) + " TO " + TimeConvert.transTimeStr(end) + "]";
+			return "timestamp:[" + TimeUtils.transTimeStr(start) + " TO " + TimeUtils.transTimeStr(end) + "]";
 		}
 
 	}

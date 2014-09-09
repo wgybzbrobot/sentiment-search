@@ -1,5 +1,6 @@
 package zx.soft.sent.utils.time;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +32,16 @@ public class TimeUtilsTest {
 		assertTrue(str.length() == 19);
 		assertFalse(str.contains("T"));
 		assertFalse(str.contains("Z"));
+	}
+
+	@Test
+	public void testTransTimeStr() {
+		assertEquals("2014-08-25T00:00:00Z", TimeUtils.transTimeStr("2014-08-25 00:00:00"));
+	}
+
+	@Test
+	public void testTransTimeLong() {
+		assertEquals(1408941105000L, TimeUtils.transTimeLong("2014-08-25 00:00:00"));
 	}
 
 }
