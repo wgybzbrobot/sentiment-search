@@ -48,8 +48,10 @@ public class FirstPageTimer {
 		 */
 		//		FirstPageTimer tasker = new FirstPageTimer(60 * 60 * 1000);
 		//		tasker.run();
-		String[] dateStr = Calendar.getInstance().getTime().toLocaleString().split("\\s");
-		System.out.println(dateStr[0] + "," + dateStr[1].split(":")[0]);
+		Calendar calendar = Calendar.getInstance();
+		System.out.println(calendar.get(Calendar.MONTH));
+		System.out.println(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-"
+				+ calendar.get(Calendar.DATE) + "," + calendar.get(Calendar.HOUR));
 	}
 
 	/**

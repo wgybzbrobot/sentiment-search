@@ -72,7 +72,7 @@ public class FacetSearch {
 		fdp.setQ("*:*");
 		fdp.setFacetDate("timestamp");
 		fdp.setFacetDateStart("NOW-7DAYS");
-		fdp.setFacetDateEnd("NOW");
+		fdp.setFacetDateEnd("NOW%2B1DAY");
 		fdp.setFacetDateGap("%2B1DAY");
 		String result = FacetSearch.getFacetDateResult(fdp);
 		System.out.println(result);

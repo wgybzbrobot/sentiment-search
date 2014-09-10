@@ -70,7 +70,7 @@ public interface SpecialQueryMapper {
 	 * 更新专题查询结果
 	 */
 	@Update("UPDATE `oa_special_query_cache` SET `result` = #{result},`lasttime` = UNIX_TIMESTAMP() "
-			+ "WHERE `identify` = #{identify}")
+			+ "WHERE `identify` = #{identify} AND `type` = #{type}")
 	public void updateSpecialResult(SpecialResult insertSpecialResult);
 
 	/**

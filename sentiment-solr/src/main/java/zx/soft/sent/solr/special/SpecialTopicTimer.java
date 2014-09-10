@@ -107,20 +107,15 @@ public class SpecialTopicTimer {
 						specialQuery.insertSpecialResult(identify, "pie",
 								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
 					} else {
-						specialQuery.updateSpecialResult(identify, "",
+						specialQuery.updateSpecialResult(identify, "pie",
 								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
 					}
 					// 从solr集群中查询趋势图结果
 					fdp = new FacetDateParams();
 					fdp.setQ(specialInfo.getKeywords());
 					fdp.setFacetDate("timestamp");
-					if (TimeUtils.transTimeLong(specialInfo.getEnd()) < System.currentTimeMillis()) {
-						fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getEnd()) + "-7DAYS");
-						fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
-					} else {
-						fdp.setFacetDateStart("NOW-7DAYS");
-						fdp.setFacetDateEnd("NOW");
-					}
+					fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
+					fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
 					fdp.setFacetDateGap("%2B1DAY");
 					trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
 					// 更新趋势图结果到数据库中
