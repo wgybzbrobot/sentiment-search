@@ -29,14 +29,10 @@ public class FirstPageTimer {
 
 	private static Logger logger = LoggerFactory.getLogger(FirstPageTimer.class);
 
-	// MySQL操作类
-	private final FirstPage firstPage;
-
 	// 定时分析的时间间隔,秒
 	private final long timeInterval;
 
 	public FirstPageTimer(long timeInterval) {
-		firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 		this.timeInterval = timeInterval;
 	}
 
@@ -57,7 +53,7 @@ public class FirstPageTimer {
 	 */
 	public void run() {
 		Timer timer = new Timer();
-		timer.schedule(new FirstPageTasker(firstPage), 0, timeInterval);
+		timer.schedule(new FirstPageTasker(), 0, timeInterval);
 	}
 
 	/**
@@ -65,18 +61,16 @@ public class FirstPageTimer {
 	 */
 	static class FirstPageTasker extends TimerTask {
 
-		private final FirstPage firstPage;
-
 		private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd,HH");
 
-		public FirstPageTasker(FirstPage firstPage) {
+		public FirstPageTasker() {
 			super();
-			this.firstPage = firstPage;
 		}
 
 		@Override
 		public void run() {
 			logger.info("Starting query OA-FirstPage data...");
+			FirstPage firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 			OAFirstPage oafirstPage = new OAFirstPage();
 			NegativeClassify negativeClassify = new NegativeClassify();
 			/**

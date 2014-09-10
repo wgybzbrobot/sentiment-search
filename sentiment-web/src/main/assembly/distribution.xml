@@ -12,6 +12,7 @@
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<includes>
+				<include>log4j.properties</include>
 				<include>data_db.properties</include>
 				<include>solr_params.properties</include>
 				<include>web-server.properties</include>

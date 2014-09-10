@@ -1,5 +1,7 @@
 package zx.soft.sent.web.demo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +19,8 @@ public class FirstPageDemo {
 		System.out.println("Starting query OA-FirstPage data...");
 		FirstPage firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 		OAFirstPage oafirstPage = new OAFirstPage();
-		String timeStr = "2014-09-08,13";
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd,HH");
+		String timeStr = formatter.format(new Date());
 		/**
 		 * 1、统计当前时间各类数据的总量
 		 */

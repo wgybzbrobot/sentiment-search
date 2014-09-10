@@ -31,14 +31,10 @@ public class SpecialTopicTimer {
 
 	private static Logger logger = LoggerFactory.getLogger(SpecialTopicTimer.class);
 
-	// MySQL操作类
-	private final SpecialQuery specialQuery;
-
 	// 定时分析的时间间隔,秒
 	private final long timeInterval;
 
 	public SpecialTopicTimer(long timeInterval) {
-		specialQuery = new SpecialQuery(MybatisConfig.ServerEnum.sentiment);
 		this.timeInterval = timeInterval;
 	}
 
@@ -59,8 +55,7 @@ public class SpecialTopicTimer {
 	 */
 	public void run() {
 		Timer timer = new Timer();
-		timer.schedule(new SpecialTopicTasker(specialQuery), 0, timeInterval);
-		//		timer.cancel();
+		timer.schedule(new SpecialTopicTasker(), 0, timeInterval);
 	}
 
 	/**
@@ -68,17 +63,15 @@ public class SpecialTopicTimer {
 	 */
 	static class SpecialTopicTasker extends TimerTask {
 
-		private final SpecialQuery specialQuery;
-
-		public SpecialTopicTasker(SpecialQuery specialQuery) {
+		public SpecialTopicTasker() {
 			super();
-			this.specialQuery = specialQuery;
 		}
 
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
 			logger.info("Running updating Tasks at:" + new Date().toLocaleString());
+			SpecialQuery specialQuery = new SpecialQuery(MybatisConfig.ServerEnum.sentiment);
 			SearchingData search = new SearchingData();
 			// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
 			// 在这里认为，如果一个月内没有查询就不更新

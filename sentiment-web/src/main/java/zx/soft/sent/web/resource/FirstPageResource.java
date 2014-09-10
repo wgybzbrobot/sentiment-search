@@ -35,12 +35,18 @@ public class FirstPageResource extends ServerResource {
 			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
 		int t = Integer.parseInt(type);
+		Object result = null;
 		if (t == 1 || t == 2) {
-			return application.selectFirstPageType12(t);
+			result = application.selectFirstPageType12(t, datestr);
 		} else if (t == 4) {
-			return application.selectFirstPageType4();
+			result = application.selectFirstPageType4(datestr);
+		} else if (t == 52 || t == 53) {
+			result = application.selectFirstPageType5(t, datestr);
+		}
+		if (result == null) {
+			return new ErrorResponse.Builder(-1, "params error!").build();
 		} else {
-			return application.selectFirstPage(Integer.parseInt(type), datestr);
+			return result;
 		}
 	}
 
