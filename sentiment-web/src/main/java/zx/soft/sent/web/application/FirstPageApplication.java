@@ -1,7 +1,9 @@
 package zx.soft.sent.web.application;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +26,7 @@ public class FirstPageApplication extends Application {
 
 	//	private static Logger logger = LoggerFactory.getLogger(FirstPageApplication.class);
 
-	//	private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+	private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 	//	private static final SimpleDateFormat FORMATTER_HH = new SimpleDateFormat("yyyy-MM-dd,HH");
 
 	private final FirstPage firstPage;
@@ -61,27 +63,26 @@ public class FirstPageApplication extends Application {
 	/**
 	 * 查询OA首页查询数据，type=4
 	 */
-	public HashMap<String, Long> selectFirstPageType4(String timestr) {
+	public HashMap<String, HashMap<String, Long>> selectFirstPageType4(String datestr) {
 		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		HashMap<String, Long> result = new HashMap<>();
+		HashMap<String, HashMap<String, Long>> result = new HashMap<>();
 		HashMap<String, Long> temp = null;
 		for (int i = 0; i <= hour; i = i + 3) {
-			//			String timestr = getCurrentYearMonthDay();
-			//			if (i < 10) {
-			//				timestr += ",0" + i;
-			//			} else {
-			//				timestr += "," + i;
-			//			}
+			String timestr = getCurrentYearMonthDay();
+			if (i < 10) {
+				timestr += ",0" + i;
+			} else {
+				timestr += "," + i;
+			}
 			temp = trans2Map(firstPage.selectFirstPage(4, timestr));
 			if (temp == null) {
 				continue;
 			}
 			for (Entry<String, Long> t : temp.entrySet()) {
 				if (result.get(t.getKey()) == null) {
-					result.put(t.getKey(), t.getValue());
-				} else {
-					result.put(t.getKey(), t.getValue() + result.get(t.getKey()));
+					result.put(t.getKey(), new HashMap<String, Long>());
 				}
+				result.get(t.getKey()).put(i + "", t.getValue());
 			}
 		}
 		if (result.size() == 0) {
@@ -137,9 +138,9 @@ public class FirstPageApplication extends Application {
 		return result;
 	}
 
-	//	private String getCurrentYearMonthDay() {
-	//		return FORMATTER.format(new Date());
-	//	}
+	private String getCurrentYearMonthDay() {
+		return FORMATTER.format(new Date());
+	}
 
 	//	private String getCurrentHH() {
 	//		return FORMATTER_HH.format(new Date());
