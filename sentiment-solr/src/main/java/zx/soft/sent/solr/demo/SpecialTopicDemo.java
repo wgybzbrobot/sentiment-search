@@ -18,6 +18,7 @@ import zx.soft.sent.solr.search.FacetSearch;
 import zx.soft.sent.solr.search.SearchingData;
 import zx.soft.sent.solr.special.PieChart;
 import zx.soft.sent.solr.special.SpecialInfo;
+import zx.soft.sent.solr.special.SpecialTopicTimer;
 import zx.soft.sent.solr.special.TrendChart;
 import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.utils.time.TimeUtils;
@@ -39,9 +40,8 @@ public class SpecialTopicDemo {
 		this.specialQuery = specialQuery;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void run() {
-		logger.info("Running updating Tasks at:" + new Date().toLocaleString());
+		logger.info("Running updating Tasks at:" + new Date().toString());
 		SearchingData search = new SearchingData();
 		// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
 		// 在这里认为，如果一个月内没有查询就不更新
@@ -54,7 +54,7 @@ public class SpecialTopicDemo {
 		QueryResult pieResult = null;
 		FacetDateResult trandResult = null;
 		for (String identify : identifys) {
-			logger.info("Updating identify=" + identify + " at:" + new Date().toLocaleString());
+			logger.info("Updating identify=" + identify + " at:" + new Date().toString());
 			// 查询专题信息
 			specialInfo = specialQuery.selectSpecialInfo(identify);
 			if (specialInfo != null) {
@@ -66,31 +66,33 @@ public class SpecialTopicDemo {
 				queryParams.setFacetField("platform");
 				pieResult = search.queryData(queryParams, false);
 				// 更新饼状图结果到数据库中
-				if (specialQuery.selectSpecialResult(identify, "pie") == null) {
-					specialQuery.insertSpecialResult(identify, "pie",
-							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
-				} else {
-					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
-					specialQuery.updateSpecialResult(identify, "pie",
-							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
-				}
+				//				if (specialQuery.selectSpecialResult(identify, "pie") == null) {
+				//					specialQuery.insertSpecialResult(identify, "pie",
+				//							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+				//				} else {
+				//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
+				//					specialQuery.updateSpecialResult(identify, "pie",
+				//							JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+				//				}
+				System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
 				// 从solr集群中查询趋势图结果
 				fdp = new FacetDateParams();
-				fdp.setQ(specialInfo.getKeywords());
+				fdp.setQ(SpecialTopicTimer.transUnicode(specialInfo.getKeywords()));
 				fdp.setFacetDate("timestamp");
 				fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
 				fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
 				fdp.setFacetDateGap("%2B1DAY");
 				trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
 				//				 更新趋势图结果到数据库中
-				if (specialQuery.selectSpecialResult(identify, "trend") == null) {
-					specialQuery.insertSpecialResult(identify, "trend",
-							JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
-				} else {
-					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
-					specialQuery.updateSpecialResult(identify, "trend",
-							JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
-				}
+				//				if (specialQuery.selectSpecialResult(identify, "trend") == null) {
+				//					specialQuery.insertSpecialResult(identify, "trend",
+				//							JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+				//				} else {
+				//					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
+				//					specialQuery.updateSpecialResult(identify, "trend",
+				//							JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+				//				}
+				System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
 			}
 		}
 		search.close();

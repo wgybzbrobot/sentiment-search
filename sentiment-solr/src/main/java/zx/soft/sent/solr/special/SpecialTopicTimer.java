@@ -1,5 +1,7 @@
 package zx.soft.sent.solr.special;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -67,10 +69,9 @@ public class SpecialTopicTimer {
 			super();
 		}
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			logger.info("Running updating Tasks at:" + new Date().toLocaleString());
+			logger.info("Running updating Tasks at:" + new Date().toString());
 			SpecialQuery specialQuery = new SpecialQuery(MybatisConfig.ServerEnum.sentiment);
 			SearchingData search = new SearchingData();
 			// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
@@ -84,7 +85,7 @@ public class SpecialTopicTimer {
 			QueryResult pieResult = null;
 			FacetDateResult trandResult = null;
 			for (String identify : identifys) {
-				logger.info("Updating identify=" + identify + " at:" + new Date().toLocaleString());
+				logger.info("Updating identify=" + identify + " at:" + new Date().toString());
 				// 查询专题信息
 				specialInfo = specialQuery.selectSpecialInfo(identify);
 				if (specialInfo != null) {
@@ -103,9 +104,10 @@ public class SpecialTopicTimer {
 						specialQuery.updateSpecialResult(identify, "pie",
 								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
 					}
+					//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
 					// 从solr集群中查询趋势图结果
 					fdp = new FacetDateParams();
-					fdp.setQ(specialInfo.getKeywords());
+					fdp.setQ(SpecialTopicTimer.transUnicode(specialInfo.getKeywords())); // URL中的部分字符需要编码转换
 					fdp.setFacetDate("timestamp");
 					fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
 					fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
@@ -119,6 +121,7 @@ public class SpecialTopicTimer {
 						specialQuery.updateSpecialResult(identify, "trend",
 								JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
 					}
+					//					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
 				}
 			}
 			search.close();
@@ -147,6 +150,15 @@ public class SpecialTopicTimer {
 			return "timestamp:[" + TimeUtils.transTimeStr(start) + " TO " + TimeUtils.transTimeStr(end) + "]";
 		}
 
+	}
+
+	public static String transUnicode(String str) {
+		try {
+			return URLEncoder.encode(str, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error("UnsupportedEncodingException e=" + e.getMessage());
+			return "";
+		}
 	}
 
 }
