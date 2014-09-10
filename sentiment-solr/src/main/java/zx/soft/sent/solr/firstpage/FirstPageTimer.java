@@ -1,7 +1,9 @@
 package zx.soft.sent.solr.firstpage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -46,12 +48,8 @@ public class FirstPageTimer {
 		/**
 		 * 设置1小时跑一次
 		 */
-		//		FirstPageTimer tasker = new FirstPageTimer(60 * 60 * 1000);
-		//		tasker.run();
-		Calendar calendar = Calendar.getInstance();
-		System.out.println(calendar.get(Calendar.MONTH));
-		System.out.println(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-"
-				+ calendar.get(Calendar.DATE) + "," + calendar.get(Calendar.HOUR));
+		FirstPageTimer tasker = new FirstPageTimer(60 * 60 * 1000);
+		tasker.run();
 	}
 
 	/**
@@ -68,6 +66,8 @@ public class FirstPageTimer {
 	static class FirstPageTasker extends TimerTask {
 
 		private final FirstPage firstPage;
+
+		private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd,HH");
 
 		public FirstPageTasker(FirstPage firstPage) {
 			super();
@@ -118,9 +118,7 @@ public class FirstPageTimer {
 		 * 将当前的时间戳转换成小时精度，如："2014-9-5,14"
 		 */
 		private String timeStrByHour() {
-			@SuppressWarnings("deprecation")
-			String[] dateStr = Calendar.getInstance().getTime().toLocaleString().split("\\s");
-			return dateStr[0] + "," + dateStr[1].split(":")[0];
+			return FORMATTER.format(new Date());
 		}
 
 		/**

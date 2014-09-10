@@ -1,7 +1,9 @@
 package zx.soft.sent.solr.demo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class FirstPageDemo {
 	}
 
 	private static Logger logger = LoggerFactory.getLogger(FirstPageDemo.class);
+
+	private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd,HH");
 
 	private final FirstPage firstPage;
 
@@ -75,9 +79,7 @@ public class FirstPageDemo {
 	 * 将当前的时间戳转换成小时精度，如："2014-9-5,14"
 	 */
 	private String timeStrByHour() {
-		@SuppressWarnings("deprecation")
-		String[] dateStr = Calendar.getInstance().getTime().toLocaleString().split("\\s");
-		return dateStr[0] + "," + dateStr[1].split(":")[0];
+		return FORMATTER.format(new Date());
 	}
 
 	private List<SolrDocument> getTopNNegativeRecords(NegativeClassify negativeClassify, List<SolrDocument> records,
