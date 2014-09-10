@@ -55,7 +55,7 @@ public class FirstPageDemo {
 		 * 即从0点开始，每隔3个小时统计以下，如果当前的小时在这几个时刻内就统计，否则不统计。
 		 */
 		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		if ((hour + 1) % 3 == 0) {
+		if (hour % 3 == 0) {
 			HashMap<String, Long> todayWeibosSum = oafirstPage.getTodayWeibosSum(0, hour);
 			firstPage.insertFirstPage(4, timeStrByHour(), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
 		}

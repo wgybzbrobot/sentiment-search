@@ -115,7 +115,7 @@ public class FirstPageTimer {
 		}
 
 		/**
-		 * 将当前的时间戳转换成小时精度，如："2014-9-5,14"
+		 * 将当前的时间戳转换成小时精度，如："2014-09-05,14"
 		 */
 		private String timeStrByHour() {
 			return FORMATTER.format(new Date());

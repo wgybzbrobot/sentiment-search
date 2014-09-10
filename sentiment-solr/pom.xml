@@ -92,6 +92,17 @@
 			<groupId>zx.soft</groupId>
 			<artifactId>negative-sentiment</artifactId>
 			<version>1.0.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>cc.pp.study</groupId>
+					<artifactId>analyzer-ik</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>cc.pp.study</groupId>
+			<artifactId>analyzer-ik</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -119,6 +130,7 @@
 				<version>2.4</version>
 				<configuration>
 					<excludes>
+						<exclude>log4j.properties</exclude>
 						<exclude>data_db.properties</exclude>
 						<exclude>solr_params.properties</exclude>
 						<exclude>oracle_db.properties</exclude>
