@@ -44,7 +44,7 @@ public class FirstPageTimer {
 		/**
 		 * 设置1小时跑一次
 		 */
-		FirstPageTimer tasker = new FirstPageTimer(60 * 60 * 1000);
+		FirstPageTimer tasker = new FirstPageTimer(2 * 60 * 1000);
 		tasker.run();
 	}
 
@@ -91,6 +91,7 @@ public class FirstPageTimer {
 			if (hour % 3 == 0) {
 				HashMap<String, Long> todayWeibosSum = oafirstPage.getTodayWeibosSum(0, hour);
 				firstPage.insertFirstPage(4, timeStrByHour(), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
+				//				System.out.println(JsonUtils.toJson(todayWeibosSum));
 			}
 			/**
 			 * 5、对当天的论坛和微博进入数据进行负面评分，并按照分值推送最大的签20条内容，每小时推送一次。
@@ -102,6 +103,10 @@ public class FirstPageTimer {
 			negativeRecordsWeibo = getTopNNegativeRecords(negativeClassify, negativeRecordsWeibo, 20);
 			firstPage.insertFirstPage(52, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 			firstPage.insertFirstPage(53, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
+			//			System.out.println(JsonUtils.toJson(currentPlatformSum));
+			//			System.out.println(JsonUtils.toJson(todayPlatformInputSum));
+			//			System.out.println(JsonUtils.toJson(negativeRecordsForum));
+			//			System.out.println(JsonUtils.toJson(negativeRecordsWeibo));
 			// 关闭资源
 			negativeClassify.cleanup();
 			oafirstPage.close();

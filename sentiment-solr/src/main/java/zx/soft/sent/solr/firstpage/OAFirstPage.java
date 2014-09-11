@@ -13,7 +13,6 @@ import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.search.SearchingData;
-import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.utils.time.TimeUtils;
 
 /**
@@ -50,13 +49,13 @@ public class OAFirstPage {
 	public static void main(String[] args) {
 
 		OAFirstPage firstPage = new OAFirstPage();
-		//		HashMap<String, Long> todayWeibos = firstPage.getTodayWeibosSum(147, 9);
-		//		System.out.println(todayWeibos);
+		HashMap<String, Long> todayWeibos = firstPage.getTodayWeibosSum(0, 9);
+		System.out.println(todayWeibos);
 		//		List<SolrDocument> negativeRecords = firstPage.getNegativeRecords(2, 147, 20);
 		//		System.out.println(JsonUtils.toJson(negativeRecords));
-		HashMap<String, Long> currentPlatformSum = firstPage.getCurrentPlatformSum();
-		System.out.println(currentPlatformSum.toString());
-		System.out.println(JsonUtils.toJson(currentPlatformSum));
+		//		HashMap<String, Long> currentPlatformSum = firstPage.getCurrentPlatformSum();
+		//		System.out.println(currentPlatformSum.toString());
+		//		System.out.println(JsonUtils.toJson(currentPlatformSum));
 		firstPage.close();
 
 	}
@@ -126,7 +125,7 @@ public class OAFirstPage {
 		logger.info("Getting today weibos' sum...");
 		HashMap<String, Long> result = initWeibosResult();
 		long currentTime = System.currentTimeMillis() - day * 86400_000L;
-		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L + hour * 3600_000;//该天的第hour时刻
+		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L + hour * 3600_000 - 3 * 3600_000;//该天的第hour时刻
 		long endTime = startTime + 3 * 3600_000; // 该天的第hour+3时刻，时间间隔为三小时
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);

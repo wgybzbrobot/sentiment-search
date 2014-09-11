@@ -3,6 +3,7 @@ package zx.soft.sent.solr.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.solr.firstpage.FirstPageRun;
 import zx.soft.sent.solr.firstpage.FirstPageTimer;
 import zx.soft.sent.solr.index.ImportSentDataToDB;
 import zx.soft.sent.solr.index.ImportSentDataToSC;
@@ -61,6 +62,10 @@ public class SentSolrDriver {
 		case "firstPageTimer":
 			logger.info("OA首页数据统计——定时分析：");
 			FirstPageTimer.main(leftArgs);
+			break;
+		case "firstPageRun":
+			logger.info("OA首页数据统计——临时分析：");
+			FirstPageRun.main(leftArgs);
 			break;
 		default:
 			return;
