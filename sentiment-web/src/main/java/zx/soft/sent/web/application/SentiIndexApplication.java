@@ -1,5 +1,6 @@
 package zx.soft.sent.web.application;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,11 +59,16 @@ public class SentiIndexApplication extends Application {
 
 	/**
 	 * 添加索引数据
+	 * @return 未索引成功的ID列表
 	 */
-	public void addDatas(List<RecordInfo> records) {
+	public List<String> addDatas(List<RecordInfo> records) {
+		List<String> result = new ArrayList<>();
 		for (RecordInfo record : records) {
-			indexCloudSolr.addSentimentDocToSolr(record);
+			if (!indexCloudSolr.addSentimentDocToSolr(record)) {
+				result.add(record.getId());
+			}
 		}
+		return result;
 	}
 
 	/**

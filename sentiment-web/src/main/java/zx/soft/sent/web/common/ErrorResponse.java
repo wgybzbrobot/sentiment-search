@@ -9,22 +9,22 @@ package zx.soft.sent.web.common;
 public class ErrorResponse {
 
 	private final int errorCode;
-	private final String ErrorMessage;
+	private final String errorMessage;
 
 	public ErrorResponse(Builder builder) {
 		this.errorCode = builder.errorCode;
-		this.ErrorMessage = builder.ErrorMessage;
+		this.errorMessage = builder.errorMessage;
 	}
 
 	public static class Builder {
 
 		private final int errorCode;
-		private final String ErrorMessage;
+		private final String errorMessage;
 
 		public Builder(int errorCode, String errorMessage) {
 			super();
 			this.errorCode = errorCode;
-			ErrorMessage = errorMessage;
+			this.errorMessage = errorMessage;
 		}
 
 		public ErrorResponse build() {
@@ -38,7 +38,7 @@ public class ErrorResponse {
 	}
 
 	public String getErrorMessage() {
-		return ErrorMessage;
+		return errorMessage;
 	}
 
 }

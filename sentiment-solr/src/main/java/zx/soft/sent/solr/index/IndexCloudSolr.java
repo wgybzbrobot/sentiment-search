@@ -63,11 +63,13 @@ public class IndexCloudSolr {
 		}
 	}
 
-	public void addSentimentDocToSolr(RecordInfo record) {
+	public boolean addSentimentDocToSolr(RecordInfo record) {
 		try {
 			cloudServer.add(getSentimentDoc(record));
+			return Boolean.TRUE;
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
 			logger.error("SolrServerException: " + e.getMessage());
+			return Boolean.FALSE;
 			//			throw new RuntimeException(e);
 		}
 	}
