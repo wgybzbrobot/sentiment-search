@@ -110,11 +110,13 @@ public class FirstPageRun {
 			table = InsertSort.toptable(table, insertTables[i]);
 		}
 		String[] keyvalue = null;
-		for (int i = 0; i < Math.min(table.length, N); i++) {
+		for (int i = 0; result.size() < Math.min(table.length, N); i++) {
 			keyvalue = table[i].split("=");
 			SolrDocument doc = records.get(Integer.parseInt(keyvalue[0]));
 			doc.setField("score", keyvalue[1]);
-			result.add(doc);
+			if (!result.contains(doc)) {
+				result.add(doc);
+			}
 		}
 
 		return result;
