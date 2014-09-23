@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.solr.common.SolrDocument;
@@ -12,11 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.negative.sentiment.core.NegativeClassify;
+import zx.soft.negative.sentiment.utils.JsonUtils;
 import zx.soft.sent.arith.sort.InsertSort;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.sent.solr.firstpage.OAFirstPage;
-import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.sent.utils.checksum.CheckSumUtils;
 
 public class FirstPageDemo {
 
@@ -67,6 +69,8 @@ public class FirstPageDemo {
 		List<SolrDocument> negativeRecordsWeibo = oafirstPage.getNegativeRecords(3, 0, 10);
 		negativeRecordsForum = getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 20);
 		negativeRecordsWeibo = getTopNNegativeRecords(negativeClassify, negativeRecordsWeibo, 20);
+		//		System.out.println(JsonUtils.toJson(negativeRecordsForum));
+		//		System.out.println(JsonUtils.toJson(negativeRecordsWeibo));
 		firstPage.insertFirstPage(52, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 		firstPage.insertFirstPage(53, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
 		// 关闭资源
@@ -85,6 +89,7 @@ public class FirstPageDemo {
 	private List<SolrDocument> getTopNNegativeRecords(NegativeClassify negativeClassify, List<SolrDocument> records,
 			int N) {
 		List<SolrDocument> result = new ArrayList<>();
+		HashSet<String> urls = new HashSet<>();
 		String[] insertTables = new String[records.size()];
 		for (int i = 0; i < records.size(); i++) {
 			String str = "";
@@ -108,10 +113,13 @@ public class FirstPageDemo {
 			keyvalue = table[i].split("=");
 			SolrDocument doc = records.get(Integer.parseInt(keyvalue[0]));
 			doc.setField("score", keyvalue[1]);
+			if (urls.contains(CheckSumUtils.getMD5(doc.getFieldValue("content").toString()))) {
+				continue;
+			}
+			urls.add(CheckSumUtils.getMD5(doc.getFieldValue("content").toString()));
 			result.add(doc);
 		}
 
 		return result;
 	}
-
 }

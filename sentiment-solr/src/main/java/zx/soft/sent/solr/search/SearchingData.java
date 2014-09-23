@@ -28,7 +28,6 @@ import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.err.SpiderSearchException;
 import zx.soft.sent.utils.config.ConfigUtil;
-import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.utils.time.TimeUtils;
 
 /**
@@ -58,10 +57,10 @@ public class SearchingData {
 	 */
 	public static void main(String[] args) {
 		SearchingData search = new SearchingData();
-		QueryParams queryParams = new QueryParams();
+		//		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("德国");
-		queryParams.setFq("timestamp:[2014-07-22T00:00:00Z TO 2014-07-22T23:59:59Z]"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
+		//		queryParams.setQ("德国");
+		//		queryParams.setFq("timestamp:[2014-07-22T00:00:00Z TO 2014-07-22T23:59:59Z]"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		//		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		//		queryParams.setStart(0);
 		//		queryParams.setRows(10);
@@ -70,10 +69,10 @@ public class SearchingData {
 		//		queryParams.setHlfl("title,content");
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		queryParams.setFacetField("nickname");
-		QueryResult result = search.queryData(queryParams, true);
-		System.out.println(JsonUtils.toJson(result));
-		//		search.deleteQuery();
+		//		queryParams.setFacetField("nickname");
+		//		QueryResult result = search.queryData(queryParams, true);
+		//		System.out.println(JsonUtils.toJson(result));
+		search.deleteQuery("id:7DF7AED7837DFC15B08BE5CA77B16ED8");
 		search.close();
 	}
 
