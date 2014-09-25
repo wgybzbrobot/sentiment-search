@@ -9,6 +9,7 @@ import zx.soft.sent.solr.index.ImportSentDataToDB;
 import zx.soft.sent.solr.index.ImportSentDataToSC;
 import zx.soft.sent.solr.index.ImportSinaDataToSC;
 import zx.soft.sent.solr.search.OracleToRedis;
+import zx.soft.sent.solr.special.SpecialTopicRun;
 import zx.soft.sent.solr.special.SpecialTopicTimer;
 import zx.soft.sent.solr.statistic.CompanyMain;
 
@@ -58,6 +59,10 @@ public class SentSolrDriver {
 		case "specialTopicTimer":
 			logger.info("OA专题数据统计——定时分析：");
 			SpecialTopicTimer.main(leftArgs);
+			break;
+		case "specialTopicRun":
+			logger.info("OA专题数据统计——临时分析：");
+			SpecialTopicRun.main(leftArgs);
 			break;
 		case "firstPageTimer":
 			logger.info("OA首页数据统计——定时分析：");
