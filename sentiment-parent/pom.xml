@@ -22,7 +22,7 @@
 		<lucene.version>4.8.0</lucene.version>
 		<hadoop.version>1.2.0</hadoop.version>
 		<mmseg4j.version>1.9.1</mmseg4j.version>
-		<jedis.version>2.4.2</jedis.version>
+		<jedis.version>2.5.1</jedis.version>
 	</properties>
 
 	<dependencyManagement>

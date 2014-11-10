@@ -716,4 +716,22 @@ public class ValueShardedJedis extends Sharded<Jedis, JedisShardInfo> implements
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String set(String key, String value, String nxxx, String expx, long time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long pfadd(String key, String... elements) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long pfcount(String key) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
