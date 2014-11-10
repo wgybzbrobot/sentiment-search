@@ -3,11 +3,12 @@ package zx.soft.sent.utils.json;
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON工具类，主要用于：
@@ -18,10 +19,11 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @since 2013-04-09
  */
 public class JsonNodeUtils {
+
 	/**
 	 * 日志输出
 	 */
-	private static Logger logger = Logger.getLogger(JsonUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(JsonNodeUtils.class);
 
 	/**
 	 * 从Json字符串中，

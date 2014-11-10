@@ -19,7 +19,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * HTTP工具类
@@ -29,7 +30,7 @@ import org.apache.log4j.Logger;
  */
 public class HttpUtils {
 
-	private static Logger logger = Logger.getLogger(HttpUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
 	/**
 	 * 新工具

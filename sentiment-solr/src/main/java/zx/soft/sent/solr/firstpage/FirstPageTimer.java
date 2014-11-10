@@ -14,10 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.negative.sentiment.core.NegativeClassify;
-import zx.soft.sent.arith.sort.InsertSort;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.sent.utils.sort.InsertSort;
 
 /**
  * OA首页信息——定时分析

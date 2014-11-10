@@ -1,4 +1,4 @@
-package zx.soft.sent.arith.sort;
+package zx.soft.sent.utils.sort;
 
 /**
  * Title: 动态数组排序：对一组不断加进来的数据进行插入并排序，这类数据形如：username=50

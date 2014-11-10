@@ -1,4 +1,4 @@
-package zx.soft.sent.arith.sort;
+package zx.soft.sent.utils.sort;
 
 import static org.junit.Assert.assertEquals;
 
