@@ -20,7 +20,6 @@
 		<module>sentiment-cache</module>
 		<module>sentiment-hdfs</module>
 		<module>sentiment-solr</module>
-		<!-- <module>sentiment-lucene</module> -->
 		<module>sentiment-spider</module>
 		<module>sentiment-core</module>
 		<module>sentiment-web</module>
