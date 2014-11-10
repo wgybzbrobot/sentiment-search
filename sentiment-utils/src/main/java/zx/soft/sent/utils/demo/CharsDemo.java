@@ -3,6 +3,9 @@ package zx.soft.sent.utils.demo;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 字符集处理测试类
  * 
@@ -11,15 +14,17 @@ import java.net.URLEncoder;
  */
 public class CharsDemo {
 
+	private static Logger logger = LoggerFactory.getLogger(CharsDemo.class);
+
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		//		String str = "测试转码";
-		//		byte[] utf_16be = str.getBytes("utf-16be");
-		//		String utf8str = CharsDemo.visualUtf8Str(utf_16be);
-		//		System.out.println(utf8str);
+		String str = "测试转码";
+		byte[] utf_16be = str.getBytes("utf-16be");
+		String utf8str = CharsDemo.visualUtf8Str(utf_16be);
+		System.out.println(utf8str);
 
-		char c = 164;
-		System.out.println(c);
+		//		char c = 164;
+		//		System.out.println(c);
 
 	}
 
@@ -34,7 +39,7 @@ public class CharsDemo {
 			} else {
 				result += Integer.toHexString(hex);
 			}
-			System.out.print(Integer.toHexString(hex) + " ");
+			logger.info(Integer.toHexString(hex) + " ");
 		}
 		return result;
 	}
@@ -53,7 +58,7 @@ public class CharsDemo {
 		try {
 			xmString = new String(sb.toString().getBytes("UTF-8"));
 			xmlUTF8 = URLEncoder.encode(xmString, "UTF-8");
-			System.out.println("utf-8 编码：" + xmlUTF8);
+			logger.info("utf-8 编码：" + xmlUTF8);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

@@ -13,7 +13,7 @@ import zx.soft.sent.utils.json.JsonNodeUtils;
 import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.web.utils.JavaPattern;
 
-public class Demo {
+public class FirstPageDemo1 {
 
 	public static void main(String[] args) {
 		FirstPage firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);

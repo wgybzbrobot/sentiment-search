@@ -323,7 +323,6 @@
 				<artifactId>spring-test</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>commons-dbcp</groupId>
 				<artifactId>commons-dbcp</artifactId>
@@ -339,13 +338,11 @@
 				<artifactId>commons-httpclient</artifactId>
 				<version>3.1</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.hadoop</groupId>
 				<artifactId>hadoop-client</artifactId>
 				<version>1.2.0</version>
 			</dependency>
-
 			<dependency>
 				<groupId>com.google.code.gson</groupId>
 				<artifactId>gson</artifactId>
@@ -356,6 +353,12 @@
 				<artifactId>mockito-core</artifactId>
 				<version>1.9.5</version>
 				<scope>test</scope>
+			</dependency>
+			<!-- zxsoft包 -->
+			<dependency>
+				<groupId>cc.pp.study</groupId>
+				<artifactId>analyzer-ik</artifactId>
+				<version>1.0.0</version>
 			</dependency>
 			<!-- Oracle相关 -->
 			<dependency>

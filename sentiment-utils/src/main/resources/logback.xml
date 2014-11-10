@@ -16,7 +16,7 @@
 
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>logs/sentiment-web.log</File>
+		<File>logs/sentiment-utils.log</File>
 		<encoder>
 			<pattern>%d{ISO8601} [%thread] %-5level %logger{36} [Line:%-3L] - %msg%n</pattern>
 		</encoder>
@@ -25,22 +25,17 @@
 			<level>INFO</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/sentiment-web.log.%d{yyyy-MM-dd}.tar.gz</fileNamePattern>
+			<fileNamePattern>logs/sentiment-utils.log.%d{yyyy-MM-dd}.tar.gz
+			</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 	</appender>
 
 	<!-- org.apache.commons.httpclient包中的java类 -->
-	<logger name="org.apache.commons.httpclient" level="ERROR"
-		addtivity="false">
+	<logger name="org.apache.commons.httpclient" level="ERROR" addtivity="false">
 		<appender-ref>FILE</appender-ref>
 	</logger>
-
-	<!-- org.restlet包中的java类 -->
-	<logger name="org.restlet" level="WARN" addtivity="false">
-		<appender-ref>FILE</appender-ref>
-	</logger>
-
+	
 	<root level="DEBUGE">
 		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
