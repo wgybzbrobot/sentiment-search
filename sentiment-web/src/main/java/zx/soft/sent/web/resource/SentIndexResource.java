@@ -1,6 +1,7 @@
 package zx.soft.sent.web.resource;
 
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
+import zx.soft.sent.utils.threads.ApplyThreadPool;
 import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.domain.IndexErrResponse;
@@ -26,7 +28,16 @@ public class SentIndexResource extends ServerResource {
 
 	private static SentiIndexApplication application;
 
-	//	private static ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector();
+	private static ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector();
+
+	static {
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				pool.shutdown();
+			}
+		}));
+	}
 
 	@Override
 	public void doInit() {
@@ -37,7 +48,7 @@ public class SentIndexResource extends ServerResource {
 	public Object acceptData(final PostData data) {
 
 		if (getReference().getRemainingPart().length() != 0) {
-			logger.error("query params is illegal, Url=" + getReference());
+			logger.error("query params is illegal, Url:{}", getReference());
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();
 		}
 
@@ -45,26 +56,23 @@ public class SentIndexResource extends ServerResource {
 			logger.info("Records' size=0");
 			return new ErrorResponse.Builder(20003, "no post data.").build();
 		}
-		logger.info("Request Url=" + getReference() + ", Records' size=" + data.getRecords().size());
+		logger.info("Request Url:{}, Records' Size:{}", getReference(), data.getRecords().size());
 
 		for (RecordInfo d : data.getRecords()) {
-			logger.info("Indexing data's ID = " + d.getId());
+			logger.info("Indexing data's ID:{}", d.getId());
 		}
-		// 另开一个线程索引和持久化数据，以免影响客户端响应时间
-		//		pool.execute(new Runnable() {
-		//			@Override
-		//			public void run() {
-		//				// 添加到Solr
-		//				application.addDatas(data.getRecords());
-		//				// 添加到Mysql
-		//				application.persist(data.getRecords());
-		//			}
-		//		});
+
 		try {
 			// 添加到Solr
 			List<String> unsuccessful = application.addDatas(data.getRecords());
-			// 添加到Mysql
-			application.persist(data.getRecords());
+			// 添加到Mysql，注：将这句代码另外开一个线程后台执行，以免影响客户端响应时间
+			pool.execute(new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// 这里面以及包含了错误日志记录
+					application.persist(data.getRecords());
+				}
+			}));
 			//		System.out.println(JsonUtils.toJson(data));
 			if (unsuccessful.size() == 0) {
 				return new ErrorResponse.Builder(0, "ok").build();
@@ -72,14 +80,13 @@ public class SentIndexResource extends ServerResource {
 				return new IndexErrResponse(-1, unsuccessful);
 			}
 		} catch (Exception e) {
-			logger.error("Indexing error,e=" + e.getMessage());
+			logger.error("Indexing error, Exception:{}", e.getMessage());
 			return new ErrorResponse.Builder(-1, "persist error!").build();
 		}
 	}
 
 	@Get("json")
 	public Object getQueryResult() {
-		//
 		return "no message!";
 	}
 

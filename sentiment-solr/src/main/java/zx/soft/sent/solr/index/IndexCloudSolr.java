@@ -44,8 +44,9 @@ public class IndexCloudSolr {
 	}
 
 	/**
-	 * 索引舆情数据
+	 * 索引舆情数据，该方法一次性提交多条数据，无法统计哪些数据索引不成功
 	 */
+	@Deprecated
 	public void addSentimentDocsToSolr(List<Record> records) {
 		if (records.size() == 0) {
 			return;
@@ -58,19 +59,21 @@ public class IndexCloudSolr {
 			cloudServer.add(docs);
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
-			//			throw new RuntimeException(e);
+			logger.error("SolrServerException:{}", e.getMessage());
 		}
 	}
 
 	public boolean addSentimentDocToSolr(RecordInfo record) {
+		SolrInputDocument temp = null;
 		try {
-			cloudServer.add(getSentimentDoc(record));
+			temp = getSentimentDoc(record);
+			if (temp != null) {
+				cloudServer.add(temp);
+			}
 			return Boolean.TRUE;
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
+			logger.error("SolrServerException:{}", e.getMessage());
 			return Boolean.FALSE;
-			//			throw new RuntimeException(e);
 		}
 	}
 
@@ -78,21 +81,18 @@ public class IndexCloudSolr {
 		try {
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
-			//			throw new RuntimeException(e);
+			logger.error("SolrServerException:{}", e.getMessage());
 		}
 	}
 
 	/**
 	 * 每次更改字段的时候，这里也需要更改
-	 * @param record
-	 * @return
 	 */
-	private SolrInputDocument getSentimentDoc(RecordInfo record) {
+	public static SolrInputDocument getSentimentDoc(RecordInfo record) {
 
 		if (record.getId() == null || record.getId() == "" || record.getId().length() == 0) {
-			logger.error("Record's id is null.");
-			throw new RuntimeException("Record's id is null.");
+			logger.error("Record's id is null,{}", record);
+			return null;
 		}
 		SolrInputDocument doc = new SolrInputDocument();
 		doc.addField("id", record.getId());
@@ -105,6 +105,9 @@ public class IndexCloudSolr {
 		}
 		if (record.getNickname() != "") {
 			doc.addField("nickname", record.getNickname().trim());
+		}
+		if (record.getOriginal_id() != "") {
+			doc.addField("original_id", record.getOriginal_id());
 		}
 		if (record.getOriginal_uid() != "") {
 			doc.addField("original_uid", record.getOriginal_uid());

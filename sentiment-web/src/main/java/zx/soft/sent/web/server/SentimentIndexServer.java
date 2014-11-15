@@ -14,7 +14,6 @@ import zx.soft.sent.web.jackson.ReplaceConvert;
  *
  * 索引示例：
  * http://localhost:8900/sentiment/index   POST
- * http://hdp321:8900/sentiment/index   POST
  * 
  * @author wanggang
  */

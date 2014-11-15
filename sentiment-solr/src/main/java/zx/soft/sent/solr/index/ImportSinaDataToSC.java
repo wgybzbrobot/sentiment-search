@@ -65,6 +65,7 @@ public class ImportSinaDataToSC {
 	/**
 	 * 索引一张数据表数据
 	 */
+	@SuppressWarnings("deprecation")
 	private void indexOneTable(String tablename) {
 		int maxId = weiboSina.getMaxId(tablename);
 		List<WeiboOldInfo> weibos = null;

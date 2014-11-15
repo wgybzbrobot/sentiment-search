@@ -39,6 +39,7 @@ public class PersistCore {
 			@Override
 			public void run() {
 				pool.shutdown();
+				logger.error("Thread Pool is shudown.");
 			}
 		}));
 
@@ -53,8 +54,7 @@ public class PersistCore {
 			try {
 				pool.execute(new PersistRunnable(cache, sentRecord, record));
 			} catch (RuntimeException e) {
-				logger.error("RuntimeException: " + e);
-				throw new RuntimeException();
+				logger.error("RuntimeException:{}", e);
 			}
 		}
 

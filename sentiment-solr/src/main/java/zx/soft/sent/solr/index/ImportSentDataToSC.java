@@ -74,6 +74,7 @@ public class ImportSentDataToSC {
 	/**
 	 * 索引数据，按时间段查询
 	 */
+	@SuppressWarnings("deprecation")
 	public void indexData(String table_name) {
 		/**
 		 * 获取待索引数据
@@ -134,6 +135,7 @@ public class ImportSentDataToSC {
 	/**
 	 * 索引图片数据
 	 */
+	@SuppressWarnings("deprecation")
 	public void indexPicData(String table_name) {
 		/**
 		 * 获取待索引数据
