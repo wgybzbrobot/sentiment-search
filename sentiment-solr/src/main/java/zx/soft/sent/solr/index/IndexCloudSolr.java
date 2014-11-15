@@ -86,7 +86,8 @@ public class IndexCloudSolr {
 	}
 
 	/**
-	 * 每次更改字段的时候，这里也需要更改
+	 * 每次更改字段的时候，这里也需要更改。
+	 * 注意：因为我们使用的服务器的时间早8个小时，所以这里面的时间都增加了8个小时
 	 */
 	public static SolrInputDocument getSentimentDoc(RecordInfo record) {
 
@@ -162,13 +163,13 @@ public class IndexCloudSolr {
 			doc.addField("voice_url", record.getVoice_url().trim());
 		}
 		if (record.getTimestamp() != 0) {
-			doc.addField("timestamp", new Date(record.getTimestamp() * 1000));
+			doc.addField("timestamp", new Date(record.getTimestamp() * 1000 + 3600 * 8 * 1000));
 		}
 		if (record.getSource_id() != 0) {
 			doc.addField("source_id", record.getSource_id());
 		}
 		if (record.getLasttime() != 0) {
-			doc.addField("lasttime", new Date(record.getLasttime() * 1000));
+			doc.addField("lasttime", new Date(record.getLasttime() * 1000 + 3600 * 8 * 1000));
 		}
 		if (record.getServer_id() != 0) {
 			doc.addField("server_id", record.getServer_id());
@@ -183,10 +184,10 @@ public class IndexCloudSolr {
 			doc.addField("keyword", record.getKeyword().trim());
 		}
 		if (record.getFirst_time() != 0) {
-			doc.addField("first_time", new Date(record.getFirst_time() * 1000));
+			doc.addField("first_time", new Date(record.getFirst_time() * 1000 + 3600 * 8 * 1000));
 		}
 		if (record.getUpdate_time() != 0) {
-			doc.addField("update_time", new Date(record.getUpdate_time() * 1000));
+			doc.addField("update_time", new Date(record.getUpdate_time() * 1000 + 3600 * 8 * 1000));
 		}
 		if (record.getIp() != "") {
 			doc.addField("ip", record.getIp().trim());
