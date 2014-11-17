@@ -35,8 +35,7 @@ public class OracleJDBC {
 			conn = DriverManager.getConnection(db_url, db_username, db_password);
 			statement = conn.createStatement();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new RuntimeException();
+			logger.error("Exception:{}", e);
 		}
 	}
 
@@ -54,7 +53,8 @@ public class OracleJDBC {
 			statement.executeUpdate(sql);
 			return true;
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			logger.error("Exception:{}", e);
+			return Boolean.FALSE;
 		}
 	}
 
@@ -65,7 +65,8 @@ public class OracleJDBC {
 		try {
 			return statement.executeQuery(sql);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			logger.error("Exception:{}", e);
+			return null;
 		}
 	}
 
@@ -74,7 +75,7 @@ public class OracleJDBC {
 			conn.close();
 			statement.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			logger.error("Exception:{}", e);
 		}
 	}
 

@@ -41,7 +41,6 @@ public class OracleToRedis {
 
 	/**
 	 * 定时执行任务
-	 *
 	 */
 	public static class OracleToRedisTask extends TimerTask {
 
