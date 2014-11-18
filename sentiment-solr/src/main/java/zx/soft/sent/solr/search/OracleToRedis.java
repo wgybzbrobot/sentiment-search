@@ -2,7 +2,6 @@ package zx.soft.sent.solr.search;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import org.slf4j.Logger;
@@ -35,9 +34,11 @@ public class OracleToRedis {
 	 */
 	public static void main(String[] args) {
 
-		Timer timer = new Timer();
-		// 每小时执行一次
-		timer.schedule(new OracleToRedisTask(), 0, 3600 * 1000);
+		//		Timer timer = new Timer();
+		//		// 每小时执行一次
+		//		timer.schedule(new OracleToRedisTask(), 0, 3600 * 1000);
+		OracleToRedis oracleToRedis = new OracleToRedis();
+		oracleToRedis.siteMapToRedis();
 	}
 
 	/**
