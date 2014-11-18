@@ -349,7 +349,7 @@ public class SearchingData {
 		return result;
 	}
 
-	private static String transFq(String fqs) {
+	public static String transFq(String fqs) {
 		int index = fqs.indexOf(":");
 		String result = "";
 		for (String str : fqs.substring(index + 1).split(",")) {
