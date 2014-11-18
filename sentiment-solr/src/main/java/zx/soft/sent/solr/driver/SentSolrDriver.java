@@ -53,7 +53,7 @@ public class SentSolrDriver {
 			CompanyMain.main(leftArgs);
 			break;
 		case "oracleToRedis":
-			logger.info("将站点数据定时导入Redis中： ");
+			logger.info("将站点数据定时导入Redis中（默认是每小时）： ");
 			OracleToRedis.main(leftArgs);
 			break;
 		case "specialTopicTimer":

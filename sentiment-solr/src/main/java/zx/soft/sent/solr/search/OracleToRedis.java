@@ -36,7 +36,8 @@ public class OracleToRedis {
 	public static void main(String[] args) {
 
 		Timer timer = new Timer();
-		timer.schedule(new OracleToRedisTask(), 0, 1000 * 86400);
+		// 每小时执行一次
+		timer.schedule(new OracleToRedisTask(), 0, 3600 * 1000);
 	}
 
 	/**
@@ -66,7 +67,6 @@ public class OracleToRedis {
 			}
 		} catch (SQLException e) {
 			logger.error("SQLException at OracleToRedis: " + e.getMessage());
-			//			throw new RuntimeException(e);
 		} finally {
 			oracleJDBC.close();
 			cache.close();
