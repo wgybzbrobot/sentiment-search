@@ -1,6 +1,6 @@
 package zx.soft.sent.solr.demo;
 
-import zx.soft.sent.utils.sort.InsertSort;
+import zx.soft.utils.sort.InsertSort;
 
 public class InsertSortDemo {
 

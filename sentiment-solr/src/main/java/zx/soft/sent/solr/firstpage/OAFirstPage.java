@@ -13,7 +13,7 @@ import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.search.SearchingData;
-import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.utils.time.TimeUtils;
 
 /**
  * OA首页信息类

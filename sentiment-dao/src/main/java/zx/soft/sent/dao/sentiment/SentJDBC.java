@@ -9,7 +9,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.utils.config.ConfigUtil;
+import zx.soft.utils.config.ConfigUtil;
 
 /**
  * 舆情数据JDBC
@@ -164,7 +164,9 @@ public class SentJDBC {
 	 * 创建站点数据表
 	 */
 	public void createSiteTable(String tablename) {
-		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " ("
+		String sql = "CREATE TABLE IF NOT EXISTS "
+				+ tablename
+				+ " ("
 				+ "`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',`url` char(250) NOT NULL COMMENT '站点主页',"
 				+ "`zone` tinyint(3) unsigned NOT NULL COMMENT '站点区域(1境内2境外)',"
 				+ "`description` varchar(500) NOT NULL COMMENT '站点描述',"

@@ -6,12 +6,12 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.cache.dao.Cache;
-import zx.soft.sent.cache.factory.CacheFactory;
+import zx.soft.redis.client.cache.Cache;
+import zx.soft.redis.client.cache.CacheFactory;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
-import zx.soft.sent.utils.threads.ApplyThreadPool;
+import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
  * 持久化到Mysql

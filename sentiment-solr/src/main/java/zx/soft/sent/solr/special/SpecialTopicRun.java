@@ -18,8 +18,8 @@ import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.search.FacetSearch;
 import zx.soft.sent.solr.search.SearchingData;
-import zx.soft.sent.utils.json.JsonUtils;
-import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.time.TimeUtils;
 
 public class SpecialTopicRun {
 

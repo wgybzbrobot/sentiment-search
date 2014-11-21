@@ -4,12 +4,12 @@
 
 	<parent>
 		<groupId>zx.soft</groupId>
-		<artifactId>sentiment-parent</artifactId>
+		<artifactId>common-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../sentiment-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>sentiment-web</artifactId>
+	<version>2.2.0</version>
 	<name>Sentiment Web</name>
 
 	<dependencies>
@@ -77,7 +77,6 @@
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

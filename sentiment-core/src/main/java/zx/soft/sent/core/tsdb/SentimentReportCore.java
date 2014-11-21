@@ -2,10 +2,10 @@ package zx.soft.sent.core.tsdb;
 
 import java.util.Properties;
 
-import zx.soft.sent.cache.dao.Cache;
-import zx.soft.sent.cache.factory.CacheFactory;
-import zx.soft.sent.cache.tsdb.TsdbReporter;
-import zx.soft.sent.utils.config.ConfigUtil;
+import zx.soft.redis.client.cache.Cache;
+import zx.soft.redis.client.cache.CacheFactory;
+import zx.soft.redis.client.tsdb.TsdbReporter;
+import zx.soft.utils.config.ConfigUtil;
 
 /**
  * 舆情数据统计控制类

@@ -11,7 +11,7 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.platform.Record;
 import zx.soft.sent.dao.domain.weibo.WeiboOldInfo;
 import zx.soft.sent.dao.sina.WeiboSina;
-import zx.soft.sent.utils.checksum.CheckSumUtils;
+import zx.soft.utils.checksum.CheckSumUtils;
 
 /**
  * 索引新浪微博数据到Solr集群中

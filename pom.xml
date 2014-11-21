@@ -2,22 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>zx.soft</groupId>
-		<version>1.0.0</version>
-		<artifactId>sentiment-parent</artifactId>
-		<relativePath>sentiment-parent/pom.xml</relativePath>
-	</parent>
-
+	<groupId>zx.soft</groupId>
+	<version>2.2.0</version>
 	<artifactId>sentiment-search</artifactId>
 	<packaging>pom</packaging>
 	<name>Sentiment Search [Build POM]</name>
 
 	<modules>
-		<module>sentiment-parent</module>
-		<module>sentiment-utils</module>
 		<module>sentiment-dao</module>
-		<module>sentiment-cache</module>
 		<module>sentiment-hdfs</module>
 		<module>sentiment-solr</module>
 		<module>sentiment-spider</module>

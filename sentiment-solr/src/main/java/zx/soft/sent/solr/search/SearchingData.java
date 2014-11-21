@@ -21,14 +21,14 @@ import org.apache.solr.common.SolrDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.cache.dao.Cache;
-import zx.soft.sent.cache.factory.CacheFactory;
+import zx.soft.redis.client.cache.Cache;
+import zx.soft.redis.client.cache.CacheFactory;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.err.SpiderSearchException;
-import zx.soft.sent.utils.config.ConfigUtil;
-import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.utils.config.ConfigUtil;
+import zx.soft.utils.time.TimeUtils;
 
 /**
  * 搜索舆情数据

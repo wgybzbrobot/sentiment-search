@@ -2,7 +2,7 @@ package zx.soft.sent.solr.special;
 
 import java.util.HashMap;
 
-import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.utils.json.JsonUtils;
 
 /**
  * 专题数据统计——趋势图

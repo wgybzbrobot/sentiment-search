@@ -22,7 +22,7 @@ import zx.soft.sent.dao.domain.platform.Reply;
 import zx.soft.sent.dao.domain.platform.Weibo;
 import zx.soft.sent.dao.oracle.OracleJDBC;
 import zx.soft.sent.solr.utils.ConvertToRecord;
-import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.utils.time.TimeUtils;
 
 /**
  * 索引舆情数据到Solr集群中

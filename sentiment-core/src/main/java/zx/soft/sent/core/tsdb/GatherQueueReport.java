@@ -3,9 +3,9 @@ package zx.soft.sent.core.tsdb;
 import java.util.ArrayList;
 import java.util.List;
 
-import zx.soft.sent.cache.dao.Cache;
-import zx.soft.sent.cache.tsdb.Reportable;
-import zx.soft.sent.cache.tsdb.Tsdb;
+import zx.soft.redis.client.cache.Cache;
+import zx.soft.redis.client.tsdb.Reportable;
+import zx.soft.redis.client.tsdb.Tsdb;
 import zx.soft.sent.core.constant.RecordsConstant;
 
 /**

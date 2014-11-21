@@ -5,9 +5,9 @@ import java.util.Properties;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.web.application.PushRecordApplication;
 import zx.soft.sent.web.jackson.ReplaceConvert;
+import zx.soft.utils.config.ConfigUtil;
 
 public class PushRecordServer {
 

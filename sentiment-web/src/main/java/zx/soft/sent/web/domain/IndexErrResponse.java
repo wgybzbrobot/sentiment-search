@@ -3,7 +3,7 @@ package zx.soft.sent.web.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.utils.json.JsonUtils;
 
 public class IndexErrResponse {
 

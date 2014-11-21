@@ -11,8 +11,8 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.sentiment.RecordSelect;
 import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
-import zx.soft.sent.utils.checksum.CheckSumUtils;
 import zx.soft.sent.web.resource.PullRecordResource;
+import zx.soft.utils.checksum.CheckSumUtils;
 
 /**
  * MySQL数据提取应用类

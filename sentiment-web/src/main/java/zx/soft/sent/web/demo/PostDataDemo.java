@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.utils.json.JsonUtils;
 import zx.soft.sent.web.domain.PostData;
+import zx.soft.utils.json.JsonUtils;
 
 public class PostDataDemo {
 

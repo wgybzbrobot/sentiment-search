@@ -3,12 +3,12 @@ package zx.soft.sent.core.persist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.cache.dao.Cache;
+import zx.soft.redis.client.cache.Cache;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
-import zx.soft.sent.utils.checksum.CheckSumUtils;
+import zx.soft.utils.checksum.CheckSumUtils;
 
 /**
  * 持久化线程类

@@ -20,8 +20,8 @@ import zx.soft.sent.solr.special.PieChart;
 import zx.soft.sent.solr.special.SpecialInfo;
 import zx.soft.sent.solr.special.SpecialTopicTimer;
 import zx.soft.sent.solr.special.TrendChart;
-import zx.soft.sent.utils.json.JsonUtils;
-import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.time.TimeUtils;
 
 public class SpecialTopicDemo {
 

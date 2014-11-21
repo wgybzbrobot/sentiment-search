@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.Record;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.utils.config.ConfigUtil;
+import zx.soft.utils.config.ConfigUtil;
 
 /**
  * 通过HTTP方式索引数据到单台机器上。

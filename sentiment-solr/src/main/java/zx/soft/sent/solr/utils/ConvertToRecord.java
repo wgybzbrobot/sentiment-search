@@ -10,7 +10,7 @@ import zx.soft.sent.dao.domain.platform.QQGroup;
 import zx.soft.sent.dao.domain.platform.Record;
 import zx.soft.sent.dao.domain.platform.Reply;
 import zx.soft.sent.dao.domain.platform.Weibo;
-import zx.soft.sent.utils.checksum.CheckSumUtils;
+import zx.soft.utils.checksum.CheckSumUtils;
 
 /**
  * 其他数据类型转换成Record工具类

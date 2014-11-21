@@ -2,8 +2,8 @@ package zx.soft.sent.dao.demo;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.special.SpecialQuery;
-import zx.soft.sent.utils.checksum.CheckSumUtils;
-import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.utils.checksum.CheckSumUtils;
+import zx.soft.utils.json.JsonUtils;
 
 /**
  * 专题信息CURD

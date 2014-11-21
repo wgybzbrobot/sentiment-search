@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.solr.domain.FacetDateParams;
 import zx.soft.sent.solr.domain.FacetDateResult;
-import zx.soft.sent.utils.http.HttpUtils;
-import zx.soft.sent.utils.json.JsonNodeUtils;
+import zx.soft.utils.http.HttpUtils;
+import zx.soft.utils.json.JsonNodeUtils;
 
 /**
  * 分类搜索，目前solrj中对时间分类搜索不支持，搜索不出结果，

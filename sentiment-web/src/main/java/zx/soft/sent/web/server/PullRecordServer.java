@@ -5,9 +5,9 @@ import java.util.Properties;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-import zx.soft.sent.utils.config.ConfigUtil;
 import zx.soft.sent.web.application.PullRecordApplication;
 import zx.soft.sent.web.jackson.ReplaceConvert;
+import zx.soft.utils.config.ConfigUtil;
 
 /**
  *  从Mysql中根据id获取记录数据

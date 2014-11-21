@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.utils.config.ConfigUtil;
+import zx.soft.utils.config.ConfigUtil;
 
 /**
  * 索引到SolrCloud

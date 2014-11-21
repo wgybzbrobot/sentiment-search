@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.solr.err.SpiderSearchException;
-import zx.soft.sent.utils.config.ConfigUtil;
+import zx.soft.utils.config.ConfigUtil;
 
 /**
  * 搜索舆情数据

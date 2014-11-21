@@ -4,19 +4,19 @@
 
 	<parent>
 		<groupId>zx.soft</groupId>
-		<artifactId>sentiment-parent</artifactId>
+		<artifactId>common-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../sentiment-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>sentiment-dao</artifactId>
+	<version>2.2.0</version>
 	<name>Sentiment Dao</name>
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>sentiment-utils</artifactId>
-			<version>${project.version}</version>
+			<groupId>zx.soft</groupId>
+			<artifactId>common-utils</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

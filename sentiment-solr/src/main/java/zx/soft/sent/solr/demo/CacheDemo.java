@@ -3,8 +3,8 @@ package zx.soft.sent.solr.demo;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import zx.soft.sent.cache.dao.Cache;
-import zx.soft.sent.cache.factory.CacheFactory;
+import zx.soft.redis.client.cache.Cache;
+import zx.soft.redis.client.cache.CacheFactory;
 import zx.soft.sent.solr.search.OracleToRedis;
 
 public class CacheDemo {

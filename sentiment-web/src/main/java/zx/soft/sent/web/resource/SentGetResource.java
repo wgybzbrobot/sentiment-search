@@ -9,9 +9,9 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.utils.http.HttpUtils;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.http.HttpUtils;
 
 /**
  * 與请数据获取资源类

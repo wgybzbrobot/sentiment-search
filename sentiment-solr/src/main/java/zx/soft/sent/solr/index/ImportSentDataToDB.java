@@ -25,9 +25,9 @@ import zx.soft.sent.dao.oracle.OracleJDBC;
 import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.solr.utils.ConvertToRecord;
-import zx.soft.sent.utils.checksum.CheckSumUtils;
-import zx.soft.sent.utils.threads.ApplyThreadPool;
-import zx.soft.sent.utils.time.TimeUtils;
+import zx.soft.utils.checksum.CheckSumUtils;
+import zx.soft.utils.threads.ApplyThreadPool;
+import zx.soft.utils.time.TimeUtils;
 
 /**
  * 索引舆情数据到Solr集群中

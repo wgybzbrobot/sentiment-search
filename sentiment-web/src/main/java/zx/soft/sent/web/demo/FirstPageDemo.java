@@ -10,7 +10,7 @@ import org.apache.solr.common.SolrDocument;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.sent.solr.firstpage.OAFirstPage;
-import zx.soft.sent.utils.json.JsonUtils;
+import zx.soft.utils.json.JsonUtils;
 
 public class FirstPageDemo {
 

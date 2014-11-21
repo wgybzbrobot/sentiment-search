@@ -7,8 +7,8 @@ import java.util.TimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.cache.dao.Cache;
-import zx.soft.sent.cache.factory.CacheFactory;
+import zx.soft.redis.client.cache.Cache;
+import zx.soft.redis.client.cache.CacheFactory;
 import zx.soft.sent.dao.oracle.OracleJDBC;
 
 /**
