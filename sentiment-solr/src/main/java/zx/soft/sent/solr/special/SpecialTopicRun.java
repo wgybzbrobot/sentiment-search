@@ -2,8 +2,10 @@ package zx.soft.sent.solr.special;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +23,20 @@ import zx.soft.sent.solr.search.SearchingData;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.time.TimeUtils;
 
+/**
+ * 专题统计，详见：
+ * <link>
+ *       http://192.168.3.22:8080/browse/SOLRSENT-27
+ * </link>
+ * 
+ * @author wanggang
+ *
+ */
 public class SpecialTopicRun {
 
 	private static Logger logger = LoggerFactory.getLogger(SpecialTopicTimer.class);
+
+	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
 
 	/**
 	 * 主函数
@@ -39,25 +52,48 @@ public class SpecialTopicRun {
 			SpecialQuery specialQuery = new SpecialQuery(MybatisConfig.ServerEnum.sentiment);
 			SearchingData search = new SearchingData();
 			// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
-			// 在这里认为，如果一个月内没有查询就不更新
-			long start = System.currentTimeMillis() / 1000 - 30 * 86400;
-			List<String> identifys = specialQuery.selectSpecialIdentifyByTime(start);
+			// 理论上，如果专题的end时间小于当天时间，那么就视为过期专题，不更新；只更新end时间大于等于今天的专题数据。
+			// 不过在这里，认为该专题在半个月之内未被查询的化，就认为是过期的，不更新；因为我们爬虫的数据暂时不还不够及时和准确。
+			long current = System.currentTimeMillis();
+			List<String> identifys = specialQuery.selectSpecialIdentifyByTime(current / 1000 - 15 * 86400);
 			// 循环更新每个专题的查询结果
 			QueryParams queryParams = null;
 			SpecialTopic specialInfo = null;
 			FacetDateParams fdp = null;
 			QueryResult pieResult = null;
 			FacetDateResult trandResult = null;
+			String start, end;
 			for (String identify : identifys) {
 				logger.info("Updating identify=" + identify + " at:" + new Date().toString());
 				// 查询专题信息
 				specialInfo = specialQuery.selectSpecialInfo(identify);
 				if (specialInfo != null) {
+					// 下面主要是时间处理
+					start = specialInfo.getStart();
+					end = specialInfo.getEnd();
+					if (format.parse(specialInfo.getEnd()).getTime() < current) {
+						// 如果end时间小于当前时间，则统计时间间隔修正为：start=end-6,end
+						start = transDate(format.parse(specialInfo.getEnd()).getTime() - 6 * 86400_000, "start");
+					} else {
+						// 如果end时间不小于当前时间，则统计时间间隔修正为：end=current
+						end = transDate(current, "end");
+						if (format.parse(specialInfo.getStart()).getTime() < current - 6 * 86400_000) {
+							// 如果start时间小于当前日期之前6天内，那么start=current-6
+							start = transDate(current - 6 * 86400_000, "start");
+						} else {
+							// 如果start时间不小于当前日期之前6天内，那么start=start
+						}
+					}
 					// 从solr集群中查询饼状图结果
 					queryParams = new QueryParams();
 					queryParams.setQ(specialInfo.getKeywords());
-					queryParams.setFq(getTimestampFilterQuery(specialInfo.getStart(), specialInfo.getEnd())
-							+ ";country_code:" + specialInfo.getHometype());
+					if (specialInfo.getHometype() == 2) {
+						// 2代表查询包括境内（1表示）和境外（0表示）的所有数据
+						queryParams.setFq(getTimestampFilterQuery(start, end));
+					} else {
+						queryParams.setFq(getTimestampFilterQuery(start, end) + ";country_code:"
+								+ specialInfo.getHometype());
+					}
 					queryParams.setFacetField("platform");
 					pieResult = search.queryData(queryParams, false);
 					// 更新饼状图结果到数据库中
@@ -73,8 +109,8 @@ public class SpecialTopicRun {
 					fdp = new FacetDateParams();
 					fdp.setQ(transUnicode(specialInfo.getKeywords())); // URL中的部分字符需要编码转换
 					fdp.setFacetDate("timestamp");
-					fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
-					fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
+					fdp.setFacetDateStart(TimeUtils.transTimeStr(start));
+					fdp.setFacetDateEnd(TimeUtils.transTimeStr(end));
 					fdp.setFacetDateGap("%2B1DAY");
 					trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
 					// 更新趋势图结果到数据库中
@@ -111,6 +147,16 @@ public class SpecialTopicRun {
 		trendChart.setSpecialInfo(new SpecialInfo(specialInfo.getIdentify(), specialInfo.getName()));
 		trendChart.setCountByDay(result.getDateCounts());
 		return trendChart;
+	}
+
+	public static String transDate(long timems, String type) {
+		long time = timems - timems % 86400_000;
+		if ("start".equalsIgnoreCase(type)) {
+			time = time - 8 * 3600_000;
+		} else {
+			time = time + 15 * 3600_000 + 59 * 60_000;
+		}
+		return TimeUtils.transToCommonDateStr(time);
 	}
 
 	public static String getTimestampFilterQuery(String start, String end) {

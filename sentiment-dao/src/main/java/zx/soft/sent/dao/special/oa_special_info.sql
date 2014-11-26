@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2014-09-02 08:58:41
+-- Generation Time: 2014-11-26 03:22:59
 -- 服务器版本： 5.5.37-MariaDB-log
 -- PHP Version: 5.5.12
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `sentiment_records`
+-- Database: `weibo_sina`
 --
 
 -- --------------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `oa_special_info` (
 -- Indexes for table `oa_special_info`
 --
 ALTER TABLE `oa_special_info`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `identify` (`identify`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `identify` (`identify`), ADD KEY `lasttime` (`lasttime`);
 
 --
 -- AUTO_INCREMENT for dumped tables

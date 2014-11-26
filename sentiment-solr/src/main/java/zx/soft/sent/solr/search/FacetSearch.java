@@ -25,15 +25,16 @@ public class FacetSearch {
 	private static final String BASE_URL = "http://192.168.32.11:8983/solr/sentiment/select?wt=json&indent=true&facet=true&rows=0";
 
 	private static final String Q = "q";
+	private static final String Q_OP = "q.op"; // 系统默认是OR关系，但是舆情项目是AND关系
 	private static final String FACET_DATE = "facet.date";
 	private static final String FACET_DATE_START = "facet.date.start";
 	private static final String FACET_DATE_END = "facet.date.end";
 	private static final String FACET_DATE_GAP = "facet.date.gap";
 
 	public static String getURL(FacetDateParams fdp) {
-		String url = BASE_URL + "&" + Q + "=" + fdp.getQ() + "&" + FACET_DATE + "=" + fdp.getFacetDate() + "&"
-				+ FACET_DATE_START + "=" + fdp.getFacetDateStart() + "&" + FACET_DATE_END + "=" + fdp.getFacetDateEnd()
-				+ "&" + FACET_DATE_GAP + "=" + fdp.getFacetDateGap();
+		String url = BASE_URL + "&" + Q + "=" + fdp.getQ() + "&" + Q_OP + "=AND" + "&" + FACET_DATE + "="
+				+ fdp.getFacetDate() + "&" + FACET_DATE_START + "=" + fdp.getFacetDateStart() + "&" + FACET_DATE_END
+				+ "=" + fdp.getFacetDateEnd() + "&" + FACET_DATE_GAP + "=" + fdp.getFacetDateGap();
 		logger.info("Request's URL=" + url);
 		return url;
 	}
