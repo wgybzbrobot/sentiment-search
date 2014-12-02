@@ -4,12 +4,12 @@
 
 	<parent>
 		<groupId>zx.soft</groupId>
-		<artifactId>common-parent</artifactId>
-		<version>1.0.0</version>
+		<artifactId>sentiment-search</artifactId>
+		<version>2.2.0</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>sentiment-dao</artifactId>
-	<version>2.2.0</version>
 	<name>Sentiment Dao</name>
 
 	<dependencies>
@@ -19,26 +19,8 @@
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpasyncclient</artifactId>
-			<version>4.0-beta4</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -49,6 +31,12 @@
 			<artifactId>je</artifactId>
 			<version>5.0.73</version>
 		</dependency>
+		<!-- 日志包 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<!-- 测试包 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
