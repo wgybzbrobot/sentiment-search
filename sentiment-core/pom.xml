@@ -20,11 +20,6 @@
 		</dependency>
 		<dependency>
 			<groupId>zx.soft</groupId>
-			<artifactId>common-utils</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>zx.soft</groupId>
 			<artifactId>redis-client</artifactId>
 			<version>1.2.0</version>
 		</dependency>

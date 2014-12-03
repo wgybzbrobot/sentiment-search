@@ -14,11 +14,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>zx.soft</groupId>
-			<artifactId>common-utils</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 		</dependency>

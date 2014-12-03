@@ -13,11 +13,6 @@
 	<name>Sentiment Spider</name>
 
 	<dependencies>
-		<dependency>
-			<groupId>zx.soft</groupId>
-			<artifactId>common-utils</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 		<!-- 日志包 -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
