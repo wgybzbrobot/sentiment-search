@@ -110,6 +110,10 @@ public class SpecialResource extends ServerResource {
 		pieChart.setSpecialInfo(new SpecialInfo(specialInfo.get("identify").toString().replaceAll("\"", ""),
 				specialInfo.get("specialName").toString().replaceAll("\"", "")));
 		for (int i = 0; i < 10; i++) {
+			if (platformCount.get(i + "") == null) {
+				pieChart.getPlatformCount().put(i + "", 0L);
+				continue;
+			}
 			pieChart.getPlatformCount().put(i + "", Long.parseLong(platformCount.get(i + "").toString()));
 		}
 		return pieChart;
