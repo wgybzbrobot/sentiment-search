@@ -49,13 +49,8 @@ public class OAFirstPage {
 	public static void main(String[] args) {
 
 		OAFirstPage firstPage = new OAFirstPage();
-		HashMap<String, Long> todayWeibos = firstPage.getTodayWeibosSum(0, 9);
+		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 100, "暴力");
 		System.out.println(todayWeibos);
-		//		List<SolrDocument> negativeRecords = firstPage.getNegativeRecords(2, 147, 20);
-		//		System.out.println(JsonUtils.toJson(negativeRecords));
-		//		HashMap<String, Long> currentPlatformSum = firstPage.getCurrentPlatformSum();
-		//		System.out.println(currentPlatformSum.toString());
-		//		System.out.println(JsonUtils.toJson(currentPlatformSum));
 		firstPage.close();
 
 	}
@@ -171,6 +166,37 @@ public class OAFirstPage {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 根据关键词查询当天的有害信息
+	 */
+	public List<SolrDocument> getTodayNegativeRecords(int interval, int N, String q) {
+		List<SolrDocument> result = new ArrayList<>();
+		List<SolrDocument> temp = null;
+		for (String negative : negatives) {
+			temp = getNegativeShard(interval, N, negative + " AND " + q);
+			if (temp != null) {
+				for (SolrDocument t : temp) {
+					result.add(t);
+				}
+			}
+		}
+		return result;
+	}
+
+	private List<SolrDocument> getNegativeShard(int interval, int N, String q) {
+		long currentTime = System.currentTimeMillis();
+		long startTime = currentTime - interval * 86400_000L;
+		QueryParams queryParams = new QueryParams();
+		queryParams.setQ(q);
+		queryParams.setQop("OR");
+		queryParams.setRows(N);
+		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
+				+ TimeUtils.transToSolrDateStr(currentTime) + "]");
+		queryParams.setSort("timestamp:desc");
+		QueryResult queryResult = search.queryData(queryParams, false);
+		return queryResult.getResults();
 	}
 
 	private List<SolrDocument> getNegativeShard(int platform, int day, int N, String q) {
