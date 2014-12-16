@@ -50,7 +50,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 		try {
 			writer.close();
 		} catch (IOException e) {
-			logger.warn("close HDFS writer exception.", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -58,6 +58,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 		try {
 			writer.syncFs();
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -74,6 +75,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 			writer.append(this.key, this.value);
 		} catch (IOException e) {
 			logger.warn("write hdfs error. key={}, value={}", key, value, e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			close();
 			createNewWriter();
 		}
@@ -90,6 +92,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 			logger.info("Create HDFS writer, fileName: " + fileName);
 			writer = SequenceFile.createWriter(fs, conf, path, Text.class, Text.class);
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

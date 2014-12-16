@@ -32,7 +32,7 @@ public class MybatisConfig {
 			try (InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");) {
 				sessionFactorys.put(server, new SqlSessionFactoryBuilder().build(inputStream, server.name()));
 			} catch (IOException e) {
-				logger.error("MybatisConfig IOException: " + e.getMessage());
+				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 				throw new RuntimeException(e);
 			}
 		}

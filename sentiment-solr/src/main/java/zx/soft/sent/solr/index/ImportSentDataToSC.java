@@ -216,7 +216,7 @@ public class ImportSentDataToSC {
 				return 0;
 			}
 		} catch (SQLException e) {
-			logger.error("getMinLasttime SQLException: " + e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -232,7 +232,7 @@ public class ImportSentDataToSC {
 				return 0;
 			}
 		} catch (SQLException e) {
-			logger.error("getMaxLasttime SQLException: " + e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -248,7 +248,7 @@ public class ImportSentDataToSC {
 				return 0;
 			}
 		} catch (SQLException e) {
-			logger.error("getRecordsCount SQLException: " + e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -303,6 +303,7 @@ public class ImportSentDataToSC {
 					.setJCSJ(new Date(rs.getTimestamp("JCSJ").getTime())).setLY(rs.getInt("LY")).setLZ(rs.getInt("LZ"))
 					.setBZ(rs.getInt("BZ")).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -336,6 +337,7 @@ public class ImportSentDataToSC {
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime())).setLY(rs.getInt("LY")).setLZ(rs.getInt("LZ"))
 					.setBZ(rs.getInt("BZ")).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -365,6 +367,7 @@ public class ImportSentDataToSC {
 					.setBZ(rs.getInt("BZ")).setPLS(rs.getInt("PLS")).setZBS(rs.getInt("ZBS")).setYDS(rs.getInt("YDS"))
 					.build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -391,6 +394,7 @@ public class ImportSentDataToSC {
 					.setJCSJ(new Date(rs.getTimestamp("JCSJ").getTime()))
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime())).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -413,6 +417,7 @@ public class ImportSentDataToSC {
 					.setFBSJ(new Date(rs.getTimestamp("FBSJ").getTime())).setLY(rs.getInt("LY")).setLZ(rs.getInt("LZ"))
 					.setBZ(rs.getInt("BZ")).setJCSJ(new Date(rs.getTimestamp("JCSJ").getTime())).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -442,6 +447,7 @@ public class ImportSentDataToSC {
 					.setGJC(rs.getString("GJC") == null ? "" : rs.getString("GJC")).setLLL(rs.getInt("LLL"))
 					.setGTL(rs.getInt("GTL")).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -471,6 +477,7 @@ public class ImportSentDataToSC {
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime()))
 					.setIPDZ(rs.getString("IPDZ") == null ? "" : rs.getString("IPDZ")).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -497,6 +504,7 @@ public class ImportSentDataToSC {
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime()))
 					.setIPDZ(rs.getString("IPDZ") == null ? "" : rs.getString("IPDZ")).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -515,6 +523,7 @@ public class ImportSentDataToSC {
 					.setTPLJ(rs.getString("TPLJ") == null ? "" : rs.getString("TPLJ"))
 					.setSFYH(rs.getInt("SFYH") == 0 ? Boolean.FALSE : Boolean.TRUE).setBZ(rs.getLong("BZ")).build();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

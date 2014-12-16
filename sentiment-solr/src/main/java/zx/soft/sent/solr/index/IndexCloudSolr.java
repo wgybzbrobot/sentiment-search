@@ -59,7 +59,7 @@ public class IndexCloudSolr {
 			cloudServer.add(docs);
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException:{}", e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -72,7 +72,8 @@ public class IndexCloudSolr {
 			}
 			return Boolean.TRUE;
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException:{}", e.getMessage());
+			logger.error("Index error Record:{}", record);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			return Boolean.FALSE;
 		}
 	}
@@ -81,7 +82,7 @@ public class IndexCloudSolr {
 		try {
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException:{}", e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

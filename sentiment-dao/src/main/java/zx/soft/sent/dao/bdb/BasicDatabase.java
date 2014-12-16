@@ -85,6 +85,7 @@ public class BasicDatabase {
 				return Boolean.FALSE;
 			}
 		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -111,6 +112,7 @@ public class BasicDatabase {
 				throw new RuntimeException("Read data in '" + key + "' " + status);
 			}
 		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -131,6 +133,7 @@ public class BasicDatabase {
 				throw new RuntimeException("Update '" + value + "' in '" + key + "' " + status);
 			}
 		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -148,6 +151,7 @@ public class BasicDatabase {
 				return Boolean.FALSE;
 			}
 		} catch (UnsupportedEncodingException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.http.HttpUtils;
 
 /**
@@ -29,6 +29,7 @@ public class SentGetResource extends ServerResource {
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		HashMap<String, String> params = new HashMap<>();
 		Form form = getRequest().getResourceRef().getQueryAsForm();
 		for (Parameter p : form) {
@@ -48,7 +49,6 @@ public class SentGetResource extends ServerResource {
 
 	@Get("json")
 	public Object getQueryResult() {
-		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		if (id.length() == 0) {
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();
 		}

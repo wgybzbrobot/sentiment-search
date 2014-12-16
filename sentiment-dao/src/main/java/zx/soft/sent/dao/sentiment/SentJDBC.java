@@ -62,6 +62,7 @@ public class SentJDBC {
 		try {
 			return dataSource.getConnection();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -73,6 +74,7 @@ public class SentJDBC {
 		try {
 			dataSource.close();
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			logger.info("Db close error.");
 		}
 	}
@@ -197,6 +199,7 @@ public class SentJDBC {
 		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
 			pstmt.execute(sql);
 		} catch (SQLException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException("SQLException: " + e);
 		}
 	}

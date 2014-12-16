@@ -17,7 +17,7 @@ import zx.soft.sent.solr.special.SpecialInfo;
 import zx.soft.sent.solr.special.TrendChart;
 import zx.soft.sent.web.application.SpecialApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.json.JsonNodeUtils;
 
 /**
@@ -80,7 +80,6 @@ public class SpecialResource extends ServerResource {
 
 	/**
 	 * 解决Jackson无法识别java.util.Collection问题。
-	 *
 	 */
 	public static class SpecialTopics extends ArrayList<SpecialTopic> {
 

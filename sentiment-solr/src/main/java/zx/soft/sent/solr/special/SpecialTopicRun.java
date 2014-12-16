@@ -1,7 +1,5 @@
 package zx.soft.sent.solr.special;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +18,7 @@ import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.search.FacetSearch;
 import zx.soft.sent.solr.search.SearchingData;
+import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.time.TimeUtils;
 
@@ -107,7 +106,7 @@ public class SpecialTopicRun {
 					//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
 					// 从solr集群中查询趋势图结果
 					fdp = new FacetDateParams();
-					fdp.setQ(transUnicode(specialInfo.getKeywords())); // URL中的部分字符需要编码转换
+					fdp.setQ(URLCodecUtils.encoder(specialInfo.getKeywords(), "UTF-8")); // URL中的部分字符需要编码转换
 					fdp.setFacetDate("timestamp");
 					fdp.setFacetDateStart(TimeUtils.transTimeStr(start));
 					fdp.setFacetDateEnd(TimeUtils.transTimeStr(end));
@@ -126,7 +125,7 @@ public class SpecialTopicRun {
 			}
 			search.close();
 		} catch (Exception e) {
-			logger.info("Exception=" + e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -161,15 +160,6 @@ public class SpecialTopicRun {
 
 	public static String getTimestampFilterQuery(String start, String end) {
 		return "timestamp:[" + TimeUtils.transTimeStr(start) + " TO " + TimeUtils.transTimeStr(end) + "]";
-	}
-
-	public static String transUnicode(String str) {
-		try {
-			return URLEncoder.encode(str, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			logger.error("UnsupportedEncodingException e=" + e.getMessage());
-			return "";
-		}
 	}
 
 }

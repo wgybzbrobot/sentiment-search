@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.dao.domain.sentiment.RecordSelect;
 import zx.soft.sent.web.application.PullRecordApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.codec.URLCodecUtils;
 
 /**
  * 提取记录资源类
@@ -32,6 +32,7 @@ public class PullRecordResource extends ServerResource {
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		ids = (String) getRequest().getAttributes().get("ids");
 		application = (PullRecordApplication) getApplication();
 		for (Parameter p : getRequest().getResourceRef().getQueryAsForm()) {
@@ -45,7 +46,6 @@ public class PullRecordResource extends ServerResource {
 
 	@Get("json")
 	public Object getRecords() {
-		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		logger.info("{params:[ids=" + ids + ",keyword=" + keyword + ",hlsimple=" + hlsimple + "]}");
 		if (ids == null || ids.length() == 0) {
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();

@@ -27,7 +27,6 @@ public class RetrivePage {
 	 * 测试函数
 	 */
 	public static void main(String[] args) {
-
 		//		String html = RetrivePage.downloadPageByScanner("http://www.baidu.com");
 		String html = RetrivePage.downloadPageBySocket("www.baidu.com", 80, "/");
 		System.out.println(html);
@@ -44,10 +43,10 @@ public class RetrivePage {
 			// 设置代理
 			//			url.openConnection(SocketProxy.getProxy());
 		} catch (MalformedURLException e) {
-			logger.error("MalformedURLException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		} catch (@SuppressWarnings("hiding") IOException e) {
-			logger.error("IOException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 		// 创建网络流
@@ -60,7 +59,7 @@ public class RetrivePage {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			logger.error("IOException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -74,7 +73,7 @@ public class RetrivePage {
 		try {
 			url = new URL(path);
 		} catch (MalformedURLException e) {
-			logger.error("MalformedURLException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 		// 指定编码格式UTF-8的Scanner
@@ -88,7 +87,7 @@ public class RetrivePage {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			logger.error("IOException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}
@@ -105,7 +104,7 @@ public class RetrivePage {
 		try {
 			socket = new Socket(host, port);
 		} catch (IOException e) {
-			logger.error("IOException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 
@@ -126,12 +125,13 @@ public class RetrivePage {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			logger.error("IOException in RetrivePage: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		} finally {
 			try {
 				socket.close();
 			} catch (IOException e) {
+				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 				throw new RuntimeException(e);
 			}
 		}

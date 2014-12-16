@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.application.FirstPageApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.JavaPattern;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.chars.JavaPattern;
+import zx.soft.utils.codec.URLCodecUtils;
 
 public class FirstPageResource extends ServerResource {
 

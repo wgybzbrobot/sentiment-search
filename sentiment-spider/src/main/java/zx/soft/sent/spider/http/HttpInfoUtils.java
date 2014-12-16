@@ -21,10 +21,8 @@ import java.util.Date;
 public class HttpInfoUtils {
 
 	public static void main(String[] args) {
-
 		System.out.println(HttpInfoUtils.getLastModifiedTime("www.lietu.com", 80, "/index.jsp"));
 		System.out.println(HttpInfoUtils.getLastModifiedTime("http://www.lietu.com"));
-
 	}
 
 	/**

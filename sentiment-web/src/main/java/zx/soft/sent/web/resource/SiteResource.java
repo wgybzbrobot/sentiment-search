@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.application.SiteApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.codec.URLCodecUtils;
 
 /**
  * 站点数据
@@ -25,12 +25,12 @@ public class SiteResource extends ServerResource {
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application = (SiteApplication) getApplication();
 	}
 
 	@Post("json")
 	public Object siteDate(List<String> data) {
-		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application.insertSiteGroups(data);
 		return new ErrorResponse.Builder(0, "ok").build();
 	}

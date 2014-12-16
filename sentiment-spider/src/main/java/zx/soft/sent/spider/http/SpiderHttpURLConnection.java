@@ -43,7 +43,6 @@ public class SpiderHttpURLConnection extends HttpURLConnection {
 	@Override
 	public void disconnect() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -55,7 +54,6 @@ public class SpiderHttpURLConnection extends HttpURLConnection {
 	@Override
 	public void connect() throws IOException {
 		// TODO Auto-generated method stub
-
 	}
 
 }

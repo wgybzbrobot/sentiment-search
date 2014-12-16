@@ -31,7 +31,7 @@ public class SentimentRecord {
 		try {
 			sqlSessionFactory = MybatisConfig.getSqlSessionFactory(server);
 		} catch (RuntimeException e) {
-			logger.error("SentimentRecord RuntimeException: " + e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

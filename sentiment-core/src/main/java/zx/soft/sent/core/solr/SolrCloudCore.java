@@ -57,8 +57,7 @@ public class SolrCloudCore {
 			cloudServer.add(docs);
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
-			//			throw new RuntimeException(e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -66,8 +65,7 @@ public class SolrCloudCore {
 		try {
 			cloudServer.add(getSentimentDoc(record));
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
-			//			throw new RuntimeException(e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -75,8 +73,7 @@ public class SolrCloudCore {
 		try {
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("SolrServerException: " + e.getMessage());
-			//			throw new RuntimeException(e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

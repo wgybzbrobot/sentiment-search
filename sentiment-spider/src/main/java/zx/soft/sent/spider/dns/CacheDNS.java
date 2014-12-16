@@ -12,12 +12,10 @@ import java.net.UnknownHostException;
 public class CacheDNS {
 
 	public static void main(String[] args) throws UnknownHostException {
-
 		InetAddress[] ips = InetAddress.getAllByName("www.baidu.com");
 		for (InetAddress ip : ips) {
 			System.out.println(ip);
 		}
-
 	}
 
 }

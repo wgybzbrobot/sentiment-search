@@ -19,7 +19,7 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.sent.solr.firstpage.OAFirstPage;
 import zx.soft.sent.web.resource.FirstPageResource;
-import zx.soft.sent.web.utils.JavaPattern;
+import zx.soft.utils.chars.JavaPattern;
 import zx.soft.utils.json.JsonNodeUtils;
 
 public class FirstPageApplication extends Application {

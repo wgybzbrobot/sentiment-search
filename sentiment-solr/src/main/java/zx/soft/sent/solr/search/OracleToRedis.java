@@ -67,7 +67,7 @@ public class OracleToRedis {
 				cache.hset(SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
 			}
 		} catch (SQLException e) {
-			logger.error("SQLException at OracleToRedis: " + e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		} finally {
 			oracleJDBC.close();
 			cache.close();

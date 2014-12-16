@@ -82,8 +82,10 @@ public class SearchingData {
 			server.deleteByQuery(q);
 			server.commit();
 		} catch (SolrServerException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			e.printStackTrace();
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			e.printStackTrace();
 		}
 	}
@@ -97,9 +99,11 @@ public class SearchingData {
 		try {
 			queryResponse = server.query(query, METHOD.GET);
 		} catch (SolrServerException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 		if (queryResponse == null) {
+			logger.error("no response!");
 			throw new SpiderSearchException("no response!");
 		}
 

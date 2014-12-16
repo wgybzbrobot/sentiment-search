@@ -35,7 +35,7 @@ public class OracleJDBC {
 			conn = DriverManager.getConnection(db_url, db_username, db_password);
 			statement = conn.createStatement();
 		} catch (Exception e) {
-			logger.error("Exception:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -53,7 +53,7 @@ public class OracleJDBC {
 			statement.executeUpdate(sql);
 			return true;
 		} catch (Exception e) {
-			logger.error("Exception:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			return Boolean.FALSE;
 		}
 	}
@@ -65,7 +65,7 @@ public class OracleJDBC {
 		try {
 			return statement.executeQuery(sql);
 		} catch (Exception e) {
-			logger.error("Exception:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			return null;
 		}
 	}
@@ -75,7 +75,7 @@ public class OracleJDBC {
 			conn.close();
 			statement.close();
 		} catch (SQLException e) {
-			logger.error("Exception:{}", e);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

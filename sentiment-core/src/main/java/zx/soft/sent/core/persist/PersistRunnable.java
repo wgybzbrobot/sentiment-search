@@ -30,6 +30,7 @@ public class PersistRunnable implements Runnable {
 
 	public PersistRunnable(final Cache cache, SentimentRecord sentRecord, RecordInfo record) {
 		if (record == null) {
+			logger.error("Record is null.");
 			throw new IllegalArgumentException("record is null");
 		}
 		this.cache = cache;
@@ -49,6 +50,7 @@ public class PersistRunnable implements Runnable {
 					sentRecord.updateRecord(tRecord);
 				} catch (Exception e) {
 					logger.error("Updating record=" + record.getId() + " occurs Exception=" + e);
+					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 				}
 				// 记录不存在的情况下
 			} else {
@@ -58,10 +60,12 @@ public class PersistRunnable implements Runnable {
 					sentRecord.insertRecord(tRecord);
 				} catch (Exception e) {
 					logger.error("Inserting record=" + record.getId() + " occurs Exception=" + e);
+					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 				}
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("record: " + record, e);
+			logger.error("Error Record:{}", record);
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 
 	}

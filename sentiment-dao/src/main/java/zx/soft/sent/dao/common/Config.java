@@ -25,6 +25,7 @@ public class Config {
 			try (InputStream in = Config.class.getClassLoader().getResourceAsStream("oracle_db.properties");) {
 				this.load(in);
 			} catch (IOException e) {
+				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 				throw new RuntimeException(e);
 			}
 		}
@@ -42,6 +43,7 @@ public class Config {
 			result.load(in);
 			return result;
 		} catch (Exception e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.web.application.PushRecordApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.codec.URLCodecUtils;
 
 /**
  * 存储记录资源类
@@ -26,12 +26,12 @@ public class PushRecordResource extends ServerResource {
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application = (PushRecordApplication) getApplication();
 	}
 
 	@Get("json")
 	public Object postRecords(List<RecordInfo> records) {
-		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application.pushRecords(records);
 		return new ErrorResponse.Builder(0, "ok").build();
 	}

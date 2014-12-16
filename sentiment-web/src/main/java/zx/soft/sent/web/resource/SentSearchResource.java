@@ -13,7 +13,7 @@ import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.web.application.SentiSearchApplication;
 import zx.soft.sent.web.common.ErrorResponse;
-import zx.soft.sent.web.utils.URLCodecUtils;
+import zx.soft.utils.codec.URLCodecUtils;
 
 /**
  * 與请搜索资源类
@@ -33,6 +33,7 @@ public class SentSearchResource extends ServerResource {
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		queryParams = new QueryParams();
 		application = (SentiSearchApplication) getApplication();
 		HashMap<String, String> params = new HashMap<>();
@@ -63,8 +64,6 @@ public class SentSearchResource extends ServerResource {
 
 	@Get("json")
 	public Object getQueryResult() {
-		final String queryURL = URLCodecUtils.decoder(getReference().toString(), "utf-8");
-		logger.info("Request Url: " + queryURL + ".");
 		if (getReference().getRemainingPart() == null) {
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();
 		}

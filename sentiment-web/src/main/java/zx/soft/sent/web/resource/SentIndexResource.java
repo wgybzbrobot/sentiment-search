@@ -9,11 +9,11 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.common.ErrorResponse;
 import zx.soft.sent.web.domain.IndexErrResponse;
 import zx.soft.sent.web.domain.PostData;
+import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
@@ -41,6 +41,7 @@ public class SentIndexResource extends ServerResource {
 
 	@Override
 	public void doInit() {
+		logger.info("Request Url: " + URLCodecUtils.decoder(getReference().toString(), "utf-8") + ".");
 		application = (SentiIndexApplication) getApplication();
 	}
 
@@ -56,11 +57,7 @@ public class SentIndexResource extends ServerResource {
 			logger.info("Records' size=0");
 			return new ErrorResponse.Builder(20003, "no post data.").build();
 		}
-		logger.info("Request Url:{}, Records' Size:{}", getReference(), data.getRecords().size());
-
-		for (RecordInfo d : data.getRecords()) {
-			logger.info("Indexing data's ID:{}", d.getId());
-		}
+		logger.info("Records' Size:{}", data.getRecords().size());
 
 		try {
 			// 添加到Solr
@@ -77,10 +74,13 @@ public class SentIndexResource extends ServerResource {
 			if (unsuccessful.size() == 0) {
 				return new ErrorResponse.Builder(0, "ok").build();
 			} else {
+				for (String id : unsuccessful) {
+					logger.info("Indexing error data's ID:{}", id);
+				}
 				return new IndexErrResponse(-1, unsuccessful);
 			}
 		} catch (Exception e) {
-			logger.error("Indexing error, Exception:{}", e.getMessage());
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			return new ErrorResponse.Builder(-1, "persist error!").build();
 		}
 	}

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 代理数据读取
  * 
@@ -16,8 +19,9 @@ import java.util.List;
  */
 public class DataReader {
 
-	public static void main(String[] args) {
+	private static Logger logger = LoggerFactory.getLogger(DataReader.class);
 
+	public static void main(String[] args) {
 		List<String> proxy = DataReader.getProxyIPs("proxy/proxy-ips.txt");
 		for (String ip : proxy) {
 			System.out.println(ip);
@@ -33,8 +37,10 @@ public class DataReader {
 			}
 			return result;
 		} catch (FileNotFoundException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
 	}

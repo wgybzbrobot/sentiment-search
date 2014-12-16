@@ -44,6 +44,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 	private final Thread hdfsWriterThread;
 
 	public HdfsWriterQueueImpl(String name) {
+
 		try {
 			logger.info("HDFS Url: " + conf.get("fs.default.name"));
 			FileSystem fs = FileSystem.get(URI.create(""), conf);
@@ -54,8 +55,10 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 			writer = SequenceFile.createWriter(fs, conf, path, Text.class, Text.class);
 			logger.info("Create HDFS writer, fileName: " + name);
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			throw new RuntimeException(e);
 		}
+
 		hdfsWriterThread = new Thread(new Runnable() {
 
 			@Override
@@ -68,9 +71,11 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 					}
 				} catch (InterruptedException e) {
 					logger.error("HDFS writer thread interrupted.");
+					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 					closeNow();
 				} catch (IOException e) {
 					logger.error("HDFS write error: " + Arrays.toString(kv), e);
+					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 					closeNow();
 				}
 			}
@@ -99,6 +104,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 			}
 			hdfsWriterThread.interrupt();
 		} catch (InterruptedException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			hdfsWriterThread.interrupt();
 		}
 	}
@@ -107,6 +113,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 		try {
 			writer.syncFs();
 		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			isRunning = false;
 			throw new RuntimeException(e);
 		}
@@ -124,6 +131,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 		try {
 			queue.put(new String[] { key, value });
 		} catch (InterruptedException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			isRunning = false;
 			throw new RuntimeException(e);
 		}
@@ -135,8 +143,8 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 			writer.sync();
 			writer.syncFs();
 			writer.close();
-		} catch (IOException e1) {
-			logger.error("HDFS writer close Exception.", e1);
+		} catch (IOException e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

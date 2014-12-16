@@ -1,7 +1,5 @@
 package zx.soft.sent.solr.special;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -20,6 +18,7 @@ import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.search.FacetSearch;
 import zx.soft.sent.solr.search.SearchingData;
+import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.time.TimeUtils;
 
@@ -49,7 +48,11 @@ public class SpecialTopicTimer {
 		 * 设置60分钟跑一次
 		 */
 		SpecialTopicTimer tasker = new SpecialTopicTimer(60 * 60 * 1000);
-		tasker.run();
+		try {
+			tasker.run();
+		} catch (Exception e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class SpecialTopicTimer {
 						//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
 						// 从solr集群中查询趋势图结果
 						fdp = new FacetDateParams();
-						fdp.setQ(SpecialTopicTimer.transUnicode(specialInfo.getKeywords())); // URL中的部分字符需要编码转换
+						fdp.setQ(URLCodecUtils.encoder(specialInfo.getKeywords(), "UTF-8")); // URL中的部分字符需要编码转换
 						fdp.setFacetDate("timestamp");
 						fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
 						fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
@@ -127,7 +130,7 @@ public class SpecialTopicTimer {
 				}
 				search.close();
 			} catch (Exception e) {
-				logger.info("e=" + e.getMessage());
+				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			}
 		}
 
@@ -154,15 +157,6 @@ public class SpecialTopicTimer {
 			return "timestamp:[" + TimeUtils.transTimeStr(start) + " TO " + TimeUtils.transTimeStr(end) + "]";
 		}
 
-	}
-
-	public static String transUnicode(String str) {
-		try {
-			return URLEncoder.encode(str, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			logger.error("UnsupportedEncodingException e=" + e.getMessage());
-			return "";
-		}
 	}
 
 }

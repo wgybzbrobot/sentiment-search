@@ -34,7 +34,11 @@ public class FirstPageRun {
 	 */
 	public static void main(String[] args) {
 		FirstPageRun firstPageRun = new FirstPageRun();
-		firstPageRun.run();
+		try {
+			firstPageRun.run();
+		} catch (Exception e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	public void run() {

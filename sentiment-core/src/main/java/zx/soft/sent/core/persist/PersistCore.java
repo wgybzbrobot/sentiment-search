@@ -54,7 +54,8 @@ public class PersistCore {
 			try {
 				pool.execute(new PersistRunnable(cache, sentRecord, record));
 			} catch (RuntimeException e) {
-				logger.error("RuntimeException:{}", e);
+				logger.error("Persist error Record:{}", record);
+				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			}
 		}
 

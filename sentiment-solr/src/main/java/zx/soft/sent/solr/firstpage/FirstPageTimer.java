@@ -45,7 +45,11 @@ public class FirstPageTimer {
 		 * 设置1小时跑一次
 		 */
 		FirstPageTimer tasker = new FirstPageTimer(2 * 60 * 1000);
-		tasker.run();
+		try {
+			tasker.run();
+		} catch (Exception e) {
+			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	/**
