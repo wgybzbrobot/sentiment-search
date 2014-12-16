@@ -13,11 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.negative.sentiment.core.NegativeClassify;
-import zx.soft.negative.sentiment.utils.JsonUtils;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.sent.solr.firstpage.OAFirstPage;
 import zx.soft.utils.checksum.CheckSumUtils;
+import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.sort.InsertSort;
 
 public class FirstPageDemo {
