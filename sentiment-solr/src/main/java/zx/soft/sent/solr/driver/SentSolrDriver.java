@@ -1,8 +1,5 @@
 package zx.soft.sent.solr.driver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import zx.soft.sent.solr.firstpage.FirstPageRun;
 import zx.soft.sent.solr.firstpage.FirstPageTimer;
 import zx.soft.sent.solr.index.ImportSentDataToDB;
@@ -12,6 +9,7 @@ import zx.soft.sent.solr.search.OracleToRedis;
 import zx.soft.sent.solr.special.SpecialTopicRun;
 import zx.soft.sent.solr.special.SpecialTopicTimer;
 import zx.soft.sent.solr.statistic.CompanyMain;
+import zx.soft.utils.driver.ProgramDriver;
 
 /**
  * 驱动类
@@ -21,60 +19,31 @@ import zx.soft.sent.solr.statistic.CompanyMain;
  */
 public class SentSolrDriver {
 
-	private static Logger logger = LoggerFactory.getLogger(SentSolrDriver.class);
-
 	/**
 	 * 主函数
 	 */
 	public static void main(String[] args) {
 
-		if (args.length == 0) {
-			System.err.println("Usage: Driver <class-name>");
-			System.exit(-1);
+		int exitCode = -1;
+		ProgramDriver pgd = new ProgramDriver();
+		try {
+			pgd.addClass("importSentDataToSC", ImportSentDataToSC.class, "导入舆情数据到SolrCloud");
+			pgd.addClass("importSentDataToDB", ImportSentDataToDB.class, "导入舆情数据到DB");
+			pgd.addClass("importSinaDataToSC", ImportSinaDataToSC.class, "导入新浪数据到SolrCloud");
+			pgd.addClass("companyMain", CompanyMain.class, "微博数据统计");
+			pgd.addClass("oracleToRedis", OracleToRedis.class, "将站点数据定时导入Redis中（默认是每小时）");
+			pgd.addClass("specialTopicTimer", SpecialTopicTimer.class, "OA专题数据统计——定时分析");
+			pgd.addClass("specialTopicRun", SpecialTopicRun.class, "OA专题数据统计——临时分析");
+			pgd.addClass("firstPageTimer", FirstPageTimer.class, "OA首页数据统计——定时分析");
+			pgd.addClass("firstPageRun", FirstPageRun.class, "OA首页数据统计——临时分析");
+			pgd.driver(args);
+			// Success
+			exitCode = 0;
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
 		}
-		String[] leftArgs = new String[args.length - 1];
-		System.arraycopy(args, 1, leftArgs, 0, leftArgs.length);
 
-		switch (args[0]) {
-		case "importSentDataToSC":
-			logger.info("导入舆情数据到SolrCloud： ");
-			ImportSentDataToSC.main(leftArgs);
-			break;
-		case "importSentDataToDB":
-			logger.info("导入舆情数据到DB： ");
-			ImportSentDataToDB.main(leftArgs);
-			break;
-		case "importSinaDataToSC":
-			logger.info("导入新浪数据到SolrCloud：");
-			ImportSinaDataToSC.main(leftArgs);
-			break;
-		case "companyMain":
-			logger.info("微博数据统计：");
-			CompanyMain.main(leftArgs);
-			break;
-		case "oracleToRedis":
-			logger.info("将站点数据定时导入Redis中（默认是每小时）： ");
-			OracleToRedis.main(leftArgs);
-			break;
-		case "specialTopicTimer":
-			logger.info("OA专题数据统计——定时分析：");
-			SpecialTopicTimer.main(leftArgs);
-			break;
-		case "specialTopicRun":
-			logger.info("OA专题数据统计——临时分析：");
-			SpecialTopicRun.main(leftArgs);
-			break;
-		case "firstPageTimer":
-			logger.info("OA首页数据统计——定时分析：");
-			FirstPageTimer.main(leftArgs);
-			break;
-		case "firstPageRun":
-			logger.info("OA首页数据统计——临时分析：");
-			FirstPageRun.main(leftArgs);
-			break;
-		default:
-			return;
-		}
+		System.exit(exitCode);
 
 	}
 
