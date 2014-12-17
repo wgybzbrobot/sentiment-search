@@ -50,7 +50,7 @@ public class OAFirstPage {
 	public static void main(String[] args) {
 
 		OAFirstPage firstPage = new OAFirstPage();
-		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 100, "暴力");
+		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 100, "合肥");
 		System.out.println(JsonUtils.toJson(todayWeibos));
 		firstPage.close();
 
@@ -195,7 +195,7 @@ public class OAFirstPage {
 		queryParams.setRows(N);
 		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(currentTime) + "]");
-		queryParams.setSort("timestamp:desc");
+		//		queryParams.setSort("timestamp:desc");
 		QueryResult queryResult = search.queryData(queryParams, false);
 		return queryResult.getResults();
 	}
