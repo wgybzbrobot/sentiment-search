@@ -29,13 +29,13 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>logs/sentiment-spider.log.%d{yyyy-MM-dd}.tar.gz
 			</fileNamePattern>
-			<maxHistory>30</maxHistory>
+			<maxHistory>7</maxHistory>
 		</rollingPolicy>
 	</appender>
 
 	<!-- org.apache.commons.httpclient包中的java类 -->
 	<logger name="org.apache.commons.httpclient" level="ERROR" addtivity="false">
-		<appender-ref>FILE</appender-ref>
+		<appender-ref ref="FILE" />
 	</logger>
 	
 	<root level="DEBUGE">

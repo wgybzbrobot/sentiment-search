@@ -27,18 +27,18 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>logs/sentiment-solr.log.%d{yyyy-MM-dd}.tar.gz
 			</fileNamePattern>
-			<maxHistory>30</maxHistory>
+			<maxHistory>7</maxHistory>
 		</rollingPolicy>
 	</appender>
 
 	<!-- org.apache.solr包中的java类 -->
 	<logger name="org.apache.solr" level="INFO" addtivity="false">
-		<appender-ref>FILE</appender-ref>
+		<appender-ref ref="FILE" />
 	</logger>
 
 	<!-- org.apache.zookeeper包中的java类 -->
 	<logger name="org.apache.zookeeper" level="WARN" addtivity="false">
-		<appender-ref>FILE</appender-ref>
+		<appender-ref ref="FILE" />
 	</logger>
 
 	<root level="DEBUGE">
