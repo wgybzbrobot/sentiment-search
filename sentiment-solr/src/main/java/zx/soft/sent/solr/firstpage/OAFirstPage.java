@@ -50,7 +50,7 @@ public class OAFirstPage {
 	public static void main(String[] args) {
 
 		OAFirstPage firstPage = new OAFirstPage();
-		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 100, "合肥");
+		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
 		System.out.println(JsonUtils.toJson(todayWeibos));
 		firstPage.close();
 

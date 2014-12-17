@@ -35,7 +35,7 @@ public class HarmfulInfoResource extends ServerResource {
 			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
 		try {
-			return application.getTodayNegativeRecords(Integer.parseInt(num), keywords);
+			return application.getTodayNegativeRecords(Integer.parseInt(num), URLCodecUtils.decoder(keywords, "UTF-8"));
 		} catch (Exception e) {
 			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 			return new ErrorResponse.Builder(-1, "params error!").build();
