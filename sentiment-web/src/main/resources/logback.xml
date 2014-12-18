@@ -25,8 +25,8 @@
 			<level>INFO</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/sentiment-web.log.%d{yyyy-MM-dd}.tar.gz</fileNamePattern>
-			<maxHistory>7</maxHistory>
+			<fileNamePattern>logs/sentiment-web.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 	</appender>
 
