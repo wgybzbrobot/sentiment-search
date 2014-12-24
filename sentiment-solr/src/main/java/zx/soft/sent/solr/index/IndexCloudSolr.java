@@ -338,6 +338,8 @@ public class IndexCloudSolr {
 		if (record.getSend_addr() != "") {
 			doc.addField("send_addr", record.getSend_addr().trim());
 		}
+		// 同步历史数据的时候需要该字段，-1代表历史
+		//		doc.addField("type_ids", -1);
 
 		return doc;
 	}
