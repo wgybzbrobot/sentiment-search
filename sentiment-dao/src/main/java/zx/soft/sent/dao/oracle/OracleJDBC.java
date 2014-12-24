@@ -35,7 +35,8 @@ public class OracleJDBC {
 			conn = DriverManager.getConnection(db_url, db_username, db_password);
 			statement = conn.createStatement();
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			throw new RuntimeException(e);
+			//			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

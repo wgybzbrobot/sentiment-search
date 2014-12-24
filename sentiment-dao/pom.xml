@@ -21,10 +21,16 @@
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
+		<!-- BerkeleyDB连接包 -->
 		<dependency>
 			<groupId>com.sleepycat</groupId>
 			<artifactId>je</artifactId>
 			<version>5.0.73</version>
+		</dependency>
+		<!-- Oracle连接包 -->
+		<dependency>
+			<groupId>oracle.jdbc</groupId>
+			<artifactId>ojdbc</artifactId>
 		</dependency>
 		<!-- 日志包 -->
 		<dependency>
