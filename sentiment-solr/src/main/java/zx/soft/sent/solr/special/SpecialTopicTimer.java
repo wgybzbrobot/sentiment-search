@@ -80,8 +80,8 @@ public class SpecialTopicTimer {
 				SearchingData search = new SearchingData();
 				// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
 				// 在这里认为，如果一个月内没有查询就不更新
-				long start = System.currentTimeMillis() / 1000 - 30 * 86400;
-				List<String> identifys = specialQuery.selectSpecialIdentifyByTime(start);
+				long start = System.currentTimeMillis() - 30 * 86400_000L;
+				List<String> identifys = specialQuery.selectSpecialIdentifyByTime(new Date(start));
 				// 循环更新每个专题的查询结果
 				QueryParams queryParams = null;
 				SpecialTopic specialInfo = null;

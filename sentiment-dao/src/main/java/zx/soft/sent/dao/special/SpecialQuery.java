@@ -1,5 +1,6 @@
 package zx.soft.sent.dao.special;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -75,7 +76,7 @@ public class SpecialQuery {
 	/**
 	 * 查询专题identify，按时间查询
 	 */
-	public List<String> selectSpecialIdentifyByTime(long lasttime) {
+	public List<String> selectSpecialIdentifyByTime(Date lasttime) {
 		try (SqlSession session = sqlSessionFactory.openSession();) {
 			SpecialQueryMapper specialQueryMapper = session.getMapper(SpecialQueryMapper.class);
 			return specialQueryMapper.selectSpecialIdentifyByTime(lasttime);

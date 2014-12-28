@@ -22,7 +22,7 @@ public interface FirstPageMapper {
 	 * 插入OA首页查询数据
 	 */
 	@Insert("INSERT INTO `oa_firstpage_query_cache` (`type`,`timestr`,`result`,`lasttime`) "
-			+ "VALUES (#{type},#{timestr},#{result},UNIX_TIMESTAMP())")
+			+ "VALUES (#{type},#{timestr},#{result},NOW())")
 	public void insertFirstPage(FirstPageInfo firstPageInfo);
 
 	/**

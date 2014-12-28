@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.sentiment;
+package zx.soft.sent.dao.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,9 +17,9 @@ import zx.soft.utils.config.ConfigUtil;
  * @author wanggang
  *
  */
-public class SentJDBC {
+public class SentDbcp {
 
-	private static Logger logger = LoggerFactory.getLogger(SentJDBC.class);
+	private static Logger logger = LoggerFactory.getLogger(SentDbcp.class);
 
 	private BasicDataSource dataSource;
 
@@ -27,7 +27,7 @@ public class SentJDBC {
 	private String db_username;
 	private String db_password;
 
-	public SentJDBC() {
+	public SentDbcp() {
 		dbInit();
 		dbConnection();
 	}
@@ -81,7 +81,7 @@ public class SentJDBC {
 
 	@Override
 	public String toString() {
-		return "SentJDBC:[db_url=" + db_url + ",db_username=" + db_username + ",db_password=" + db_password + "]";
+		return "SentDbcp:[db_url=" + db_url + ",db_username=" + db_username + ",db_password=" + db_password + "]";
 	}
 
 	/**
@@ -128,8 +128,7 @@ public class SentJDBC {
 				+ "`server_id` mediumint(9) unsigned NOT NULL COMMENT '来自前置机编号',"
 				+ "`identify_id` int(11) unsigned NOT NULL COMMENT '标志id',"
 				+ "`identify_md5` varchar(50) NOT NULL COMMENT '标志md5',"
-				+ "`keyword` varchar(500) NOT NULL COMMENT '关键词',"
-				+ "`first_time` datetime NOT NULL COMMENT '首次发现时间',"
+				+ "`keyword` varchar(500) NOT NULL COMMENT '关键词'," + "`first_time` datetime NOT NULL COMMENT '首次发现时间',"
 				+ "`update_time` datetime NOT NULL COMMENT '最新更新时间',"
 				+ "`ip` varchar(20) NOT NULL COMMENT '该记录发布的ip地址',"
 				+ "`location` varchar(100) NOT NULL COMMENT '该记录发布的区域地址',"
@@ -186,6 +185,57 @@ public class SentJDBC {
 				+ "`identify` int(10) unsigned NOT NULL COMMENT '标识',`lasttime` datetime NOT NULL COMMENT '记录时间',"
 				+ "PRIMARY KEY (`id`),UNIQUE KEY `source_id` (`source_id`), KEY `source_name` (`source_name`)) "
 				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='與请站点数据表' AUTO_INCREMENT=1 ;";
+		execSQL(sql);
+	}
+
+	/**
+	 * 创建OA首页信息表
+	 */
+	public void createFirstPageTable(String tablename) {
+		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " (" //
+				+ "`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID'," //
+				+ "`type` tinyint(3) unsigned NOT NULL COMMENT '首页展现类型，如：1-今日概况、2-饼状图、3-舆情聚焦、4-微博当天数据趋势、52/53-重点关注'," //
+				+ "`timestr` char(20) CHARACTER SET utf8 NOT NULL COMMENT '记录时间字符串，如：2014-09-03 12:23:01'," //  
+				+ "`result` mediumtext CHARACTER SET utf8 NOT NULL COMMENT '查询结果'," //
+				+ "`lasttime` datetime NOT NULL COMMENT '记录时间'," //
+				+ "PRIMARY KEY (`id`,`lasttime`),UNIQUE KEY `type_timestr` (`type`,`timestr`)," //
+				+ "KEY `type` (`type`),KEY `timestr` (`timestr`)) " //
+				+ "ENGINE=MyISAM DEFAULT CHARSET=gbk COMMENT='OA首页数据查询缓存表' AUTO_INCREMENT=1 ;";
+		execSQL(sql);
+	}
+
+	/**
+	 * 创建OA专题信息表
+	 */
+	public void createSpecialInfoTable(String tablename) {
+		String sql = "CREATE TABLE IF NOT EXISTS " + tablename
+				+ " ("//
+				+ "`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增',"//
+				+ "`identify` char(50) NOT NULL COMMENT '唯一标识',"//
+				+ "`name` char(100) NOT NULL COMMENT '专题名称',"//
+				+ "`keywords` char(100) NOT NULL COMMENT '关键词',"//
+				+ "`start` char(20) NOT NULL COMMENT '起始查询时间',"//
+				+ "`end` char(20) NOT NULL COMMENT '结束查询时间',"//
+				+ "`hometype` tinyint(3) unsigned NOT NULL COMMENT '境内外参数',"//
+				+ "`lasttime` datetime NOT NULL COMMENT '记录时间',"//
+				+ "PRIMARY KEY (`id`),UNIQUE KEY `identify` (`identify`),KEY `lasttime` (`lasttime`)) "
+				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='OA专题信息表' AUTO_INCREMENT=1 ;";
+		execSQL(sql);
+	}
+
+	/**
+	 * 创建OA专题查询缓存表
+	 */
+	public void createSpecialQueryCacheTable(String tablename) {
+		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " ("//
+				+ "`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID'," //
+				+ "`identify` char(50) NOT NULL COMMENT '专题的唯一标识',"//
+				+ "`type` char(10) NOT NULL COMMENT '专题的类型，如：饼状图、趋势图',"//
+				+ "`result` mediumtext NOT NULL COMMENT '根据专题参数查询的结果'," //
+				+ "`lasttime` datetime NOT NULL COMMENT '查询时间',"//
+				+ "PRIMARY KEY (`id`),UNIQUE KEY `identify_type` (`identify`,`type`),"//
+				+ "KEY `identify` (`identify`),KEY `type` (`type`)) "//
+				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='OA系统中专题模块查询缓存表' AUTO_INCREMENT=1 ;";
 		execSQL(sql);
 	}
 

@@ -1,5 +1,7 @@
 package zx.soft.sent.dao.domain.platform;
 
+import java.util.Date;
+
 /**
  * 分类列表，采集站点 
  * 
@@ -45,7 +47,7 @@ public class SiteInfo {
 	private long root; // 父节点
 	private String params; // 参数名键值对列表
 	private long uid; // 创建人ID
-	private long timestamp; // 创建时间
+	private Date timestamp; // 创建时间
 	private int identify; // 标识
 
 	@Override
@@ -185,11 +187,11 @@ public class SiteInfo {
 		this.uid = uid;
 	}
 
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

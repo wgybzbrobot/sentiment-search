@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import zx.soft.redis.client.cache.Cache;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.domain.sentiment.RecordInsert;
-import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
+import zx.soft.sent.dao.sql.CreateTables;
 import zx.soft.utils.checksum.CheckSumUtils;
 
 /**

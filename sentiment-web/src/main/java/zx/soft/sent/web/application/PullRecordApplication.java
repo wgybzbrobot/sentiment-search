@@ -9,8 +9,8 @@ import org.restlet.routing.Router;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.sentiment.RecordSelect;
-import zx.soft.sent.dao.sentiment.CreateTables;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
+import zx.soft.sent.dao.sql.CreateTables;
 import zx.soft.sent.web.resource.PullRecordResource;
 import zx.soft.utils.checksum.CheckSumUtils;
 

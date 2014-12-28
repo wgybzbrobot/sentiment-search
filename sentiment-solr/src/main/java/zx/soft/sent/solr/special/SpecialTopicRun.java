@@ -54,7 +54,7 @@ public class SpecialTopicRun {
 			// 理论上，如果专题的end时间小于当天时间，那么就视为过期专题，不更新；只更新end时间大于等于今天的专题数据。
 			// 不过在这里，认为该专题在半个月之内未被查询的化，就认为是过期的，不更新；因为我们爬虫的数据暂时不还不够及时和准确。
 			long current = System.currentTimeMillis();
-			List<String> identifys = specialQuery.selectSpecialIdentifyByTime(current / 1000 - 15 * 86400);
+			List<String> identifys = specialQuery.selectSpecialIdentifyByTime(new Date(current - 15 * 86400_000L));
 			// 循环更新每个专题的查询结果
 			QueryParams queryParams = null;
 			SpecialTopic specialInfo = null;

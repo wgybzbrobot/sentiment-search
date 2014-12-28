@@ -1,5 +1,7 @@
 package zx.soft.sent.dao.demo;
 
+import java.util.Date;
+
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.platform.SiteInfo;
 import zx.soft.sent.dao.spidersite.SpiderSite;
@@ -27,10 +29,9 @@ public class SpiderSiteDemo {
 		siteInfo.setRoot(123456789L);
 		siteInfo.setParams("参数名键值对列表");
 		siteInfo.setUid(987654321L);
-		siteInfo.setTimestamp(136589822L);
+		siteInfo.setTimestamp(new Date(1419755627695L));
 		siteInfo.setIdentify(111111);
 
-		//		System.out.println(siteInfo);
 		/**
 		 * 插入站点信息
 		 */

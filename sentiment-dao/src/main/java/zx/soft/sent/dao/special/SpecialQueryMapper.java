@@ -1,5 +1,6 @@
 package zx.soft.sent.dao.special;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Arg;
@@ -25,7 +26,7 @@ public interface SpecialQueryMapper {
 	 * 插入专题信息
 	 */
 	@Insert("INSERT INTO `oa_special_info` (`identify`,`name`,`keywords`,`start`,`end`,`hometype`,`lasttime`) "
-			+ "VALUES (#{identify},#{name},#{keywords},#{start},#{end},#{hometype},UNIX_TIMESTAMP())")
+			+ "VALUES (#{identify},#{name},#{keywords},#{start},#{end},#{hometype},NOW())")
 	public void insertSpecialInfo(SpecialTopic specialTopic);
 
 	/**
@@ -43,7 +44,7 @@ public interface SpecialQueryMapper {
 	 * 插入专题查询结果
 	 */
 	@Insert("INSERT INTO `oa_special_query_cache` (`identify`,`type`,`result`,`lasttime`) "
-			+ "VALUES (#{identify},#{type},#{result},UNIX_TIMESTAMP())")
+			+ "VALUES (#{identify},#{type},#{result},NOW())")
 	public void insertSpecialResult(SpecialResult specialResult);
 
 	/**
@@ -51,7 +52,7 @@ public interface SpecialQueryMapper {
 	 */
 	@Select("SELECT `identify` FROM `oa_special_info` WHERE `lasttime` > #{lasttime}")
 	@ConstructorArgs(value = { @Arg(column = "identify", javaType = String.class) })
-	public List<String> selectSpecialIdentifyByTime(long lasttime);
+	public List<String> selectSpecialIdentifyByTime(Date lasttime);
 
 	/**
 	 * 查询专题查询结果
@@ -69,7 +70,7 @@ public interface SpecialQueryMapper {
 	/**
 	 * 更新专题查询结果
 	 */
-	@Update("UPDATE `oa_special_query_cache` SET `result` = #{result},`lasttime` = UNIX_TIMESTAMP() "
+	@Update("UPDATE `oa_special_query_cache` SET `result` = #{result},`lasttime` = NOW() "
 			+ "WHERE `identify` = #{identify} AND `type` = #{type}")
 	public void updateSpecialResult(SpecialResult insertSpecialResult);
 

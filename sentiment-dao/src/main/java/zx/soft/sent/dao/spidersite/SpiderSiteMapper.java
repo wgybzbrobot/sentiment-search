@@ -23,7 +23,7 @@ public interface SpiderSiteMapper {
 			+ "`spider_id`,`spider_type`,`source_id`,`source_type`,`source_code`,`contact`,`admin`,`root`,"
 			+ "`params`,`uid`,`timestamp`,`identify`,`lasttime`) VALUES (#{url},#{zone},#{description},"
 			+ "#{source_name},#{platform},#{status},#{spider_id},#{spider_type},#{source_id},#{source_type},"
-			+ "#{source_code},#{contact},#{admin},#{root},#{params},#{uid},#{timestamp},#{identify},UNIX_TIMESTAMP())")
+			+ "#{source_code},#{contact},#{admin},#{root},#{params},#{uid},#{timestamp},#{identify},NOW())")
 	public void insertSiteInfo(SiteInfo siteInfo);
 
 	/**
