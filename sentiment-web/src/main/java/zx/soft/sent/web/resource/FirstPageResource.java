@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.application.FirstPageApplication;
-import zx.soft.sent.web.common.ErrorResponse;
+import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.utils.chars.JavaPattern;
 import zx.soft.utils.codec.URLCodecUtils;
 

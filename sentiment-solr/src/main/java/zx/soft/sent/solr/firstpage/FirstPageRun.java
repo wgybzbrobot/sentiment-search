@@ -17,6 +17,7 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.sort.InsertSort;
 
 public class FirstPageRun {
@@ -37,7 +38,7 @@ public class FirstPageRun {
 		try {
 			firstPageRun.run();
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 

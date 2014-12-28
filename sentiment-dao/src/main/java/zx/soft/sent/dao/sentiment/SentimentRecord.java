@@ -15,6 +15,7 @@ import zx.soft.sent.dao.domain.sentiment.RecordSelect;
 import zx.soft.sent.dao.domain.sentiment.SelectParamsById;
 import zx.soft.sent.dao.domain.sentiment.SelectParamsByTime;
 import zx.soft.sent.dao.domain.sentiment.SentTablename;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 與请数据CURD类
@@ -32,7 +33,7 @@ public class SentimentRecord {
 		try {
 			sqlSessionFactory = MybatisConfig.getSqlSessionFactory(server);
 		} catch (RuntimeException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}

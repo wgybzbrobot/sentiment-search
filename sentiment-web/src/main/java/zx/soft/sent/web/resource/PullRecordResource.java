@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.sentiment.RecordSelect;
 import zx.soft.sent.web.application.PullRecordApplication;
-import zx.soft.sent.web.common.ErrorResponse;
+import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.utils.codec.URLCodecUtils;
 
 /**

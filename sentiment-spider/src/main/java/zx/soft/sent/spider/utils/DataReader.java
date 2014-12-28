@@ -11,6 +11,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * 代理数据读取
  * 
@@ -37,10 +39,10 @@ public class DataReader {
 			}
 			return result;
 		} catch (FileNotFoundException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}

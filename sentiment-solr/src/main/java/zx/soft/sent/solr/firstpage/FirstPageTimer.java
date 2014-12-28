@@ -17,6 +17,7 @@ import zx.soft.negative.sentiment.core.NegativeClassify;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
 import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.sort.InsertSort;
 
 /**
@@ -48,7 +49,7 @@ public class FirstPageTimer {
 		try {
 			tasker.run();
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 

@@ -11,6 +11,7 @@ import zx.soft.redis.client.cache.CacheFactory;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
@@ -54,8 +55,8 @@ public class PersistCore {
 			try {
 				pool.execute(new PersistRunnable(cache, sentRecord, record));
 			} catch (RuntimeException e) {
-				logger.error("Persist error Record:{}", record);
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Persist Record:{}", record);
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
 		}
 

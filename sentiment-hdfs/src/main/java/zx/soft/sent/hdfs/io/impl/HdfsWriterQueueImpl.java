@@ -19,6 +19,8 @@ import org.apache.hadoop.io.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * HDFS写数据队列实现类
  * 
@@ -55,7 +57,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 			writer = SequenceFile.createWriter(fs, conf, path, Text.class, Text.class);
 			logger.info("Create HDFS writer, fileName: " + name);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 
@@ -71,11 +73,11 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 					}
 				} catch (InterruptedException e) {
 					logger.error("HDFS writer thread interrupted.");
-					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 					closeNow();
 				} catch (IOException e) {
 					logger.error("HDFS write error: " + Arrays.toString(kv), e);
-					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 					closeNow();
 				}
 			}
@@ -104,7 +106,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 			}
 			hdfsWriterThread.interrupt();
 		} catch (InterruptedException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			hdfsWriterThread.interrupt();
 		}
 	}
@@ -113,7 +115,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 		try {
 			writer.syncFs();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			isRunning = false;
 			throw new RuntimeException(e);
 		}
@@ -131,7 +133,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 		try {
 			queue.put(new String[] { key, value });
 		} catch (InterruptedException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			isRunning = false;
 			throw new RuntimeException(e);
 		}
@@ -144,7 +146,7 @@ public class HdfsWriterQueueImpl implements HdfsWriter {
 			writer.syncFs();
 			writer.close();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 

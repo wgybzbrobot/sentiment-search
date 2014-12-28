@@ -26,6 +26,7 @@ import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.dao.sql.CreateTables;
 import zx.soft.sent.solr.utils.ConvertToRecord;
 import zx.soft.utils.checksum.CheckSumUtils;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.threads.ApplyThreadPool;
 import zx.soft.utils.time.TimeUtils;
 
@@ -57,13 +58,11 @@ public class ImportSentDataToDB {
 
 		@Override
 		public void run() {
-
 			try {
 				sentimentRecord.insertRecord(recordInsert);
 			} catch (Exception e) {
-				logger.error("Exception: " + e);
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
-
 		}
 
 	}
@@ -150,7 +149,7 @@ public class ImportSentDataToDB {
 					}
 				}
 			} catch (SQLException e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				throw new RuntimeException(e);
 			}
 			logger.info("records' size=" + c);
@@ -195,7 +194,7 @@ public class ImportSentDataToDB {
 				return 0;
 			}
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -211,7 +210,7 @@ public class ImportSentDataToDB {
 				return 0;
 			}
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -227,7 +226,7 @@ public class ImportSentDataToDB {
 				return 0;
 			}
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -280,7 +279,7 @@ public class ImportSentDataToDB {
 					.setJCSJ(new Date(rs.getTimestamp("JCSJ").getTime())).setLY(rs.getInt("LY")).setLZ(rs.getInt("LZ"))
 					.setBZ(rs.getInt("BZ")).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -314,7 +313,7 @@ public class ImportSentDataToDB {
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime())).setLY(rs.getInt("LY")).setLZ(rs.getInt("LZ"))
 					.setBZ(rs.getInt("BZ")).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -344,7 +343,7 @@ public class ImportSentDataToDB {
 					.setBZ(rs.getInt("BZ")).setPLS(rs.getInt("PLS")).setZBS(rs.getInt("ZBS")).setYDS(rs.getInt("YDS"))
 					.build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -371,7 +370,7 @@ public class ImportSentDataToDB {
 					.setJCSJ(new Date(rs.getTimestamp("JCSJ").getTime()))
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime())).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -394,7 +393,7 @@ public class ImportSentDataToDB {
 					.setFBSJ(new Date(rs.getTimestamp("FBSJ").getTime())).setLY(rs.getInt("LY")).setLZ(rs.getInt("LZ"))
 					.setBZ(rs.getInt("BZ")).setJCSJ(new Date(rs.getTimestamp("JCSJ").getTime())).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -424,7 +423,7 @@ public class ImportSentDataToDB {
 					.setGJC(rs.getString("GJC") == null ? "" : rs.getString("GJC")).setLLL(rs.getInt("LLL"))
 					.setGTL(rs.getInt("GTL")).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -454,7 +453,7 @@ public class ImportSentDataToDB {
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime()))
 					.setIPDZ(rs.getString("IPDZ") == null ? "" : rs.getString("IPDZ")).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -481,7 +480,7 @@ public class ImportSentDataToDB {
 					.setGXSJ(new Date(rs.getTimestamp("GXSJ").getTime()))
 					.setIPDZ(rs.getString("IPDZ") == null ? "" : rs.getString("IPDZ")).build();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -492,7 +491,7 @@ public class ImportSentDataToDB {
 		try {
 			pool.awaitTermination(30, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 		logger.info("Importing data to CloudSolr finish!");

@@ -29,6 +29,7 @@ import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.err.SpiderSearchException;
 import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
 
 /**
@@ -82,10 +83,10 @@ public class SearchingData {
 			server.deleteByQuery(q);
 			server.commit();
 		} catch (SolrServerException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			e.printStackTrace();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			e.printStackTrace();
 		}
 	}
@@ -99,7 +100,7 @@ public class SearchingData {
 		try {
 			queryResponse = server.query(query, METHOD.GET);
 		} catch (SolrServerException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 		if (queryResponse == null) {

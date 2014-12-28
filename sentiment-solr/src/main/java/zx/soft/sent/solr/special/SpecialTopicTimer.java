@@ -20,6 +20,7 @@ import zx.soft.sent.solr.search.FacetSearch;
 import zx.soft.sent.solr.search.SearchingData;
 import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
 
 /**
@@ -51,7 +52,7 @@ public class SpecialTopicTimer {
 		try {
 			tasker.run();
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 
@@ -130,7 +131,7 @@ public class SpecialTopicTimer {
 				}
 				search.close();
 			} catch (Exception e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
 		}
 

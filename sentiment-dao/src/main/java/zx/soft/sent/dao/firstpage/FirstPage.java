@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.firstpage.FirstPageInfo;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * OA首页查询信息
@@ -24,7 +25,7 @@ public class FirstPage {
 		try {
 			sqlSessionFactory = MybatisConfig.getSqlSessionFactory(server);
 		} catch (RuntimeException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}

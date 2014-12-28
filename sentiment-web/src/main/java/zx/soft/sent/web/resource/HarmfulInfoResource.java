@@ -6,9 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.application.HarmfulInfoApplication;
-import zx.soft.sent.web.common.ErrorResponse;
+import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.utils.chars.JavaPattern;
 import zx.soft.utils.codec.URLCodecUtils;
+import zx.soft.utils.log.LogbackUtil;
 
 public class HarmfulInfoResource extends ServerResource {
 
@@ -37,7 +38,7 @@ public class HarmfulInfoResource extends ServerResource {
 		try {
 			return application.getTodayNegativeRecords(Integer.parseInt(num), URLCodecUtils.decoder(keywords, "UTF-8"));
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return new ErrorResponse.Builder(-1, "params error!").build();
 		}
 	}

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.dao.domain.platform.Record;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.utils.config.ConfigUtil;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 通过HTTP方式索引数据到单台机器上。
@@ -59,7 +60,7 @@ public class IndexCloudSolr {
 			cloudServer.add(docs);
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 
@@ -72,8 +73,8 @@ public class IndexCloudSolr {
 			}
 			return Boolean.TRUE;
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("Index error Record:{}", record);
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Index Record:{}", record);
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return Boolean.FALSE;
 		}
 	}
@@ -82,7 +83,7 @@ public class IndexCloudSolr {
 		try {
 			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 
@@ -164,13 +165,13 @@ public class IndexCloudSolr {
 			doc.addField("voice_url", record.getVoice_url().trim());
 		}
 		if (record.getTimestamp() != 0) {
-			doc.addField("timestamp", new Date(record.getTimestamp() * 1000 + 3600 * 8 * 1000));
+			doc.addField("timestamp", new Date(transTime(record.getTimestamp())));
 		}
 		if (record.getSource_id() != 0) {
 			doc.addField("source_id", record.getSource_id());
 		}
 		if (record.getLasttime() != 0) {
-			doc.addField("lasttime", new Date(record.getLasttime() * 1000 + 3600 * 8 * 1000));
+			doc.addField("lasttime", new Date(transTime(record.getLasttime())));
 		}
 		if (record.getServer_id() != 0) {
 			doc.addField("server_id", record.getServer_id());
@@ -185,10 +186,10 @@ public class IndexCloudSolr {
 			doc.addField("keyword", record.getKeyword().trim());
 		}
 		if (record.getFirst_time() != 0) {
-			doc.addField("first_time", new Date(record.getFirst_time() * 1000 + 3600 * 8 * 1000));
+			doc.addField("first_time", new Date(transTime(record.getFirst_time())));
 		}
 		if (record.getUpdate_time() != 0) {
-			doc.addField("update_time", new Date(record.getUpdate_time() * 1000 + 3600 * 8 * 1000));
+			doc.addField("update_time", new Date(transTime(record.getUpdate_time())));
 		}
 		if (record.getIp() != "") {
 			doc.addField("ip", record.getIp().trim());
@@ -226,6 +227,10 @@ public class IndexCloudSolr {
 		}
 
 		return doc;
+	}
+
+	private static long transTime(long time) {
+		return (time / 1000 + 3600 * 8) * 1000L;
 	}
 
 	private SolrInputDocument getSentimentDoc(Record record) {

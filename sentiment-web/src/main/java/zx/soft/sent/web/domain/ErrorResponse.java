@@ -1,4 +1,4 @@
-package zx.soft.sent.web.common;
+package zx.soft.sent.web.domain;
 
 /**
  * 错误相应类

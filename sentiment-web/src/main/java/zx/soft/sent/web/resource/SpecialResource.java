@@ -16,7 +16,7 @@ import zx.soft.sent.solr.special.PieChart;
 import zx.soft.sent.solr.special.SpecialInfo;
 import zx.soft.sent.solr.special.TrendChart;
 import zx.soft.sent.web.application.SpecialApplication;
-import zx.soft.sent.web.common.ErrorResponse;
+import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.json.JsonNodeUtils;
 

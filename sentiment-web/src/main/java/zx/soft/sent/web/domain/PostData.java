@@ -34,6 +34,7 @@ public class PostData {
 	}
 
 	public static void main(String[] args) {
+		//  2014-12-28 16:33:47    1419755627695
 		RecordInfo recordInfo = new RecordInfo();
 		recordInfo.setId("sentiment");
 		recordInfo.setPlatform(10);
@@ -59,15 +60,15 @@ public class PostData {
 		recordInfo.setVideo_url("http://www.video_url.com");
 		recordInfo.setPic_url("htpp://www.pic_url.com");
 		recordInfo.setVoice_url("http://www.voice_url.com");
-		recordInfo.setTimestamp(1416038921);
+		recordInfo.setTimestamp(1419755627695L);
 		recordInfo.setSource_id(70);
-		recordInfo.setLasttime(1416038921 + 86400);
+		recordInfo.setLasttime(1419755627695L + 86400_000L);
 		recordInfo.setServer_id(90);
 		recordInfo.setIdentify_id(100);
 		recordInfo.setIdentify_md5("abcdefg123456789");
 		recordInfo.setKeyword("关键词");
-		recordInfo.setFirst_time(1416038921 + 86400 * 2);
-		recordInfo.setUpdate_time(1416038921 + 86400 * 3);
+		recordInfo.setFirst_time(1419755627695L + 86400_000L * 2);
+		recordInfo.setUpdate_time(1419755627695L + 86400_000L * 3);
 		recordInfo.setIp("192.168.32.45");
 		recordInfo.setLocation("安徽省合肥市");
 		recordInfo.setGeo("经纬度信息");

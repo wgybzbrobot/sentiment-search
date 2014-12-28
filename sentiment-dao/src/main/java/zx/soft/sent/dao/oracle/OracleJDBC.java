@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.Config;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * Oracle数据库访问类
@@ -35,8 +36,8 @@ public class OracleJDBC {
 			conn = DriverManager.getConnection(db_url, db_username, db_password);
 			statement = conn.createStatement();
 		} catch (Exception e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
-			//			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
 		}
 	}
 

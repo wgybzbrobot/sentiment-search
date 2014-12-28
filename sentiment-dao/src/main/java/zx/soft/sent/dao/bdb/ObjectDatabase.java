@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.utils.file.FileUtils;
+import zx.soft.utils.log.LogbackUtil;
 
 import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
@@ -85,7 +86,7 @@ public class ObjectDatabase {
 				return Boolean.FALSE;
 			}
 		} catch (UnsupportedEncodingException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -112,7 +113,7 @@ public class ObjectDatabase {
 				throw new RuntimeException("Read data in '" + key + "' " + status);
 			}
 		} catch (UnsupportedEncodingException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -133,7 +134,7 @@ public class ObjectDatabase {
 				throw new RuntimeException("Update '" + value + "' in '" + key + "' " + status);
 			}
 		} catch (UnsupportedEncodingException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -151,7 +152,7 @@ public class ObjectDatabase {
 				return Boolean.FALSE;
 			}
 		} catch (UnsupportedEncodingException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}

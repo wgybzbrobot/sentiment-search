@@ -12,6 +12,8 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * 下载网页，并解析。
  * 该类中提供了三种资源提取方式，但不能提供全面灵活性和套接字连接池等开发爬虫需要的功能，因而建议使用HttpClient较好。
@@ -43,10 +45,10 @@ public class RetrivePage {
 			// 设置代理
 			//			url.openConnection(SocketProxy.getProxy());
 		} catch (MalformedURLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		} catch (@SuppressWarnings("hiding") IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 		// 创建网络流
@@ -59,7 +61,7 @@ public class RetrivePage {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -73,7 +75,7 @@ public class RetrivePage {
 		try {
 			url = new URL(path);
 		} catch (MalformedURLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 		// 指定编码格式UTF-8的Scanner
@@ -87,7 +89,7 @@ public class RetrivePage {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -104,7 +106,7 @@ public class RetrivePage {
 		try {
 			socket = new Socket(host, port);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 
@@ -125,13 +127,13 @@ public class RetrivePage {
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		} finally {
 			try {
 				socket.close();
 			} catch (IOException e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				throw new RuntimeException(e);
 			}
 		}

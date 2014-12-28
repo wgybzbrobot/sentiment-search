@@ -11,6 +11,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * Mybatis配置类
  * 
@@ -32,7 +34,7 @@ public class MybatisConfig {
 			try (InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");) {
 				sessionFactorys.put(server, new SqlSessionFactoryBuilder().build(inputStream, server.name()));
 			} catch (IOException e) {
-				logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				throw new RuntimeException(e);
 			}
 		}

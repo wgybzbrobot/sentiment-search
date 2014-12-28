@@ -12,6 +12,8 @@ import org.apache.hadoop.io.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.utils.log.LogbackUtil;
+
 /**
  * 简单的HDFS写数据实现类
  * 
@@ -50,7 +52,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 		try {
 			writer.close();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 	}
 
@@ -58,7 +60,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 		try {
 			writer.syncFs();
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -75,7 +77,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 			writer.append(this.key, this.value);
 		} catch (IOException e) {
 			logger.warn("write hdfs error. key={}, value={}", key, value, e);
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			close();
 			createNewWriter();
 		}
@@ -92,7 +94,7 @@ public class HdfsWriterSimpleImpl implements HdfsWriter {
 			logger.info("Create HDFS writer, fileName: " + fileName);
 			writer = SequenceFile.createWriter(fs, conf, path, Text.class, Text.class);
 		} catch (IOException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}

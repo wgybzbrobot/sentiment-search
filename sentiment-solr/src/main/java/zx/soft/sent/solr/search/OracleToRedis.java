@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.redis.client.cache.Cache;
 import zx.soft.redis.client.cache.CacheFactory;
 import zx.soft.sent.dao.oracle.OracleJDBC;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 将Oracle中的站点数据读取到Redis中
@@ -67,7 +68,7 @@ public class OracleToRedis {
 				cache.hset(SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
 			}
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} finally {
 			oracleJDBC.close();
 			cache.close();

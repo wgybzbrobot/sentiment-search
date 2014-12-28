@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.utils.config.ConfigUtil;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 舆情数据JDBC
@@ -62,7 +63,7 @@ public class SentDbcp {
 		try {
 			return dataSource.getConnection();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
 	}
@@ -74,7 +75,7 @@ public class SentDbcp {
 		try {
 			dataSource.close();
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			logger.info("Db close error.");
 		}
 	}
@@ -246,7 +247,7 @@ public class SentDbcp {
 		try (Connection conn = getConnection(); Statement pstmt = conn.createStatement();) {
 			pstmt.execute(sql);
 		} catch (SQLException e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException("SQLException: " + e);
 		}
 	}

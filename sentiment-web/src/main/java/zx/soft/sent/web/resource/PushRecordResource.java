@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.web.application.PushRecordApplication;
-import zx.soft.sent.web.common.ErrorResponse;
+import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.utils.codec.URLCodecUtils;
 
 /**

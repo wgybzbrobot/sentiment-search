@@ -8,9 +8,9 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
+import zx.soft.sent.solr.search.SearchingData;
 import zx.soft.sent.web.resource.SentGetResource;
 import zx.soft.sent.web.resource.SentSearchResource;
-import zx.soft.sent.web.sentiment.SearchingData;
 
 /**
  * 與请搜索应用类
@@ -37,7 +37,7 @@ public class SentiSearchApplication extends Application {
 	}
 
 	public QueryResult queryData(QueryParams queryParams) {
-		return searchingData.queryData(queryParams);
+		return searchingData.queryData(queryParams, Boolean.TRUE);
 	}
 
 	/**

@@ -10,10 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.application.SentiIndexApplication;
-import zx.soft.sent.web.common.ErrorResponse;
+import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.sent.web.domain.IndexErrResponse;
 import zx.soft.sent.web.domain.PostData;
 import zx.soft.utils.codec.URLCodecUtils;
+import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
@@ -80,7 +81,7 @@ public class SentIndexResource extends ServerResource {
 				return new IndexErrResponse(-1, unsuccessful);
 			}
 		} catch (Exception e) {
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return new ErrorResponse.Builder(-1, "persist error!").build();
 		}
 	}

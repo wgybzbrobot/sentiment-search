@@ -11,6 +11,7 @@ import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.dao.sql.CreateTables;
 import zx.soft.utils.checksum.CheckSumUtils;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 持久化线程类
@@ -33,7 +34,7 @@ public class PersistRunnable implements Runnable {
 	public PersistRunnable(final Cache cache, SentimentRecord sentRecord, RecordInfo record) {
 		if (record == null) {
 			logger.error("Record is null.");
-			throw new IllegalArgumentException("record is null");
+			//			throw new IllegalArgumentException("record is null");
 		}
 		this.cache = cache;
 		this.sentRecord = sentRecord;
@@ -49,25 +50,24 @@ public class PersistRunnable implements Runnable {
 			if (cache.sismember(SENT_KEY_INSERTED, record.getId())) {
 				// 更新的时候存在线程安全，但是问题不太大
 				try {
+					logger.info("Update Record:{}", record.getId());
 					sentRecord.updateRecord(tRecord);
 				} catch (Exception e) {
-					logger.error("Updating record=" + record.getId() + " occurs Exception=" + e);
-					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				}
 				// 记录不存在的情况下
 			} else {
 				// 下面两句顺序不可改变，否则会导致线程安全
 				cache.sadd(SENT_KEY_INSERTED, record.getId());
 				try {
+					logger.info("Insert Record:{}", record.getId());
 					sentRecord.insertRecord(tRecord);
 				} catch (Exception e) {
-					logger.error("Inserting record=" + record.getId() + " occurs Exception=" + e);
-					logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Error Record:{}", record);
-			logger.error("Exception:{}, StackTrace:{}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
 
 	}
