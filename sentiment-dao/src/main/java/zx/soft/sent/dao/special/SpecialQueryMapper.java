@@ -64,7 +64,7 @@ public interface SpecialQueryMapper {
 	/**
 	 * 更新专题查询结果的时间，在每次查询后更新时间
 	 */
-	@Update("UPDATE `oa_special_info` SET `lasttime` = UNIX_TIMESTAMP() WHERE `identify` = #{identify}")
+	@Update("UPDATE `oa_special_info` SET `lasttime` = NOW() WHERE `identify` = #{identify}")
 	public void updateSpecialResultLasttime(String identify);
 
 	/**

@@ -8,7 +8,6 @@ import zx.soft.sent.solr.index.ImportSinaDataToSC;
 import zx.soft.sent.solr.search.OracleToRedis;
 import zx.soft.sent.solr.special.SpecialTopicRun;
 import zx.soft.sent.solr.special.SpecialTopicTimer;
-import zx.soft.sent.solr.statistic.CompanyMain;
 import zx.soft.utils.driver.ProgramDriver;
 
 /**
@@ -30,7 +29,6 @@ public class SentSolrDriver {
 			pgd.addClass("importSentDataToSC", ImportSentDataToSC.class, "导入舆情数据到SolrCloud");
 			pgd.addClass("importSentDataToDB", ImportSentDataToDB.class, "导入舆情数据到DB");
 			pgd.addClass("importSinaDataToSC", ImportSinaDataToSC.class, "导入新浪数据到SolrCloud");
-			pgd.addClass("companyMain", CompanyMain.class, "微博数据统计");
 			pgd.addClass("oracleToRedis", OracleToRedis.class, "将站点数据定时导入Redis中（默认是每小时）");
 			pgd.addClass("specialTopicTimer", SpecialTopicTimer.class, "OA专题数据统计——定时分析");
 			pgd.addClass("specialTopicRun", SpecialTopicRun.class, "OA专题数据统计——临时分析");

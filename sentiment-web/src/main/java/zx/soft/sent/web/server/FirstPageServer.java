@@ -12,7 +12,7 @@ import zx.soft.utils.jackson.ReplaceConvert;
 /**
  * OA首页查询缓存服务
  * 
- * 示例：http://localhost:XXXX/firstpage/{type}/{datestr}
+ * 示例：http://localhost:5901/firstpage/{type}/{datestr}
  * 
  * @author wanggang
  *
