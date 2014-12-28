@@ -1,5 +1,7 @@
 package zx.soft.sent.dao.domain.sentiment;
 
+import java.util.Date;
+
 /**
  * 根据时间查询参数类
  * 
@@ -9,14 +11,14 @@ package zx.soft.sent.dao.domain.sentiment;
 public class SelectParamsByTime {
 
 	private String tablename;
-	private long low;
-	private long high;
+	private Date low;
+	private Date high;
 
 	public SelectParamsByTime() {
 		//
 	}
 
-	public SelectParamsByTime(String tablename, long low, long high) {
+	public SelectParamsByTime(String tablename, Date low, Date high) {
 		this.tablename = tablename;
 		this.low = low;
 		this.high = high;
@@ -30,19 +32,19 @@ public class SelectParamsByTime {
 		this.tablename = tablename;
 	}
 
-	public long getLow() {
+	public Date getLow() {
 		return low;
 	}
 
-	public void setLow(long low) {
+	public void setLow(Date low) {
 		this.low = low;
 	}
 
-	public long getHigh() {
+	public Date getHigh() {
 		return high;
 	}
 
-	public void setHigh(long high) {
+	public void setHigh(Date high) {
 		this.high = high;
 	}
 

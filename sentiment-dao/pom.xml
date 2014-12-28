@@ -13,6 +13,7 @@
 	<name>Sentiment Dao</name>
 
 	<dependencies>
+		<!-- Mybatis包 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -21,13 +22,17 @@
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
-		<!-- BerkeleyDB连接包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- BerkeleyDB包 -->
 		<dependency>
 			<groupId>com.sleepycat</groupId>
 			<artifactId>je</artifactId>
 			<version>5.0.73</version>
 		</dependency>
-		<!-- Oracle连接包 -->
+		<!-- Oracle包 -->
 		<dependency>
 			<groupId>oracle.jdbc</groupId>
 			<artifactId>ojdbc</artifactId>

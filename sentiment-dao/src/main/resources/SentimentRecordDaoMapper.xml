@@ -12,7 +12,7 @@
 		useGeneratedKeys="true" keyProperty="id" flushCache="true"
 		statementType="PREPARED">
 		INSERT INTO ${tablename} (`name`,`lasttime`) VALUES
-		(#{name},UNIX_TIMESTAMP());
+		(#{name},NOW());
 	</insert>
 
 	<!-- 插入Record数据 -->
@@ -82,7 +82,7 @@
 		statementType="PREPARED">
 		INSERT INTO ${tablename}
 		(`query_id`,`query_url`,`query_result`,`lasttime`) VALUES
-		(#{query_id},#{query_url},#{query_result},UNIX_TIMESTAMP());
+		(#{query_id},#{query_url},#{query_result},NOW());
 	</insert>
 
 	<!-- 查询查询缓存数据 -->
@@ -96,7 +96,7 @@
 	<select id="updateCacheQuery" parameterType="InsertCacheQuery">
 		UPDATE ${tablename}
 		SET
-		`query_result`=#{query_result},`lasttime`=UNIX_TIMESTAMP() WHERE
+		`query_result`=#{query_result},`lasttime`=NOW() WHERE
 		`query_id` = #{query_id};
 	</select>
 

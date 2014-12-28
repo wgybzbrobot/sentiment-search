@@ -89,7 +89,7 @@ public class SentJDBC {
 	 */
 	public void createTablenameTable(String tablename) {
 		String sql = "CREATE TABLE " + tablename + " (`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '序号',"
-				+ "`name` varchar(50) NOT NULL COMMENT '用户名',`lasttime` int(11) unsigned NOT NULL COMMENT '创建时间',"
+				+ "`name` varchar(50) NOT NULL COMMENT '用户名',`lasttime` datetime NOT NULL COMMENT '创建时间',"
 				+ "PRIMARY KEY (`id`)) " + "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='舆情数据表名数据表' AUTO_INCREMENT=1 ;";
 		execSQL(sql);
 	}
@@ -122,15 +122,15 @@ public class SentJDBC {
 				+ "`video_url` varchar(500) NOT NULL COMMENT '视频url',"
 				+ "`pic_url` varchar(500) NOT NULL COMMENT '图片url',"
 				+ "`voice_url` varchar(500) NOT NULL COMMENT '音频url',"
-				+ "`timestamp` int(11) unsigned NOT NULL COMMENT '该记录发布时间',"
+				+ "`timestamp` datetime NOT NULL COMMENT '该记录发布时间',"
 				+ "`source_id` mediumint(9) unsigned NOT NULL COMMENT '来源网站名',"
-				+ "`lasttime` int(11) unsigned NOT NULL COMMENT '最新监测时间',"
+				+ "`lasttime` datetime NOT NULL COMMENT '最新监测时间',"
 				+ "`server_id` mediumint(9) unsigned NOT NULL COMMENT '来自前置机编号',"
 				+ "`identify_id` int(11) unsigned NOT NULL COMMENT '标志id',"
 				+ "`identify_md5` varchar(50) NOT NULL COMMENT '标志md5',"
 				+ "`keyword` varchar(500) NOT NULL COMMENT '关键词',"
-				+ "`first_time` int(11) unsigned NOT NULL COMMENT '首次发现时间',"
-				+ "`update_time` int(11) unsigned NOT NULL COMMENT '最新更新时间',"
+				+ "`first_time` datetime NOT NULL COMMENT '首次发现时间',"
+				+ "`update_time` datetime NOT NULL COMMENT '最新更新时间',"
 				+ "`ip` varchar(20) NOT NULL COMMENT '该记录发布的ip地址',"
 				+ "`location` varchar(100) NOT NULL COMMENT '该记录发布的区域地址',"
 				+ "`geo` varchar(500) NOT NULL COMMENT '该记录发布的地理位置信息',"
@@ -152,13 +152,12 @@ public class SentJDBC {
 	 * 创建缓存数据表
 	 */
 	public void createQueryCacheTable(String tablename) {
-		String sql = "CREATE TABLE  " + tablename + " ("
-				+ "`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT  '自增id',"
-				+ "`query_id` CHAR (50) NOT NULL COMMENT  '查询ID',"
-				+ "`query_url` VARCHAR( 1000 ) NOT NULL COMMENT  '查询URL',"
-				+ "`query_result` MEDIUMTEXT NOT NULL COMMENT  '查询结果',"
-				+ "`lasttime` INT UNSIGNED NOT NULL COMMENT  '记录时间',"
-				+ "UNIQUE (`query_id`)) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  '查询缓存'";
+		String sql = "CREATE TABLE IF NOT EXISTS " + tablename + " ("
+				+ "`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',"
+				+ "`query_id` char(50) NOT NULL COMMENT '查询ID',`query_url` varchar(1000) NOT NULL COMMENT '查询URL',"
+				+ "`query_result` mediumtext NOT NULL COMMENT '查询结果',`lasttime` datetime NOT NULL COMMENT '记录时间',"
+				+ "PRIMARY KEY (`id`),UNIQUE KEY `query_id` (`query_id`)) "
+				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='查询缓存' AUTO_INCREMENT=1 ;";
 		execSQL(sql);
 	}
 
@@ -183,10 +182,8 @@ public class SentJDBC {
 				+ "`contact` char(100) NOT NULL COMMENT '站点联系方式',`admin` char(50) NOT NULL COMMENT '站点负责人',"
 				+ "`root` int(10) unsigned NOT NULL COMMENT '父节点',"
 				+ "`params` varchar(500) NOT NULL COMMENT '参数名键值对列表',"
-				+ "`uid` int(10) unsigned NOT NULL COMMENT '创建人ID',"
-				+ "`timestamp` int(10) unsigned NOT NULL COMMENT '创建时间',"
-				+ "`identify` int(10) unsigned NOT NULL COMMENT '标识',"
-				+ "`lasttime` int(10) unsigned NOT NULL COMMENT '记录时间',"
+				+ "`uid` int(10) unsigned NOT NULL COMMENT '创建人ID',`timestamp` datetime NOT NULL COMMENT '创建时间',"
+				+ "`identify` int(10) unsigned NOT NULL COMMENT '标识',`lasttime` datetime NOT NULL COMMENT '记录时间',"
 				+ "PRIMARY KEY (`id`),UNIQUE KEY `source_id` (`source_id`), KEY `source_name` (`source_name`)) "
 				+ "ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='與请站点数据表' AUTO_INCREMENT=1 ;";
 		execSQL(sql);

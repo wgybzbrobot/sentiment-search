@@ -1,5 +1,6 @@
 package zx.soft.sent.dao.sentiment;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -82,7 +83,7 @@ public class SentimentRecord {
 	/**
 	 * 获取Records数据，根据lasttime
 	 */
-	public List<RecordSelect> selectRecordsByLasttime(String tablename, long low, long high) {
+	public List<RecordSelect> selectRecordsByLasttime(String tablename, Date low, Date high) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			SentimentRecordDao sentimentRecordDao = sqlSession.getMapper(SentimentRecordDao.class);
 			return sentimentRecordDao.selectRecordsByLasttime(new SelectParamsByTime(tablename, low, high));

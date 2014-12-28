@@ -1,5 +1,7 @@
 package zx.soft.sent.dao.domain.sentiment;
 
+import java.util.Date;
+
 /**
  * 记录查询类
  * 
@@ -32,15 +34,15 @@ public class RecordSelect {
 	private String video_url; // 视频url
 	private String pic_url; // 图片url
 	private String voice_url; // 音频url
-	private long timestamp; // 该记录发布时间
+	private Date timestamp; // 该记录发布时间
 	private int source_id; // 来源网站名
-	private long lasttime; // 最新监测时间
+	private Date lasttime; // 最新监测时间
 	private int server_id; // 来自前置机编号
 	private long identify_id; // 标志id
 	private String identify_md5; // 标志md5
 	private String keyword; // 关键词
-	private long first_time; // 首次发现时间
-	private long update_time; // 最新更新时间
+	private Date first_time; // 首次发现时间
+	private Date update_time; // 最新更新时间
 	private String ip; // 该记录发布的ip地址
 	private String location; // 该记录发布的区域地址
 	private String geo; // 该记录发布的地理位置信息
@@ -248,11 +250,11 @@ public class RecordSelect {
 		this.voice_url = voice_url;
 	}
 
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -264,11 +266,11 @@ public class RecordSelect {
 		this.source_id = source_id;
 	}
 
-	public long getLasttime() {
+	public Date getLasttime() {
 		return lasttime;
 	}
 
-	public void setLasttime(long lasttime) {
+	public void setLasttime(Date lasttime) {
 		this.lasttime = lasttime;
 	}
 
@@ -304,19 +306,19 @@ public class RecordSelect {
 		this.keyword = keyword;
 	}
 
-	public long getFirst_time() {
+	public Date getFirst_time() {
 		return first_time;
 	}
 
-	public void setFirst_time(long first_time) {
+	public void setFirst_time(Date first_time) {
 		this.first_time = first_time;
 	}
 
-	public long getUpdate_time() {
+	public Date getUpdate_time() {
 		return update_time;
 	}
 
-	public void setUpdate_time(long update_time) {
+	public void setUpdate_time(Date update_time) {
 		this.update_time = update_time;
 	}
 

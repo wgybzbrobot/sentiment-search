@@ -1,5 +1,7 @@
 package zx.soft.sent.core.persist;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,12 +84,12 @@ public class PersistRunnable implements Runnable {
 				.setFavorite_count(record.getFavorite_count()).setAttitude_count(record.getAttitude_count())
 				.setRepost_count(record.getRepost_count()).setVideo_url(record.getVideo_url())
 				.setPic_url(record.getPic_url()).setVoice_url(record.getVoice_url())
-				.setTimestamp(record.getTimestamp()).setSource_id(record.getSource_id())
-				.setLasttime(record.getLasttime()).setServer_id(record.getServer_id())
+				.setTimestamp(new Date(record.getTimestamp())).setSource_id(record.getSource_id())
+				.setLasttime(new Date(record.getLasttime())).setServer_id(record.getServer_id())
 				.setIdentify_id(record.getIdentify_id()).setIdentify_md5(record.getIdentify_md5())
-				.setKeyword(record.getKeyword()).setFirst_time(record.getFirst_time())
-				.setUpdate_time(record.getUpdate_time()).setIp(record.getIp()).setLocation(record.getLocation())
-				.setGeo(record.getGeo()).setReceive_addr(record.getReceive_addr())
+				.setKeyword(record.getKeyword()).setFirst_time(new Date(record.getFirst_time()))
+				.setUpdate_time(new Date(record.getUpdate_time())).setIp(record.getIp())
+				.setLocation(record.getLocation()).setGeo(record.getGeo()).setReceive_addr(record.getReceive_addr())
 				.setAppend_addr(record.getAppend_addr()).setSend_addr(record.getSend_addr())
 				.setSource_name(record.getSource_name()).setSource_type(record.getSource_type())
 				.setCountry_code(record.getCountry_code()).setLocation_code(record.getLocation_code())
