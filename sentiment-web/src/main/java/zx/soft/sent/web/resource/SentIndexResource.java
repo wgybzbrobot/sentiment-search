@@ -18,7 +18,7 @@ import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
- * 與请索引资源类
+ * 舆情索引资源类
  * 
  * @author wanggang
  *

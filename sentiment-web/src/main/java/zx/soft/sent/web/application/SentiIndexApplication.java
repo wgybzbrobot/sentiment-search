@@ -18,7 +18,7 @@ import zx.soft.sent.solr.index.IndexCloudSolr;
 import zx.soft.sent.web.resource.SentIndexResource;
 
 /**
- * 與请索引应用类
+ * 舆情索引应用类
  * 
  * @author wanggang
  *

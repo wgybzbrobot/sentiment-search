@@ -16,7 +16,7 @@ import zx.soft.sent.web.domain.ErrorResponse;
 import zx.soft.utils.codec.URLCodecUtils;
 
 /**
- * 與请搜索资源类
+ * 舆情搜索资源类
  * 
  * @author wanggang
  *

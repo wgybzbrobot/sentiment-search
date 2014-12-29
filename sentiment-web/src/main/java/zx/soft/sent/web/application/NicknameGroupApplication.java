@@ -16,7 +16,7 @@ import zx.soft.sent.web.resource.NicknameGroupResource;
 import zx.soft.utils.sort.InsertSort;
 
 /**
- * 與请搜索应用类
+ * 舆情搜索应用类
  * 
  * @author wanggang
  *

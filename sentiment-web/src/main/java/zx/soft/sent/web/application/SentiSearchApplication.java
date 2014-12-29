@@ -13,7 +13,7 @@ import zx.soft.sent.web.resource.SentGetResource;
 import zx.soft.sent.web.resource.SentSearchResource;
 
 /**
- * 與请搜索应用类
+ * 舆情搜索应用类
  * 
  * @author wanggang
  *

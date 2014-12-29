@@ -14,7 +14,7 @@ import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.http.HttpUtils;
 
 /**
- * 與请数据获取资源类
+ * 舆情数据获取资源类
  * 
  * @author wanggang
  *
