@@ -224,7 +224,10 @@ public class SearchingData {
 						}
 					} else {
 						if (isPlatformTrans) {
-							t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+							// 目前我们的平台类型共有10个，如果超过10则不处理
+							if (Integer.parseInt(temp.getName()) < 10) {
+								t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+							}
 						} else {
 							t.put(temp.getName(), temp.getCount());
 						}
