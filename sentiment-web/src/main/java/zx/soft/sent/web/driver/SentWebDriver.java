@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.server.FirstPageServer;
 import zx.soft.sent.web.server.HarmfulInfoServer;
+import zx.soft.sent.web.server.NicknameGroupServer;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
 import zx.soft.sent.web.server.SiteServer;
@@ -29,6 +30,7 @@ public class SentWebDriver {
 			System.err.println("Usage: Input <class-name>, eg: \n" + //
 					"`sentimentIndexServer` 索引接口服务\n" + //
 					"`sentimentSearchServer` 搜索接口服务\n" + //
+					"`NicknameGroupServer` 根据nickname统计查询" + //
 					"`siteServer` 站点数据存储到Redis服务\n" + //
 					"`specialServer` OA专题信息CRUD服务\n" + //
 					"`firstPageServer` OA首页信息缓存服务\n" + //
@@ -46,6 +48,10 @@ public class SentWebDriver {
 		case "sentimentSearchServer":
 			logger.info("搜索接口服务");
 			SentimentSearchServer.main(leftArgs);
+			break;
+		case "nicknameGroupServer":
+			logger.info("根据nickname统计查询");
+			NicknameGroupServer.main(leftArgs);
 			break;
 		case "siteServer":
 			logger.info("站点数据存储到Redis服务");
@@ -85,5 +91,4 @@ public class SentWebDriver {
 		//		System.exit(exitCode);
 
 	}
-
 }
