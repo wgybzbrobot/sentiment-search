@@ -28,7 +28,6 @@ import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.err.SpiderSearchException;
 import zx.soft.utils.config.ConfigUtil;
-import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
 
@@ -59,10 +58,10 @@ public class SearchingData {
 	 */
 	public static void main(String[] args) {
 		SearchingData search = new SearchingData();
-		QueryParams queryParams = new QueryParams();
+		//		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("香港占中");
-		queryParams.setFq("timestamp:[2014-11-27T00:00:00Z TO 2014-11-27T23:59:59Z]"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
+		//		queryParams.setQ("香港占中");
+		//		queryParams.setFq("timestamp:[2014-11-27T00:00:00Z TO 2014-11-27T23:59:59Z]"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		//		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		//		queryParams.setStart(0);
 		//		queryParams.setRows(10);
@@ -71,10 +70,10 @@ public class SearchingData {
 		//		queryParams.setHlfl("title,content");
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		queryParams.setFacetField("nickname");
-		QueryResult result = search.queryData(queryParams, true);
-		System.out.println(JsonUtils.toJson(result));
-		//		search.deleteQuery("id:7DF7AED7837DFC15B08BE5CA77B16ED8");
+		//		queryParams.setFacetField("nickname");
+		//		QueryResult result = search.queryData(queryParams, true);
+		//		System.out.println(JsonUtils.toJson(result));
+		search.deleteQuery("timestamp:[2000-11-27T00:00:00Z TO 2014-09-30T23:59:59Z]");
 		search.close();
 	}
 
@@ -365,7 +364,7 @@ public class SearchingData {
 			result = result + fqs.substring(0, index) + ":" + str + " OR ";
 		}
 		result = result.substring(0, result.length() - 4);
-		if (fqs.contains("-")) {
+		if (fqs.charAt(0) == '-' || fqs.contains(";-")) {
 			result = result.replace("OR", "AND");
 		}
 		return result;
