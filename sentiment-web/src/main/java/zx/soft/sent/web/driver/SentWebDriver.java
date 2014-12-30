@@ -30,7 +30,7 @@ public class SentWebDriver {
 			System.err.println("Usage: Input <class-name>, eg: \n" + //
 					"`sentimentIndexServer` 索引接口服务\n" + //
 					"`sentimentSearchServer` 搜索接口服务\n" + //
-					"`NicknameGroupServer` 根据nickname统计查询" + //
+					"`nicknameGroupServer` 根据nickname统计查询" + //
 					"`siteServer` 站点数据存储到Redis服务\n" + //
 					"`specialServer` OA专题信息CRUD服务\n" + //
 					"`firstPageServer` OA首页信息缓存服务\n" + //

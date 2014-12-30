@@ -36,7 +36,7 @@ public class NicknameGroupApplication extends Application {
 		return router;
 	}
 
-	public LinkedHashMap<String, Integer> queryData(QueryParams queryParams) {
+	public HashMap<String, Integer> queryData(QueryParams queryParams) {
 		queryParams.setRows(10_000);
 		queryParams.setFl("nickname");
 		QueryResult queryResult = searchingData.queryData(queryParams, true);
@@ -52,16 +52,19 @@ public class NicknameGroupApplication extends Application {
 				map.put(tmp.getFieldValue("nickname").toString(), 1 + map.get(tmp.getFieldValue("nickname")));
 			}
 		}
-		String[] table = new String[50];
+		String[] table = new String[10];
 		for (int i = 0; i < table.length; i++) {
 			table[i] = "0=0";
 		}
 		for (Entry<String, Integer> tmp : map.entrySet()) {
 			table = InsertSort.toptable(table, tmp.getKey() + "=" + tmp.getValue());
 		}
-		LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
+		HashMap<String, Integer> result = new LinkedHashMap<>();
 		String[] t = null;
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < table.length; i++) {
+			if ("0=0".equalsIgnoreCase(table[i])) {
+				break;
+			}
 			t = table[i].split("=");
 			result.put(t[0], Integer.parseInt(t[1]));
 		}
