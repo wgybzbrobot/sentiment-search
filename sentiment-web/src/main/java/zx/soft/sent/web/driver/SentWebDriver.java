@@ -10,6 +10,7 @@ import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
 import zx.soft.sent.web.server.SiteServer;
 import zx.soft.sent.web.server.SpecialServer;
+import zx.soft.sent.web.server.SpecialSpeedServer;
 
 /**
  * 驱动类
@@ -30,9 +31,10 @@ public class SentWebDriver {
 			System.err.println("Usage: Input <class-name>, eg: \n" + //
 					"`sentimentIndexServer` 索引接口服务\n" + //
 					"`sentimentSearchServer` 搜索接口服务\n" + //
-					"`nicknameGroupServer` 根据nickname统计查询" + //
+					"`nicknameGroupServer` 根据nickname统计查询\n" + //
 					"`siteServer` 站点数据存储到Redis服务\n" + //
 					"`specialServer` OA专题信息CRUD服务\n" + //
+					"`specialSpeedServer` OA专题信息CRUD服务Speed\n" + //
 					"`firstPageServer` OA首页信息缓存服务\n" + //
 					"`harmfulInfoServer` OA有害信息缓存服务");
 			System.exit(-1);
@@ -60,6 +62,10 @@ public class SentWebDriver {
 		case "specialServer":
 			logger.info("OA专题信息CRUD服务");
 			SpecialServer.main(leftArgs);
+			break;
+		case "specialSpeedServer":
+			logger.info("OA专题信息CRUD服务Speed");
+			SpecialSpeedServer.main(leftArgs);
 			break;
 		case "firstPageServer":
 			logger.info("OA首页信息缓存服务");
