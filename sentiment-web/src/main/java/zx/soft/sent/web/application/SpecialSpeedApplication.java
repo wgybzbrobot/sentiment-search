@@ -8,6 +8,8 @@ import org.codehaus.jackson.JsonNode;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.special.SpecialQuery;
@@ -16,6 +18,7 @@ import zx.soft.sent.solr.special.SpecialInfo;
 import zx.soft.sent.solr.special.TrendChart;
 import zx.soft.sent.web.resource.SpecialSpeedResource;
 import zx.soft.utils.json.JsonNodeUtils;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 专题模块应用类
@@ -24,6 +27,8 @@ import zx.soft.utils.json.JsonNodeUtils;
  *
  */
 public class SpecialSpeedApplication extends Application {
+
+	private static Logger logger = LoggerFactory.getLogger(SpecialSpeedApplication.class);
 
 	private final SpecialQuery specialQuery;
 
@@ -46,10 +51,14 @@ public class SpecialSpeedApplication extends Application {
 		List<SpecialResult> result = new ArrayList<>();
 		for (String identify : identifys.split(",")) {
 			SpecialResult specialResult = new SpecialResult();
-			specialResult.setPieChart(strToPieChart(specialQuery.selectSpecialResult(identify, "pie")));
-			specialResult.setTrendChart(strToTrendChart(specialQuery.selectSpecialResult(identify, "trend")));
-			result.add(specialResult);
-			specialQuery.updateSpecialResultLasttime(identify);
+			try {
+				specialResult.setPieChart(strToPieChart(specialQuery.selectSpecialResult(identify, "pie")));
+				specialResult.setTrendChart(strToTrendChart(specialQuery.selectSpecialResult(identify, "trend")));
+				result.add(specialResult);
+				specialQuery.updateSpecialResultLasttime(identify);
+			} catch (Exception e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			}
 		}
 		return result;
 	}
