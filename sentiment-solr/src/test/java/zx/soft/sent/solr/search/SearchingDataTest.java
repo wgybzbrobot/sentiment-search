@@ -31,4 +31,5 @@ public class SearchingDataTest {
 		assertEquals(fqs, "timestamp:[2014-4-22T13:39:26Z TO 2014-4-29T13:39:26Z]");
 
 	}
+
 }
