@@ -37,13 +37,13 @@ public class SentiIndexApplication extends Application {
 		indexCloudSolr = new IndexCloudSolr();
 		persistCore = new PersistCore();
 		/**
-		 * 每分钟定时提交更新
+		 * 原来每分钟定时提交更新，由于数据量很大改为10秒
 		 */
 		commitThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				Timer timer = new Timer();
-				timer.schedule(new TimerCommit(), 0, 60 * 1000);
+				timer.schedule(new TimerCommit(), 0, 10 * 1000);
 			}
 		});
 		commitThread.start();
