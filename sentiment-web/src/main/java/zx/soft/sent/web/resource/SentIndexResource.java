@@ -1,6 +1,5 @@
 package zx.soft.sent.web.resource;
 
-import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.restlet.resource.Get;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.application.SentiIndexApplication;
 import zx.soft.sent.web.domain.ErrorResponse;
-import zx.soft.sent.web.domain.IndexErrResponse;
 import zx.soft.sent.web.domain.PostData;
 import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.log.LogbackUtil;
@@ -61,25 +59,28 @@ public class SentIndexResource extends ServerResource {
 		logger.info("Records' Size:{}", data.getRecords().size());
 
 		try {
-			// 添加到Solr
-			List<String> unsuccessful = application.addDatas(data.getRecords());
-			// 添加到Mysql，注：将这句代码另外开一个线程后台执行，以免影响客户端响应时间
+			// 添加到Mysql并Add索引
+			// 注：将这句代码另外开一个线程后台执行，以免影响客户端响应时间
 			pool.execute(new Thread(new Runnable() {
 				@Override
 				public void run() {
 					// 这里面以及包含了错误日志记录
 					application.persist(data.getRecords());
+					// Add索引
+					application.addDatasWithoutCommit(data.getRecords());
 				}
 			}));
-			//		System.out.println(JsonUtils.toJson(data));
-			if (unsuccessful.size() == 0) {
-				return new ErrorResponse.Builder(0, "ok").build();
-			} else {
-				for (String id : unsuccessful) {
-					logger.info("Indexing error data's ID:{}", id);
-				}
-				return new IndexErrResponse(-1, unsuccessful);
-			}
+			// 添加到Solr，这样会导致IOException，由于IO瓶颈导致。
+			//			List<String> unsuccessful = application.addDatas(data.getRecords());
+			//			if (unsuccessful.size() == 0) {
+			//				return new ErrorResponse.Builder(0, "ok").build();
+			//			} else {
+			//				for (String id : unsuccessful) {
+			//					logger.info("Indexing error data's ID:{}", id);
+			//				}
+			//				return new IndexErrResponse(-1, unsuccessful);
+			//			}
+			return new ErrorResponse.Builder(0, "ok").build();
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return new ErrorResponse.Builder(-1, "persist error!").build();

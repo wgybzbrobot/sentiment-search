@@ -43,14 +43,17 @@ public class SearchingData {
 
 	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类", "图片类" };
 
-	final CloudSolrServer server;
+	final CloudSolrServer cloudServer;
 	final Cache cache;
 
 	public SearchingData() {
 		cache = CacheFactory.getInstance();
 		Properties props = ConfigUtil.getProps("solr_params.properties");
-		server = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
-		server.setDefaultCollection(props.getProperty("collection"));
+		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
+		cloudServer.setDefaultCollection(props.getProperty("collection"));
+		cloudServer.setZkConnectTimeout(Integer.parseInt(props.getProperty("zookeeper_connect_timeout")));
+		cloudServer.setZkClientTimeout(Integer.parseInt(props.getProperty("zookeeper_client_timeout")));
+		cloudServer.connect();
 	}
 
 	/**
@@ -79,8 +82,8 @@ public class SearchingData {
 
 	public void deleteQuery(String q) {
 		try {
-			server.deleteByQuery(q);
-			server.commit();
+			cloudServer.deleteByQuery(q);
+			cloudServer.commit();
 		} catch (SolrServerException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			e.printStackTrace();
@@ -97,7 +100,9 @@ public class SearchingData {
 		SolrQuery query = getSolrQuery(queryParams);
 		QueryResponse queryResponse = null;
 		try {
-			queryResponse = server.query(query, METHOD.GET);
+			queryResponse = cloudServer.query(query, METHOD.POST);
+			// GET方式的时候所有查询条件都是拼装到url上边的，url过长当然没有响应，必然中断talking了
+			//			queryResponse = server.query(query, METHOD.GET);
 		} catch (SolrServerException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
@@ -381,7 +386,7 @@ public class SearchingData {
 	 * 关闭资源
 	 */
 	public void close() {
-		server.shutdown();
+		cloudServer.shutdown();
 		cache.close();
 	}
 

@@ -42,6 +42,7 @@ public class IndexCloudSolr {
 		cloudServer.setParallelUpdates(true);
 		cloudServer.setZkConnectTimeout(Integer.parseInt(props.getProperty("zookeeper_connect_timeout")));
 		cloudServer.setZkClientTimeout(Integer.parseInt(props.getProperty("zookeeper_client_timeout")));
+		cloudServer.connect();
 	}
 
 	/**
@@ -59,6 +60,22 @@ public class IndexCloudSolr {
 		try {
 			cloudServer.add(docs);
 			cloudServer.commit();
+		} catch (RemoteSolrException | SolrServerException | IOException e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+		}
+	}
+
+	public void addDocsToSolr(List<RecordInfo> records) {
+		if (records.size() == 0) {
+			return;
+		}
+		Collection<SolrInputDocument> docs = new ArrayList<>();
+		for (RecordInfo record : records) {
+			docs.add(getSentimentDoc(record));
+		}
+		try {
+			cloudServer.add(docs);
+			//			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}

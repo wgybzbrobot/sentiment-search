@@ -81,10 +81,10 @@ public class PostData {
 		recordInfo.setLocation_code(123);
 		recordInfo.setProvince_code(124);
 		recordInfo.setCity_code(125);
-		PostData data = new PostData();
-		data.setNum(1);
 		List<RecordInfo> records = new ArrayList<>();
 		records.add(recordInfo);
+		PostData data = new PostData();
+		data.setNum(1);
 		data.setRecords(records);
 		System.out.println(JsonUtils.toJsonWithoutPretty(data));
 	}

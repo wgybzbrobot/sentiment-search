@@ -37,7 +37,7 @@ public class SentiIndexApplication extends Application {
 		indexCloudSolr = new IndexCloudSolr();
 		persistCore = new PersistCore();
 		/**
-		 * 原来每分钟定时提交更新，由于数据量很大改为10秒
+		 * 原来每分钟定时提交更新，由于数据量很大改为1秒
 		 */
 		commitThread = new Thread(new Runnable() {
 			@Override
@@ -58,9 +58,10 @@ public class SentiIndexApplication extends Application {
 	}
 
 	/**
-	 * 添加索引数据
+	 * 添加索引数据，这样对于每条数据都进行Add操作，会导致IO瓶颈
 	 * @return 未索引成功的ID列表
 	 */
+	@Deprecated
 	public List<String> addDatas(List<RecordInfo> records) {
 		List<String> result = new ArrayList<>();
 		for (RecordInfo record : records) {
@@ -69,6 +70,13 @@ public class SentiIndexApplication extends Application {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 添加索引数据，调一次接口索引Add一次，这样减少IO
+	 */
+	public void addDatasWithoutCommit(List<RecordInfo> records) {
+		indexCloudSolr.addDocsToSolr(records);
 	}
 
 	/**
