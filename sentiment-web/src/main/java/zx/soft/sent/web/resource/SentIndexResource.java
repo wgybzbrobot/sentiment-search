@@ -66,8 +66,8 @@ public class SentIndexResource extends ServerResource {
 				public void run() {
 					// 这里面以及包含了错误日志记录
 					application.persist(data.getRecords());
-					// Add索引
-					application.addDatasWithoutCommit(data.getRecords());
+					// 持久化到Redis
+					application.addToRedis(data.getRecords());
 				}
 			}));
 			// 添加到Solr，这样会导致IOException，由于IO瓶颈导致。

@@ -75,7 +75,7 @@ public class IndexCloudSolr {
 		}
 		try {
 			cloudServer.add(docs);
-			//			cloudServer.commit();
+			cloudServer.commit();
 		} catch (RemoteSolrException | SolrServerException | IOException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}

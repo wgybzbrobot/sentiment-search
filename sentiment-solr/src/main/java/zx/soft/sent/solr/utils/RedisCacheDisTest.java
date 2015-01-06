@@ -1,90 +1,61 @@
-package zx.soft.sent.web.common;
+package zx.soft.sent.solr.utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.ThreadPoolExecutor;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import redis.clients.jedis.Jedis;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.json.JsonUtils;
-import zx.soft.utils.log.LogbackUtil;
+import zx.soft.utils.threads.ApplyThreadPool;
 
-public class RedisCache {
+public class RedisCacheDisTest {
 
-	private static Logger logger = LoggerFactory.getLogger(RedisCache.class);
+	private static final Random RANDOM = new Random();
 
-	private final Jedis jedis;
+	public static void main(String[] args) {
 
-	private static final String CACHE_SENTIMENT_KEY = "cache-records";
+		final ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector(8);
 
-	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				pool.shutdown();
+			}
+		}));
 
-	public RedisCache() {
-		Properties props = ConfigUtil.getProps("cache-sentiment.properties");
-		jedis = new Jedis(props.getProperty("redis.servers"), Integer.parseInt(props.getProperty("redis.port")));
-		jedis.auth(props.getProperty("redis.password"));
-	}
+		final RedisCache redisCache = new RedisCache();
+		System.err.println("初始化完成......");
 
-	/**
-	 * 添加数据
-	 */
-	public void addRecord(String... members) {
-		jedis.sadd(CACHE_SENTIMENT_KEY, members);
-	}
-
-	/**
-	 * 获取集合大小
-	 */
-	public long getSetSize() {
-		return jedis.scard(CACHE_SENTIMENT_KEY).longValue();
-	}
-
-	/**
-	 * 获取数据
-	 */
-	public List<String> getRecords() {
-		List<String> records = new ArrayList<>();
-		String value = jedis.spop(CACHE_SENTIMENT_KEY);
-		while (value != null) {
-			records.add(value);
-			value = jedis.spop(CACHE_SENTIMENT_KEY);
-		}
-		logger.info("Records'size = {}", records.size());
-		return records;
-	}
-
-	/**
-	 * 将数据从String映射到Object
-	 */
-	public List<RecordInfo> mapper(List<String> records) {
-		List<RecordInfo> recordInfos = new ArrayList<>();
-		for (String record : records) {
-			try {
-				recordInfos.add(OBJECT_MAPPER.readValue(record, RecordInfo.class));
-			} catch (IOException e) {
-				logger.error("Record:{}", record);
-				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+		for (int i = 0; i < 100; i++) {
+			System.out.println("Add at : " + i);
+			pool.execute(new Thread(new Runnable() {
+				@Override
+				public void run() {
+					List<String> records = getRecords();
+					redisCache.addRecord(records.toArray(new String[records.size()]));
+				}
+			}));
+			if (i % 10 == 0) {
+				System.err.println(redisCache.getSetSize());
+				List<String> records = redisCache.getRecords();
+				System.out.println(JsonUtils.toJson(redisCache.mapper(records)));
 			}
 		}
-		return recordInfos;
+
+		try {
+			Thread.sleep(3_000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		pool.shutdown();
+
 	}
 
-	public void close() {
-		jedis.close();
-	}
-
-	/**
-	 * 测试函数
-	 */
-	public static void main(String[] args) {
+	public static List<String> getRecords() {
+		int i = RANDOM.nextInt(10000);
 		RecordInfo recordInfo1 = new RecordInfo();
-		recordInfo1.setId("sentiment-1");
+		recordInfo1.setId("sentiment" + i);
 		recordInfo1.setPlatform(10);
 		recordInfo1.setMid("123456789987654321");
 		recordInfo1.setUsername("zxsoft");
@@ -130,7 +101,7 @@ public class RedisCache {
 		recordInfo1.setProvince_code(124);
 		recordInfo1.setCity_code(125);
 		RecordInfo recordInfo2 = new RecordInfo();
-		recordInfo2.setId("sentiment-2");
+		recordInfo2.setId("sentiment" + (i + 1));
 		recordInfo2.setPlatform(10);
 		recordInfo2.setMid("123456789987654321");
 		recordInfo2.setUsername("zxsoft");
@@ -175,13 +146,10 @@ public class RedisCache {
 		recordInfo2.setLocation_code(123);
 		recordInfo2.setProvince_code(124);
 		recordInfo2.setCity_code(125);
-		RedisCache redisCache = new RedisCache();
-		redisCache.addRecord(JsonUtils.toJsonWithoutPretty(recordInfo1), JsonUtils.toJsonWithoutPretty(recordInfo2));
-		System.out.println(redisCache.getSetSize());
-		List<String> records = redisCache.getRecords();
-		System.out.println(JsonUtils.toJson(redisCache.mapper(records)));
-		System.out.println(redisCache.getSetSize());
-		redisCache.close();
+		List<String> recordInfos = new ArrayList<>();
+		recordInfos.add(JsonUtils.toJsonWithoutPretty(recordInfo1));
+		recordInfos.add(JsonUtils.toJsonWithoutPretty(recordInfo2));
+		return recordInfos;
 	}
 
 }

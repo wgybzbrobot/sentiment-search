@@ -1,21 +1,16 @@
 package zx.soft.sent.web.application;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.core.persist.PersistCore;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.solr.index.IndexCloudSolr;
+import zx.soft.sent.solr.utils.RedisCache;
 import zx.soft.sent.web.resource.SentIndexResource;
+import zx.soft.utils.json.JsonUtils;
 
 /**
  * 舆情索引应用类
@@ -25,29 +20,32 @@ import zx.soft.sent.web.resource.SentIndexResource;
  */
 public class SentiIndexApplication extends Application {
 
-	private static Logger logger = LoggerFactory.getLogger(SentiIndexApplication.class);
+	//	private static Logger logger = LoggerFactory.getLogger(SentiIndexApplication.class);
 
-	private final IndexCloudSolr indexCloudSolr;
+	//	private final IndexCloudSolr indexCloudSolr;
 
 	private final PersistCore persistCore;
+
+	private final RedisCache redisCache;
 
 	static Thread commitThread;
 
 	public SentiIndexApplication() {
-		indexCloudSolr = new IndexCloudSolr();
+		//		indexCloudSolr = new IndexCloudSolr();
 		persistCore = new PersistCore();
+		redisCache = new RedisCache();
 		/**
 		 * 原来每分钟定时提交更新，由于数据量很大改为1秒
 		 */
-		commitThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Timer timer = new Timer();
-				timer.schedule(new TimerCommit(), 0, 10 * 1000);
-			}
-		});
-		commitThread.start();
-		logger.info("SolrCloud committed start ...");
+		//		commitThread = new Thread(new Runnable() {
+		//			@Override
+		//			public void run() {
+		//				Timer timer = new Timer();
+		//				timer.schedule(new TimerCommit(), 0, 10 * 1000);
+		//			}
+		//		});
+		//		commitThread.start();
+		//		logger.info("SolrCloud committed start ...");
 	}
 
 	@Override
@@ -61,22 +59,34 @@ public class SentiIndexApplication extends Application {
 	 * 添加索引数据，这样对于每条数据都进行Add操作，会导致IO瓶颈
 	 * @return 未索引成功的ID列表
 	 */
-	@Deprecated
-	public List<String> addDatas(List<RecordInfo> records) {
-		List<String> result = new ArrayList<>();
-		for (RecordInfo record : records) {
-			if (!indexCloudSolr.addSentimentDocToSolr(record)) {
-				result.add(record.getId());
+	/*	@Deprecated
+		public List<String> addDatas(List<RecordInfo> records) {
+			List<String> result = new ArrayList<>();
+			for (RecordInfo record : records) {
+				if (!indexCloudSolr.addSentimentDocToSolr(record)) {
+					result.add(record.getId());
+				}
 			}
-		}
-		return result;
-	}
+			return result;
+		}*/
 
 	/**
 	 * 添加索引数据，调一次接口索引Add一次，这样减少IO
 	 */
-	public void addDatasWithoutCommit(List<RecordInfo> records) {
-		indexCloudSolr.addDocsToSolr(records);
+	/*	@Deprecated
+		public void addDatasWithoutCommit(List<RecordInfo> records) {
+			indexCloudSolr.addDocsToSolr(records);
+		}*/
+
+	/**
+	 * 数据持久化到Redis
+	 */
+	public void addToRedis(List<RecordInfo> records) {
+		String[] data = new String[records.size()];
+		for (int i = 0; i < records.size(); i++) {
+			data[i] = JsonUtils.toJsonWithoutPretty(records.get(i));
+		}
+		redisCache.addRecord(data);
 	}
 
 	/**
@@ -91,21 +101,22 @@ public class SentiIndexApplication extends Application {
 	/**
 	 * 定时提交更新索引
 	 */
-	public class TimerCommit extends TimerTask {
+	/*	@Deprecated
+		public class TimerCommit extends TimerTask {
 
-		private final AtomicInteger count = new AtomicInteger(0);
+			private final AtomicInteger count = new AtomicInteger(0);
 
-		@Override
-		public void run() {
-			indexCloudSolr.commitToSolr();
-			logger.info("SolrCloud committed " + count.addAndGet(1) + ".");
-		}
+			@Override
+			public void run() {
+				indexCloudSolr.commitToSolr();
+				logger.info("SolrCloud committed " + count.addAndGet(1) + ".");
+			}
 
-	}
+		}*/
 
 	public void close() {
-		commitThread.interrupt(); // 可能需要修改
-		indexCloudSolr.close();
+		//		commitThread.interrupt(); // 可能需要修改
+		//		indexCloudSolr.close();
 	}
 
 }
