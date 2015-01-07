@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.Transaction;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.json.JsonUtils;
@@ -40,17 +40,17 @@ public class RedisCache {
 	public void addRecord(String... members) {
 		Jedis jedis = pool.getResource();
 		try {
-			//			Transaction tx = jedis.multi();
-			//			tx.sadd(CACHE_SENTIMENT_KEY, members);
-			//			tx.exec();
+			jedis.watch(CACHE_SENTIMENT_KEY);
+			Transaction tx = jedis.multi();
+			tx.sadd(CACHE_SENTIMENT_KEY, members);
+			tx.exec();
+			jedis.unwatch();
 			//			tx.discard();
-			// 管道比事务效率高
+			// pipeline适用于批处理，管道比事务效率高
 			// 不使用dsicard会出现打开文件数太多，使用的话DISCARD without MULTI。
-			Pipeline p = jedis.pipelined();
-			//			p.multi();
-			p.sadd(CACHE_SENTIMENT_KEY, members);
-			//			p.exec();
-			//			p.discard();
+			//			Pipeline p = jedis.pipelined();
+			//			p.sadd(CACHE_SENTIMENT_KEY, members);
+			//			p.sync();// 关闭pipeline
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		} finally {
