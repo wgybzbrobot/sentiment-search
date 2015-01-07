@@ -71,7 +71,9 @@ public class IndexCloudSolr {
 		}
 		Collection<SolrInputDocument> docs = new ArrayList<>();
 		for (RecordInfo record : records) {
-			docs.add(getSentimentDoc(record));
+			if (getSentimentDoc(record) != null) {
+				docs.add(getSentimentDoc(record));
+			}
 		}
 		try {
 			cloudServer.add(docs);

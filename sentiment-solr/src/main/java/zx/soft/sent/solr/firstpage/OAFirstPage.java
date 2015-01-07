@@ -50,8 +50,17 @@ public class OAFirstPage {
 	public static void main(String[] args) {
 
 		OAFirstPage firstPage = new OAFirstPage();
-		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
-		System.out.println(JsonUtils.toJson(todayWeibos));
+		// 1、统计当前时间各类数据的总量
+		//		HashMap<String, Long> currentPSum = firstPage.getCurrentPlatformSum();
+		//		System.out.println(JsonUtils.toJson(currentPSum));
+		// 2、统计当天各类数据的进入量，其中day=0表示当天的数据
+		//		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
+		//		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
+		// 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
+		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
+		System.out.println(JsonUtils.toJson(todayWeibosSum));
+		//		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
+		//		System.out.println(JsonUtils.toJson(todayWeibos));
 		firstPage.close();
 
 	}
@@ -125,22 +134,15 @@ public class OAFirstPage {
 		long endTime = startTime + 3 * 3600_000; // 该天的第hour+3时刻，时间间隔为三小时
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);
-		queryParams.setFacetField("source_id");
+		queryParams.setFacetField("source_name");
 		queryParams.setFq("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
 		QueryResult queryResult = search.queryData(queryParams, false);
-		HashMap<String, Long> ff = null;
 		for (SimpleFacetInfo facetField : queryResult.getFacetFields()) {
-			if ("source_id".equalsIgnoreCase(facetField.getName())) {
-				ff = facetField.getValues();
-			}
-		}
-		if (ff != null) {
-			for (Entry<String, Long> temp : ff.entrySet()) {
-				if (temp.getValue() > 0) {
-					if (result.get(temp.getKey().split(",")[1]) != null) {
-						result.put(temp.getKey().split(",")[1],
-								temp.getValue() + result.get(temp.getKey().split(",")[1]));
+			if ("source_name".equalsIgnoreCase(facetField.getName())) {
+				for (Entry<String, Long> t : facetField.getValues().entrySet()) {
+					if (result.containsKey(t.getKey())) {
+						result.put(t.getKey(), t.getValue());
 					}
 				}
 			}

@@ -43,13 +43,13 @@ public class RedisCache {
 			//			Transaction tx = jedis.multi();
 			//			tx.sadd(CACHE_SENTIMENT_KEY, members);
 			//			tx.exec();
-			// ERR DISCARD without MULTI
 			//			tx.discard();
 			// 管道比事务效率高
+			// 不使用dsicard会出现打开文件数太多，使用的话DISCARD without MULTI。
 			Pipeline p = jedis.pipelined();
-			p.multi();
+			//			p.multi();
 			p.sadd(CACHE_SENTIMENT_KEY, members);
-			p.exec();
+			//			p.exec();
 			//			p.discard();
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));

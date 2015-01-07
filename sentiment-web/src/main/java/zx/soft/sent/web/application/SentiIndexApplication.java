@@ -5,12 +5,15 @@ import java.util.List;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.core.persist.PersistCore;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.solr.utils.RedisCache;
 import zx.soft.sent.web.resource.SentIndexResource;
 import zx.soft.utils.json.JsonUtils;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 舆情索引应用类
@@ -20,7 +23,7 @@ import zx.soft.utils.json.JsonUtils;
  */
 public class SentiIndexApplication extends Application {
 
-	//	private static Logger logger = LoggerFactory.getLogger(SentiIndexApplication.class);
+	private static Logger logger = LoggerFactory.getLogger(SentiIndexApplication.class);
 
 	//	private final IndexCloudSolr indexCloudSolr;
 
@@ -86,7 +89,11 @@ public class SentiIndexApplication extends Application {
 		for (int i = 0; i < records.size(); i++) {
 			data[i] = JsonUtils.toJsonWithoutPretty(records.get(i));
 		}
-		redisCache.addRecord(data);
+		try {
+			redisCache.addRecord(data);
+		} catch (Exception e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+		}
 	}
 
 	/**

@@ -9,7 +9,7 @@ public class FirstPageDemo {
 
 		FirstPage firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 		int type = 4;
-		String timestr = "2014-09-01 12:22:00";
+		String timestr = "2012-01-07,05";
 		String result = "first page result";
 		/**
 		 * 插入OA首页查询数据
