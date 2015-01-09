@@ -27,19 +27,20 @@ public class RedisCacheDisTest {
 		final RedisCache redisCache = new RedisCache();
 		System.err.println("初始化完成......");
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			System.out.println("Add at : " + i);
 			pool.execute(new Thread(new Runnable() {
 				@Override
 				public void run() {
-					List<String> records = getRecords();
+					List<String> records = getRecords10();
 					redisCache.addRecord(records.toArray(new String[records.size()]));
 				}
 			}));
-			if (i % 10 == 0) {
+			if (i % 100 == 0) {
 				System.err.println(redisCache.getSetSize());
-				List<String> records = redisCache.getRecords();
-				System.out.println(JsonUtils.toJson(redisCache.mapper(records)));
+				redisCache.getRecords();
+				//				List<String> records = redisCache.getRecords();
+				//				System.out.println(JsonUtils.toJson(redisCache.mapper(records)));
 			}
 		}
 
@@ -52,7 +53,17 @@ public class RedisCacheDisTest {
 
 	}
 
-	public static List<String> getRecords() {
+	public static List<String> getRecords10() {
+		List<String> result = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			for (String str : getRecords()) {
+				result.add(str);
+			}
+		}
+		return result;
+	}
+
+	private static List<String> getRecords() {
 		int i = RANDOM.nextInt(10000);
 		RecordInfo recordInfo1 = new RecordInfo();
 		recordInfo1.setId("sentiment" + i);
