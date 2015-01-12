@@ -9,7 +9,7 @@ import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.threads.ApplyThreadPool;
 
-public class RedisCacheDisTest {
+public class RedisMQTest {
 
 	private static final Random RANDOM = new Random();
 
@@ -24,7 +24,7 @@ public class RedisCacheDisTest {
 			}
 		}));
 
-		final RedisCache redisCache = new RedisCache();
+		final RedisMQ redisMQ = new RedisMQ();
 		System.err.println("初始化完成......");
 
 		for (int i = 0; i < 1000000; i++) {
@@ -33,14 +33,14 @@ public class RedisCacheDisTest {
 				@Override
 				public void run() {
 					List<String> records = getRecords10();
-					redisCache.addRecord(records.toArray(new String[records.size()]));
+					redisMQ.addRecord(records.toArray(new String[records.size()]));
 				}
 			}));
 			if (i % 100 == 0) {
-				System.err.println(redisCache.getSetSize());
-				redisCache.getRecords();
-				//				List<String> records = redisCache.getRecords();
-				//				System.out.println(JsonUtils.toJson(redisCache.mapper(records)));
+				System.err.println(redisMQ.getSetSize());
+				redisMQ.getRecords();
+				//				List<String> records = redisMQ.getRecords();
+				//				System.out.println(JsonUtils.toJson(redisMQ.mapper(records)));
 			}
 		}
 

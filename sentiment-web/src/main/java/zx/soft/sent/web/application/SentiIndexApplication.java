@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.core.persist.PersistCore;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.solr.utils.RedisCache;
+import zx.soft.sent.solr.utils.RedisMQ;
 import zx.soft.sent.web.resource.SentIndexResource;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
@@ -29,14 +29,14 @@ public class SentiIndexApplication extends Application {
 
 	private final PersistCore persistCore;
 
-	private final RedisCache redisCache;
+	private final RedisMQ redisMQ;
 
 	static Thread commitThread;
 
 	public SentiIndexApplication() {
 		//		indexCloudSolr = new IndexCloudSolr();
 		persistCore = new PersistCore();
-		redisCache = new RedisCache();
+		redisMQ = new RedisMQ();
 		/**
 		 * 原来每分钟定时提交更新，由于数据量很大改为1秒
 		 */
@@ -90,7 +90,7 @@ public class SentiIndexApplication extends Application {
 			data[i] = JsonUtils.toJsonWithoutPretty(records.get(i));
 		}
 		try {
-			redisCache.addRecord(data);
+			redisMQ.addRecord(data);
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}

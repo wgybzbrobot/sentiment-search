@@ -18,9 +18,9 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 
-public class RedisCache {
+public class RedisMQ {
 
-	private static Logger logger = LoggerFactory.getLogger(RedisCache.class);
+	private static Logger logger = LoggerFactory.getLogger(RedisMQ.class);
 
 	private final JedisPool pool;
 
@@ -28,7 +28,7 @@ public class RedisCache {
 
 	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
 
-	public RedisCache() {
+	public RedisMQ() {
 		Properties props = ConfigUtil.getProps("cache-sentiment.properties");
 		pool = new JedisPool(new JedisPoolConfig(), props.getProperty("redis.servers"), Integer.parseInt(props
 				.getProperty("redis.port")), 30_000, props.getProperty("redis.password"));

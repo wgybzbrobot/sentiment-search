@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.solr.utils.RedisCache;
+import zx.soft.sent.solr.utils.RedisMQ;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
@@ -21,11 +21,11 @@ public class ImportRedisToSC {
 
 	private final IndexCloudSolr indexCloudSolr;
 
-	private final RedisCache redisCache;
+	private final RedisMQ redisCache;
 
 	public ImportRedisToSC() {
 		indexCloudSolr = new IndexCloudSolr();
-		redisCache = new RedisCache();
+		redisCache = new RedisMQ();
 	}
 
 	/**
