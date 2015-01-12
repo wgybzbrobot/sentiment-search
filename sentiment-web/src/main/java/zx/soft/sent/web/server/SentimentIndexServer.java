@@ -3,6 +3,8 @@ package zx.soft.sent.web.server;
 import java.util.Properties;
 
 import org.restlet.Component;
+import org.restlet.Context;
+import org.restlet.Server;
 import org.restlet.data.Protocol;
 
 import zx.soft.sent.web.application.SentiIndexApplication;
@@ -41,7 +43,28 @@ public class SentimentIndexServer {
 	}
 
 	public void start() {
-		component.getServers().add(Protocol.HTTP, PORT);
+		// 需要设置最大线程数和连接数，否则高并发时请求超时
+		//		component.getServers().add(Protocol.HTTP, PORT);
+		//		component.getContext().getParameters().add("maxThreads", "512");
+		//		component.getContext().getParameters().add("minThreads", "100");
+		//		component.getContext().getParameters().add("lowThreads", "200");
+		//		component.getContext().getParameters().add("maxQueued", "100");
+		//		component.getContext().getParameters().add("maxConnectionsPerHost", "128");
+		//		component.getContext().getParameters().add("initialConnections", "255");
+		//		component.getContext().getParameters().add("maxTotalConnections", "1024");
+		//		component.getContext().getParameters().add("maxIoIdleTimeMs", "100");
+		//		component.getContext().getParameters().add("connectionManagerTimeout", "1000");
+		Context context = new Context();
+		context.getParameters().add("maxThreads", "512");
+		context.getParameters().add("minThreads", "100");
+		context.getParameters().add("lowThreads", "200");
+		context.getParameters().add("maxConnectionsPerHost", "128");
+		context.getParameters().add("initialConnections", "255");
+		context.getParameters().add("maxTotalConnections", "1024");
+		context.getParameters().add("maxIoIdleTimeMs", "100");
+		context.getParameters().add("connectionManagerTimeout", "1000");
+		Server server = new Server(context, Protocol.HTTP, PORT);
+		component.getServers().add(server);
 		try {
 			component.getDefaultHost().attach("/sentiment/index", sentiIndexApplication);
 			ReplaceConvert.configureJacksonConverter();

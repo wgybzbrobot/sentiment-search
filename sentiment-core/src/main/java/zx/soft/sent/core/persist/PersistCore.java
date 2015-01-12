@@ -6,8 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.redis.client.cache.Cache;
-import zx.soft.redis.client.cache.CacheFactory;
+import zx.soft.sent.core.redis.RedisReplication;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
@@ -24,7 +23,8 @@ public class PersistCore {
 
 	private static Logger logger = LoggerFactory.getLogger(PersistCore.class);
 
-	private final Cache cache;
+	//	private final Cache cache;
+	private final RedisReplication cache;
 
 	private final SentimentRecord sentRecord;
 
@@ -32,7 +32,8 @@ public class PersistCore {
 
 	public PersistCore() {
 
-		cache = CacheFactory.getInstance();
+		//		cache = CacheFactory.getInstance();
+		cache = new RedisReplication();
 		sentRecord = new SentimentRecord(MybatisConfig.ServerEnum.sentiment);
 		pool = ApplyThreadPool.getThreadPoolExector(64);
 
