@@ -46,7 +46,7 @@ public class SentSearchResource extends ServerResource {
 			}
 		}
 		// 参数处理
-		queryParams.setQ(params.get("q") == null ? "*:*" : params.get("q"));
+		queryParams.setQ(params.get("q") == null ? "*:*" : params.get("q").replaceAll(":", "")); // q中带有英文冒号无法传入solr
 		queryParams.setFq(params.get("fq") == null ? "" : params.get("fq"));
 		queryParams.setSort(params.get("sort") == null ? "" : params.get("sort"));
 		queryParams.setStart(params.get("start") == null ? 0 : (Integer.parseInt(params.get("start")) > 1000 ? 1000
