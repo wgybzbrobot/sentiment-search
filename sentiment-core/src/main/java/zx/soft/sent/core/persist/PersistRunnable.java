@@ -5,7 +5,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.core.redis.RedisReplication;
+import zx.soft.redis.client.cache.Cache;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
@@ -27,12 +27,11 @@ public class PersistRunnable implements Runnable {
 
 	private final RecordInfo record;
 
-	//	private final Cache cache;
-	private final RedisReplication cache;
+	private final Cache cache;
 
 	public static final String SENT_KEY_INSERTED = "sent:key:inserted";
 
-	public PersistRunnable(final RedisReplication cache, SentimentRecord sentRecord, RecordInfo record) {
+	public PersistRunnable(final Cache cache, SentimentRecord sentRecord, RecordInfo record) {
 		if (record == null) {
 			logger.error("Record is null.");
 			//			throw new IllegalArgumentException("record is null");

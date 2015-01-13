@@ -13,6 +13,7 @@
 			<directory>src/main/resources</directory>
 			<includes>
 				<include>logback.xml</include>
+				<include>cache-config.properties</include>
 				<include>data_db.properties</include>
 				<include>solr_params.properties</include>
 				<include>web-server.properties</include>

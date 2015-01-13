@@ -122,6 +122,7 @@
 				<configuration>
 					<excludes>
 						<exclude>logback.xml</exclude>
+						<exclude>cache-config.properties</exclude>
 						<exclude>data_db.properties</exclude>
 						<exclude>solr_params.properties</exclude>
 						<exclude>web-server.properties</exclude>

@@ -29,9 +29,9 @@ public class RedisMQ {
 	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
 
 	public RedisMQ() {
-		Properties props = ConfigUtil.getProps("cache-sentiment.properties");
-		pool = new JedisPool(new JedisPoolConfig(), props.getProperty("redis.servers"), Integer.parseInt(props
-				.getProperty("redis.port")), 30_000, props.getProperty("redis.password"));
+		Properties props = ConfigUtil.getProps("cache-config.properties");
+		pool = new JedisPool(new JedisPoolConfig(), props.getProperty("redis.mq.server"), Integer.parseInt(props
+				.getProperty("redis.mq.port")), 30_000, props.getProperty("redis.password"));
 	}
 
 	/**
