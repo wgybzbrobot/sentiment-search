@@ -3,19 +3,18 @@ package zx.soft.sent.web.application;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.solr.common.SolrDocumentList;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.solr.domain.QueryParams;
+import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.search.SearchingData;
-import zx.soft.sent.web.domain.InternetTask;
+import zx.soft.sent.web.domain.Task;
 import zx.soft.sent.web.resource.InternetTaskResource;
 
 public class InternetTaskApplication extends Application {
-
-	private static Logger logger = LoggerFactory.getLogger(InternetTaskApplication.class);
 
 	private final SearchingData searchingData;
 
@@ -27,16 +26,25 @@ public class InternetTaskApplication extends Application {
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		// POST专题信息
-		router.attach("/{type}/{datestr}", InternetTaskResource.class);
+		router.attach("", InternetTaskResource.class);
 		return router;
 	}
 
 	/**
 	 * 查询OA首页查询数据
 	 */
-	public String taskResult(InternetTask internetTask) {
-		List<String> result = new ArrayList<>();
-		return null;
+	public List<SolrDocumentList> taskResult(List<Task> tasks) {
+		List<SolrDocumentList> result = new ArrayList<>();
+		QueryParams queryParams = new QueryParams();
+		QueryResult queryResult = null;
+		for (Task task : tasks) {
+			queryParams.setQ(task.getKeywords());
+			queryParams.setFq("lasttime:[" + task.getStart() + " TO " + task.getEnd() + "];source_name:"
+					+ task.getSource_name());
+			queryResult = searchingData.queryData(queryParams, Boolean.FALSE);
+			result.add(queryResult.getResults());
+		}
+		return result;
 	}
 
 	@Override

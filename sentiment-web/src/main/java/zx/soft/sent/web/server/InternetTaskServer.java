@@ -43,7 +43,7 @@ public class InternetTaskServer {
 	public void start() {
 		component.getServers().add(Protocol.HTTP, PORT);
 		try {
-			component.getDefaultHost().attach("/firstpage", internetTaskApplication);
+			component.getDefaultHost().attach("/task", internetTaskApplication);
 			ReplaceConvert.configureJacksonConverter();
 			component.start();
 		} catch (Exception e) {

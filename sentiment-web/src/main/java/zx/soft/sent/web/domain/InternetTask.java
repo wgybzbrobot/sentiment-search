@@ -1,7 +1,10 @@
 package zx.soft.sent.web.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import zx.soft.utils.json.JsonUtils;
 
 /**
  * 全网搜索任务请求参数刘表
@@ -34,49 +37,18 @@ public class InternetTask implements Serializable {
 		this.tasks = tasks;
 	}
 
-	static class Task {
-
-		// 关键词
-		private String keywords;
-		// 监测开始时间
-		private String start;
-		// 监测结束时间
-		private String end;
-		// 站点名称
-		private String source_name;
-
-		public String getKeywords() {
-			return keywords;
-		}
-
-		public void setKeywords(String keywords) {
-			this.keywords = keywords;
-		}
-
-		public String getStart() {
-			return start;
-		}
-
-		public void setStart(String start) {
-			this.start = start;
-		}
-
-		public String getEnd() {
-			return end;
-		}
-
-		public void setEnd(String end) {
-			this.end = end;
-		}
-
-		public String getSource_name() {
-			return source_name;
-		}
-
-		public void setSource_name(String source_name) {
-			this.source_name = source_name;
-		}
-
+	public static void main(String[] args) {
+		InternetTask internetTask = new InternetTask();
+		List<Task> tasks = new ArrayList<>();
+		Task task = new Task();
+		task.setKeywords("穿越火线");
+		task.setStart("2014-12-25T15:09:01Z");
+		task.setEnd("2014-12-26T15:09:01Z");
+		task.setSource_name("腾讯微博");
+		tasks.add(task);
+		internetTask.setNum(1);
+		internetTask.setTasks(tasks);
+		System.out.println(JsonUtils.toJsonWithoutPretty(internetTask));
 	}
 
 }

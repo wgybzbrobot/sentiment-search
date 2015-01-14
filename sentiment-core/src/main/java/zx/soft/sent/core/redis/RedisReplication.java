@@ -37,10 +37,10 @@ public class RedisReplication implements Cache {
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTimeBetweenEvictionRunsMillis(30000);
 		Properties props = ConfigUtil.getProps("cache-config.properties");
-		masterPool = new JedisPool(poolConfig, props.getProperty("redis.master"), Integer.parseInt(props
-				.getProperty("redis.port")), 30_000, props.getProperty("redis.password"));
-		slavePool = new JedisPool(poolConfig, props.getProperty("redis.slave"), Integer.parseInt(props
-				.getProperty("redis.port")), 30_000, props.getProperty("redis.password"));
+		masterPool = new JedisPool(poolConfig, props.getProperty("redis.rp.master"), Integer.parseInt(props
+				.getProperty("redis.rp.port")), 30_000, props.getProperty("redis.password"));
+		slavePool = new JedisPool(poolConfig, props.getProperty("redis.rp.slave"), Integer.parseInt(props
+				.getProperty("redis.rp.port")), 30_000, props.getProperty("redis.password"));
 	}
 
 	/**
