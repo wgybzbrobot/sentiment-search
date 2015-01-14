@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.web.server.FirstPageServer;
 import zx.soft.sent.web.server.HarmfulInfoServer;
+import zx.soft.sent.web.server.InternetTaskServer;
 import zx.soft.sent.web.server.NicknameGroupServer;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
@@ -36,7 +37,8 @@ public class SentWebDriver {
 					"`specialServer` OA专题信息CRUD服务\n" + //
 					"`specialSpeedServer` OA专题信息CRUD服务Speed\n" + //
 					"`firstPageServer` OA首页信息缓存服务\n" + //
-					"`harmfulInfoServer` OA有害信息缓存服务");
+					"`harmfulInfoServer` OA有害信息缓存服务\n" + //
+					"`internetTaskServer` 全网搜索任务联合接口服务");
 			System.exit(-1);
 		}
 		String[] leftArgs = new String[args.length - 1];
@@ -74,6 +76,10 @@ public class SentWebDriver {
 		case "harmfulInfoServer":
 			logger.info("OA有害信息缓存服务");
 			HarmfulInfoServer.main(leftArgs);
+			break;
+		case "internetTaskServer":
+			logger.info("全网搜索任务联合接口服务");
+			InternetTaskServer.main(leftArgs);
 			break;
 		default:
 			return;

@@ -3,7 +3,6 @@ package zx.soft.sent.web.application;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.solr.common.SolrDocumentList;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
@@ -33,8 +32,8 @@ public class InternetTaskApplication extends Application {
 	/**
 	 * 查询OA首页查询数据
 	 */
-	public List<SolrDocumentList> taskResult(List<Task> tasks) {
-		List<SolrDocumentList> result = new ArrayList<>();
+	public List<Long> taskResult(List<Task> tasks) {
+		List<Long> result = new ArrayList<>();
 		QueryParams queryParams = new QueryParams();
 		QueryResult queryResult = null;
 		for (Task task : tasks) {
@@ -42,7 +41,7 @@ public class InternetTaskApplication extends Application {
 			queryParams.setFq("lasttime:[" + task.getStart() + " TO " + task.getEnd() + "];source_name:"
 					+ task.getSource_name());
 			queryResult = searchingData.queryData(queryParams, Boolean.FALSE);
-			result.add(queryResult.getResults());
+			result.add(queryResult.getNumFound());
 		}
 		return result;
 	}

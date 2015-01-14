@@ -12,7 +12,7 @@ import zx.soft.utils.jackson.ReplaceConvert;
 /**
  * 全网搜索任务联合接口服务
  * 
- * 示例：http://localhost:3901/task
+ * 示例：http://localhost:3900/task
  * 
  * @author wanggang
  *
