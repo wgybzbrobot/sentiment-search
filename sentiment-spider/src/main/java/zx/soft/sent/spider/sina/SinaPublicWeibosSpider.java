@@ -61,10 +61,10 @@ public class SinaPublicWeibosSpider {
 		RecordInfo recordInfo;
 		while (true) {
 			records = new ArrayList<>();
-			weibos = sinaPublicWeibos.getPublicWeibos(200);
-			logger.info("Spider sina_public_weibos at:{}, weibos'size={}", COUNT.addAndGet(1),
-					weibos.getFieldValues("statuses").size());
 			try {
+				weibos = sinaPublicWeibos.getPublicWeibos(200);
+				logger.info("Spider sina_public_weibos at:{}, weibos'size={}", COUNT.addAndGet(1), weibos
+						.getFieldValues("statuses").size());
 				for (Object status : weibos.getFieldValues("statuses")) {
 					// 循环添加RecordInfo
 					weibo = (SinaDomain) status;
