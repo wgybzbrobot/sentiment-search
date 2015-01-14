@@ -24,15 +24,22 @@ public class RedisReplication implements Cache {
 
 	private static Logger logger = LoggerFactory.getLogger(RedisReplication.class);
 
-	private final JedisPool masterPool;
+	private static JedisPool masterPool;
 
-	private final JedisPool slavePool;
+	private static JedisPool slavePool;
 
 	public RedisReplication() {
+		JedisPoolConfig poolConfig = new JedisPoolConfig();
+		poolConfig.setMaxIdle(128);
+		poolConfig.setMinIdle(64);
+		poolConfig.setMaxWaitMillis(10_000);
+		poolConfig.setMaxTotal(256);
+		poolConfig.setTestOnBorrow(true);
+		poolConfig.setTimeBetweenEvictionRunsMillis(30000);
 		Properties props = ConfigUtil.getProps("cache-config.properties");
-		masterPool = new JedisPool(new JedisPoolConfig(), props.getProperty("redis.master"), Integer.parseInt(props
+		masterPool = new JedisPool(poolConfig, props.getProperty("redis.master"), Integer.parseInt(props
 				.getProperty("redis.port")), 30_000, props.getProperty("redis.password"));
-		slavePool = new JedisPool(new JedisPoolConfig(), props.getProperty("redis.slave"), Integer.parseInt(props
+		slavePool = new JedisPool(poolConfig, props.getProperty("redis.slave"), Integer.parseInt(props
 				.getProperty("redis.port")), 30_000, props.getProperty("redis.password"));
 	}
 
@@ -41,14 +48,36 @@ public class RedisReplication implements Cache {
 	 */
 	@Override
 	public void sadd(String key, String... members) {
-		Jedis jedis = masterPool.getResource();
+		Jedis jedis = getMasterJedis();
+		if (jedis == null) {
+			return;
+		}
 		try {
+			//			jedis.getClient().setTimeoutInfinite();
 			jedis.sadd(key, members);
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			if (jedis != null) {
+				masterPool.returnBrokenResource(jedis);
+				jedis = null;
+			}
 		} finally {
 			// 这里很重要，一旦拿到的jedis实例使用完毕，必须要返还给池中 
-			masterPool.returnResource(jedis);
+			if (jedis != null && jedis.isConnected())
+				masterPool.returnResource(jedis);
+		}
+	}
+
+	public synchronized static Jedis getMasterJedis() {
+		try {
+			if (masterPool != null) {
+				return masterPool.getResource();
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			return null;
 		}
 	}
 
@@ -57,14 +86,35 @@ public class RedisReplication implements Cache {
 	 */
 	@Override
 	public boolean sismember(String key, String member) {
-		Jedis jedis = slavePool.getResource();
+		Jedis jedis = getSlaveJedis();
+		if (jedis == null) {
+			return Boolean.FALSE;
+		}
 		try {
 			return jedis.sismember(key, member);
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			if (jedis != null) {
+				slavePool.returnBrokenResource(jedis);
+				jedis = null;
+			}
 			return Boolean.FALSE;
 		} finally {
-			slavePool.returnResource(jedis);
+			if (jedis != null && jedis.isConnected())
+				slavePool.returnResource(jedis);
+		}
+	}
+
+	public synchronized static Jedis getSlaveJedis() {
+		try {
+			if (slavePool != null) {
+				return slavePool.getResource();
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			return null;
 		}
 	}
 
