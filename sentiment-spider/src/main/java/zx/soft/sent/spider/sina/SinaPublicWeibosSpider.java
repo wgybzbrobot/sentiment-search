@@ -64,31 +64,35 @@ public class SinaPublicWeibosSpider {
 			weibos = sinaPublicWeibos.getPublicWeibos(200);
 			logger.info("Spider sina_public_weibos at:{}, weibos'size={}", COUNT.addAndGet(1),
 					weibos.getFieldValues("statuses").size());
-			for (Object status : weibos.getFieldValues("statuses")) {
-				// 循环添加RecordInfo
-				weibo = (SinaDomain) status;
-				user = (SinaDomain) weibo.getFieldValue("user");
-				recordInfo = new RecordInfo();
-				recordInfo.setPlatform(3);
-				recordInfo.setSource_id(7);
-				recordInfo.setSource_name("新浪微博");
-				recordInfo.setIdentify_md5("sentiment-spider");
-				recordInfo.setLasttime(System.currentTimeMillis());
-				recordInfo.setIdentify_id(100L); // 表示本地
-				recordInfo.setCountry_code(1);
-				recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
-				recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
-				recordInfo.setId(weibo.getFieldValue("id").toString());
-				recordInfo.setNickname(user.getFieldValue("screen_name").toString());
-				recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
-						+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
-				recordInfo.setContent(weibo.getFieldValue("text").toString());
-				recordInfo.setLocation(user.getFieldValue("location").toString());
-				recordInfo.setCity_code(Integer.parseInt(user.getFieldValue("city").toString()));
-				recordInfo.setProvince_code(Integer.parseInt(user.getFieldValue("province").toString()));
-				records.add(JsonUtils.toJsonWithoutPretty(recordInfo));
+			try {
+				for (Object status : weibos.getFieldValues("statuses")) {
+					// 循环添加RecordInfo
+					weibo = (SinaDomain) status;
+					user = (SinaDomain) weibo.getFieldValue("user");
+					recordInfo = new RecordInfo();
+					recordInfo.setPlatform(3);
+					recordInfo.setSource_id(7);
+					recordInfo.setSource_name("新浪微博");
+					recordInfo.setIdentify_md5("sentiment-spider");
+					recordInfo.setLasttime(System.currentTimeMillis());
+					recordInfo.setIdentify_id(100L); // 表示本地
+					recordInfo.setCountry_code(1);
+					recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
+					recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
+					recordInfo.setId(weibo.getFieldValue("id").toString());
+					recordInfo.setNickname(user.getFieldValue("screen_name").toString());
+					recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
+							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
+					recordInfo.setContent(weibo.getFieldValue("text").toString());
+					recordInfo.setLocation(user.getFieldValue("location").toString());
+					recordInfo.setCity_code(Integer.parseInt(user.getFieldValue("city").toString()));
+					recordInfo.setProvince_code(Integer.parseInt(user.getFieldValue("province").toString()));
+					records.add(JsonUtils.toJsonWithoutPretty(recordInfo));
+				}
+				redisMQ.addRecord(records.toArray(new String[records.size()]));
+			} catch (Exception e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
-			redisMQ.addRecord(records.toArray(new String[records.size()]));
 		}
 	}
 
