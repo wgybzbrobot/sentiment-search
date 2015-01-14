@@ -1,11 +1,14 @@
 package zx.soft.sent.web.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import zx.soft.utils.json.JsonUtils;
 
-public class IndexErrResponse {
+public class IndexErrResponse implements Serializable {
+
+	private static final long serialVersionUID = -5183178204181065266L;
 
 	private int errorCode;
 	private List<String> errorMessage;

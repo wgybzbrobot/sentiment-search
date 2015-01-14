@@ -1,12 +1,16 @@
 package zx.soft.sent.web.domain;
 
+import java.io.Serializable;
+
 /**
  * 错误相应类
  * 
  * @author wanggang
  *
  */
-public class ErrorResponse {
+public class ErrorResponse implements Serializable {
+
+	private static final long serialVersionUID = -3408598774435409654L;
 
 	private final int errorCode;
 	private final String errorMessage;

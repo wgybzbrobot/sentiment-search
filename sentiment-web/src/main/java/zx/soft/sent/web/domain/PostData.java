@@ -1,5 +1,6 @@
 package zx.soft.sent.web.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import zx.soft.utils.json.JsonUtils;
  * @author wanggang
  *
  */
-public class PostData {
+public class PostData implements Serializable {
+
+	private static final long serialVersionUID = 3183580989697121542L;
 
 	private int num;
 	private List<RecordInfo> records;
