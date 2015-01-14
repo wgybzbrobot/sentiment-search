@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mainClass=zx.soft.sent.solr.driver.SentSolrDriver
+mainClass=zx.soft.sent.spider.driver.SpiderDriver
 
 # resolve links - $0 may be a softlink
 PRG="$0"
