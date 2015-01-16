@@ -42,15 +42,11 @@ public class InternetTask implements Serializable {
 		List<Task> tasks = new ArrayList<>();
 		Task task1 = new Task();
 		task1.setKeywords("穿越火线");
-		task1.setStart("2014-12-25T15:09:01Z");
-		task1.setEnd("2014-12-26T15:09:01Z");
-		task1.setSource_name("腾讯微博");
+		task1.setFq("lasttime:[2014-12-25T15:09:01Z TO 2014-12-26T15:09:01Z];source_name:腾讯微博;platform:3");
 		tasks.add(task1);
 		Task task2 = new Task();
 		task2.setKeywords("圣诞节");
-		task2.setStart("2014-12-25T15:09:01Z");
-		task2.setEnd("2014-12-26T15:09:01Z");
-		task2.setSource_name("新浪微博");
+		task2.setFq("lasttime:[2014-12-25T15:09:01Z TO 2014-12-26T15:09:01Z];source_name:新浪微博;platform:3");
 		tasks.add(task2);
 		internetTask.setNum(2);
 		internetTask.setTasks(tasks);

@@ -10,7 +10,7 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * 全网搜索任务联合接口服务
+ * 全网搜索任务联合接口服务：hefei15
  * 
  * 示例：http://localhost:3900/task
  * 

@@ -34,12 +34,14 @@ public class InternetTaskApplication extends Application {
 	 */
 	public List<Long> taskResult(List<Task> tasks) {
 		List<Long> result = new ArrayList<>();
-		QueryParams queryParams = new QueryParams();
+		QueryParams queryParams = null;
 		QueryResult queryResult = null;
 		for (Task task : tasks) {
+			queryParams = new QueryParams();
 			queryParams.setQ(task.getKeywords());
-			queryParams.setFq("lasttime:[" + task.getStart() + " TO " + task.getEnd() + "];source_name:"
-					+ task.getSource_name());
+			if (task.getFq().length() > 0) {
+				queryParams.setFq(task.getFq());
+			}
 			queryResult = searchingData.queryData(queryParams, Boolean.FALSE);
 			result.add(queryResult.getNumFound());
 		}
