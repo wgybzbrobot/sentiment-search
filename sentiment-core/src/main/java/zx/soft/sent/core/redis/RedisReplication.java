@@ -3,6 +3,8 @@ package zx.soft.sent.core.redis;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,27 @@ public class RedisReplication implements Cache {
 	private static JedisPool slavePool;
 
 	public RedisReplication() {
+		init();
+		// 每小时定时清空Redis连接池
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				logger.info("Starting managing redis pools ...");
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						logger.info("Updating redis pools ...");
+						close();
+						init();
+					}
+				}, 0, 60 * 60_000);
+			}
+		});
+		thread.start();
+	}
+
+	private void init() {
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
 		poolConfig.setMaxIdle(128);
 		poolConfig.setMinIdle(64);
@@ -47,8 +70,9 @@ public class RedisReplication implements Cache {
 	 * Master：写数据
 	 */
 	@Override
-	public void sadd(String key, String... members) {
+	public synchronized void sadd(String key, String... members) {
 		Jedis jedis = getMasterJedis();
+		// 下面可能导致丢失少量数据，后期需要修改
 		if (jedis == null) {
 			return;
 		}
@@ -85,7 +109,7 @@ public class RedisReplication implements Cache {
 	 * Slave：读数据
 	 */
 	@Override
-	public boolean sismember(String key, String member) {
+	public synchronized boolean sismember(String key, String member) {
 		Jedis jedis = getSlaveJedis();
 		if (jedis == null) {
 			return Boolean.FALSE;

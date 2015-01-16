@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -29,6 +31,27 @@ public class RedisMQ {
 	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
 
 	public RedisMQ() {
+		init();
+		// 每小时定时清空Redis连接池
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				logger.info("Starting managing redis pool ...");
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						logger.info("Updating redis pool ...");
+						close();
+						init();
+					}
+				}, 0, 60 * 60_000);
+			}
+		});
+		thread.start();
+	}
+
+	private void init() {
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
 		poolConfig.setMaxIdle(128);
 		poolConfig.setMinIdle(64);
@@ -57,7 +80,7 @@ public class RedisMQ {
 	/**
 	 * 添加数据
 	 */
-	public void addRecord(String... members) {
+	public synchronized void addRecord(String... members) {
 		Jedis jedis = getJedis();
 		if (jedis == null) {
 			return;
@@ -89,7 +112,7 @@ public class RedisMQ {
 	/**
 	 * 获取集合大小
 	 */
-	public long getSetSize() {
+	public synchronized long getSetSize() {
 		long result = 0L;
 		Jedis jedis = getJedis();
 		if (jedis == null) {
@@ -114,7 +137,7 @@ public class RedisMQ {
 	/**
 	 * 获取数据
 	 */
-	public List<String> getRecords() {
+	public synchronized List<String> getRecords() {
 		List<String> records = new ArrayList<>();
 		Jedis jedis = getJedis();
 		if (jedis == null) {
