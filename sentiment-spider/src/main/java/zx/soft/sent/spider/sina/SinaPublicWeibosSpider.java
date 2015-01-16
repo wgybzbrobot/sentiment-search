@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.solr.utils.RedisMQ;
+import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.http.HttpClientDaoImpl;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
@@ -73,20 +74,25 @@ public class SinaPublicWeibosSpider {
 					recordInfo.setPlatform(3);
 					recordInfo.setSource_id(7);
 					recordInfo.setSource_name("新浪微博");
-					recordInfo.setIdentify_md5("sentiment-spider");
+					//					recordInfo.setIdentify_md5("sentiment-spider");
+					recordInfo.setFirst_time(System.currentTimeMillis());
+					recordInfo.setUpdate_time(System.currentTimeMillis());
 					recordInfo.setLasttime(System.currentTimeMillis());
 					recordInfo.setIdentify_id(100L); // 表示本地
 					recordInfo.setCountry_code(1);
+					recordInfo.setIp("180.149.134.141");
+					recordInfo.setLocation("北京市 电信集团公司");
 					recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
 					recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
-					recordInfo.setId(weibo.getFieldValue("id").toString());
+					recordInfo.setId(CheckSumUtils.getMD5(weibo.getFieldValue("id").toString()));
 					recordInfo.setNickname(user.getFieldValue("screen_name").toString());
 					recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
 							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
 					recordInfo.setContent(weibo.getFieldValue("text").toString());
-					recordInfo.setLocation(user.getFieldValue("location").toString());
+					//					recordInfo.setLocation(user.getFieldValue("location").toString());
 					recordInfo.setCity_code(Integer.parseInt(user.getFieldValue("city").toString()));
 					recordInfo.setProvince_code(Integer.parseInt(user.getFieldValue("province").toString()));
+					//					recordInfo.setLocation_code();
 					records.add(JsonUtils.toJsonWithoutPretty(recordInfo));
 				}
 				redisMQ.addRecord(records.toArray(new String[records.size()]));
