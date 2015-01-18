@@ -95,6 +95,9 @@ public class SentiIndexApplication extends Application {
 	public void addToRedis(List<RecordInfo> records) {
 		String[] data = new String[records.size()];
 		for (int i = 0; i < records.size(); i++) {
+			if (records.get(i).getPic_url().length() > 500) {
+				records.get(i).setPic_url(records.get(i).getPic_url().substring(0, 500));
+			}
 			data[i] = JsonUtils.toJsonWithoutPretty(records.get(i));
 		}
 		try {
@@ -109,6 +112,9 @@ public class SentiIndexApplication extends Application {
 	 */
 	public void persist(List<RecordInfo> records) {
 		for (RecordInfo record : records) {
+			if (record.getPic_url().length() > 500) {
+				record.setPic_url(record.getPic_url().substring(0, 500));
+			}
 			persistCore.persist(record);
 		}
 	}

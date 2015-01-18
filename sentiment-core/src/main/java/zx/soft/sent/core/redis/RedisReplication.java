@@ -3,8 +3,6 @@ package zx.soft.sent.core.redis;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,31 +30,14 @@ public class RedisReplication implements Cache {
 
 	public RedisReplication() {
 		init();
-		// 每小时定时清空Redis连接池
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				logger.info("Starting managing redis pools ...");
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						logger.info("Updating redis pools ...");
-						close();
-						init();
-					}
-				}, 0, 60 * 60_000);
-			}
-		});
-		thread.start();
 	}
 
 	private void init() {
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
-		poolConfig.setMaxIdle(128);
+		poolConfig.setMaxIdle(256);
 		poolConfig.setMinIdle(64);
 		poolConfig.setMaxWaitMillis(10_000);
-		poolConfig.setMaxTotal(256);
+		poolConfig.setMaxTotal(1024);
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTimeBetweenEvictionRunsMillis(30000);
 		Properties props = ConfigUtil.getProps("cache-config.properties");

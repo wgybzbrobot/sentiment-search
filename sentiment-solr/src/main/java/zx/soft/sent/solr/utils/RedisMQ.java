@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -33,30 +31,30 @@ public class RedisMQ {
 	public RedisMQ() {
 		init();
 		// 每小时定时清空Redis连接池
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				logger.info("Starting managing redis pool ...");
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						logger.info("Updating redis pool ...");
-						close();
-						init();
-					}
-				}, 0, 60 * 60_000);
-			}
-		});
-		thread.start();
+		//		Thread thread = new Thread(new Runnable() {
+		//			@Override
+		//			public void run() {
+		//				logger.info("Starting managing redis pool ...");
+		//				Timer timer = new Timer();
+		//				timer.schedule(new TimerTask() {
+		//					@Override
+		//					public void run() {
+		//						logger.info("Updating redis pool ...");
+		//						close();
+		//						init();
+		//					}
+		//				}, 0, 60 * 60_000);
+		//			}
+		//		});
+		//		thread.start();
 	}
 
 	private void init() {
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
-		poolConfig.setMaxIdle(128);
+		poolConfig.setMaxIdle(256);
 		poolConfig.setMinIdle(64);
 		poolConfig.setMaxWaitMillis(10_000);
-		poolConfig.setMaxTotal(256);
+		poolConfig.setMaxTotal(1024);
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTimeBetweenEvictionRunsMillis(30000);
 		Properties props = ConfigUtil.getProps("cache-config.properties");

@@ -42,13 +42,13 @@ public class CreateTables {
 		// 创建站点数据表
 		//		sentDbcp.createSiteTable(SENT_SITE_TABLE);
 		// 创建查询缓存数据表
-		sentDbcp.createQueryCacheTable(CreateTables.CACHE_QUERY_TABLE);
+		//		sentDbcp.createQueryCacheTable(CreateTables.CACHE_QUERY_TABLE);
 		// 创建舆情数据表表名表
 		//		sentDbcp.createTablenameTable(CreateTables.SENT_TABLE_TABLE);
 		// 创建舆情数据表
-		//		for (int i = 0; i < MAX_TABLE_NUM; i++) {
-		//			sentDbcp.createSentimentTable(CreateTables.SENT_TABLE + i);
-		//		}
+		for (int i = 0; i < MAX_TABLE_NUM; i++) {
+			sentDbcp.createSentimentTable(CreateTables.SENT_TABLE + i);
+		}
 		sentDbcp.close();
 		System.out.println("Finish!");
 
