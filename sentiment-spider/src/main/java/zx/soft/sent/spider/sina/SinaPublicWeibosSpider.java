@@ -16,7 +16,7 @@ import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.http.HttpClientDaoImpl;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
-import zx.soft.weibo.core.weibos.SinaPublicWeibos;
+import zx.soft.weibo.core.weibos.SinaPublicWeibosSentiment;
 import zx.soft.weibo.sina.common.WidToMid;
 import zx.soft.weibo.sina.domain.SinaDomain;
 
@@ -34,7 +34,7 @@ public class SinaPublicWeibosSpider {
 	// 消息队列类
 	private final RedisMQ redisMQ;
 	// 新浪微博接口实现类
-	private final SinaPublicWeibos sinaPublicWeibos;
+	private final SinaPublicWeibosSentiment sinaPublicWeibos;
 
 	private static final String WEIBO_BASE_URL = "http://weibo.com/";
 
@@ -45,7 +45,7 @@ public class SinaPublicWeibosSpider {
 
 	public SinaPublicWeibosSpider() {
 		this.redisMQ = new RedisMQ();
-		this.sinaPublicWeibos = new SinaPublicWeibos(new HttpClientDaoImpl());
+		this.sinaPublicWeibos = new SinaPublicWeibosSentiment(new HttpClientDaoImpl());
 	}
 
 	/**
