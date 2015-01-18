@@ -28,7 +28,7 @@ for jar in "$PROJECT_DIR/lib"/*.jar; do
 done
 echo CLASSPATH=$CLASSPATH
 
-JVMARGS="${JVMARGS} -Dproject_dir=${PROJECT_DIR}"
+JVMARGS="${JVMARGS} -Dproject_dir=${PROJECT_DIR} -Djava.net.preferIPv4Stack=true"
 echo JVMARGS=$JVMARGS
 
 usage() {
