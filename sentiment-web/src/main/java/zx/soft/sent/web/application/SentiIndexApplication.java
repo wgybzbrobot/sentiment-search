@@ -54,13 +54,13 @@ public class SentiIndexApplication extends Application {
 	@Override
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
-		getContext().getParameters().add("maxThreads", "512");
-		getContext().getParameters().add("minThreads", "100");
-		getContext().getParameters().add("lowThreads", "200");
-		getContext().getParameters().add("maxConnectionsPerHost", "128");
-		getContext().getParameters().add("initialConnections", "255");
+		getContext().getParameters().add("maxThreads", "1024");
+		getContext().getParameters().add("minThreads", "128");
+		getContext().getParameters().add("lowThreads", "256");
+		getContext().getParameters().add("maxConnectionsPerHost", "1024");
+		getContext().getParameters().add("initialConnections", "256");
 		getContext().getParameters().add("maxTotalConnections", "1024");
-		getContext().getParameters().add("maxIoIdleTimeMs", "100");
+		getContext().getParameters().add("maxIoIdleTimeMs", "10000");
 		//		System.out.println(getContext().getParameters().getValues("maxTotalConnections"));
 		router.attach("", SentIndexResource.class);
 		return router;

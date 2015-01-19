@@ -43,15 +43,14 @@ public class SentimentIndexServer {
 	public void start() {
 		// 需要设置最大线程数和连接数，否则高并发时请求超时
 		component.getServers().add(Protocol.HTTP, PORT);
-		//		component.getContext().getParameters().add("maxThreads", "512");
-		//		component.getContext().getParameters().add("minThreads", "100");
-		//		component.getContext().getParameters().add("lowThreads", "200");
-		//		component.getContext().getParameters().add("maxQueued", "100");
-		//		component.getContext().getParameters().add("maxConnectionsPerHost", "128");
-		//		component.getContext().getParameters().add("initialConnections", "255");
-		//		component.getContext().getParameters().add("maxTotalConnections", "1024");
-		//		component.getContext().getParameters().add("maxIoIdleTimeMs", "100");
-		//		component.getContext().getParameters().add("connectionManagerTimeout", "1000");
+		component.getContext().getParameters().add("maxThreads", "1024");
+		component.getContext().getParameters().add("minThreads", "128");
+		component.getContext().getParameters().add("lowThreads", "256");
+		component.getContext().getParameters().add("maxConnectionsPerHost", "1024");
+		component.getContext().getParameters().add("initialConnections", "255");
+		component.getContext().getParameters().add("maxTotalConnections", "1024");
+		component.getContext().getParameters().add("maxIoIdleTimeMs", "10000");
+		component.getContext().getParameters().add("connectionManagerTimeout", "10000");
 		try {
 			component.getDefaultHost().attach("/sentiment/index", sentiIndexApplication);
 			ReplaceConvert.configureJacksonConverter();
