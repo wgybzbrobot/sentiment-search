@@ -53,15 +53,17 @@ public class IndexService {
 		}
 		logger.info("Records' Size:{}", postData.getRecords().size());
 		try {
-			pool.execute(new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// 这里面以及包含了错误日志记录
-					persist(postData.getRecords());
-					// 持久化到Redis
-					addToRedis(postData.getRecords());
-				}
-			}));
+			if (postData.getRecords().size() > 0) {
+				pool.execute(new Thread(new Runnable() {
+					@Override
+					public void run() {
+						// 这里面以及包含了错误日志记录
+						persist(postData.getRecords());
+						// 持久化到Redis
+						addToRedis(postData.getRecords());
+					}
+				}));
+			}
 			return new ErrorResponse.Builder(0, "ok").build();
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));

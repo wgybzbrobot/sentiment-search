@@ -76,7 +76,7 @@ public class RedisMQ {
 	}
 
 	/**
-	 * 添加数据
+	 * 添加数据，members不能为空
 	 */
 	public synchronized void addRecord(String... members) {
 		Jedis jedis = getJedis();
@@ -95,7 +95,7 @@ public class RedisMQ {
 			//			p.sadd(CACHE_SENTIMENT_KEY, members);
 			//			p.sync();// 关闭pipeline
 		} catch (Exception e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			logger.error("Exception:{},Records'size={}.", LogbackUtil.expection2Str(e), members.length);
 			if (jedis != null) {
 				pool.returnBrokenResource(jedis);
 				jedis = null;
