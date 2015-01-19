@@ -49,12 +49,13 @@ public class PersistRunnable implements Runnable {
 			// 记录存在的情况下
 			if (cache.sismember(SENT_KEY_INSERTED, record.getId())) {
 				// 更新的时候存在线程安全，但是问题不太大
-				try {
-					logger.info("Update Record:{}", record.getId());
-					sentRecord.updateRecord(tRecord);
-				} catch (Exception e) {
-					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-				}
+				// 暂时不做更新
+				//				try {
+				//					logger.info("Update Record:{}", record.getId());
+				//					sentRecord.updateRecord(tRecord);
+				//				} catch (Exception e) {
+				//					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+				//				}
 				// 记录不存在的情况下
 			} else {
 				// 下面两句顺序不可改变，否则会导致线程安全
