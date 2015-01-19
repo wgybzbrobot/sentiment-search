@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+	default-lazy-init="true">
+
+	<context:component-scan base-package="zx.soft.sent.spring.controller" />
+	<context:component-scan base-package="zx.soft.sent.spring.service" />
+	
+	<bean id="persistCore" class="zx.soft.sent.core.persist.PersistCore" />
+	
+	<bean id="redisMQ" class="zx.soft.sent.solr.utils.RedisMQ" />
+
+	<bean id="customObjectMapper" class="zx.soft.sent.spring.utils.CustomObjectMapper" />
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="customObjectMapper" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+</beans>

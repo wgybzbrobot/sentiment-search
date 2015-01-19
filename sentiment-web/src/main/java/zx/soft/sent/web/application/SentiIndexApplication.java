@@ -31,7 +31,7 @@ public class SentiIndexApplication extends Application {
 
 	private final RedisMQ redisMQ;
 
-	static Thread commitThread;
+	//	static Thread commitThread;
 
 	public SentiIndexApplication() {
 		//		indexCloudSolr = new IndexCloudSolr();

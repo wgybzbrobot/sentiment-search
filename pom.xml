@@ -20,6 +20,7 @@
 		<module>sentiment-spider</module>
 		<module>sentiment-core</module>
 		<module>sentiment-web</module>
+		<module>sentiment-spring</module>
 	</modules>
 
 	<dependencies>
