@@ -23,7 +23,7 @@ import zx.soft.weibo.sina.domain.SinaDomain;
 /**
  * 新浪公共微博抓取：hefei06机器
  * 单线程模式，多线程暂时不需要，因为新浪公共微博抓起过于频繁的话，重复数据太多。
- * 
+ *
  * @author wanggang
  *
  */
@@ -84,7 +84,9 @@ public class SinaPublicWeibosSpider {
 					recordInfo.setLocation("北京市 电信集团公司");
 					recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
 					recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
-					recordInfo.setId(CheckSumUtils.getMD5(weibo.getFieldValue("id").toString()));
+					recordInfo.setId(CheckSumUtils.getMD5(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
+							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString())));
+					recordInfo.setUsername(user.getFieldValue("id").toString());
 					recordInfo.setNickname(user.getFieldValue("screen_name").toString());
 					recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
 							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
