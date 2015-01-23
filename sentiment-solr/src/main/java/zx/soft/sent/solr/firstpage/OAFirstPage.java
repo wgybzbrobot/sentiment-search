@@ -1,6 +1,7 @@
 package zx.soft.sent.solr.firstpage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -18,7 +19,7 @@ import zx.soft.utils.time.TimeUtils;
 
 /**
  * OA首页信息类
- * 
+ *
  * @author wanggang
  *
  */
@@ -54,11 +55,11 @@ public class OAFirstPage {
 		//		HashMap<String, Long> currentPSum = firstPage.getCurrentPlatformSum();
 		//		System.out.println(JsonUtils.toJson(currentPSum));
 		// 2、统计当天各类数据的进入量，其中day=0表示当天的数据
-		//		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
-		//		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
+		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
+		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
 		// 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
-		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
-		System.out.println(JsonUtils.toJson(todayWeibosSum));
+		//		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
+		//		System.out.println(JsonUtils.toJson(todayWeibosSum));
 		//		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
 		//		System.out.println(JsonUtils.toJson(todayWeibos));
 		firstPage.close();
@@ -86,12 +87,16 @@ public class OAFirstPage {
 	/**
 	 * 统计当天各类数据的进入量，其中day=0表示当天的数据
 	 */
+	@SuppressWarnings("deprecation")
 	public HashMap<String, Long> getTodayPlatformInputSum(int day) {
 		logger.info("Getting today platform's sum...");
 		HashMap<String, Long> result = null;
 		// 注意：86400_000L必能换成86400_000，否则会超出int型的范围，从而导致计算错误，应当为long型。
 		long currentTime = System.currentTimeMillis() - day * 86400_000L;
 		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L;
+		if (new Date(currentTime).getHours() < 8) {
+			startTime += 1 * 86400_000L;
+		}
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);
 		queryParams.setFacetField("platform");
