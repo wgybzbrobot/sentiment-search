@@ -89,7 +89,7 @@ public class OAFirstPage {
 	 */
 	@SuppressWarnings("deprecation")
 	public HashMap<String, Long> getTodayPlatformInputSum(int day) {
-		logger.info("Getting today platform's sum...");
+		logger.info("Getting today platform's sum ...");
 		HashMap<String, Long> result = null;
 		// 注意：86400_000L必能换成86400_000，否则会超出int型的范围，从而导致计算错误，应当为long型。
 		long currentTime = System.currentTimeMillis() - day * 86400_000L;
@@ -132,7 +132,7 @@ public class OAFirstPage {
 	 * 即从0点开始，每隔3个小时统计以下。
 	 */
 	public HashMap<String, Long> getTodayWeibosSum(int day, int hour) {
-		logger.info("Getting today weibos' sum...");
+		logger.info("Getting today weibos' sum ...");
 		HashMap<String, Long> result = initWeibosResult();
 		long currentTime = System.currentTimeMillis() - day * 86400_000L;
 		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L + hour * 3600_000 - 3 * 3600_000;//该天的第hour时刻
@@ -163,6 +163,7 @@ public class OAFirstPage {
 	 * @return
 	 */
 	public List<SolrDocument> getNegativeRecords(int platform, int day, int N) {
+		logger.info("Getting today negative records ...");
 		List<SolrDocument> result = new ArrayList<>();
 		List<SolrDocument> temp = null;
 		for (String negative : negatives) {
