@@ -7,6 +7,7 @@ import zx.soft.sent.web.server.FirstPageServer;
 import zx.soft.sent.web.server.HarmfulInfoServer;
 import zx.soft.sent.web.server.InternetTaskServer;
 import zx.soft.sent.web.server.NicknameGroupServer;
+import zx.soft.sent.web.server.PullRecordServer;
 import zx.soft.sent.web.server.SentimentIndexServer;
 import zx.soft.sent.web.server.SentimentSearchServer;
 import zx.soft.sent.web.server.SiteServer;
@@ -15,7 +16,7 @@ import zx.soft.sent.web.server.SpecialSpeedServer;
 
 /**
  * 驱动类
- * 
+ *
  * @author wanggang
  *
  */
@@ -32,6 +33,7 @@ public class SentWebDriver {
 			System.err.println("Usage: Input <class-name>, eg: \n" + //
 					"`sentimentIndexServer` 索引接口服务\n" + //
 					"`sentimentSearchServer` 搜索接口服务\n" + //
+					"`pullRecordServer` 数据库查询接口服务\n" + //
 					"`nicknameGroupServer` 根据nickname统计查询\n" + //
 					"`siteServer` 站点数据存储到Redis服务\n" + //
 					"`specialServer` OA专题信息CRUD服务\n" + //
@@ -53,6 +55,10 @@ public class SentWebDriver {
 			logger.info("搜索接口服务");
 			SentimentSearchServer.main(leftArgs);
 			break;
+		case "pullRecordServer":
+			logger.info("数据库查询接口服务");
+			PullRecordServer.main(leftArgs);
+			break;
 		case "nicknameGroupServer":
 			logger.info("根据nickname统计查询");
 			NicknameGroupServer.main(leftArgs);
@@ -63,6 +69,7 @@ public class SentWebDriver {
 			break;
 		case "specialServer":
 			logger.info("OA专题信息CRUD服务");
+			// 放弃
 			SpecialServer.main(leftArgs);
 			break;
 		case "specialSpeedServer":

@@ -13,8 +13,8 @@ import zx.soft.sent.dao.oracle.OracleJDBC;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
- * 将Oracle中的站点数据读取到Redis中
- * 
+ * 将Oracle中的站点数据读取到Redis中: hefei09
+ *
  * @author wanggang
  *
  */
@@ -56,6 +56,7 @@ public class OracleToRedis {
 			OracleToRedis oracleToRedis = new OracleToRedis();
 			oracleToRedis.siteMapToRedis();
 		}
+
 	}
 
 	public void siteMapToRedis() {
@@ -65,6 +66,7 @@ public class OracleToRedis {
 		ResultSet rs = oracleJDBC.query("SELECT ID,ZDMC FROM FLLB_CJLB");
 		try {
 			while (rs.next()) {
+				//				System.out.println(rs.getInt("ID") + "," + rs.getString("ZDMC"));
 				cache.hset(SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
 			}
 		} catch (SQLException e) {

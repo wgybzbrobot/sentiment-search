@@ -11,10 +11,10 @@ import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
  * OA专题查询缓存服务
- * 
- * 示例：POST: http://192.168.32.13:5900/special/{identifys}
+ *
+ * 示例：GET: http://192.168.32.13:5900/special/{identifys}
  *       408,409,410,412,413,414,415,416,417,419,427,450
- * 
+ *
  * @author wanggang
  *
  */

@@ -11,13 +11,13 @@ import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
  * OA专题查询缓存服务
- * 
+ *
  * 示例：
- *      1、POST: http://localhost:5900/special/add
+ *      1、POST: http://192.168.32.17:5900/special/add
  *      [{"identify":"absbhdfhfjfi","name":"专题1","keywords":"（合肥 and 警察） not 打人","start":"2014-08-25 00:00:00","end":"2014-08-25 23:59:59","hometype":0},{"identify":"djdjfkfklglg","name":"专题2","keywords":"（安徽 and 城管） not 暴力执法","start":"2013-08-25 00:00:00","end":"2013-08-25 23:59:59","hometype":2}]
- *      2、GET: http://localhost:5900/special/{identify}/{type}
- *      3、DELETE: http://localhost:5900/special/{identify}/remove
- * 
+ *      2、GET: http://192.168.32.17:5900/special/{identify}/{type}
+ *      3、DELETE: http://192.168.32.17:5900/special/{identify}/remove
+ *
  * @author wanggang
  *
  */

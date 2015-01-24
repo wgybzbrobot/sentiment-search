@@ -9,12 +9,11 @@ import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.search.SearchingData;
-import zx.soft.sent.web.resource.SentGetResource;
 import zx.soft.sent.web.resource.SentSearchResource;
 
 /**
  * 舆情搜索应用类
- * 
+ *
  * @author wanggang
  *
  */
@@ -39,7 +38,7 @@ public class SentiSearchApplication extends Application {
 		getContext().getParameters().add("maxTotalConnections", "1024");
 		getContext().getParameters().add("maxIoIdleTimeMs", "100");
 		router.attach("/search", SentSearchResource.class);
-		router.attach("/get", SentGetResource.class);
+		//		router.attach("/get", SentGetResource.class);
 		return router;
 	}
 

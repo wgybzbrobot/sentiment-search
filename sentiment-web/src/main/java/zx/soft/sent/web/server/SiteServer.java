@@ -11,10 +11,10 @@ import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
  * 站点组合数据服务
- * 
+ *
  * @author wanggang
  * 示例：
- *     1、http://localhost:6900/site
+ *     1、http://192.168.32.11:6900/site
  *     POST: [ "2344,543,23,1355", "667,99,145,987" ]
  *
  */
