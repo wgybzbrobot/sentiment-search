@@ -7,13 +7,14 @@ import zx.soft.sent.solr.index.ImportSentDataToDB;
 import zx.soft.sent.solr.index.ImportSentDataToSC;
 import zx.soft.sent.solr.index.ImportSinaDataToSC;
 import zx.soft.sent.solr.search.OracleToRedis;
+import zx.soft.sent.solr.search.RemoveSentiData;
 import zx.soft.sent.solr.special.SpecialTopicRun;
 import zx.soft.sent.solr.special.SpecialTopicTimer;
 import zx.soft.utils.driver.ProgramDriver;
 
 /**
  * 驱动类
- * 
+ *
  * @author wanggang
  *
  */
@@ -36,6 +37,7 @@ public class SentSolrDriver {
 			pgd.addClass("firstPageTimer", FirstPageTimer.class, "OA首页数据统计——定时分析");
 			pgd.addClass("firstPageRun", FirstPageRun.class, "OA首页数据统计——临时分析");
 			pgd.addClass("importRedisToSC", ImportRedisToSC.class, "将Redis中的数据所引到SolrCloud");
+			pgd.addClass("removeSentiData", RemoveSentiData.class, "定时删除过期数据");
 			pgd.driver(args);
 			// Success
 			exitCode = 0;
