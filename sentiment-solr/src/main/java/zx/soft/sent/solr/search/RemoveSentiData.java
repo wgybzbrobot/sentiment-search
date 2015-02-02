@@ -22,7 +22,9 @@ public class RemoveSentiData {
 	 * 主函数
 	 */
 	public static void main(String[] args) {
-
+		SearchingData search = new SearchingData();
+		search.deleteQuery("lasttime:[2000-11-27T00:00:00Z TO 2014-12-30T23:59:59Z]");
+		search.close();
 	}
 
 	public static class RemoveTimer extends TimerTask {
@@ -30,7 +32,7 @@ public class RemoveSentiData {
 		@Override
 		public void run() {
 			SearchingData search = new SearchingData();
-			search.deleteQuery("timestamp:[2000-11-27T00:00:00Z TO 2014-09-30T23:59:59Z]");
+			search.deleteQuery("timestamp:[2000-11-27T00:00:00Z TO 2014-12-30T23:59:59Z]");
 			search.close();
 		}
 
