@@ -17,9 +17,9 @@ import zx.soft.utils.time.TimeUtils;
  * @author wanggang
  *
  */
-public class RemoveSentiData {
+public class RemoveWeiboData {
 
-	private static Logger logger = LoggerFactory.getLogger(RemoveSentiData.class);
+	private static Logger logger = LoggerFactory.getLogger(RemoveWeiboData.class);
 
 	/**
 	 * 主函数
@@ -35,9 +35,9 @@ public class RemoveSentiData {
 		public void run() {
 			logger.info("Start Removing expired data ...");
 			SearchingData search = new SearchingData();
-			// 删除一个月之前的数据
-			String end = TimeUtils.transToSolrDateStr(System.currentTimeMillis() - 30 * 86400_000L);
-			String query = "timestamp:[1970-01-01T00:00:00Z TO " + end + "]";
+			// 删除七天之前的数据
+			String end = TimeUtils.transToSolrDateStr(System.currentTimeMillis() - 7 * 86400_000L);
+			String query = "platform:3 AND timestamp:[1970-01-01T00:00:00Z TO " + end + "]";
 			search.deleteQuery(query);
 			search.close();
 			logger.info("Finish Removing expired data ...");

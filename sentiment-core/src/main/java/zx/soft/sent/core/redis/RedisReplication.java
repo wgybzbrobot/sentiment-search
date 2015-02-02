@@ -16,7 +16,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * Redis主从复制客户端
- * 
+ *
  * @author wanggang
  *
  */
@@ -67,7 +67,7 @@ public class RedisReplication implements Cache {
 				jedis = null;
 			}
 		} finally {
-			// 这里很重要，一旦拿到的jedis实例使用完毕，必须要返还给池中 
+			// 这里很重要，一旦拿到的jedis实例使用完毕，必须要返还给池中
 			if (jedis != null && jedis.isConnected())
 				masterPool.returnResource(jedis);
 		}
@@ -120,6 +120,28 @@ public class RedisReplication implements Cache {
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			return null;
+		}
+	}
+
+	/**
+	 * 情况Master中的数据
+	 */
+	public void flushallMaster() {
+		Jedis jedis = getMasterJedis();
+		if (jedis == null) {
+			return;
+		}
+		try {
+			jedis.flushAll();
+		} catch (Exception e) {
+			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			if (jedis != null) {
+				masterPool.returnBrokenResource(jedis);
+				jedis = null;
+			}
+		} finally {
+			if (jedis != null && jedis.isConnected())
+				masterPool.returnResource(jedis);
 		}
 	}
 
@@ -185,7 +207,7 @@ public class RedisReplication implements Cache {
 
 	@Override
 	public void close() {
-		// 程序关闭时，需要调用关闭方法 
+		// 程序关闭时，需要调用关闭方法
 		masterPool.destroy();
 		slavePool.destroy();
 	}
