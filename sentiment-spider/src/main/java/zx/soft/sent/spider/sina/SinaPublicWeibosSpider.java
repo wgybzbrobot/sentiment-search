@@ -74,7 +74,8 @@ public class SinaPublicWeibosSpider {
 					recordInfo.setPlatform(3);
 					recordInfo.setSource_id(7);
 					recordInfo.setSource_name("新浪微博");
-					//					recordInfo.setIdentify_md5("sentiment-spider");
+					recordInfo.setLocation_code(110000);
+					recordInfo.setProvince_code(11);
 					recordInfo.setFirst_time(System.currentTimeMillis());
 					recordInfo.setUpdate_time(System.currentTimeMillis());
 					recordInfo.setLasttime(System.currentTimeMillis());
@@ -84,16 +85,16 @@ public class SinaPublicWeibosSpider {
 					recordInfo.setLocation("北京市 电信集团公司");
 					recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
 					recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
-					recordInfo.setId(CheckSumUtils.getMD5(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
-							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString())));
+					recordInfo.setId((CheckSumUtils.getMD5(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
+							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()))).toUpperCase());
 					recordInfo.setUsername(user.getFieldValue("id").toString());
 					recordInfo.setNickname(user.getFieldValue("screen_name").toString());
 					recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
 							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
 					recordInfo.setContent(weibo.getFieldValue("text").toString());
 					//					recordInfo.setLocation(user.getFieldValue("location").toString());
-					recordInfo.setCity_code(Integer.parseInt(user.getFieldValue("city").toString()));
-					recordInfo.setProvince_code(Integer.parseInt(user.getFieldValue("province").toString()));
+					//					recordInfo.setCity_code(Integer.parseInt(user.getFieldValue("city").toString()));
+					//					recordInfo.setProvince_code(Integer.parseInt(user.getFieldValue("province").toString()));
 					//					recordInfo.setLocation_code();
 					records.add(JsonUtils.toJsonWithoutPretty(recordInfo));
 				}

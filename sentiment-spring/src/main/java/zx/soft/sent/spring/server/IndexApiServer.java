@@ -16,9 +16,9 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * 用户数据接口服务
- * 
+ *
  * 接口说明：http://localhost:8900/sentiment/index   POST: PostData
- * 
+ *
  * @author wanggang
  *
  */
