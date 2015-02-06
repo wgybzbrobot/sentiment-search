@@ -29,6 +29,12 @@
 			<artifactId>redis-client</artifactId>
 			<version>1.3.0</version>
 		</dependency>
+		<!-- XML解析工具 -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 		<!-- 微博服务包 -->
 		<dependency>
 			<groupId>zx.soft</groupId>

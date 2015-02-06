@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESSAGE>
+	<DATASET name="WA_COMMON_010017" rmk="数据文件索引信息">
+		<DATA>
+			<DATASET name="WA_COMMON_010013" rmk="BCP文件格式信息">
+				<DATA>
+					<ITEM key="I010032" val="	" rmk="列分隔符(缺少值时默认为制表符\t)" />
+					<ITEM key="I010033" val="   " rmk="行分隔符(缺少值时默认为换行符\n)" />
+					<ITEM key="A010004" val="WACODE_0080" rmk="数据集代码" />
+					<ITEM key="B050016" val="138" rmk="数据来源 " />
+					<ITEM key="G020013" val="757914656" rmk="网安专用产品厂家组织机构代码" />
+					<ITEM key="F010008" val="340000" rmk="数据采集地" />
+					<ITEM key="I010038" val="1" rmk="数据起始行，可选项，不填写默认为第１行" />
+					<DATASET name="WA_COMMON_010014" rmk="BCP数据文件信息">
+						<DATA>
+							<ITEM key="H040003" val="./" rmk="文件路径" />
+							<ITEM key="H010020" val="138-340000-1423211396-10001-WACODE_0080-0.bcp"
+								rmk="文件名" />
+							<ITEM key="I010034" val="574" rmk="记录行数" />
+						</DATA>
+					</DATASET>
+					<DATASET name="WA_COMMON_010015" rmk="BCP文件数据结构">
+						<DATA>
+							<ITEM key="H100001" eng="MBLOG_ID" chn="微博ID" />
+							<ITEM key="H100008" eng="RELEVANT_USERID" chn="相关人ID" />
+							<ITEM key="H100009" eng="RELEVANT_USER_NICKNAME" chn="相关人昵称" />
+							<ITEM key="H100006" eng="WEIBO_MESSAGE" chn="微博消息内容" />
+							<ITEM key="F010008" eng="COLLECT_PLACE" chn="采集地" />
+							<ITEM key="B050012" eng="FIRST_TIME" chn="首次采集时间" />
+							<ITEM key="B050014" eng="LAST_TIME" chn="最近采集时间" />
+							<ITEM key="B050016" eng="DATA_SOURCE" chn="数据来源名称" />
+							<ITEM key="G010001" eng="DOMAIN" chn="域名" />
+							<ITEM key="H010014" eng="CAPTURE_TIME" chn="数据截获时间" />
+						</DATA>
+					</DATASET>
+				</DATA>
+			</DATASET>
+		</DATA>
+	</DATASET>
+</MESSAGE>
