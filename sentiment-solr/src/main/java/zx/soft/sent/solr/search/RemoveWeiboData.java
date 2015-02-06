@@ -1,6 +1,5 @@
 package zx.soft.sent.solr.search;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
 import org.slf4j.Logger;
@@ -25,8 +24,16 @@ public class RemoveWeiboData {
 	 * 主函数
 	 */
 	public static void main(String[] args) {
-		Timer timer = new Timer();
-		timer.schedule(new RemoveTimer(), 0, 86400_000L);
+		logger.info("Start Removing expired data ...");
+		SearchingData search = new SearchingData();
+		// 删除七天之前的数据
+		String end = TimeUtils.transToSolrDateStr(System.currentTimeMillis() - 7 * 86400_000L);
+		String query = "platform:3 AND timestamp:[1970-01-01T00:00:00Z TO " + end + "]";
+		search.deleteQuery(query);
+		search.close();
+		logger.info("Finish Removing expired data ...");
+		//		Timer timer = new Timer();
+		//		timer.schedule(new RemoveTimer(), 0, 86400_000L);
 	}
 
 	public static class RemoveTimer extends TimerTask {
