@@ -15,6 +15,9 @@ import zx.soft.utils.log.LogbackUtil;
 /**
  * 将Oracle中的站点数据读取到Redis中: hefei09
  *
+ * 运行目录：/home/zxdfs/run-work/site
+ * 运行命令：./timer.sh &
+ *
  * @author wanggang
  *
  */

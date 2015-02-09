@@ -10,13 +10,14 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * 站点组合数据服务
+ * 站点组合数据服务：hefei01
+ * 示例： http://192.168.32.11:6900/site   POST: [ "2344,543,23,1355", "667,99,145,987" ]
+ *
+ * 运行目录：/home/zxdfs/run-work/api/site
+ * 运行命令：cd sentiment-web
+ *        bin/ctl.sh start siteServer
  *
  * @author wanggang
- * 示例：
- *     1、http://192.168.32.11:6900/site
- *     POST: [ "2344,543,23,1355", "667,99,145,987" ]
- *
  */
 public class SiteServer {
 

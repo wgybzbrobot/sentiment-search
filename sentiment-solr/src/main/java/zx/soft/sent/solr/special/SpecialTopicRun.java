@@ -24,11 +24,11 @@ import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
 
 /**
- * 专题统计，详见：
- * <link>
- *       http://192.168.3.22:8080/browse/SOLRSENT-27
- * </link>
- * 
+ * OA专题统计定时分析：hefei07
+ *
+ * 运行目录：/home/zxdfs/run-work/timer/oa-special
+ * 运行命令：./special_timer.sh &
+ *
  * @author wanggang
  *
  */

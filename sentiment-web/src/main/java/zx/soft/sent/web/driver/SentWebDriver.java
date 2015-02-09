@@ -47,43 +47,53 @@ public class SentWebDriver {
 		System.arraycopy(args, 1, leftArgs, 0, leftArgs.length);
 
 		switch (args[0]) {
+		// 放弃
 		case "sentimentIndexServer":
 			logger.info("索引接口服务");
 			SentimentIndexServer.main(leftArgs);
 			break;
+		// 运行在hefei01和hefei03两台机器上
 		case "sentimentSearchServer":
 			logger.info("搜索接口服务");
 			SentimentSearchServer.main(leftArgs);
 			break;
+		// 运行在hefei01机器上
 		case "pullRecordServer":
 			logger.info("数据库查询接口服务");
 			PullRecordServer.main(leftArgs);
 			break;
+		// 运行在hefei02机器上
 		case "nicknameGroupServer":
 			logger.info("根据nickname统计查询");
 			NicknameGroupServer.main(leftArgs);
 			break;
+		// 运行在hefei01机器上
 		case "siteServer":
 			logger.info("站点数据存储到Redis服务");
 			SiteServer.main(leftArgs);
 			break;
+		// 运行在hefei07机器上
 		case "specialServer":
 			logger.info("OA专题信息CRUD服务");
-			// 放弃
+			// 准备放弃
 			SpecialServer.main(leftArgs);
 			break;
+		// 运行在hefei03机器上
 		case "specialSpeedServer":
 			logger.info("OA专题信息CRUD服务Speed");
 			SpecialSpeedServer.main(leftArgs);
 			break;
+		// 运行在hefei07机器上
 		case "firstPageServer":
 			logger.info("OA首页信息缓存服务");
 			FirstPageServer.main(leftArgs);
 			break;
+		// 运行在hefei07机器上
 		case "harmfulInfoServer":
 			logger.info("OA有害信息缓存服务");
 			HarmfulInfoServer.main(leftArgs);
 			break;
+		// 运行在hefei05机器上
 		case "internetTaskServer":
 			logger.info("全网搜索任务联合接口服务");
 			InternetTaskServer.main(leftArgs);

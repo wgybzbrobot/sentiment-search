@@ -30,17 +30,29 @@ public class SentSolrDriver {
 		int exitCode = -1;
 		ProgramDriver pgd = new ProgramDriver();
 		try {
+			// 丢弃
 			pgd.addClass("importSentDataToSC", ImportSentDataToSC.class, "导入舆情数据到SolrCloud");
+			// 丢弃
 			pgd.addClass("importSentDataToDB", ImportSentDataToDB.class, "导入舆情数据到DB");
+			// 丢弃
 			pgd.addClass("importSinaDataToSC", ImportSinaDataToSC.class, "导入新浪数据到SolrCloud");
+			// 在hefei09机器上运行
 			pgd.addClass("oracleToRedis", OracleToRedis.class, "将站点数据定时导入Redis中（默认是每小时）");
+			// 丢弃
 			pgd.addClass("specialTopicTimer", SpecialTopicTimer.class, "OA专题数据统计——定时分析");
-			pgd.addClass("specialTopicRun", SpecialTopicRun.class, "OA专题数据统计——临时分析");
+			// 丢弃
 			pgd.addClass("firstPageTimer", FirstPageTimer.class, "OA首页数据统计——定时分析");
+			// 在hefei07机器上运行
+			pgd.addClass("specialTopicRun", SpecialTopicRun.class, "OA专题数据统计——临时分析");
+			// 在hefei07机器上运行
 			pgd.addClass("firstPageRun", FirstPageRun.class, "OA首页数据统计——临时分析");
+			// 在hefei08机器上运行
 			pgd.addClass("importRedisToSC", ImportRedisToSC.class, "将Redis中的数据所引到SolrCloud");
+			// 暂时不用
 			pgd.addClass("removeSentiData", RemoveSentiData.class, "定时删除过期舆情数据");
+			// 在hefei08机器上运行
 			pgd.addClass("removeWeiboData", RemoveWeiboData.class, "定时删除过期微博数据");
+			// 暂时不用
 			pgd.addClass("removeRedisReplicationData", RemoveRedisReplicationData.class, "定时清理Redis去重数据");
 			pgd.driver(args);
 			// Success

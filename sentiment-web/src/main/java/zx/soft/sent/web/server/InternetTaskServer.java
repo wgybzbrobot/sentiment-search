@@ -11,9 +11,12 @@ import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
  * 全网搜索任务联合接口服务：hefei15
- * 
- * 示例：http://localhost:3900/task
- * 
+ * 示例：http://192.168.32.15:3900/task
+ *
+ * 运行目录：/home/zxdfs/run-work/api/internettask
+ * 运行命令：cd sentiment-web
+ *        bin/ctl.sh start internetTaskServer
+ *
  * @author wanggang
  *
  */

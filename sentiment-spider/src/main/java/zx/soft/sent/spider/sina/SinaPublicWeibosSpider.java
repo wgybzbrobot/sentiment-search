@@ -21,8 +21,12 @@ import zx.soft.weibo.sina.common.WidToMid;
 import zx.soft.weibo.sina.domain.SinaDomain;
 
 /**
- * 新浪公共微博抓取：hefei06机器
+ * 新浪公共微博抓取：hefei06
  * 单线程模式，多线程暂时不需要，因为新浪公共微博抓起过于频繁的话，重复数据太多。
+ *
+ * 运行目录：/home/zxdfs/run-work/spider
+ * 运行命令：cd sentiment-spider
+ *        ./timer-spider.sh &
  *
  * @author wanggang
  *

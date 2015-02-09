@@ -15,9 +15,12 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
- * 用户数据接口服务
+ * 用户数据接口服务：hefei01~hefei06
+ * 接口说明：http://192.168.32.1X:8900/sentiment/index   POST: PostData
  *
- * 接口说明：http://localhost:8900/sentiment/index   POST: PostData
+ * 运行目录：/home/zxdfs/run-work/api/index
+ * 运行命令：cd sentiment-spring
+ *        ./timer-index.sh &
  *
  * @author wanggang
  *

@@ -10,10 +10,13 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * OA首页查询缓存服务
- * 
+ * OA首页查询缓存服务：hefei07
  * 示例：http://localhost:5901/firstpage/{type}/{datestr}
- * 
+ *
+ * 运行目录：/home/zxdfs/run-work/api/oa-firstpage
+ * 运行命令：cd sentiment-web
+ *        bin/ctl.sh start firstPageServer
+ *
  * @author wanggang
  *
  */

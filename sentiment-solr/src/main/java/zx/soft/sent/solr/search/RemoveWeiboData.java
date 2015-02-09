@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import zx.soft.utils.time.TimeUtils;
 
 /**
- * 定时删除
+ * 定时删除微博数据：hefei08
  *
- * 1、删除1周前的微博数据
- * 2、删除1个月前的其他数据
+ * 运行目录：/home/zxdfs/run-work/remove/weibos
+ * 运行命令：cd sentiment-solr
+ *        ./timer-remove-weibos.sh &
  *
  * @author wanggang
  *

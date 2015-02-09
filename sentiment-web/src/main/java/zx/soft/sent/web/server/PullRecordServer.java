@@ -10,10 +10,13 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- *  从Mysql中根据id获取记录数据
- *
+ *  从Mysql中根据id获取记录数据：hefei01
  *  示例：
  *       根据多个id、关键词、高亮标签查询数据：http://192.168.32.11:7900/sentiment/pull/ids/{ids}?keyword=XXXX&hlsimple=red
+ *
+ *  运行目录：/home/zxdfs/run-work/api/mysql
+ *  运行命令：cd sentiment-web
+ *         bin/ctl.sh start pullRecordServer
  *
  * @author wanggang
  *

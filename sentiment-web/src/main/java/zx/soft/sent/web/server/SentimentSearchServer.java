@@ -10,10 +10,13 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * 舆情搜索Server
- * 
+ * 舆情搜索服务：hefei01和hefei03
  * 搜索示例：
  * http://localhost:8901/sentiment/search?q=美食&fq=platform:7&sort=lasttime:desc&start=10&rows=50&fl=username,nickname&wt=xml&hlfl=content&facetQuery=abc&facetField=nickname
+ *
+ * 运行目录：/home/zxdfs/run-work/api/search
+ * 运行命令： cd sentiment-web
+ *         bin/ctl.sh start sentimentSearchServer
  *
  * @author wanggang
  *

@@ -12,7 +12,11 @@ import zx.soft.sent.solr.utils.RedisMQ;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
- * hefei08运行
+ * 将Redis消息队列中的数据所引到SolrCloud：hefei08运行
+ *
+ * 运行目录：/home/zxdfs/run-work/index
+ * 运行命令： cd sentiment-solr
+ *         bin/ctl.sh start importRedisToSC
  *
  * @author wanggang
  *

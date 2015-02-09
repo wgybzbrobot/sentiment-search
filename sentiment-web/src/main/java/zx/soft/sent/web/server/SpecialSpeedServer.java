@@ -10,10 +10,13 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * OA专题查询缓存服务
- *
+ * OA专题查询缓存服务：hefei03
  * 示例：GET: http://192.168.32.13:5900/special/{identifys}
  *       408,409,410,412,413,414,415,416,417,419,427,450
+ *
+ * 运行目录：/home/zxdfs/run-work/api/special
+ * 运行命令：cd sentiment-web
+ *        bin/ctl.sh start specialSpeedServer
  *
  * @author wanggang
  *

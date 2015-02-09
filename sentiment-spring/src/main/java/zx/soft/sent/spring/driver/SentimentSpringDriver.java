@@ -5,7 +5,7 @@ import zx.soft.utils.driver.ProgramDriver;
 
 /**
  * 驱动类
- * 
+ *
  * @author wanggang
  *
  */
@@ -19,6 +19,7 @@ public class SentimentSpringDriver {
 		int exitCode = -1;
 		ProgramDriver pgd = new ProgramDriver();
 		try {
+			// 运行在hefei01~hefei06机器上
 			pgd.addClass("indexApiServer", IndexApiServer.class, "舆情数据索引接口");
 			pgd.driver(args);
 			// Success

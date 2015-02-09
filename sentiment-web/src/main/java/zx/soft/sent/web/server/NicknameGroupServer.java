@@ -10,10 +10,12 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * 舆情搜索Server，针对nickname
- * 
- * 搜索示例：
- * http://192.168.32.12:8901/sentiment/search?q=合肥&fq=timestamp:[2014-12-23T00:00:00Z TO 2014-12-29T23:59:59Z]
+ * 舆情搜索Server，针对nickname：hefei02
+ * 搜索示例：http://192.168.32.12:8901/sentiment/search?q=合肥&fq=timestamp:[2014-12-23T00:00:00Z TO 2014-12-29T23:59:59Z]
+ *
+ * 运行目录：/home/zxdfs/run-work/api/nicknamegroup
+ * 运行命令： cd sentiment-web
+ *         bin/ctl.sh start nicknameGroupServer
  *
  * @author wanggang
  *

@@ -20,6 +20,15 @@ import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.sort.InsertSort;
 
+/**
+ * OA首页信息定时分析：hefei07
+ *
+ * 运行目录：/home/zxdfs/run-work/timer/oa-firstpage
+ * 运行命令：./firstpage_timer.sh &
+ *
+ * @author wanggang
+ *
+ */
 public class FirstPageRun {
 
 	private static Logger logger = LoggerFactory.getLogger(FirstPageRun.class);
@@ -27,7 +36,7 @@ public class FirstPageRun {
 	private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd,HH");
 
 	public FirstPageRun() {
-		//		
+		//
 	}
 
 	/**

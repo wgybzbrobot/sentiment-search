@@ -10,10 +10,14 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * OA有害信息查询，根据关键词keywords查询最近7天的数据，并根据评分排序，返回num条结果。
- * 
+ * OA有害信息查询：hefei07
+ * 根据关键词keywords查询最近7天的数据，并根据评分排序，返回num条结果。
  * 示例：http://localhost:4900/harmful/{keywords}/{num}
- * 
+ *
+ * 运行目录：/home/zxdfs/run-work/api/oa-harmful
+ * 运行命令：cd sentiment-web
+ *        bin/ctl.sh start harmfulInfoServer
+ *
  * @author wanggang
  *
  */
