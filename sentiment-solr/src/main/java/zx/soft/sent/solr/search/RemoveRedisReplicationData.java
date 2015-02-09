@@ -1,6 +1,5 @@
 package zx.soft.sent.solr.search;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
 import org.slf4j.Logger;
@@ -25,8 +24,13 @@ public class RemoveRedisReplicationData {
 	 * 主函数
 	 */
 	public static void main(String[] args) {
-		Timer timer = new Timer();
-		timer.schedule(new RemoveTimer(), 0, 86400_000L);
+		logger.info("Start Removing redis-replication data ...");
+		RedisReplication pool = new RedisReplication();
+		pool.flushallMaster();
+		pool.close();
+		logger.info("Finish Removing redis-replication data ...");
+		//		Timer timer = new Timer();
+		//		timer.schedule(new RemoveTimer(), 0, 86400_000L);
 	}
 
 	public static class RemoveTimer extends TimerTask {
