@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.solr.utils.RedisCacheExpired;
 import zx.soft.sent.solr.utils.RedisMQ;
-import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 将Redis消息队列中的数据所引到SolrCloud：hefei08运行
@@ -79,11 +78,11 @@ public class ImportRedisToSC {
 			}
 			logger.info("Finishing index ...");
 			// 休息2秒
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			}
+			//			try {
+			//				Thread.sleep(2000);
+			//			} catch (InterruptedException e) {
+			//				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			//			}
 		}
 	}
 

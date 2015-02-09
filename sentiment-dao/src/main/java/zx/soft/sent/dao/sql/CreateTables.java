@@ -2,7 +2,7 @@ package zx.soft.sent.dao.sql;
 
 /**
  * 创建舆情相关数据表，根据crc32校验码hash分表。
- * 
+ *
  * @author wanggang
  *
  */
