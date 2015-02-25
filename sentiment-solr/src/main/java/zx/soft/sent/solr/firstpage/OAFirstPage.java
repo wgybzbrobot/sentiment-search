@@ -215,7 +215,7 @@ public class OAFirstPage {
 		queryParams.setQ(q);
 		queryParams.setQop("OR");
 		queryParams.setRows(N);
-		queryParams.setFq("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
+		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(currentTime) + "];platform:" + platform);
 		QueryResult queryResult = search.queryData(queryParams, false);
 		return queryResult.getResults();
