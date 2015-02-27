@@ -34,6 +34,10 @@
 			<artifactId>negative-sentiment</artifactId>
 			<version>2.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
 		<!-- 日志包 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -45,6 +49,11 @@
 			<artifactId>jsoup</artifactId>
 		</dependency>
 		<!-- JSON包 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
