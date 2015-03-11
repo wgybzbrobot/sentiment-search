@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.allinternet.InternetTask;
+import zx.soft.sent.dao.domain.allinternet.TaskResult;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
@@ -34,7 +35,7 @@ public class AllInternet {
 	}
 
 	/**
-	 * 任务信息插入
+	 * 插入任务的缓存信息
 	 */
 	public void insertInternetTask(InternetTask internetTask) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
@@ -44,9 +45,9 @@ public class AllInternet {
 	}
 
 	/**
-	 * 任务信息查询：根据identify
+	 * 查询任务的缓存信息
 	 */
-	public InternetTask selectInternetTask(String identify) {
+	public TaskResult selectInternetTask(String identify) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
 			return mapper.selectInternetTask(identify);
@@ -54,27 +55,17 @@ public class AllInternet {
 	}
 
 	/**
-	 * 任务信息查询：查询未完成任务，并按照最后更新时间降序
+	 * 更新任务的缓存信息
 	 */
-	public List<InternetTask> selectInternetTasks(Date startTime) {
+	public void updateInternetTask(InternetTask internetTask) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			return mapper.selectInternetTasks(startTime);
+			mapper.updateInternetTask(internetTask);
 		}
 	}
 
 	/**
-	 * 任务信息中isover字段更新
-	 */
-	public void updateInternetTaskIsOver(String identify, int isOver) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			mapper.updateInternetTaskIsOver(identify, isOver);
-		}
-	}
-
-	/**
-	 * 任务信息最近更新时间字段更新
+	 * 更新任务的最新查询时间lasttime
 	 */
 	public void updateInternetTaskLasttime(String identify) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
@@ -84,52 +75,22 @@ public class AllInternet {
 	}
 
 	/**
-	 * 任务信息删除
+	 * 查询固定时间内的所有任务identify
+	 */
+	public List<String> selectInternetTaskIdentifys(Date startTime) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
+			return mapper.selectInternetTaskIdentifys(startTime);
+		}
+	}
+
+	/**
+	 * 删除任务的缓存信息
 	 */
 	public void deleteInternetTask(String identify) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
 			mapper.deleteInternetTask(identify);
-		}
-	}
-
-	/**
-	 * 任务查询结果插入
-	 */
-	public void insertInternetTaskQuery(String identify, String queryResult) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			mapper.insertInternetTaskQuery(identify, queryResult);
-		}
-	}
-
-	/**
-	 * 任务查询结果查询
-	 */
-	public String selectInternetTaskQuery(String identify) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			return mapper.selectInternetTaskQuery(identify);
-		}
-	}
-
-	/**
-	 * 任务查询结果更新
-	 */
-	public void updateInternetTaskQuery(String identify, String queryResult) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			mapper.updateInternetTaskQuery(identify, queryResult);
-		}
-	}
-
-	/**
-	 * 任务查询结果删除
-	 */
-	public void deleteInternetTaskQuery(String identify) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
-			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			mapper.deleteInternetTaskQuery(identify);
 		}
 	}
 

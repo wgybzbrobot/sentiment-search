@@ -25,6 +25,7 @@
 		<typeAlias alias="SpecialTopic" type="zx.soft.sent.dao.domain.special.SpecialTopic"/>
 		<!-- OA全网搜索 -->
 		<typeAlias alias="InternetTask" type="zx.soft.sent.dao.domain.allinternet.InternetTask"/>
+		<typeAlias alias="TaskResult" type="zx.soft.sent.dao.domain.allinternet.TaskResult"/>
 	</typeAliases>
 	<environments default="sentiment">
 		<environment id="sentiment">

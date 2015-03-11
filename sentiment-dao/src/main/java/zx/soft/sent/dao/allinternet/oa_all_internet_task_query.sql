@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-03-11 08:19:19
+-- Generation Time: 2015-03-11 12:28:03
 -- 服务器版本： 5.5.37-MariaDB-log
 -- PHP Version: 5.5.12
 
@@ -29,9 +29,15 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `oa_all_internet_task_query` (
 `id` int(11) NOT NULL COMMENT '自增ID',
   `identify` char(32) NOT NULL COMMENT '任务MD5唯一ID',
-  `query_result` mediumtext NOT NULL COMMENT '查询结果',
-  `lasttime` datetime NOT NULL COMMENT '记录时间'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='OA全网搜索任务缓存数据表' AUTO_INCREMENT=4 ;
+  `keywords` char(250) NOT NULL COMMENT '关键词组',
+  `start_time` char(20) NOT NULL COMMENT '监测开始时间',
+  `end_time` char(20) NOT NULL COMMENT '监测结束时间',
+  `source_ids` varchar(500) NOT NULL COMMENT '来源ID列表',
+  `local_count` int(10) unsigned NOT NULL COMMENT '本地搜索量',
+  `autm_count` int(10) unsigned NOT NULL COMMENT '元搜索量',
+  `all_count` int(10) unsigned NOT NULL COMMENT '总量',
+  `lasttime` datetime NOT NULL COMMENT '最新查询时间'
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='OA全网搜索任务缓存数据表' AUTO_INCREMENT=8 ;
 
 --
 -- Indexes for dumped tables
@@ -51,7 +57,7 @@ ALTER TABLE `oa_all_internet_task_query`
 -- AUTO_INCREMENT for table `oa_all_internet_task_query`
 --
 ALTER TABLE `oa_all_internet_task_query`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
