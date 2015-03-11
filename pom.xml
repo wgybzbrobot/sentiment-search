@@ -21,6 +21,7 @@
 		<module>sentiment-core</module>
 		<module>sentiment-web</module>
 		<module>sentiment-spring</module>
+		<module>sentiment-api</module>
 	</modules>
 
 	<dependencies>
