@@ -25,7 +25,7 @@ import zx.soft.sent.api.service.SimpleService;
  */
 @Controller
 @RequestMapping("/oa/allinternet")
-public class OAAllInternetController {
+public class AllInternetTaskController {
 
 	@Inject
 	private SimpleService simpleService;
