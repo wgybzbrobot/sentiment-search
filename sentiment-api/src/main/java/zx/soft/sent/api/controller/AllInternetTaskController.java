@@ -16,15 +16,14 @@ import zx.soft.sent.api.service.SimpleService;
  * OA全网任务缓存查询控制类
  *
  * 接口说明：
- *       1、POST:   http://192.168.32.17:2900/sentiment/oa/internet             不返回数据
- *       2、DELETE: http://192.168.32.17:2900/sentiment/oa/internet/{identify}  不返回数据
- *       3、POST:   http://192.168.32.17:2900/sentiment/oa/internet/cache       返回缓存数据
+ *       1、POST:   http://192.168.32.17:2900/sentiment/oa/tasks       返回缓存数据
+ *       2、DELETE: http://192.168.32.17:2900/sentiment/oa/tasks/{identify}  不返回数据
  *
  * @author wanggang
  *
  */
 @Controller
-@RequestMapping("/oa/allinternet")
+@RequestMapping("/sentiment/oa/tasks")
 public class AllInternetTaskController {
 
 	@Inject
