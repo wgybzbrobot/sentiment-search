@@ -28,6 +28,11 @@ public class AllInternetDemo {
 		System.out.println(JsonUtils.toJson(allInternet.selectInternetTask("absdjdff")));
 		System.out.println(JsonUtils.toJson(allInternet.selectInternetTask("jiioiyyf")));
 		/**
+		 * 判断任务是否存在
+		 */
+		System.out.println(allInternet.isInternetTaskExisted("absdjdff"));
+		System.out.println(allInternet.isInternetTaskExisted("absdjdfff"));
+		/**
 		 * 更新任务的缓存信息
 		 */
 		InternetTask task3 = new InternetTask("absdjdff", "测试数据1", "2015-02-01T01:34:40Z", "2015-02-02T01:34:40Z",
@@ -35,9 +40,9 @@ public class AllInternetDemo {
 		allInternet.updateInternetTask(task3);
 		System.out.println(JsonUtils.toJson(allInternet.selectInternetTask("absdjdff")));
 		/**
-		 * 更新任务的最新查询时间lasttime
+		 * 更新任务的最新查询时间
 		 */
-		allInternet.updateInternetTaskLasttime("absdjdff");
+		allInternet.updateInternetTaskQuerytime("absdjdff");
 		System.out.println(JsonUtils.toJson(allInternet.selectInternetTask("absdjdff")));
 		/**
 		 * 查询固定时间内的所有任务identify

@@ -12,7 +12,7 @@ public class InternetTask implements Serializable {
 
 	private static final long serialVersionUID = -3367601380930928682L;
 
-	private String identify; // MD5值,gjc,id,cjsj MD5大写
+	private String identify; // MD5值, id,gjc,cjsj MD5大写
 	private String keywords; // 关键词组
 	private String start_time; // 2015-02-02T01:34:40Z
 	private String end_time; // 2015-02-02T01:34:40Z
@@ -23,6 +23,15 @@ public class InternetTask implements Serializable {
 
 	public InternetTask() {
 		//
+	}
+
+	public InternetTask(String identify, String keywords, String start_time, String end_time, String source_ids) {
+		super();
+		this.identify = identify;
+		this.keywords = keywords;
+		this.start_time = start_time;
+		this.end_time = end_time;
+		this.source_ids = source_ids;
 	}
 
 	public InternetTask(String identify, String keywords, String start_time, String end_time, String source_ids,

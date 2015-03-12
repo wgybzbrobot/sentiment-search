@@ -55,6 +55,20 @@ public class AllInternet {
 	}
 
 	/**
+	 * 判断任务是否存在
+	 */
+	public boolean isInternetTaskExisted(String identify) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
+			if (mapper.selectInternetTaskIdentify(identify) == null) {
+				return Boolean.FALSE;
+			} else {
+				return Boolean.TRUE;
+			}
+		}
+	}
+
+	/**
 	 * 更新任务的缓存信息
 	 */
 	public void updateInternetTask(InternetTask internetTask) {
@@ -67,10 +81,10 @@ public class AllInternet {
 	/**
 	 * 更新任务的最新查询时间lasttime
 	 */
-	public void updateInternetTaskLasttime(String identify) {
+	public void updateInternetTaskQuerytime(String identify) {
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			AllInternetMapper mapper = sqlSession.getMapper(AllInternetMapper.class);
-			mapper.updateInternetTaskLasttime(identify);
+			mapper.updateInternetTaskQuerytime(identify);
 		}
 	}
 

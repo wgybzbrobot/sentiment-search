@@ -23,8 +23,8 @@ public interface AllInternetMapper {
 	 * 插入任务的缓存信息
 	 */
 	@Insert("INSERT INTO `oa_all_internet_task_query` (`identify`,`keywords`,`start_time`,`end_time`,`source_ids`,"
-			+ "`local_count`,`autm_count`,`all_count`,`lasttime`) VALUES (#{identify},#{keywords},#{start_time},"
-			+ "#{end_time},#{source_ids},#{local_count},#{autm_count},#{all_count},NOW())")
+			+ "`local_count`,`autm_count`,`all_count`,`query_time`,`lasttime`) VALUES (#{identify},#{keywords},#{start_time},"
+			+ "#{end_time},#{source_ids},#{local_count},#{autm_count},#{all_count},NOW(),NOW())")
 	public void insertInternetTask(InternetTask internetTask);
 
 	/**
@@ -34,22 +34,29 @@ public interface AllInternetMapper {
 	public TaskResult selectInternetTask(String identify);
 
 	/**
+	 * 查询任务的identify
+	 */
+	@Select("SELECT `identify` FROM `oa_all_internet_task_query` WHERE `identify` = #{identify}")
+	public String selectInternetTaskIdentify(String identify);
+
+	/**
 	 * 更新任务的缓存信息
 	 */
 	@Update("UPDATE `oa_all_internet_task_query` SET `end_time` = #{end_time},`source_ids` = #{source_ids},"
-			+ "`local_count` = #{local_count},`autm_count` = #{autm_count},`all_count` = #{all_count} WHERE `identify` = #{identify}")
+			+ "`local_count` = #{local_count},`autm_count` = #{autm_count},`all_count` = #{all_count},"
+			+ "`lasttime` = NOW() WHERE `identify` = #{identify}")
 	public void updateInternetTask(InternetTask internetTask);
 
 	/**
-	 * 更新任务的最新查询时间lasttime
+	 * 更新任务的最新查询时间
 	 */
-	@Update("UPDATE `oa_all_internet_task_query` SET `lasttime` = NOW() WHERE `identify` = #{identify}")
-	public void updateInternetTaskLasttime(String identify);
+	@Update("UPDATE `oa_all_internet_task_query` SET `query_time` = NOW() WHERE `identify` = #{identify}")
+	public void updateInternetTaskQuerytime(String identify);
 
 	/**
 	 * 查询固定时间内的所有任务identify
 	 */
-	@Select("SELECT `identify` FROM `oa_all_internet_task_query` WHERE `lasttime` >= #{startTime}")
+	@Select("SELECT `identify` FROM `oa_all_internet_task_query` WHERE `query_time` >= #{startTime}")
 	public List<String> selectInternetTaskIdentifys(Date startTime);
 
 	/**
