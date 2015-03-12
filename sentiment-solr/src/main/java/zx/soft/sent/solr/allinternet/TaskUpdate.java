@@ -65,8 +65,10 @@ public class TaskUpdate {
 
 	public static void main(String[] args) throws SQLException {
 		TaskUpdate taskUpdate = new TaskUpdate();
-		taskUpdate.tackleExecutedTasks();
-		taskUpdate.tackleFinishedTasks();
+		while (true) {
+			taskUpdate.tackleExecutedTasks();
+			taskUpdate.tackleFinishedTasks();
+		}
 		//		taskUpdate.close(); // 多线程不能关闭
 	}
 
@@ -77,6 +79,9 @@ public class TaskUpdate {
 		HashMap<String, InternetTask> tasks;
 		try {
 			tasks = getTasks(QUERY_UPDATED);
+			if (tasks == null) {
+				return;
+			}
 			logger.info("Updating executed tasks' size={}", tasks.size());
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
 				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));
@@ -94,6 +99,9 @@ public class TaskUpdate {
 		HashMap<String, InternetTask> tasks;
 		try {
 			tasks = getTasks(QUERY_FINISHED);
+			if (tasks == null) {
+				return;
+			}
 			logger.info("Updating finished tasks' size={}", tasks.size());
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
 				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));

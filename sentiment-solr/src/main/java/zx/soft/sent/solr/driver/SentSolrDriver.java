@@ -55,7 +55,7 @@ public class SentSolrDriver {
 			pgd.addClass("removeWeiboData", RemoveWeiboData.class, "定时删除过期微博数据");
 			// 暂时不用
 			pgd.addClass("removeRedisReplicationData", RemoveRedisReplicationData.class, "定时清理Redis去重数据");
-			// OA全网搜索更新缓存
+			// 在hefei07机器上运行
 			pgd.addClass("taskUpdate", TaskUpdate.class, "全网任务信息查询结果存储缓存信息");
 			pgd.driver(args);
 			// Success
