@@ -16,7 +16,7 @@ import zx.soft.sent.api.service.SimpleService;
  * 简单控制类示例
  *
  *  接口说明：
- *       1、GET: http://localhost:1234/simple/{uid}/{name}
+ *       1、GET: http://localhost:2900/simple/{uid}/{name}
  *
  * @author wanggang
  *

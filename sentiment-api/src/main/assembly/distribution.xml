@@ -13,7 +13,7 @@
 			<directory>src/main/resources</directory>
 			<includes>
 				<include>logback.xml</include>
-				<include>applicationContext.xml</include>
+				<include>data_db.properties</include>
 				<include>web-server.properties</include>
 			</includes>
 			<outputDirectory>/conf</outputDirectory>

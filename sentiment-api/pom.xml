@@ -20,6 +20,14 @@
 		</dependency>
 		<!-- Json包 -->
 		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 		</dependency>
@@ -76,6 +84,23 @@
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 		</dependency>
+		<!-- 日志包 -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 		<!-- Spring专用日志包 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -96,7 +121,7 @@
 				<configuration>
 					<excludes>
 						<exclude>logback.xml</exclude>
-						<exclude>applicationContext.xml</exclude>
+						<exclude>data_db.properties</exclude>
 						<exclude>web-server.properties</exclude>
 					</excludes>
 				</configuration>
@@ -119,6 +144,16 @@
 				</executions>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<targetPath>webapp</targetPath>
+				<directory>src/main/webapp</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 
 		<finalName>${project.artifactId}-${project.version}</finalName>
 
