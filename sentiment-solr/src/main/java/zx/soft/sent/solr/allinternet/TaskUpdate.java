@@ -41,14 +41,10 @@ public class TaskUpdate {
 	private AllInternet allInternet;
 
 	// 查询需要更新缓存信息的任务
-	public static final String QUERY_UPDATED = "select t1.id,t1.gjc,t1.cjsj,t1.jssj,t3.sourceid,t1.cjzid from "
-			+ "JHRW_RWDD t1,JHRW_RWZX t2,FLLB_CJLB t3 where t1.rwzt in (0,1) and t1.bz=1 and "
-			+ "t1.id=t2.rwjhid and t2.sswz=t3.id"; // and t1.jssj>sysdate-30，因为有些没有结束时间，所以不能使用结束时间限定
+	public static final String QUERY_UPDATED = "select id,gjc,cjsj,jssj,cjzid,sourceid from JHRW_WWC";
 
 	// 查询最近一天内已经完成的任务
-	public static final String QUERY_FINISHED = "select t1.id,t1.gjc,t1.cjsj,t1.jssj,t3.sourceid,t1.cjzid from "
-			+ "JHRW_RWDD t1,JHRW_RWZX t2,FLLB_CJLB t3 where t1.rwzt=2 and t1.bz=1 and t1.id=t2.rwjhid "
-			+ "and t2.sswz=t3.id and t1.jssj>sysdate-1";
+	public static final String QUERY_FINISHED = "select id,gjc,cjsj,jssj,cjzid,sourceid from JHRW_YWC";
 
 	public TaskUpdate() {
 		this.oracleJDBC = new OracleJDBC();
@@ -65,10 +61,10 @@ public class TaskUpdate {
 
 	public static void main(String[] args) throws SQLException {
 		TaskUpdate taskUpdate = new TaskUpdate();
-		while (true) {
-			taskUpdate.tackleExecutedTasks();
-			taskUpdate.tackleFinishedTasks();
-		}
+		//		while (true) {
+		taskUpdate.tackleExecutedTasks();
+		//			taskUpdate.tackleFinishedTasks();
+		//		}
 		//		taskUpdate.close(); // 多线程不能关闭
 	}
 
@@ -86,7 +82,7 @@ public class TaskUpdate {
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
 				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
@@ -106,7 +102,7 @@ public class TaskUpdate {
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
 				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}

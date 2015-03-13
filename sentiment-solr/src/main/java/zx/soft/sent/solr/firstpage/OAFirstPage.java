@@ -55,11 +55,11 @@ public class OAFirstPage {
 		//		HashMap<String, Long> currentPSum = firstPage.getCurrentPlatformSum();
 		//		System.out.println(JsonUtils.toJson(currentPSum));
 		// 2、统计当天各类数据的进入量，其中day=0表示当天的数据
-		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
-		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
+		//		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
+		//		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
 		// 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
-		//		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
-		//		System.out.println(JsonUtils.toJson(todayWeibosSum));
+		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
+		System.out.println(JsonUtils.toJson(todayWeibosSum));
 		//		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
 		//		System.out.println(JsonUtils.toJson(todayWeibos));
 		firstPage.close();
@@ -135,11 +135,13 @@ public class OAFirstPage {
 		logger.info("Getting today weibos' sum ...");
 		HashMap<String, Long> result = initWeibosResult();
 		long currentTime = System.currentTimeMillis() - day * 86400_000L;
-		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L + hour * 3600_000 - 3 * 3600_000;//该天的第hour时刻
-		long endTime = startTime + 3 * 3600_000; // 该天的第hour+3时刻，时间间隔为三小时
+		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L + hour * 3600_000L - 3 * 3600_000L;//该天的第hour-3时刻
+		long endTime = startTime + 3 * 3600_000L; // 该天的第hour时刻，时间间隔为三小时
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);
 		queryParams.setFacetField("source_name");
+		System.out.println("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
+				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
 		queryParams.setFq("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
 		QueryResult queryResult = search.queryData(queryParams, false);
