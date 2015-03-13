@@ -1,5 +1,6 @@
 package zx.soft.sent.api.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,7 +25,7 @@ public class OATasksService {
 	/**
 	 * 根据多个identify查询缓存结果
 	 */
-	public List<TaskResult> getQueryResults(List<String> identifys) {
+	public HashMap<String, TaskResult> getQueryResults(List<String> identifys) {
 		return oATaskAccess.getQueryResults(identifys);
 	}
 

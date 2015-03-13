@@ -41,10 +41,13 @@ public class TaskUpdate {
 	private AllInternet allInternet;
 
 	// 查询需要更新缓存信息的任务
-	public static final String QUERY_UPDATED = "select id,gjc,cjsj,jssj,cjzid,sourceid from JHRW_WWC";
+	public static final String QUERY_EXECUTED = "select id,gjc,cjsj,jssj,cjzid,sourceid from JHRW_WWC";
 
 	// 查询最近一天内已经完成的任务
 	public static final String QUERY_FINISHED = "select id,gjc,cjsj,jssj,cjzid,sourceid from JHRW_YWC";
+
+	// 所有任务
+	public static final String ALL_TASKS = "select id,gjc,cjsj,jssj,cjzid,sourceid from JHRW_ALL";
 
 	public TaskUpdate() {
 		this.oracleJDBC = new OracleJDBC();
@@ -61,6 +64,9 @@ public class TaskUpdate {
 
 	public static void main(String[] args) throws SQLException {
 		TaskUpdate taskUpdate = new TaskUpdate();
+		// 只进行一次
+		//		taskUpdate.tackleAllTasks();
+		// 循环更新
 		while (true) {
 			taskUpdate.tackleExecutedTasks();
 			taskUpdate.tackleFinishedTasks();
@@ -69,36 +75,37 @@ public class TaskUpdate {
 	}
 
 	/**
+	 * 获取全部任务
+	 */
+	public void tackleAllTasks() {
+		logger.info("Updating all tasks ...");
+		tackleTasks(ALL_TASKS);
+	}
+
+	/**
 	 * 获取需要更新的任务
 	 */
 	public void tackleExecutedTasks() {
-		HashMap<String, InternetTask> tasks;
-		try {
-			tasks = getTasks(QUERY_UPDATED);
-			if (tasks == null) {
-				return;
-			}
-			logger.info("Updating executed tasks' size={}", tasks.size());
-			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
-				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));
-			}
-		} catch (Exception e) {
-			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			throw new RuntimeException(e);
-		}
+		logger.info("Updating executed tasks ...");
+		tackleTasks(QUERY_EXECUTED);
 	}
 
 	/**
 	 * 获取一天内已经完成的任务
 	 */
 	public void tackleFinishedTasks() {
+		logger.info("Updating finished tasks ...");
+		tackleTasks(QUERY_FINISHED);
+	}
+
+	private void tackleTasks(String query) {
 		HashMap<String, InternetTask> tasks;
 		try {
-			tasks = getTasks(QUERY_FINISHED);
+			tasks = getTasks(query);
 			if (tasks == null) {
 				return;
 			}
-			logger.info("Updating finished tasks' size={}", tasks.size());
+			logger.info("Updating tasks' size={}", tasks.size());
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
 				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));
 			}
@@ -111,7 +118,7 @@ public class TaskUpdate {
 	/**
 	 * 获取需要更新的任务信息
 	 */
-	public HashMap<String, InternetTask> getTasks(String query) throws SQLException {
+	private HashMap<String, InternetTask> getTasks(String query) throws SQLException {
 		HashMap<String, InternetTask> result = new HashMap<>();
 		ResultSet rs = oracleJDBC.query(query);
 		if (rs == null) {

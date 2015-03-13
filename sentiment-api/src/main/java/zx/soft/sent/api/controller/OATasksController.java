@@ -1,5 +1,6 @@
 package zx.soft.sent.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +40,7 @@ public class OATasksController {
 	 */
 	@RequestMapping(value = "/tasks", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<TaskResult> queryGenderByUid(@RequestBody List<String> identifys) {
+	public @ResponseBody HashMap<String, TaskResult> queryGenderByUid(@RequestBody List<String> identifys) {
 		return oATasksService.getQueryResults(identifys);
 	}
 
