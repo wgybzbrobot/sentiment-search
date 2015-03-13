@@ -61,10 +61,10 @@ public class TaskUpdate {
 
 	public static void main(String[] args) throws SQLException {
 		TaskUpdate taskUpdate = new TaskUpdate();
-		//		while (true) {
-		taskUpdate.tackleExecutedTasks();
-		//			taskUpdate.tackleFinishedTasks();
-		//		}
+		while (true) {
+			taskUpdate.tackleExecutedTasks();
+			taskUpdate.tackleFinishedTasks();
+		}
 		//		taskUpdate.close(); // 多线程不能关闭
 	}
 
