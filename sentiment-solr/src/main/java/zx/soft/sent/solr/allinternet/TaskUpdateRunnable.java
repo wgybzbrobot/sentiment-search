@@ -39,28 +39,28 @@ public class TaskUpdateRunnable implements Runnable {
 	@Override
 	public void run() {
 		//		System.out.println(COUNT.addAndGet(1));
-		/*
-		 * 执行查询
-		 */
-		// 本地库总量
-		QueryParams queryParams = new QueryParams();
-		queryParams.setQ(task.getKeywords());
-		queryParams.setFq("first_time:[2000-01-01T00:00:00Z TO " + task.getStart_time() + "]");
-		queryParams.setRows(0);
-		QueryResult result = search.queryData(queryParams, true);
-		int localCount = (int) result.getNumFound();
-		// 元搜索总量
-		queryParams.setFq("first_time:[" + task.getStart_time() + " TO " + task.getEnd_time() + "];" + "source_id:"
-				+ task.getSource_ids());
-		result = search.queryData(queryParams, true);
-		int autmCount = (int) result.getNumFound();
-
-		/*
-		 * 执行数据写入MySQL
-		 */
-		InternetTask newTask = new InternetTask(task.getIdentify(), task.getKeywords(), task.getStart_time(),
-				task.getEnd_time(), task.getSource_ids(), localCount, autmCount);
 		try {
+			/*
+			 * 执行查询
+			 */
+			// 本地库总量
+			QueryParams queryParams = new QueryParams();
+			queryParams.setQ(task.getKeywords().replaceAll("\"", "")); // 防止单引号问题
+			queryParams.setFq("first_time:[2000-01-01T00:00:00Z TO " + task.getStart_time() + "]");
+			queryParams.setRows(0);
+			QueryResult result = search.queryData(queryParams, true);
+			int localCount = (int) result.getNumFound();
+			// 元搜索总量
+			queryParams.setFq("first_time:[" + task.getStart_time() + " TO " + task.getEnd_time() + "];" + "source_id:"
+					+ task.getSource_ids());
+			result = search.queryData(queryParams, true);
+			int autmCount = (int) result.getNumFound();
+
+			/*
+			 * 执行数据写入MySQL
+			 */
+			InternetTask newTask = new InternetTask(task.getIdentify(), task.getKeywords(), task.getStart_time(),
+					task.getEnd_time(), task.getSource_ids(), localCount, autmCount);
 			if (allInternet.isInternetTaskExisted(task.getIdentify())) {
 				// 如果该任务缓存信息存在，则更新
 				allInternet.updateInternetTask(newTask);
