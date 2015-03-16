@@ -45,7 +45,8 @@ public class TaskUpdateRunnable implements Runnable {
 			 */
 			// 本地库总量
 			QueryParams queryParams = new QueryParams();
-			queryParams.setQ(task.getKeywords().replaceAll("\"", "")); // 防止单引号问题
+			//			queryParams.setQ(task.getKeywords().replaceAll("\"", "")); // 防止单引号问题
+			queryParams.setQ(task.getKeywords());
 			queryParams.setFq("first_time:[2000-01-01T00:00:00Z TO " + task.getStart_time() + "]");
 			queryParams.setRows(0);
 			QueryResult result = search.queryData(queryParams, true);
