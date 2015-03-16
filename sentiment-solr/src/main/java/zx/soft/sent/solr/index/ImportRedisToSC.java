@@ -11,7 +11,7 @@ import zx.soft.sent.solr.utils.RedisCacheExpired;
 import zx.soft.sent.solr.utils.RedisMQ;
 
 /**
- * 将Redis消息队列中的数据所引到SolrCloud：hefei08运行
+ * 将Redis消息队列中的数据所引到SolrCloud：hefei09,hefei10运行
  *
  * 运行目录：/home/zxdfs/run-work/index
  * 运行命令： cd sentiment-solr
@@ -31,8 +31,8 @@ public class ImportRedisToSC {
 	private final RedisCacheExpired redisCacheExpired;
 
 	public ImportRedisToSC() {
-		// 三天有效期
-		redisCacheExpired = new RedisCacheExpired(3 * 86400);
+		// 7天有效期
+		redisCacheExpired = new RedisCacheExpired(7 * 86400);
 		indexCloudSolr = new IndexCloudSolr();
 		redisCache = new RedisMQ();
 	}

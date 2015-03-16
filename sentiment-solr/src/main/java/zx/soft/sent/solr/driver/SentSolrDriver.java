@@ -47,7 +47,7 @@ public class SentSolrDriver {
 			pgd.addClass("specialTopicRun", SpecialTopicRun.class, "OA专题数据统计——临时分析");
 			// 在hefei07机器上运行
 			pgd.addClass("firstPageRun", FirstPageRun.class, "OA首页数据统计——临时分析");
-			// 在hefei08机器上运行
+			// 在hefei09,hefei10机器上运行
 			pgd.addClass("importRedisToSC", ImportRedisToSC.class, "将Redis中的数据所引到SolrCloud");
 			// 暂时不用
 			pgd.addClass("removeSentiData", RemoveSentiData.class, "定时删除过期舆情数据");
