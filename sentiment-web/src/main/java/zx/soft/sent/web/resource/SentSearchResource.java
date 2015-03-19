@@ -17,7 +17,7 @@ import zx.soft.utils.codec.URLCodecUtils;
 
 /**
  * 舆情搜索资源类
- * 
+ *
  * @author wanggang
  *
  */
@@ -49,7 +49,7 @@ public class SentSearchResource extends ServerResource {
 		queryParams.setQ(params.get("q") == null ? "*:*" : params.get("q").replaceAll(":", "")); // q中带有英文冒号无法传入solr
 		queryParams.setFq(params.get("fq") == null ? "" : params.get("fq"));
 		queryParams.setSort(params.get("sort") == null ? "" : params.get("sort"));
-		queryParams.setStart(params.get("start") == null ? 0 : (Integer.parseInt(params.get("start")) > 1000 ? 1000
+		queryParams.setStart(params.get("start") == null ? 0 : (Integer.parseInt(params.get("start")) > 100000 ? 100000
 				: Integer.parseInt(params.get("start"))));
 		queryParams.setRows(params.get("rows") == null ? 10 : (Integer.parseInt(params.get("rows")) > 100 ? 100
 				: Integer.parseInt(params.get("rows"))));
