@@ -22,7 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.redis.client.cache.Cache;
-import zx.soft.redis.client.cache.CacheFactory;
+import zx.soft.redis.client.cache.RedisCache;
+import zx.soft.redis.client.common.Config;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
@@ -47,7 +48,8 @@ public class SearchingData {
 	final Cache cache;
 
 	public SearchingData() {
-		cache = CacheFactory.getInstance();
+		cache = new RedisCache(Config.get("redis.rp.master"), Integer.parseInt(Config.get("redis.rp.port")),
+				Config.get("redis.password"));
 		Properties props = ConfigUtil.getProps("solr_params.properties");
 		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
 		cloudServer.setDefaultCollection(props.getProperty("collection"));
