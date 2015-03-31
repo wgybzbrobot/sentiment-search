@@ -42,7 +42,8 @@ public class SearchingData {
 
 	private static Logger logger = LoggerFactory.getLogger(SearchingData.class);
 
-	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类", "图片类" };
+	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类", "图片类",
+			"微信类" };
 
 	final CloudSolrServer cloudServer;
 	final Cache cache;
@@ -230,8 +231,8 @@ public class SearchingData {
 						}
 					} else {
 						if (isPlatformTrans) {
-							// 目前我们的平台类型共有10个，如果超过10则不处理
-							if (Integer.parseInt(temp.getName()) < 10) {
+							// 目前我们的平台类型共有11个，如果超过11则不处理
+							if (Integer.parseInt(temp.getName()) < 11) {
 								t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
 							}
 						} else {
@@ -239,14 +240,14 @@ public class SearchingData {
 						}
 					}
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
-					if ((t.size() < 10) && (temp.getCount() > 0)) {
+					if ((t.size() < 11) && (temp.getCount() > 0)) {
 						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),
 								temp.getCount());
 					} else {
 						break;
 					}
 				} else {
-					if ((t.size() < 10) && (temp.getCount() > 0)) {
+					if ((t.size() < 11) && (temp.getCount() > 0)) {
 						t.put(temp.getName(), temp.getCount());
 					} else {
 						break;
