@@ -9,7 +9,7 @@ import org.restlet.routing.Router;
 
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
-import zx.soft.sent.solr.search.SearchingData;
+import zx.soft.sent.solr.query.SearchingData;
 import zx.soft.sent.web.domain.Task;
 import zx.soft.sent.web.resource.InternetTaskResource;
 

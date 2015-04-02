@@ -14,7 +14,7 @@ import zx.soft.sent.dao.allinternet.AllInternet;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.allinternet.InternetTask;
 import zx.soft.sent.dao.oracle.OracleJDBC;
-import zx.soft.sent.solr.search.SearchingData;
+import zx.soft.sent.solr.query.SearchingData;
 import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.threads.ApplyThreadPool;

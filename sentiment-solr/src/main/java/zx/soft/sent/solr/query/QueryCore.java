@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.search;
+package zx.soft.sent.solr.query;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +27,8 @@ import zx.soft.redis.client.common.Config;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
-import zx.soft.sent.solr.err.SpiderSearchException;
+import zx.soft.sent.solr.ecxception.SpiderSearchException;
+import zx.soft.sent.solr.utils.SentimentConstant;
 import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
@@ -38,17 +39,14 @@ import zx.soft.utils.time.TimeUtils;
  * @author wanggang
  *
  */
-public class SearchingData {
+public class QueryCore {
 
-	private static Logger logger = LoggerFactory.getLogger(SearchingData.class);
-
-	private static final String[] PLATFORMS = { "其他类", "资讯类", "论坛类", "微博类", "博客类", "QQ类", "搜索类", "回复类", "邮件类", "图片类",
-			"微信类" };
+	private static Logger logger = LoggerFactory.getLogger(QueryCore.class);
 
 	final CloudSolrServer cloudServer;
 	final Cache cache;
 
-	public SearchingData() {
+	public QueryCore() {
 		cache = new RedisCache(Config.get("redis.rp.master"), Integer.parseInt(Config.get("redis.rp.port")),
 				Config.get("redis.password"));
 		Properties props = ConfigUtil.getProps("solr_params.properties");
@@ -63,7 +61,7 @@ public class SearchingData {
 	 * 测试函数
 	 */
 	public static void main(String[] args) {
-		SearchingData search = new SearchingData();
+		QueryCore search = new QueryCore();
 		//		QueryParams queryParams = new QueryParams();
 		// q:关键词
 		//		queryParams.setQ("香港占中");
@@ -224,7 +222,8 @@ public class SearchingData {
 					if (fqPlatform.contains("platform")) {
 						if (fqPlatform.contains(temp.getName())) {
 							if (isPlatformTrans) {
-								t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+								t.put(SentimentConstant.PLATFORM_ARRAY[Integer.parseInt(temp.getName())],
+										temp.getCount());
 							} else {
 								t.put(temp.getName(), temp.getCount());
 							}
@@ -232,22 +231,23 @@ public class SearchingData {
 					} else {
 						if (isPlatformTrans) {
 							// 目前我们的平台类型共有11个，如果超过11则不处理
-							if (Integer.parseInt(temp.getName()) < 11) {
-								t.put(PLATFORMS[Integer.parseInt(temp.getName())], temp.getCount());
+							if (Integer.parseInt(temp.getName()) < SentimentConstant.PLATFORM_ARRAY.length) {
+								t.put(SentimentConstant.PLATFORM_ARRAY[Integer.parseInt(temp.getName())],
+										temp.getCount());
 							}
 						} else {
 							t.put(temp.getName(), temp.getCount());
 						}
 					}
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
-					if ((t.size() < 11) && (temp.getCount() > 0)) {
+					if ((t.size() < SentimentConstant.PLATFORM_ARRAY.length) && (temp.getCount() > 0)) {
 						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),
 								temp.getCount());
 					} else {
 						break;
 					}
 				} else {
-					if ((t.size() < 11) && (temp.getCount() > 0)) {
+					if ((t.size() < SentimentConstant.PLATFORM_ARRAY.length) && (temp.getCount() > 0)) {
 						t.put(temp.getName(), temp.getCount());
 					} else {
 						break;

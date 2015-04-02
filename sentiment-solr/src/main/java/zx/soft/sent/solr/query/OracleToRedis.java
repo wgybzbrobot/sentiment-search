@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.search;
+package zx.soft.sent.solr.query;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

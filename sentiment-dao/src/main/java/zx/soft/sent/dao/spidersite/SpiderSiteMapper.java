@@ -10,7 +10,7 @@ import zx.soft.sent.dao.domain.platform.SiteInfo;
 
 /**
  * 站点信息Mapper
- * 
+ *
  * @author wanggang
  *
  */

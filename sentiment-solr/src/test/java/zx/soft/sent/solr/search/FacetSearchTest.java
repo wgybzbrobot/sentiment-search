@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import zx.soft.sent.solr.domain.FacetDateParams;
+import zx.soft.sent.solr.query.FacetSearch;
 
 public class FacetSearchTest {
 

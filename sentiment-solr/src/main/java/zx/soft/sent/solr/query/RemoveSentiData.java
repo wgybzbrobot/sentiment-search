@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.search;
+package zx.soft.sent.solr.query;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -7,7 +7,7 @@ import zx.soft.sent.dao.allinternet.AllInternet;
 import zx.soft.sent.dao.domain.allinternet.InternetTask;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
-import zx.soft.sent.solr.search.SearchingData;
+import zx.soft.sent.solr.query.SearchingData;
 import zx.soft.utils.log.LogbackUtil;
 
 /**

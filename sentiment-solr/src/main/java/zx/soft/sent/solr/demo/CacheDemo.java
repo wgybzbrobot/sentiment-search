@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import zx.soft.redis.client.cache.Cache;
 import zx.soft.redis.client.cache.CacheFactory;
-import zx.soft.sent.solr.search.OracleToRedis;
+import zx.soft.sent.solr.query.OracleToRedis;
 
 public class CacheDemo {
 

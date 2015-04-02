@@ -10,7 +10,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.sent.solr.err.SpiderSearchException;
+import zx.soft.sent.solr.ecxception.SpiderSearchException;
 import zx.soft.utils.config.ConfigUtil;
 
 /**

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
-import zx.soft.sent.solr.search.SearchingData;
+import zx.soft.sent.solr.query.SearchingData;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.time.TimeUtils;
 
