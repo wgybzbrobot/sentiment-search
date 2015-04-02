@@ -25,7 +25,7 @@ import zx.soft.utils.time.TimeUtils;
 
 /**
  * OA专题数据统计——定时分析
- * 
+ *
  * @author wanggang
  *
  */
@@ -90,43 +90,47 @@ public class SpecialTopicTimer {
 				QueryResult pieResult = null;
 				FacetDateResult trandResult = null;
 				for (String identify : identifys) {
-					logger.info("Updating identify=" + identify + " at:" + new Date().toString());
-					// 查询专题信息
-					specialInfo = specialQuery.selectSpecialInfo(identify);
-					if (specialInfo != null) {
-						// 从solr集群中查询饼状图结果
-						queryParams = new QueryParams();
-						queryParams.setQ(specialInfo.getKeywords());
-						queryParams.setFq(getTimestampFilterQuery(specialInfo.getStart(), specialInfo.getEnd())
-								+ ";country_code:" + specialInfo.getHometype());
-						queryParams.setFacetField("platform");
-						pieResult = search.queryData(queryParams, false);
-						// 更新饼状图结果到数据库中
-						if (specialQuery.selectSpecialResult(identify, "pie") == null) {
-							specialQuery.insertSpecialResult(identify, "pie",
-									JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
-						} else {
-							specialQuery.updateSpecialResult(identify, "pie",
-									JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+					try {
+						logger.info("Updating identify=" + identify + " at:" + new Date().toString());
+						// 查询专题信息
+						specialInfo = specialQuery.selectSpecialInfo(identify);
+						if (specialInfo != null) {
+							// 从solr集群中查询饼状图结果
+							queryParams = new QueryParams();
+							queryParams.setQ(specialInfo.getKeywords());
+							queryParams.setFq(getTimestampFilterQuery(specialInfo.getStart(), specialInfo.getEnd())
+									+ ";country_code:" + specialInfo.getHometype());
+							queryParams.setFacetField("platform");
+							pieResult = search.queryData(queryParams, false);
+							// 更新饼状图结果到数据库中
+							if (specialQuery.selectSpecialResult(identify, "pie") == null) {
+								specialQuery.insertSpecialResult(identify, "pie",
+										JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+							} else {
+								specialQuery.updateSpecialResult(identify, "pie",
+										JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+							}
+							//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
+							// 从solr集群中查询趋势图结果
+							fdp = new FacetDateParams();
+							fdp.setQ(URLCodecUtils.encoder(specialInfo.getKeywords(), "UTF-8")); // URL中的部分字符需要编码转换
+							fdp.setFacetDate("timestamp");
+							fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
+							fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
+							fdp.setFacetDateGap("%2B1DAY");
+							trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
+							// 更新趋势图结果到数据库中
+							if (specialQuery.selectSpecialResult(identify, "trend") == null) {
+								specialQuery.insertSpecialResult(identify, "trend",
+										JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+							} else {
+								specialQuery.updateSpecialResult(identify, "trend",
+										JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+							}
+							//					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
 						}
-						//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
-						// 从solr集群中查询趋势图结果
-						fdp = new FacetDateParams();
-						fdp.setQ(URLCodecUtils.encoder(specialInfo.getKeywords(), "UTF-8")); // URL中的部分字符需要编码转换
-						fdp.setFacetDate("timestamp");
-						fdp.setFacetDateStart(TimeUtils.transTimeStr(specialInfo.getStart()));
-						fdp.setFacetDateEnd(TimeUtils.transTimeStr(specialInfo.getEnd()));
-						fdp.setFacetDateGap("%2B1DAY");
-						trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
-						// 更新趋势图结果到数据库中
-						if (specialQuery.selectSpecialResult(identify, "trend") == null) {
-							specialQuery.insertSpecialResult(identify, "trend",
-									JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
-						} else {
-							specialQuery.updateSpecialResult(identify, "trend",
-									JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
-						}
-						//					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
+					} catch (Exception e) {
+						logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 					}
 				}
 				search.close();

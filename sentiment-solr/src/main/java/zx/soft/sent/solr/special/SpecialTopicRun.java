@@ -64,64 +64,68 @@ public class SpecialTopicRun {
 			FacetDateResult trandResult = null;
 			String start, end;
 			for (String identify : identifys) {
-				logger.info("Updating identify=" + identify + " at:" + new Date().toString());
-				// 查询专题信息
-				specialInfo = specialQuery.selectSpecialInfo(identify);
-				if (specialInfo != null) {
-					// 下面主要是时间处理
-					start = specialInfo.getStart();
-					end = specialInfo.getEnd();
-					if (format.parse(specialInfo.getEnd()).getTime() < current) {
-						// 如果end时间小于当前时间，则统计时间间隔修正为：start=end-6,end
-						start = transDate(format.parse(specialInfo.getEnd()).getTime() - 6 * 86400_000, "start");
-					} else {
-						// 如果end时间不小于当前时间，则统计时间间隔修正为：end=current
-						end = transDate(current, "end");
-						if (format.parse(specialInfo.getStart()).getTime() < current - 6 * 86400_000) {
-							// 如果start时间小于当前日期之前6天内，那么start=current-6
-							start = transDate(current - 6 * 86400_000, "start");
+				try {
+					logger.info("Updating identify=" + identify + " at:" + new Date().toString());
+					// 查询专题信息
+					specialInfo = specialQuery.selectSpecialInfo(identify);
+					if (specialInfo != null) {
+						// 下面主要是时间处理
+						start = specialInfo.getStart();
+						end = specialInfo.getEnd();
+						if (format.parse(specialInfo.getEnd()).getTime() < current) {
+							// 如果end时间小于当前时间，则统计时间间隔修正为：start=end-6,end
+							start = transDate(format.parse(specialInfo.getEnd()).getTime() - 6 * 86400_000, "start");
 						} else {
-							// 如果start时间不小于当前日期之前6天内，那么start=start
+							// 如果end时间不小于当前时间，则统计时间间隔修正为：end=current
+							end = transDate(current, "end");
+							if (format.parse(specialInfo.getStart()).getTime() < current - 6 * 86400_000) {
+								// 如果start时间小于当前日期之前6天内，那么start=current-6
+								start = transDate(current - 6 * 86400_000, "start");
+							} else {
+								// 如果start时间不小于当前日期之前6天内，那么start=start
+							}
 						}
+						// 从solr集群中查询饼状图结果
+						queryParams = new QueryParams();
+						queryParams.setQ(specialInfo.getKeywords());
+						if (specialInfo.getHometype() == 2) {
+							// 2代表查询包括境内（1表示）和境外（0表示）的所有数据
+							queryParams.setFq(getTimestampFilterQuery(start, end));
+						} else {
+							queryParams.setFq(getTimestampFilterQuery(start, end) + ";country_code:"
+									+ specialInfo.getHometype());
+						}
+						queryParams.setFacetField("platform");
+						pieResult = search.queryData(queryParams, false);
+						// 更新饼状图结果到数据库中
+						if (specialQuery.selectSpecialResult(identify, "pie") == null) {
+							specialQuery.insertSpecialResult(identify, "pie",
+									JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+						} else {
+							specialQuery.updateSpecialResult(identify, "pie",
+									JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
+						}
+						//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
+						// 从solr集群中查询趋势图结果
+						fdp = new FacetDateParams();
+						fdp.setQ(URLCodecUtils.encoder(specialInfo.getKeywords(), "UTF-8")); // URL中的部分字符需要编码转换
+						fdp.setFacetDate("timestamp");
+						fdp.setFacetDateStart(TimeUtils.transTimeStr(start));
+						fdp.setFacetDateEnd(TimeUtils.transTimeStr(end));
+						fdp.setFacetDateGap("%2B1DAY");
+						trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
+						// 更新趋势图结果到数据库中
+						if (specialQuery.selectSpecialResult(identify, "trend") == null) {
+							specialQuery.insertSpecialResult(identify, "trend",
+									JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+						} else {
+							specialQuery.updateSpecialResult(identify, "trend",
+									JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
+						}
+						//					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
 					}
-					// 从solr集群中查询饼状图结果
-					queryParams = new QueryParams();
-					queryParams.setQ(specialInfo.getKeywords());
-					if (specialInfo.getHometype() == 2) {
-						// 2代表查询包括境内（1表示）和境外（0表示）的所有数据
-						queryParams.setFq(getTimestampFilterQuery(start, end));
-					} else {
-						queryParams.setFq(getTimestampFilterQuery(start, end) + ";country_code:"
-								+ specialInfo.getHometype());
-					}
-					queryParams.setFacetField("platform");
-					pieResult = search.queryData(queryParams, false);
-					// 更新饼状图结果到数据库中
-					if (specialQuery.selectSpecialResult(identify, "pie") == null) {
-						specialQuery.insertSpecialResult(identify, "pie",
-								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
-					} else {
-						specialQuery.updateSpecialResult(identify, "pie",
-								JsonUtils.toJsonWithoutPretty(getPieChart(specialInfo, pieResult)));
-					}
-					//					System.out.println(JsonUtils.toJson(getPieChart(specialInfo, pieResult)));
-					// 从solr集群中查询趋势图结果
-					fdp = new FacetDateParams();
-					fdp.setQ(URLCodecUtils.encoder(specialInfo.getKeywords(), "UTF-8")); // URL中的部分字符需要编码转换
-					fdp.setFacetDate("timestamp");
-					fdp.setFacetDateStart(TimeUtils.transTimeStr(start));
-					fdp.setFacetDateEnd(TimeUtils.transTimeStr(end));
-					fdp.setFacetDateGap("%2B1DAY");
-					trandResult = FacetSearch.getFacetDates("timestamp", FacetSearch.getFacetDateResult(fdp));
-					// 更新趋势图结果到数据库中
-					if (specialQuery.selectSpecialResult(identify, "trend") == null) {
-						specialQuery.insertSpecialResult(identify, "trend",
-								JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
-					} else {
-						specialQuery.updateSpecialResult(identify, "trend",
-								JsonUtils.toJsonWithoutPretty(getTrendChart(specialInfo, trandResult)));
-					}
-					//					System.out.println(JsonUtils.toJson(getTrendChart(specialInfo, trandResult)));
+				} catch (Exception e) {
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				}
 			}
 			search.close();
