@@ -70,6 +70,12 @@ public class TaskUpdate {
 		while (true) {
 			taskUpdate.tackleExecutedTasks();
 			taskUpdate.tackleFinishedTasks();
+			// 休息30秒
+			try {
+				Thread.sleep(30_000);
+			} catch (InterruptedException e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			}
 		}
 		//		taskUpdate.close(); // 多线程不能关闭
 	}

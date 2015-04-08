@@ -65,9 +65,11 @@ public class TaskUpdateRunnable implements Runnable {
 			if (allInternet.isInternetTaskExisted(task.getIdentify())) {
 				// 如果该任务缓存信息存在，则更新
 				allInternet.updateInternetTask(newTask);
+				logger.info("Updating Task:{}", newTask.getIdentify());
 			} else {
 				// 否则，插入
 				allInternet.insertInternetTask(newTask);
+				logger.info("Inserting Task:{}", newTask.getIdentify());
 			}
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
