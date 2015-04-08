@@ -44,6 +44,7 @@ public class QueryCore {
 	private static Logger logger = LoggerFactory.getLogger(QueryCore.class);
 
 	final CloudSolrServer cloudServer;
+
 	final Cache cache;
 
 	public QueryCore() {
@@ -148,14 +149,14 @@ public class QueryCore {
 					}
 				}
 			}
-			if (result.getResults().get(i).getFieldValue("source_id") != null) {
+			/*if (result.getResults().get(i).getFieldValue("source_id") != null) {
 				result.getResults()
 						.get(i)
 						.setField(
 								"source_name",
 								cache.hget(OracleToRedis.SITE_MAP, result.getResults().get(i)
 										.getFieldValue("source_id").toString()));
-			}
+			}*/
 		}
 
 		logger.info("numFound=" + queryResponse.getResults().getNumFound());
@@ -164,6 +165,9 @@ public class QueryCore {
 		return result;
 	}
 
+	/**
+	 * 查询时间有8小时误差，在这里修正
+	 */
 	private void tackleTime(QueryResult result) {
 		SolrDocument str = null;
 		for (int i = 0; i < result.getResults().size(); i++) {
