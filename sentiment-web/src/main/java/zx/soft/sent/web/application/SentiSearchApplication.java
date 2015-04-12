@@ -8,7 +8,7 @@ import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.sent.web.resource.SentSearchResource;
 
 /**
@@ -19,11 +19,11 @@ import zx.soft.sent.web.resource.SentSearchResource;
  */
 public class SentiSearchApplication extends Application {
 
-	private final SearchingData searchingData;
+	private final QueryCore queryCore;
 	private final SentimentRecord sentimentRecord;
 
 	public SentiSearchApplication() {
-		searchingData = new SearchingData();
+		queryCore = new QueryCore();
 		sentimentRecord = new SentimentRecord(MybatisConfig.ServerEnum.sentiment);
 	}
 
@@ -43,7 +43,7 @@ public class SentiSearchApplication extends Application {
 	}
 
 	public QueryResult queryData(QueryParams queryParams) {
-		return searchingData.queryData(queryParams, Boolean.TRUE);
+		return queryCore.queryData(queryParams, Boolean.TRUE);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class SentiSearchApplication extends Application {
 	}
 
 	public void close() {
-		searchingData.close();
+		queryCore.close();
 	}
 
 }
