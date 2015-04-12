@@ -41,6 +41,8 @@ public class OAFirstPage {
 			"涉嫌色情持刀抓获归案同案赃款被害人击毙击伤搜查围捕血案圣战爆炸声爆炸枪走私涉枪涉赌绑架寻衅枪支子弹枪弹举报线索上当骗走被骗谎称受骗骗取被打", //
 			"因涉嫌故意伤害案发后" };
 
+	private static String LOCATION_ANHUI = "安徽";
+
 	public OAFirstPage() {
 		this.search = new SearchingData();
 	}
@@ -58,10 +60,13 @@ public class OAFirstPage {
 		//		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
 		//		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
 		// 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
-		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
-		System.out.println(JsonUtils.toJson(todayWeibosSum));
+		//		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
+		//		System.out.println(JsonUtils.toJson(todayWeibosSum));
 		//		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
 		//		System.out.println(JsonUtils.toJson(todayWeibos));
+		//		List<SolrDocument> negative = firstPage.getNegativeRecords(2, 0, 10);
+		List<SolrDocument> negative = firstPage.getNegativeRecords(3, 0, 10);
+		System.out.println(JsonUtils.toJson(negative));
 		firstPage.close();
 
 	}
@@ -222,7 +227,7 @@ public class OAFirstPage {
 		queryParams.setQop("OR");
 		queryParams.setRows(N);
 		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
-				+ TimeUtils.transToSolrDateStr(currentTime) + "];platform:" + platform);
+				+ TimeUtils.transToSolrDateStr(currentTime) + "];platform:" + platform + ";content:" + LOCATION_ANHUI);
 		QueryResult queryResult = search.queryData(queryParams, false);
 		return queryResult.getResults();
 	}
