@@ -49,7 +49,7 @@ public class QueryCore {
 	final Cache cache;
 
 	public QueryCore() {
-		cache = new RedisCache(Config.get("redis.rp.master"), Integer.parseInt(Config.get("redis.rp.port")),
+		cache = new RedisCache(Config.get("redis.mq.server"), Integer.parseInt(Config.get("redis.mq.port")),
 				Config.get("redis.password"));
 		Properties props = ConfigUtil.getProps("solr_params.properties");
 		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));

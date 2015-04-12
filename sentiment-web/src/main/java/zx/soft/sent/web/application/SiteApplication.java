@@ -7,13 +7,14 @@ import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import zx.soft.redis.client.cache.Cache;
-import zx.soft.redis.client.cache.CacheFactory;
+import zx.soft.redis.client.cache.RedisCache;
+import zx.soft.redis.client.common.Config;
 import zx.soft.sent.web.resource.SiteResource;
 import zx.soft.utils.checksum.CheckSumUtils;
 
 /**
  * 站点应用类
- * 
+ *
  * @author wanggang
  *
  */
@@ -24,7 +25,8 @@ public class SiteApplication extends Application {
 	public static final String SITE_GROUPS = "sent:site:groups";
 
 	public SiteApplication() {
-		cache = CacheFactory.getInstance();
+		cache = new RedisCache(Config.get("redis.mq.server"), Integer.parseInt(Config.get("redis.mq.port")),
+				Config.get("redis.password"));
 	}
 
 	@Override
