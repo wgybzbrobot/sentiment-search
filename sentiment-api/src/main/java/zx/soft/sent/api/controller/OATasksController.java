@@ -22,7 +22,7 @@ import zx.soft.sent.dao.domain.allinternet.TaskResult;
  *
  * 接口说明：
  *       1、POST:   http://192.168.32.17:2900/sentiment/oa/tasks            返回缓存数据
- *         ["671CC22D8FB5669A848B3E9CBE006D1F","1B5E770CA5944C1F4804AB8FA1F815D3","D68152D6CA0061E114205B76C52510FD"]
+ *         ["CE9402701D796B22E15D433EB17FA4FE","4E4E7BF57E3B57B9718549646D364964","76AC38F439C31812D71251EE024B316A"]
  *       2、DELETE: http://192.168.32.17:2900/sentiment/oa/tasks/{identify}  不返回数据
  *
  * @author wanggang
