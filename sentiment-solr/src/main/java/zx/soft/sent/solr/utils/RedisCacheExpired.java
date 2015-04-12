@@ -40,8 +40,8 @@ public class RedisCacheExpired {
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTimeBetweenEvictionRunsMillis(30000);
 		Properties props = ConfigUtil.getProps("cache-config.properties");
-		pool = new JedisPool(poolConfig, props.getProperty("redis.ex.server"), Integer.parseInt(props
-				.getProperty("redis.ex.port")), 30_000, props.getProperty("redis.password"));
+		pool = new JedisPool(poolConfig, props.getProperty("redis.mq.server"), Integer.parseInt(props
+				.getProperty("redis.mq.port")), 30_000, props.getProperty("redis.password"));
 	}
 
 	public synchronized static Jedis getJedis() {

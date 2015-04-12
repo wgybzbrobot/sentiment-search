@@ -75,6 +75,12 @@ public class ImportRedisToSC {
 					result.add(tmp);
 				}
 				indexCloudSolr.addDocsToSolr(result);
+			} else {
+				try {
+					Thread.sleep(30_000);
+				} catch (InterruptedException e) {
+					//
+				}
 			}
 			logger.info("Finishing index ...");
 			// 休息2秒
