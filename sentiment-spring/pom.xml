@@ -17,6 +17,12 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>sentiment-dao</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-pool</groupId>
+					<artifactId>commons-pool</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
