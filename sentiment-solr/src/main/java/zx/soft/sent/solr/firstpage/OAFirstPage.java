@@ -29,7 +29,7 @@ public class OAFirstPage {
 
 	private final SearchingData search;
 
-	private static String[] negatives = { //
+	public static final String[] NEGATIVES = { //
 	"造谣窒息事故暴行毁容致死诬陷猥亵砍人诈骗案反动被害逃逸违法罪犯刺死爆炸物施暴开枪迷幻药毒手炸通缉令砍伤毒打砍杀辱骂偷窃窒息而死违法行为",
 			"灭口杀灭非法滋事下毒手交警刑事案件贪污腐败恐怖行动伸冤害人强奸淫秽强暴炸药事件起火毒死跳楼尸体恶毒暴打变态新疆人毒害受害人草菅人命威吓",
 			"通缉侵占霸占打架斗殴砸死报案恶名拆迁房死了假释暴力冤枉灾区嫌疑人暴动腐败分子禁毒仇恨死亡淫笑恐怖主义撞死死人侵害犯罪猥亵作乱审判打劫得罪",
@@ -41,7 +41,7 @@ public class OAFirstPage {
 			"涉嫌色情持刀抓获归案同案赃款被害人击毙击伤搜查围捕血案圣战爆炸声爆炸枪走私涉枪涉赌绑架寻衅枪支子弹枪弹举报线索上当骗走被骗谎称受骗骗取被打", //
 			"因涉嫌故意伤害案发后" };
 
-	private static String LOCATION_ANHUI = "安徽";
+	public static String LOCATION_ANHUI = "安徽";
 
 	public OAFirstPage() {
 		this.search = new SearchingData();
@@ -177,7 +177,7 @@ public class OAFirstPage {
 		logger.info("Getting today negative records ...");
 		List<SolrDocument> result = new ArrayList<>();
 		List<SolrDocument> temp = null;
-		for (String negative : negatives) {
+		for (String negative : NEGATIVES) {
 			temp = getNegativeShard(platform, day, N, negative);
 			if (temp != null) {
 				for (SolrDocument t : temp) {
@@ -194,7 +194,7 @@ public class OAFirstPage {
 	public List<SolrDocument> getTodayNegativeRecords(int interval, int N, String q) {
 		List<SolrDocument> result = new ArrayList<>();
 		List<SolrDocument> temp = null;
-		for (String negative : negatives) {
+		for (String negative : NEGATIVES) {
 			temp = getNegativeShard(interval, N, negative + " AND " + q);
 			if (temp != null) {
 				for (SolrDocument t : temp) {
@@ -242,6 +242,34 @@ public class OAFirstPage {
 		result.put("搜狐微博", 0L);
 		result.put("网易微博", 0L);
 		return result;
+	}
+
+	public List<SolrDocument> getHarmfulRecords(String platform, int day, int N) {
+		logger.info("Getting today negative records ...");
+		List<SolrDocument> result = new ArrayList<>();
+		List<SolrDocument> temp = null;
+		for (String negative : NEGATIVES) {
+			temp = getHarmfulShard(platform, day, N, negative);
+			if (temp != null) {
+				for (SolrDocument t : temp) {
+					result.add(t);
+				}
+			}
+		}
+		return result;
+	}
+
+	private List<SolrDocument> getHarmfulShard(String platform, int day, int N, String q) {
+		long currentTime = System.currentTimeMillis() - day * 86400_000L;
+		long startTime = currentTime - currentTime % 86400_000L - 8 * 3600_000L;
+		QueryParams queryParams = new QueryParams();
+		queryParams.setQ(q);
+		queryParams.setQop("OR");
+		queryParams.setRows(N);
+		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
+				+ TimeUtils.transToSolrDateStr(currentTime) + "];platform:" + platform + ";content:" + LOCATION_ANHUI);
+		QueryResult queryResult = search.queryData(queryParams, false);
+		return queryResult.getResults();
 	}
 
 	public void close() {

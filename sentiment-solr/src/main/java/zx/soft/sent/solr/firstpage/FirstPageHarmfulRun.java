@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import zx.soft.negative.sentiment.core.NegativeClassify;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPageHarmful;
-import zx.soft.sent.solr.utils.SentimentConstant;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 
@@ -41,14 +40,19 @@ public class FirstPageHarmfulRun {
 		/**
 		 * 对当天的各平台进入数据进行负面评分，并按照分值推送最大的签20条内容，每小时推送一次。
 		 */
-		for (int i = 1; i < SentimentConstant.PLATFORM_ARRAY.length; i++) {
+		/*for (int i = 1; i < SentimentConstant.PLATFORM_ARRAY.length; i++) {
 			logger.info("Retriving platform:{}", i);
 			List<SolrDocument> negativeRecordsForum = oafirstPage.getNegativeRecords(i, 0, 30);
 			negativeRecordsForum = FirstPageRun.getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 50);
 			firstPage.insertFirstPage(i, FirstPageRun.timeStrByHour(),
 					JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
-			//			System.out.println(JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
-		}
+		}*/
+
+		List<SolrDocument> negativeRecordsForum = oafirstPage.getHarmfulRecords("1,2,3,4,6,7,10", 0, 30);
+		negativeRecordsForum = FirstPageRun.getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 50);
+		firstPage.insertFirstPage(0, FirstPageRun.timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
+		//		System.out.println(JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
+
 		// 关闭资源
 		negativeClassify.cleanup();
 		oafirstPage.close();
