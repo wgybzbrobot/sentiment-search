@@ -94,7 +94,7 @@ public class FirstPageRun {
 	/**
 	 * 将当前的时间戳转换成小时精度，如："2014-09-05,14"
 	 */
-	private String timeStrByHour() {
+	public static String timeStrByHour() {
 		return FORMATTER.format(new Date());
 	}
 
@@ -104,8 +104,8 @@ public class FirstPageRun {
 	 * @param N
 	 * @return
 	 */
-	private List<SolrDocument> getTopNNegativeRecords(NegativeClassify negativeClassify, List<SolrDocument> records,
-			int N) {
+	public static List<SolrDocument> getTopNNegativeRecords(NegativeClassify negativeClassify,
+			List<SolrDocument> records, int N) {
 		List<SolrDocument> result = new ArrayList<>();
 		HashSet<String> urls = new HashSet<>();
 		String[] insertTables = new String[records.size()];

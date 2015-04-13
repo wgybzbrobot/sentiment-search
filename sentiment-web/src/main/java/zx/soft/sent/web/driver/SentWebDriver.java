@@ -3,6 +3,7 @@ package zx.soft.sent.web.driver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import zx.soft.sent.web.server.FirstPageHarmfulServer;
 import zx.soft.sent.web.server.FirstPageServer;
 import zx.soft.sent.web.server.HarmfulInfoServer;
 import zx.soft.sent.web.server.InternetTaskServer;
@@ -87,6 +88,11 @@ public class SentWebDriver {
 		case "firstPageServer":
 			logger.info("OA首页信息缓存服务");
 			FirstPageServer.main(leftArgs);
+			break;
+		// 运行在hefei07机器上
+		case "firstPageHarmfulServer":
+			logger.info("OA首页有害信息信息缓存服务");
+			FirstPageHarmfulServer.main(leftArgs);
 			break;
 		// 运行在hefei07机器上
 		case "harmfulInfoServer":

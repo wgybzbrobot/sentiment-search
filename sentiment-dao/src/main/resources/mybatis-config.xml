@@ -31,7 +31,7 @@
 		<environment id="sentiment">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
-				<property name="url" value="${sent.db.oa.url}" />
+				<property name="url" value="${sent.db.url}" />
 				<property name="username" value="${sent.db.username}" />
 				<property name="password" value="${sent.db.password}" />
 				<property name="driver" value="${db_driver}" />

@@ -1,6 +1,7 @@
 package zx.soft.sent.solr.driver;
 
 import zx.soft.sent.solr.allinternet.TaskUpdate;
+import zx.soft.sent.solr.firstpage.FirstPageHarmfulRun;
 import zx.soft.sent.solr.firstpage.FirstPageRun;
 import zx.soft.sent.solr.firstpage.FirstPageTimer;
 import zx.soft.sent.solr.index.ImportRedisToSC;
@@ -47,6 +48,8 @@ public class SentSolrDriver {
 			pgd.addClass("specialTopicRun", SpecialTopicRun.class, "OA专题数据统计——临时分析");
 			// 在hefei07机器上运行
 			pgd.addClass("firstPageRun", FirstPageRun.class, "OA首页数据统计——临时分析");
+			// 在hefei07机器上运行
+			pgd.addClass("firstPageHarmfulRun", FirstPageHarmfulRun.class, "OA首页负面信息数据定时统计");
 			// 在hefei09,hefei10机器上运行
 			pgd.addClass("importRedisToSC", ImportRedisToSC.class, "将Redis中的数据所引到SolrCloud");
 			// 暂时不用

@@ -17,7 +17,6 @@ import org.restlet.routing.Router;
 
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.firstpage.FirstPage;
-import zx.soft.sent.solr.firstpage.OAFirstPage;
 import zx.soft.sent.web.resource.FirstPageResource;
 import zx.soft.utils.chars.JavaPattern;
 import zx.soft.utils.json.JsonNodeUtils;
@@ -30,11 +29,9 @@ public class FirstPageApplication extends Application {
 	//	private static final SimpleDateFormat FORMATTER_HH = new SimpleDateFormat("yyyy-MM-dd,HH");
 
 	private final FirstPage firstPage;
-	private final OAFirstPage oafirstPage;
 
 	public FirstPageApplication() {
 		firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
-		oafirstPage = new OAFirstPage();
 	}
 
 	@Override
@@ -149,7 +146,6 @@ public class FirstPageApplication extends Application {
 	@Override
 	public void stop() throws Exception {
 		super.stop();
-		oafirstPage.close();
 	}
 
 }
