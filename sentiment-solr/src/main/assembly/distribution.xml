@@ -14,6 +14,7 @@
 			<includes>
 				<include>logback.xml</include>
 				<include>data_db.properties</include>
+				<include>oracle_db.properties</include>
 				<include>solr_params.properties</include>
 				<include>cache-config.properties</include>
 			</includes>

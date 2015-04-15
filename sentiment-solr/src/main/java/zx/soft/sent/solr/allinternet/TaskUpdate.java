@@ -157,6 +157,14 @@ public class TaskUpdate {
 			}
 			id = rs.getString("id");
 		}
+		// 最后一个添加
+		if (result.get(task.getIdentify()) == null) {
+			result.put(task.getIdentify(), task);
+		} else {
+			InternetTask tmp = result.get(task.getIdentify());
+			tmp.setSource_ids(tmp.getSource_ids() + "," + task.getSource_ids());
+			result.put(task.getIdentify(), tmp);
+		}
 
 		return result;
 	}

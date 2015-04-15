@@ -86,6 +86,7 @@
 					<excludes>
 						<exclude>logback.xml</exclude>
 						<exclude>data_db.properties</exclude>
+						<exclude>oracle_db.properties</exclude>
 						<exclude>solr_params.properties</exclude>
 						<exclude>cache-config.properties</exclude>
 					</excludes>
