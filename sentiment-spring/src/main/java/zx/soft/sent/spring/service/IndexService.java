@@ -20,7 +20,7 @@ import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
  * 索引服务类
- * 
+ *
  * @author wanggang
  *
  */
@@ -54,6 +54,7 @@ public class IndexService {
 		logger.info("Records' Size:{}", postData.getRecords().size());
 		try {
 			if (postData.getRecords().size() > 0) {
+				//				System.out.println(JsonUtils.toJson(postData.getRecords()));
 				pool.execute(new Thread(new Runnable() {
 					@Override
 					public void run() {
