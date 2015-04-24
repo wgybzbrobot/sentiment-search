@@ -48,10 +48,10 @@ public class FirstPageHarmfulRun {
 					JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 		}*/
 
-		List<SolrDocument> negativeRecordsForum = oafirstPage.getHarmfulRecords("1,2,3,4,6,7,10", 0, 30);
+		List<SolrDocument> negativeRecordsForum = oafirstPage.getHarmfulRecords("1,2,3,4,7,10", 0, 30);
 		negativeRecordsForum = FirstPageRun.getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 50);
 		firstPage.insertFirstPage(0, FirstPageRun.timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
-		//		System.out.println(JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
+		//		System.out.println(JsonUtils.toJson(negativeRecordsForum));
 
 		// 关闭资源
 		negativeClassify.cleanup();
