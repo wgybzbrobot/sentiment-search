@@ -1,6 +1,5 @@
 package zx.soft.sent.solr.utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -101,7 +100,7 @@ public class RedisMQ {
 				jedis = null;
 			}
 		} finally {
-			// 这里很重要，一旦拿到的jedis实例使用完毕，必须要返还给池中 
+			// 这里很重要，一旦拿到的jedis实例使用完毕，必须要返还给池中
 			if (jedis != null && jedis.isConnected())
 				pool.returnResource(jedis);
 		}
@@ -144,6 +143,7 @@ public class RedisMQ {
 		try {
 			String value = jedis.spop(CACHE_SENTIMENT_KEY);
 			while (value != null) {
+				//			for (int i = 0; i < 10000; i++) {
 				records.add(value);
 				value = jedis.spop(CACHE_SENTIMENT_KEY);
 			}
@@ -169,7 +169,7 @@ public class RedisMQ {
 		for (String record : records) {
 			try {
 				recordInfos.add(OBJECT_MAPPER.readValue(record, RecordInfo.class));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				logger.error("Record:{}", record);
 				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
@@ -178,7 +178,7 @@ public class RedisMQ {
 	}
 
 	public void close() {
-		// 程序关闭时，需要调用关闭方法 
+		// 程序关闭时，需要调用关闭方法
 		pool.destroy();
 	}
 

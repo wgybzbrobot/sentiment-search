@@ -68,7 +68,7 @@ public class ImportRedisToSC {
 							if (tmp.getFirst_time() != 0) {
 								redisCacheExpired.addRecord(tmp.getId(), tmp.getFirst_time() + "");
 							} else {
-								logger.info("id:{} firsttime is null.", tmp.getFirst_time());
+								logger.info("id:{} firsttime is null.", tmp.getId());
 							}
 						}
 					}

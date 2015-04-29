@@ -21,7 +21,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 通过HTTP方式索引数据到单台机器上。
- * 
+ *
  * @author wgybzb
  *
  */
@@ -71,8 +71,13 @@ public class IndexCloudSolr {
 		}
 		Collection<SolrInputDocument> docs = new ArrayList<>();
 		for (RecordInfo record : records) {
-			if (getSentimentDoc(record) != null) {
-				docs.add(getSentimentDoc(record));
+			// 添加单条数据可能出现问题，需要捕获Bug
+			try {
+				if (getSentimentDoc(record) != null) {
+					docs.add(getSentimentDoc(record));
+				}
+			} catch (Exception e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			}
 		}
 		try {
