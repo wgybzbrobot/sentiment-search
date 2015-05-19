@@ -58,10 +58,10 @@ public class IndexService {
 				pool.execute(new Thread(new Runnable() {
 					@Override
 					public void run() {
-						// 这里面以及包含了错误日志记录
-						persist(postData.getRecords());
 						// 持久化到Redis
 						addToRedis(postData.getRecords());
+						// 这里面以及包含了错误日志记录
+						persist(postData.getRecords());
 					}
 				}));
 			}
