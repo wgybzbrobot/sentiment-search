@@ -142,8 +142,8 @@ public class RedisMQ {
 		}
 		try {
 			String value = jedis.spop(CACHE_SENTIMENT_KEY);
-			while (value != null) {
-				//			for (int i = 0; i < 10000; i++) {
+			//			while (value != null) {
+			for (int i = 0; (i < 10000) && (value != null); i++) {
 				records.add(value);
 				value = jedis.spop(CACHE_SENTIMENT_KEY);
 			}
