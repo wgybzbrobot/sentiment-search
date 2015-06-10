@@ -75,13 +75,14 @@ public class ImportRedisToSC {
 					result.add(tmp);
 				}
 				indexCloudSolr.addDocsToSolr(result);
-			} else {
-				try {
-					Thread.sleep(1_000);
-				} catch (InterruptedException e) {
-					// TODO
-				}
 			}
+			//			else {
+			//				try {
+			//					Thread.sleep(1_000);
+			//				} catch (InterruptedException e) {
+			//					// TODO
+			//				}
+			//			}
 			logger.info("Finishing index ...");
 			// 休息2秒
 			//			try {
