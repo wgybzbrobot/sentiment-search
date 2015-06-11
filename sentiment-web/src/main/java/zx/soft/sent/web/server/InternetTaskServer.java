@@ -10,7 +10,7 @@ import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.jackson.ReplaceConvert;
 
 /**
- * 全网搜索任务联合接口服务：hefei15
+ * 全网搜索任务联合接口服务：hefei05
  * 示例：http://192.168.32.15:3900/task
  *
  * 运行目录：/home/zxdfs/run-work/api/internettask

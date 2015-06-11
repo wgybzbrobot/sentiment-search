@@ -17,9 +17,9 @@ import org.springframework.web.servlet.DispatcherServlet;
 /**
  * 用户数据接口服务：hefei07
  *
- * 运行目录：/home/zxdfs/run-work/api/oa-internet
- * 运行命令：cd sentiment-spring
- *        bin/ctl.sh start oAApiServer
+ * 运行目录：/home/zxdfs/run-work/api/oa-allinternet
+ * 运行命令：cd sentiment-api
+ *        bin/ctl.sh start queryApiServer
  *
  * @author wanggang
  *

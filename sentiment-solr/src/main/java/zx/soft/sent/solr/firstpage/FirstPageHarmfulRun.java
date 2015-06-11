@@ -12,6 +12,15 @@ import zx.soft.sent.dao.firstpage.FirstPageHarmful;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 
+/**
+ * OA首页信息定时分析：hefei07
+ *
+ * 运行目录：/home/zxdfs/run-work/timer/oa-firstpage
+ * 运行命令：./firstpage_timer.sh &
+ *
+ * @author wanggang
+ *
+ */
 public class FirstPageHarmfulRun {
 
 	private static Logger logger = LoggerFactory.getLogger(FirstPageHarmfulRun.class);
