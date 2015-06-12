@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.solr.utils.RedisCacheExpired;
 import zx.soft.sent.solr.utils.RedisMQ;
+import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 将Redis消息队列中的数据所引到SolrCloud：hefei09,hefei10运行
@@ -74,22 +75,21 @@ public class ImportRedisToSC {
 					}
 					result.add(tmp);
 				}
-				indexCloudSolr.addDocsToSolr(result);
+				try {
+					indexCloudSolr.addDocsToSolr(result);
+				} catch (final Exception e) {
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+					// 索引提交失败，还需要将元数据写回Redis
+					redisCache.addRecord(records.toArray(new String[0]));
+				}
+			} else {
+				try {
+					Thread.sleep(1_000);
+				} catch (InterruptedException e) {
+					// TODO
+				}
 			}
-			//			else {
-			//				try {
-			//					Thread.sleep(1_000);
-			//				} catch (InterruptedException e) {
-			//					// TODO
-			//				}
-			//			}
 			logger.info("Finishing index ...");
-			// 休息2秒
-			//			try {
-			//				Thread.sleep(2000);
-			//			} catch (InterruptedException e) {
-			//				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-			//			}
 		}
 	}
 
