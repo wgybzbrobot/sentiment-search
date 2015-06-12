@@ -25,7 +25,7 @@ public class SiteApplication extends Application {
 	public static final String SITE_GROUPS = "sent:site:groups";
 
 	public SiteApplication() {
-		cache = new RedisCache(Config.get("redis.mq.server"), Integer.parseInt(Config.get("redis.mq.port")),
+		cache = new RedisCache(Config.get("redis.rp.master"), Integer.parseInt(Config.get("redis.rp.port")),
 				Config.get("redis.password"));
 	}
 

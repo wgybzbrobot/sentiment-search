@@ -49,7 +49,7 @@ public class SearchingData {
 	final Cache cache;
 
 	public SearchingData() {
-		cache = new RedisCache(Config.get("redis.rp.master"), Integer.parseInt(Config.get("redis.rp.port")),
+		cache = new RedisCache(Config.get("redis.rp.slave"), Integer.parseInt(Config.get("redis.rp.port")),
 				Config.get("redis.password"));
 		Properties props = ConfigUtil.getProps("solr_params.properties");
 		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
