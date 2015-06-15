@@ -14,10 +14,11 @@ import zx.soft.utils.json.JsonNodeUtils;
 /**
  * 分类搜索，目前solrj中对时间分类搜索不支持，搜索不出结果，
  * 所以采用GET直接请求Solr接口的形式获取按时间分类统计的数据。
- * 
+ *
  * @author wanggang
  *
  */
+@Deprecated
 public class FacetSearch {
 
 	private static Logger logger = LoggerFactory.getLogger(FacetSearch.class);
