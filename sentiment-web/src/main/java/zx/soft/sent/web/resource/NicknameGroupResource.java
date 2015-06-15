@@ -48,14 +48,14 @@ public class NicknameGroupResource extends ServerResource {
 		queryParams.setSort(params.get("sort") == null ? "" : params.get("sort"));
 		queryParams.setStart(params.get("start") == null ? 0 : (Integer.parseInt(params.get("start")) > 1000 ? 1000
 				: Integer.parseInt(params.get("start"))));
-		queryParams.setRows(params.get("rows") == null ? 10 : (Integer.parseInt(params.get("rows")) > 100 ? 100
+		queryParams.setRows(params.get("rows") == null ? 0 : (Integer.parseInt(params.get("rows")) > 100 ? 100
 				: Integer.parseInt(params.get("rows"))));
 		queryParams.setFl(params.get("fl") == null ? "" : params.get("fl"));
 		queryParams.setWt(params.get("wt") == null ? "json" : params.get("wt"));
 		queryParams.setHlfl(params.get("hlfl") == null ? "" : params.get("hlfl"));
 		queryParams.setHlsimple(params.get("hlsimple") == null ? "" : params.get("hlsimple"));
 		queryParams.setFacetQuery(params.get("facetQuery") == null ? "" : params.get("facetQuery"));
-		queryParams.setFacetField(params.get("facetField") == null ? "" : params.get("facetField"));
+		queryParams.setFacetField(params.get("facetField") == null ? "nickname" : params.get("facetField"));
 		logger.info(queryParams.toString());
 	}
 

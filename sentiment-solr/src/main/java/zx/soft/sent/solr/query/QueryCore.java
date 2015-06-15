@@ -218,7 +218,7 @@ public class QueryCore {
 			for (Count temp : facet.getValues()) {
 				if ("platform".equalsIgnoreCase(facet.getName())) {
 					if (fqPlatform.contains("platform")) {
-						if (fqPlatform.contains(temp.getName())) {
+						if ((fqPlatform.split(":"))[1].trim().equals((temp.getName()))) {
 							if (isPlatformTrans) {
 								t.put(SentimentConstant.PLATFORM_ARRAY[Integer.parseInt(temp.getName())],
 										temp.getCount());
@@ -328,6 +328,8 @@ public class QueryCore {
 		if (queryParams.getFacetField() != "") {
 			//			query.setFacet(true);
 			query.addFacetField(queryParams.getFacetField().split(","));
+			//			query.setFacetLimit(15);
+			//			query.setFacetMinCount(1);
 		}
 
 		// 按日期分类查询

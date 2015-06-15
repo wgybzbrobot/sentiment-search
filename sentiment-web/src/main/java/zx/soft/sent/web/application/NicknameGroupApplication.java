@@ -2,22 +2,24 @@ package zx.soft.sent.web.application;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.solr.common.SolrDocument;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
+import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.query.SearchingData;
 import zx.soft.sent.web.resource.NicknameGroupResource;
 import zx.soft.utils.sort.InsertSort;
 
 /**
  * 舆情搜索应用类
- * 
+ *
  * @author wanggang
  *
  */
@@ -37,38 +39,46 @@ public class NicknameGroupApplication extends Application {
 	}
 
 	public HashMap<String, Integer> queryData(QueryParams queryParams) {
-		queryParams.setRows(10_000);
-		queryParams.setFl("nickname");
-		QueryResult queryResult = searchingData.queryData(queryParams, true);
-		// Hash表
-		HashMap<String, Integer> map = new HashMap<>();
-		for (SolrDocument tmp : queryResult.getResults()) {
-			if (tmp.getFieldValue("nickname") == null) {
-				continue;
+		long startTime = System.currentTimeMillis();
+		List<QueryResult> queryResults = searchingData.facetResult(queryParams, true);
+		//		System.err.println(System.currentTimeMillis() - startTime);
+		//		startTime = System.currentTimeMillis();
+		for (String field : queryParams.getFacetField().split(",")) {
+			Map<String, Long> facet = new HashMap<String, Long>();
+			for (QueryResult queryResult : queryResults) {
+				for (SimpleFacetInfo info : queryResult.getFacetFields()) {
+					if (info.getName().equals(field)) {
+						for (Entry<String, Long> entrys : info.getValues().entrySet()) {
+							String key = entrys.getKey();
+							if (facet.containsKey(key)) {
+								facet.put(key, facet.get(key) + entrys.getValue());
+							} else {
+								facet.put(key, entrys.getValue());
+							}
+						}
+					}
+				}
 			}
-			if (map.get(tmp.getFieldValue("nickname").toString()) == null) {
-				map.put(tmp.getFieldValue("nickname").toString(), 1);
-			} else {
-				map.put(tmp.getFieldValue("nickname").toString(), 1 + map.get(tmp.getFieldValue("nickname")));
+			String[] table = new String[10];
+			for (int i = 0; i < table.length; i++) {
+				table[i] = "0=0";
 			}
-		}
-		String[] table = new String[10];
-		for (int i = 0; i < table.length; i++) {
-			table[i] = "0=0";
-		}
-		for (Entry<String, Integer> tmp : map.entrySet()) {
-			table = InsertSort.toptable(table, tmp.getKey() + "=" + tmp.getValue());
-		}
-		HashMap<String, Integer> result = new LinkedHashMap<>();
-		String[] t = null;
-		for (int i = 0; i < table.length; i++) {
-			if ("0=0".equalsIgnoreCase(table[i])) {
-				break;
+			for (Entry<String, Long> tmp : facet.entrySet()) {
+				table = InsertSort.toptable(table, tmp.getKey() + "=" + tmp.getValue());
 			}
-			t = table[i].split("=");
-			result.put(t[0], Integer.parseInt(t[1]));
+			HashMap<String, Integer> result = new LinkedHashMap<>();
+			String[] t = null;
+			for (int i = 0; i < table.length; i++) {
+				if ("0=0".equalsIgnoreCase(table[i])) {
+					break;
+				}
+				t = table[i].split("=");
+				result.put(t[0], Integer.parseInt(t[1]));
+			}
+			System.err.println(System.currentTimeMillis() - startTime);
+			return result;
 		}
-		return result;
+		return null;
 	}
 
 	public void close() {

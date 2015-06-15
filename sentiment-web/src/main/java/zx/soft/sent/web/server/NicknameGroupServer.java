@@ -12,6 +12,7 @@ import zx.soft.utils.jackson.ReplaceConvert;
 /**
  * 舆情搜索Server，针对nickname：hefei02
  * 搜索示例：http://192.168.32.12:8901/sentiment/search?q=合肥&fq=timestamp:[2014-12-23T00:00:00Z TO 2014-12-29T23:59:59Z]
+ * http://192.168.31.11:8902/sentiment/search?q="人"&fq=timestamp:[2015-05-06T00:00:00Z TO 2015-06-04T23:59:59Z];
  *
  * 运行目录：/home/zxdfs/run-work/api/nicknamegroup
  * 运行命令： cd sentiment-web
