@@ -27,8 +27,6 @@ public class SentSearchResource extends ServerResource {
 
 	private static SentiSearchApplication application;
 
-	//	private static ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector();
-
 	private QueryParams queryParams;
 
 	@Override
@@ -69,29 +67,7 @@ public class SentSearchResource extends ServerResource {
 		if (getReference().getRemainingPart() == null) {
 			return new ErrorResponse.Builder(20003, "your query params is illegal.").build();
 		}
-		// 数据库存在的话，返回该条数据，并且另一个线程更新数据
-		//		String cacheResult = application.selectCacheQuery(CreateTables.CACHE_QUERY_TABLE,
-		//				CheckSumUtils.getMD5(queryURL));
-		//		if (cacheResult != null) {
-		//			pool.execute(new Runnable() {
-		//				@Override
-		//				public void run() {
-		//					final QueryResult result = application.queryData(queryParams);
-		//					application.updateCacheQuery(CreateTables.CACHE_QUERY_TABLE, CheckSumUtils.getMD5(queryURL),
-		//							queryURL, JsonUtils.toJsonWithoutPretty(result));
-		//				}
-		//			});
-		//			return cacheResult;
-		//		}
-		// 数据库不存在的话，查询结果返回，并且另一个线程写数据
 		final QueryResult queryResult = application.queryData(queryParams);
-		//		pool.execute(new Runnable() {
-		//			@Override
-		//			public void run() {
-		//				application.insertCacheQuery(CreateTables.CACHE_QUERY_TABLE, CheckSumUtils.getMD5(queryURL), queryURL,
-		//						JsonUtils.toJsonWithoutPretty(queryResult));
-		//			}
-		//		});
 		return queryResult;
 	}
 

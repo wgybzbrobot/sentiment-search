@@ -8,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.redis.client.cache.Cache;
-import zx.soft.redis.client.cache.CacheFactory;
+import zx.soft.redis.client.cache.RedisCache;
+import zx.soft.redis.client.common.Config;
 import zx.soft.sent.dao.oracle.OracleJDBC;
+import zx.soft.sent.solr.utils.SentimentConstant;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
@@ -24,10 +26,6 @@ import zx.soft.utils.log.LogbackUtil;
 public class OracleToRedis {
 
 	private static Logger logger = LoggerFactory.getLogger(OracleToRedis.class);
-
-	public static final String SITE_MAP = "sent:site:map";
-
-	public static final String SITE_GROUPS = "sent:site:groups";
 
 	public OracleToRedis() {
 		//
@@ -64,13 +62,14 @@ public class OracleToRedis {
 
 	public void siteMapToRedis() {
 		logger.info("Start importing data ...");
-		Cache cache = CacheFactory.getInstance();
+		Cache cache = new RedisCache(Config.get("redis.rp.master"), Integer.parseInt(Config.get("redis.rp.port")),
+				Config.get("redis.password"));
 		OracleJDBC oracleJDBC = new OracleJDBC();
 		ResultSet rs = oracleJDBC.query("SELECT ID,ZDMC FROM FLLB_CJLB");
 		try {
 			while (rs.next()) {
 				//				System.out.println(rs.getInt("ID") + "," + rs.getString("ZDMC"));
-				cache.hset(SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
+				cache.hset(SentimentConstant.SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
 			}
 		} catch (SQLException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));

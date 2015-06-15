@@ -23,7 +23,10 @@ public class RedisMQ {
 
 	private static JedisPool pool;
 
+	@Deprecated
 	private static final String CACHE_SENTIMENT_KEY = "cache-records";
+
+	private static final String SENTIMENT_CACHE_KEY = "sent.cache.records";
 
 	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
 

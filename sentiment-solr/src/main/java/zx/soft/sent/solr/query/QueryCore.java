@@ -49,7 +49,7 @@ public class QueryCore {
 	final Cache cache;
 
 	public QueryCore() {
-		cache = new RedisCache(Config.get("redis.mq.server"), Integer.parseInt(Config.get("redis.mq.port")),
+		cache = new RedisCache(Config.get("redis.rp.slave"), Integer.parseInt(Config.get("redis.rp.port")),
 				Config.get("redis.password"));
 		Properties props = ConfigUtil.getProps("solr_params.properties");
 		cloudServer = new CloudSolrServer(props.getProperty("zookeeper_cloud"));
@@ -66,8 +66,9 @@ public class QueryCore {
 		QueryCore search = new QueryCore();
 		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("香港占中");
-		//		queryParams.setFq("timestamp:[2014-11-27T00:00:00Z TO 2014-11-27T23:59:59Z]"); //timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
+		queryParams.setQ("沉船");
+		//		queryParams.setFq("source_id:607202e6603cb23b3d3173d4ca20a886");
+		//timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		//		queryParams.setSort("timestamp:desc"); // lasttime:desc
 		//		queryParams.setStart(0);
 		//		queryParams.setRows(10);
@@ -76,7 +77,7 @@ public class QueryCore {
 		//		queryParams.setHlfl("title,content");
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		//		queryParams.setFacetField("nickname");
+		queryParams.setFacetField("source_id");
 		QueryResult result = search.queryData(queryParams, true);
 		System.out.println(JsonUtils.toJson(result));
 		//		search.deleteQuery("timestamp:[2000-11-27T00:00:00Z TO 2014-09-30T23:59:59Z]");
@@ -150,14 +151,6 @@ public class QueryCore {
 					}
 				}
 			}
-			/*if (result.getResults().get(i).getFieldValue("source_id") != null) {
-				result.getResults()
-						.get(i)
-						.setField(
-								"source_name",
-								cache.hget(OracleToRedis.SITE_MAP, result.getResults().get(i)
-										.getFieldValue("source_id").toString()));
-			}*/
 		}
 
 		logger.info("numFound=" + queryResponse.getResults().getNumFound());
@@ -246,7 +239,7 @@ public class QueryCore {
 					}
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
 					if ((t.size() < SentimentConstant.PLATFORM_ARRAY.length) && (temp.getCount() > 0)) {
-						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),
+						t.put(temp.getName() + "," + cache.hget(SentimentConstant.SITE_MAP, temp.getName()),
 								temp.getCount());
 					} else {
 						break;
@@ -351,7 +344,7 @@ public class QueryCore {
 		String result = "";
 		String sites = fqs.split(":")[1];
 		if ((sites.indexOf(",") < 0) && (sites.length() == 32)) {
-			sites = cache.hget(OracleToRedis.SITE_GROUPS, sites);
+			sites = cache.hget(SentimentConstant.SITE_GROUPS, sites);
 			if (sites == null) {
 				return "";
 			}
@@ -387,7 +380,7 @@ public class QueryCore {
 	 * 获取资源站点和名称列表
 	 */
 	public Map<String, String> getSourceIdAndNames() {
-		return cache.hgetAll(OracleToRedis.SITE_MAP);
+		return cache.hgetAll(SentimentConstant.SITE_MAP);
 	}
 
 	/**

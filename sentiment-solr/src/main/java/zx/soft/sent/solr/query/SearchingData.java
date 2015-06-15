@@ -28,6 +28,7 @@ import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.ecxception.SpiderSearchException;
+import zx.soft.sent.solr.utils.SentimentConstant;
 import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
@@ -38,6 +39,7 @@ import zx.soft.utils.time.TimeUtils;
  * @author wanggang
  *
  */
+@Deprecated
 public class SearchingData {
 
 	private static Logger logger = LoggerFactory.getLogger(SearchingData.class);
@@ -155,8 +157,8 @@ public class SearchingData {
 						.get(i)
 						.setField(
 								"source_name",
-								cache.hget(OracleToRedis.SITE_MAP, result.getResults().get(i)
-										.getFieldValue("source_id").toString()));
+								cache.hget(SentimentConstant.SITE_MAP,
+										result.getResults().get(i).getFieldValue("source_id").toString()));
 			}
 		}
 
@@ -241,7 +243,7 @@ public class SearchingData {
 					}
 				} else if ("source_id".equalsIgnoreCase(facet.getName())) {
 					if ((t.size() < 11) && (temp.getCount() > 0)) {
-						t.put(temp.getName() + "," + cache.hget(OracleToRedis.SITE_MAP, temp.getName()),
+						t.put(temp.getName() + "," + cache.hget(SentimentConstant.SITE_MAP, temp.getName()),
 								temp.getCount());
 					} else {
 						break;
@@ -346,7 +348,7 @@ public class SearchingData {
 		String result = "";
 		String sites = fqs.split(":")[1];
 		if ((sites.indexOf(",") < 0) && (sites.length() == 32)) {
-			sites = cache.hget(OracleToRedis.SITE_GROUPS, sites);
+			sites = cache.hget(SentimentConstant.SITE_GROUPS, sites);
 			if (sites == null) {
 				return "";
 			}
@@ -382,7 +384,7 @@ public class SearchingData {
 	 * 获取资源站点和名称列表
 	 */
 	public Map<String, String> getSourceIdAndNames() {
-		return cache.hgetAll(OracleToRedis.SITE_MAP);
+		return cache.hgetAll(SentimentConstant.SITE_MAP);
 	}
 
 	/**
