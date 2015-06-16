@@ -9,8 +9,10 @@ import zx.soft.utils.config.ConfigUtil;
 
 /**
  * 舆情数据统计控制类
- * 
+ *
  * @author wanggang
+ *
+ * TODO
  *
  */
 public class SentimentReportCore {

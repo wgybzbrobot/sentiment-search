@@ -10,8 +10,10 @@ import zx.soft.sent.core.constant.RecordsConstant;
 
 /**
  * 统计Redis中的数据条数等实时数据。
- * 
+ *
  * @author wanggang
+ *
+ * TODO
  *
  */
 public class GatherQueueReport implements Reportable {

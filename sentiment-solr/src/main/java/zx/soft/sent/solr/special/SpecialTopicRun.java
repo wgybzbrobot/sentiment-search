@@ -34,7 +34,7 @@ import zx.soft.utils.time.TimeUtils;
  */
 public class SpecialTopicRun {
 
-	private static Logger logger = LoggerFactory.getLogger(SpecialTopicTimer.class);
+	private static Logger logger = LoggerFactory.getLogger(SpecialTopicRun.class);
 
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
 
