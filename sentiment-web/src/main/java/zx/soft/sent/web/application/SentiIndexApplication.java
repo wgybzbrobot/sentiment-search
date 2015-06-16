@@ -17,7 +17,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 舆情索引应用类
- * 
+ *
  * @author wanggang
  *
  */

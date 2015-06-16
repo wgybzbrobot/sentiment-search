@@ -13,10 +13,10 @@ import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
- * OA首页信息定时分析：hefei07
+ * OA首页有害负面信息定时分析：hefei07
  *
- * 运行目录：/home/zxdfs/run-work/timer/oa-firstpage
- * 运行命令：./firstpage_timer.sh &
+ * 运行目录：/home/zxdfs/run-work/timer/oa-firstpage-harmful
+ * 运行命令：./firstpage_harmful_timer.sh &
  *
  * @author wanggang
  *
@@ -38,6 +38,7 @@ public class FirstPageHarmfulRun {
 			fphr.run();
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -57,7 +58,7 @@ public class FirstPageHarmfulRun {
 					JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 		}*/
 
-		List<SolrDocument> negativeRecordsForum = oafirstPage.getHarmfulRecords("1,2,3,4,7,10", 0, 30);
+		List<SolrDocument> negativeRecordsForum = oafirstPage.getHarmfulRecords("2,3,7,10", 0, 30); // 1,2,3,4,7,10
 		negativeRecordsForum = FirstPageRun.getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 50);
 		firstPage.insertFirstPage(0, FirstPageRun.timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 		//		System.out.println(JsonUtils.toJson(negativeRecordsForum));

@@ -11,7 +11,6 @@ import zx.soft.redis.client.cache.Cache;
 import zx.soft.redis.client.cache.RedisCache;
 import zx.soft.redis.client.common.Config;
 import zx.soft.sent.dao.oracle.OracleJDBC;
-import zx.soft.sent.solr.utils.SentimentConstant;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
@@ -69,7 +68,8 @@ public class OracleToRedis {
 		try {
 			while (rs.next()) {
 				//				System.out.println(rs.getInt("ID") + "," + rs.getString("ZDMC"));
-				cache.hset(SentimentConstant.SITE_MAP, rs.getInt("ID") + "", rs.getString("ZDMC"));
+				cache.hset(zx.soft.sent.dao.common.SentimentConstant.SITE_MAP, rs.getInt("ID") + "",
+						rs.getString("ZDMC"));
 			}
 		} catch (SQLException e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));

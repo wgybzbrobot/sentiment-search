@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import zx.soft.redis.client.cache.Cache;
 import zx.soft.redis.client.cache.RedisCache;
-import zx.soft.sent.solr.utils.SentimentConstant;
+import zx.soft.sent.dao.common.SentimentConstant;
 
 public class CacheDemo {
 

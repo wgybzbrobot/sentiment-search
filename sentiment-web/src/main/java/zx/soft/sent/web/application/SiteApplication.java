@@ -9,7 +9,7 @@ import org.restlet.routing.Router;
 import zx.soft.redis.client.cache.Cache;
 import zx.soft.redis.client.cache.RedisCache;
 import zx.soft.redis.client.common.Config;
-import zx.soft.sent.solr.utils.SentimentConstant;
+import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.web.resource.SiteResource;
 import zx.soft.utils.checksum.CheckSumUtils;
 

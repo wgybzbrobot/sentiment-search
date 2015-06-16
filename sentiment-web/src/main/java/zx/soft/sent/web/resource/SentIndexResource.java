@@ -17,7 +17,7 @@ import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
  * 舆情索引资源类
- * 
+ *
  * @author wanggang
  *
  */

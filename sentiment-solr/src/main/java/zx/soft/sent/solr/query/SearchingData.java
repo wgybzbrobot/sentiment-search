@@ -31,13 +31,12 @@ import org.slf4j.LoggerFactory;
 import zx.soft.redis.client.cache.Cache;
 import zx.soft.redis.client.cache.RedisCache;
 import zx.soft.redis.client.common.Config;
+import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.ecxception.SpiderSearchException;
-import zx.soft.sent.solr.utils.SentimentConstant;
 import zx.soft.utils.config.ConfigUtil;
-import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
 

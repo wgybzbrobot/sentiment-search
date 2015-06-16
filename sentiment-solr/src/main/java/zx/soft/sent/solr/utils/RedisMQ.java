@@ -12,6 +12,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Transaction;
+import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.utils.config.ConfigUtil;
 import zx.soft.utils.json.JsonUtils;
@@ -23,32 +24,10 @@ public class RedisMQ {
 
 	private static JedisPool pool;
 
-	@Deprecated
-	private static final String CACHE_SENTIMENT_KEY = "cache-records";
-
-	private static final String SENTIMENT_CACHE_KEY = "sent.cache.records";
-
 	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
 
 	public RedisMQ() {
 		init();
-		// 每小时定时清空Redis连接池
-		//		Thread thread = new Thread(new Runnable() {
-		//			@Override
-		//			public void run() {
-		//				logger.info("Starting managing redis pool ...");
-		//				Timer timer = new Timer();
-		//				timer.schedule(new TimerTask() {
-		//					@Override
-		//					public void run() {
-		//						logger.info("Updating redis pool ...");
-		//						close();
-		//						init();
-		//					}
-		//				}, 0, 60 * 60_000);
-		//			}
-		//		});
-		//		thread.start();
 	}
 
 	private void init() {
@@ -86,9 +65,9 @@ public class RedisMQ {
 			return;
 		}
 		try {
-			jedis.watch(CACHE_SENTIMENT_KEY);
+			jedis.watch(SentimentConstant.SENTIMENT_CACHE_KEY);
 			Transaction tx = jedis.multi();
-			tx.sadd(CACHE_SENTIMENT_KEY, members);
+			tx.sadd(SentimentConstant.SENTIMENT_CACHE_KEY, members);
 			tx.exec();
 			jedis.unwatch();
 			// pipeline适用于批处理，管道比事务效率高
@@ -120,7 +99,7 @@ public class RedisMQ {
 		}
 		try {
 			// 在事务和管道中不支持同步查询
-			result = jedis.scard(CACHE_SENTIMENT_KEY).longValue();
+			result = jedis.scard(SentimentConstant.SENTIMENT_CACHE_KEY).longValue();
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			if (jedis != null) {
@@ -144,11 +123,11 @@ public class RedisMQ {
 			return records;
 		}
 		try {
-			String value = jedis.spop(CACHE_SENTIMENT_KEY);
+			String value = jedis.spop(SentimentConstant.SENTIMENT_CACHE_KEY);
 			//			while (value != null) {
 			for (int i = 0; (i < 10000) && (value != null); i++) {
 				records.add(value);
-				value = jedis.spop(CACHE_SENTIMENT_KEY);
+				value = jedis.spop(SentimentConstant.SENTIMENT_CACHE_KEY);
 			}
 			logger.info("Records'size = {}", records.size());
 		} catch (Exception e) {

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.redis.client.cache.Cache;
+import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
@@ -15,7 +16,7 @@ import zx.soft.utils.log.LogbackUtil;
 
 /**
  * 持久化线程类
- * 
+ *
  * @author wanggang
  *
  */
@@ -28,8 +29,6 @@ public class PersistRunnable implements Runnable {
 	private final RecordInfo record;
 
 	private final Cache cache;
-
-	public static final String SENT_KEY_INSERTED = "sent:key:inserted";
 
 	public PersistRunnable(final Cache cache, SentimentRecord sentRecord, RecordInfo record) {
 		if (record == null) {
@@ -47,7 +46,7 @@ public class PersistRunnable implements Runnable {
 		try {
 			RecordInsert tRecord = transRecord(record);
 			// 记录存在的情况下
-			if (cache.sismember(SENT_KEY_INSERTED, record.getId())) {
+			if (cache.sismember(SentimentConstant.SENT_KEY_INSERTED, record.getId())) {
 				// 更新的时候存在线程安全，但是问题不太大
 				// 暂时不做更新
 				//				try {
@@ -59,7 +58,7 @@ public class PersistRunnable implements Runnable {
 				// 记录不存在的情况下
 			} else {
 				// 下面两句顺序不可改变，否则会导致线程安全
-				cache.sadd(SENT_KEY_INSERTED, record.getId());
+				cache.sadd(SentimentConstant.SENT_KEY_INSERTED, record.getId());
 				try {
 					logger.info("Insert Record:{}", record.getId());
 					sentRecord.insertRecord(tRecord);

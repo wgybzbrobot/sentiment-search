@@ -14,9 +14,10 @@ import zx.soft.utils.jackson.ReplaceConvert;
  *
  * 索引示例：
  * http://localhost:8900/sentiment/index   POST
- * 
+ *
  * @author wanggang
  */
+@Deprecated
 public class SentimentIndexServer {
 
 	private final Component component;

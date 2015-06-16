@@ -1,4 +1,4 @@
-package zx.soft.sent.solr.utils;
+package zx.soft.sent.dao.common;
 
 /**
  * 與情信息常量值
@@ -19,5 +19,11 @@ public class SentimentConstant {
 
 	// 所有站点id和站点名称对应的列表名称
 	public static final String SITE_MAP = "sent:site:map";
+
+	// 與情数据消息队列
+	public static final String SENTIMENT_CACHE_KEY = "sent.cache.records";
+
+	// 存储记录的id，主要用于数据库写入去重
+	public static final String SENT_KEY_INSERTED = "sent:key:inserted";
 
 }
