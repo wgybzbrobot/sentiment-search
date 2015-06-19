@@ -1,10 +1,13 @@
 #!/bin/bash
 
 echo "Starting ..."
-bin/ctl.sh start firstPageRun
+
+bin/ctl.sh start importRedisToSC
+
 while (true)
 do
-    bin/ctl.sh restart firstPageRun
     sleep 1h
+    bin/ctl.sh restart importRedisToSC
 done
+
 echo "Finishing ..."
