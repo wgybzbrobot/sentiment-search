@@ -2,7 +2,7 @@ package zx.soft.sent.dao.domain.platform;
 
 /**
  * POST的数据类，注意：id需要md5，时间都是10位的数字时间戳，精确到秒的
- * 
+ *
  * @author wanggang
  *
  */
@@ -184,16 +184,16 @@ public class RecordInfo {
 		return type;
 	}
 
-	public void setIsharmful(boolean isharmful) {
-		this.isharmful = isharmful;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public boolean isIsharmful() {
 		return isharmful;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setIsharmful(boolean isharmful) {
+		this.isharmful = isharmful;
 	}
 
 	public String getContent() {

@@ -8,11 +8,6 @@
 		<property name="db_encoding" value="UTF8" />
 	</properties>
 	<typeAliases>
-		<!-- 新浪微博数据 -->
-		<typeAlias alias="WeiboOldInfo"
-			type="zx.soft.sent.dao.domain.weibo.WeiboOldInfo" />
-		<typeAlias alias="WeiboSinaParams"
-			type="zx.soft.sent.dao.domain.weibo.WeiboSinaParams" />
 		<!-- 舆情数据 -->
 		<typeAlias alias="SentTablename" type="zx.soft.sent.dao.domain.sentiment.SentTablename" />
 		<typeAlias alias="RecordInsert" type="zx.soft.sent.dao.domain.sentiment.RecordInsert" />
@@ -43,7 +38,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="WeiboSinaDaoMapper.xml" />
 		<mapper resource="SentimentRecordDaoMapper.xml"/>
 		<mapper resource="SpecialQueryMapper.xml"/>
 		<package name="zx.soft.sent.dao.spidersite"/>

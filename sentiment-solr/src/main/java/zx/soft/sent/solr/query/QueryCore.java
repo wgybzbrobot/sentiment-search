@@ -30,7 +30,6 @@ import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.ecxception.SpiderSearchException;
 import zx.soft.utils.config.ConfigUtil;
-import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.time.TimeUtils;
 
@@ -64,9 +63,9 @@ public class QueryCore {
 	 */
 	public static void main(String[] args) {
 		QueryCore search = new QueryCore();
-		QueryParams queryParams = new QueryParams();
+		//		QueryParams queryParams = new QueryParams();
 		// q:关键词
-		queryParams.setQ("沉船");
+		//		queryParams.setQ("沉船");
 		//		queryParams.setFq("source_id:607202e6603cb23b3d3173d4ca20a886");
 		//timestamp:[2014-04-22T00:00:00Z TO 2014-04-23T00:00:00Z]
 		//		queryParams.setSort("timestamp:desc"); // lasttime:desc
@@ -77,10 +76,10 @@ public class QueryCore {
 		//		queryParams.setHlfl("title,content");
 		//		queryParams.setHlsimple("red");
 		//		queryParams.setFacetQuery("");
-		queryParams.setFacetField("source_id");
-		QueryResult result = search.queryData(queryParams, true);
-		System.out.println(JsonUtils.toJson(result));
-		//		search.deleteQuery("timestamp:[2000-11-27T00:00:00Z TO 2014-09-30T23:59:59Z]");
+		//		queryParams.setFacetField("source_id");
+		//		QueryResult result = search.queryData(queryParams, true);
+		//		System.out.println(JsonUtils.toJson(result));
+		search.deleteQuery("id:sentiment*");
 		search.close();
 	}
 

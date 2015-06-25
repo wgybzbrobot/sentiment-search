@@ -15,13 +15,14 @@ import zx.soft.utils.threads.ApplyThreadPool;
 
 /**
  * 持久化到Mysql
- * 
+ *
  * @author wanggang
  *
  */
-public class PersistCore {
+@Deprecated
+public class PersistCoreOld {
 
-	private static Logger logger = LoggerFactory.getLogger(PersistCore.class);
+	private static Logger logger = LoggerFactory.getLogger(PersistCoreOld.class);
 
 	//	private final Cache cache;
 	private final RedisReplication cache;
@@ -30,7 +31,7 @@ public class PersistCore {
 
 	final ThreadPoolExecutor pool;
 
-	public PersistCore() {
+	public PersistCoreOld() {
 
 		//		cache = CacheFactory.getInstance();
 		cache = new RedisReplication();

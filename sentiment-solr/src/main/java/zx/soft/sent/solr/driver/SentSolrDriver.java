@@ -9,6 +9,7 @@ import zx.soft.sent.solr.query.RemoveRedisReplicationData;
 import zx.soft.sent.solr.query.RemoveSentiData;
 import zx.soft.sent.solr.query.RemoveWeiboData;
 import zx.soft.sent.solr.special.SpecialTopicRun;
+import zx.soft.sent.solr.utils.RedisMQTest;
 import zx.soft.utils.driver.ProgramDriver;
 
 /**
@@ -45,6 +46,8 @@ public class SentSolrDriver {
 			pgd.addClass("removeRedisReplicationData", RemoveRedisReplicationData.class, "定时清理Redis去重数据");
 			// 在hefei10机器上运行
 			pgd.addClass("taskUpdate", TaskUpdate.class, "全网任务信息查询结果存储缓存信息");
+			// 测试
+			pgd.addClass("redisMQTest", RedisMQTest.class, "测试Redis");
 			pgd.driver(args);
 			// Success
 			exitCode = 0;

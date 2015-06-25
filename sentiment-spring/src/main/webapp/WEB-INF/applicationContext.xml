@@ -14,7 +14,7 @@
 	<context:component-scan base-package="zx.soft.sent.spring.controller" />
 	<context:component-scan base-package="zx.soft.sent.spring.service" />
 	
-	<bean id="persistCore" class="zx.soft.sent.core.persist.PersistCore" />
+	<bean id="persistCore" class="zx.soft.sent.spring.utils.PersistCore" />
 	
 	<bean id="redisMQ" class="zx.soft.sent.solr.utils.RedisMQ" />
 

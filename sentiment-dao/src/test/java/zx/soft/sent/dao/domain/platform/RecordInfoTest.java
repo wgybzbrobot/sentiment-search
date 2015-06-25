@@ -62,17 +62,6 @@ public class RecordInfoTest {
 
 	@Test
 	public void testRecordInfo() {
-		String result = "Record:{id=sentiment,platform=10,mid=123456789987654321,username=zxsoft,nickname=中新舆情,"
-				+ "original_id=original_sentiment,original_uid=original_zxsoft,original_name=original_中新软件,"
-				+ "original_title=original_标题,original_url=http://www.orignal_url.com,url=http://www.url.com,"
-				+ "home_url=http://www.home_url.com,title=标题,type=所属类型,isharmful=true,content=测试内容,comment_count=10,"
-				+ "read_count=20,favorite_count=30,attitude_count=40,repost_count=50,video_url=http://www.video_url.com,"
-				+ "pic_url=htpp://www.pic_url.com,voice_url=http://www.voice_url.com,timestamp=60,source_id=70,lasttime=80,"
-				+ "server_id=90,identify_id=100,identify_md5=abcdefg123456789,keyword=关键词,first_time=110,update_time=120,"
-				+ "ip=192.168.32.45,location=安徽省合肥市,geo=经纬度信息,receive_addr=receive@gmail.com,append_addr=append@gmail.com,"
-				+ "send_addr=send@gmail.com,source_name=新浪微博,country_code=122,location_code=123,province_code=124,"
-				+ "city_code=125,source_type=121}";
-		assertEquals(result, recordInfo.toString());
 		assertEquals("sentiment", recordInfo.getId());
 		assertEquals(10, recordInfo.getPlatform());
 		assertEquals("123456789987654321", recordInfo.getMid());

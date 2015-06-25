@@ -1,76 +1,48 @@
-package zx.soft.sent.core.persist;
+package zx.soft.sent.spring.utils;
 
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zx.soft.redis.client.cache.Cache;
+import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
 import zx.soft.sent.dao.sql.CreateTables;
+import zx.soft.sent.solr.utils.RedisMQ;
 import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
- * 持久化线程类
+ * 持久化到Mysql
  *
  * @author wanggang
  *
  */
-@Deprecated
-public class PersistRunnable implements Runnable {
+public class PersistCore {
 
-	private static Logger logger = LoggerFactory.getLogger(PersistRunnable.class);
+	private static Logger logger = LoggerFactory.getLogger(PersistCore.class);
 
 	private final SentimentRecord sentRecord;
 
-	private final RecordInfo record;
-
-	private final Cache cache;
-
-	public PersistRunnable(final Cache cache, SentimentRecord sentRecord, RecordInfo record) {
-		if (record == null) {
-			logger.error("Record is null.");
-			//			throw new IllegalArgumentException("record is null");
-		}
-		this.cache = cache;
-		this.sentRecord = sentRecord;
-		this.record = record;
+	public PersistCore() {
+		sentRecord = new SentimentRecord(MybatisConfig.ServerEnum.sentiment);
 	}
 
-	@Override
-	public synchronized void run() {
-
+	public void persist(RedisMQ cache, RecordInfo record) {
 		try {
 			RecordInsert tRecord = transRecord(record);
-			// 记录存在的情况下
-			if (cache.sismember(SentimentConstant.SENT_KEY_INSERTED, record.getId())) {
-				// 更新的时候存在线程安全，但是问题不太大
-				// 暂时不做更新
-				//				try {
-				//					logger.info("Update Record:{}", record.getId());
-				//					sentRecord.updateRecord(tRecord);
-				//				} catch (Exception e) {
-				//					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-				//				}
-				// 记录不存在的情况下
-			} else {
+			if (!cache.sismember(SentimentConstant.SENT_KEY_INSERTED, record.getId())) {
 				// 下面两句顺序不可改变，否则会导致线程安全
 				cache.sadd(SentimentConstant.SENT_KEY_INSERTED, record.getId());
-				try {
-					logger.info("Insert Record:{}", record.getId());
-					sentRecord.insertRecord(tRecord);
-				} catch (Exception e) {
-					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
-				}
+				logger.info("Insert Record:{}", record.getId());
+				sentRecord.insertRecord(tRecord);
 			}
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
-
 	}
 
 	private RecordInsert transRecord(RecordInfo record) {
