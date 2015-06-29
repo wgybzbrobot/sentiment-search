@@ -204,6 +204,24 @@ public class RedisMQ {
 		}
 	}
 
+	public void deleteKey(String key) {
+		Jedis jedis = getJedis();
+		if (jedis != null) {
+			try {
+				jedis.del(key);
+			} catch (Exception e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+				if (jedis != null) {
+					pool.returnBrokenResource(jedis);
+					jedis = null;
+				}
+			} finally {
+				if (jedis != null && jedis.isConnected())
+					pool.returnResource(jedis);
+			}
+		}
+	}
+
 	public void close() {
 		// 程序关闭时，需要调用关闭方法
 		pool.destroy();

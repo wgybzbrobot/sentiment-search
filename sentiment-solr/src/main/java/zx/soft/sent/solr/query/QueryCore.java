@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -46,6 +53,10 @@ public class QueryCore {
 	final CloudSolrServer cloudServer;
 
 	final Cache cache;
+
+	private enum Shards {
+		shard1, shard2, shard3, shard4, shard5, shard6
+	};
 
 	public QueryCore() {
 		cache = new RedisCache(Config.get("redis.rp.slave"), Integer.parseInt(Config.get("redis.rp.port")),
@@ -94,6 +105,65 @@ public class QueryCore {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @author Donglei
+	 *
+	 * 仅对用于大量数据的facet应用
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 * QTime: 7353
+	 * QTime: 7376
+	 * QTime: 7383
+	 * QTime: 7610
+	 * QTime: 7637
+	 * QTime: 7661
+	 * 多线程请求耗时：7883
+	 */
+	public List<QueryResult> facetResult(final QueryParams queryParams, final boolean isPlatformTrans) {
+		List<QueryResult> queryResults = new ArrayList<QueryResult>();
+		final SolrQuery query = getSolrQuery(queryParams);
+		long startTime = System.currentTimeMillis();
+		ExecutorService executor = Executors.newFixedThreadPool(6);
+		List<Future<QueryResult>> results = new ArrayList<Future<QueryResult>>();
+		for (final Shards shard : Shards.values()) {
+			Future<QueryResult> result = executor.submit(new Callable<QueryResult>() {
+				@Override
+				public QueryResult call() throws Exception {
+					query.set("shards", shard.name());
+					QueryResponse queryResponse = null;
+					try {
+						queryResponse = cloudServer.query(query, METHOD.POST);
+					} catch (SolrServerException e) {
+						logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+						throw new RuntimeException(e);
+					}
+					if (queryResponse == null) {
+						logger.error("no response!");
+						throw new SpiderSearchException("no response!");
+					}
+					QueryResult result = new QueryResult();
+					logger.info("QTime: " + queryResponse.getQTime());
+					result.setFacetFields(transFacetField(queryResponse.getFacetFields(), queryParams, isPlatformTrans));
+					result.setFacetDates(transFacetField(queryResponse.getFacetDates(), queryParams, isPlatformTrans));
+					return result;
+				}
+			});
+
+			results.add(result);
+		}
+		for (Future<QueryResult> result : results) {
+			try {
+				queryResults.add(result.get(20, TimeUnit.SECONDS));
+			} catch (InterruptedException | ExecutionException | TimeoutException e) {
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+				throw new RuntimeException(e);
+			}
+		}
+		logger.info("多线程请求耗时：" + (System.currentTimeMillis() - startTime));
+		executor.shutdown();
+		return queryResults;
 	}
 
 	/**

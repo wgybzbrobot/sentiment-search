@@ -15,13 +15,13 @@
 
 `用于站点Id和站点名存储K-V`: sent:site:map
 
-`用于数据库写入去重`: sent:key:inserted
-
 #### 消息队列节点
 
 > 一台机器，hefei10，redis.mq.server
 
 `索引缓存数据消息队列List`: sent.cache.records
+
+`用于数据库写入去重`: sent:key:inserted
 
 #### 有效期缓存节点
 

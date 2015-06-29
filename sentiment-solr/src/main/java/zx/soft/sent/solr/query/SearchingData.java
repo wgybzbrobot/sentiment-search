@@ -158,14 +158,12 @@ public class SearchingData {
 			try {
 				queryResults.add(result.get(20, TimeUnit.SECONDS));
 			} catch (InterruptedException | ExecutionException | TimeoutException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+				throw new RuntimeException(e);
 			}
 		}
 		logger.info("多线程请求耗时：" + (System.currentTimeMillis() - startTime));
-		//		startTime = System.currentTimeMillis();
 		executor.shutdown();
-		//		System.err.println("线程池关闭耗时：" + (System.currentTimeMillis() - startTime));
 		return queryResults;
 	}
 

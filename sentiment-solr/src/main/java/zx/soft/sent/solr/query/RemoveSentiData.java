@@ -34,12 +34,12 @@ public class RemoveSentiData {
 		@Override
 		public void run() {
 			logger.info("Start Removing expired data ...");
-			SearchingData search = new SearchingData();
+			QueryCore queryCore = new QueryCore();
 			// 删除一个月之前的数据
 			String end = TimeUtils.transToSolrDateStr(System.currentTimeMillis() - 30 * 86400_000L);
-			String query = "timestamp:[1970-01-01T00:00:00Z TO " + end + "]";
-			search.deleteQuery(query);
-			search.close();
+			String query = "lasttime:[1970-01-01T00:00:00Z TO " + end + "]";
+			queryCore.deleteQuery(query);
+			queryCore.close();
 			logger.info("Finish Removing expired data ...");
 		}
 

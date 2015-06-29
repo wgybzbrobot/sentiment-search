@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.time.TimeUtils;
 
@@ -27,7 +27,7 @@ public class OAFirstPage {
 
 	private static Logger logger = LoggerFactory.getLogger(OAFirstPage.class);
 
-	private final SearchingData search;
+	private final QueryCore queryCore;
 
 	public static final String[] NEGATIVES = { //
 	"造谣窒息事故暴行毁容致死诬陷猥亵砍人诈骗案反动被害逃逸违法罪犯刺死爆炸物施暴开枪迷幻药毒手炸通缉令砍伤毒打砍杀辱骂偷窃窒息而死违法行为",
@@ -44,7 +44,7 @@ public class OAFirstPage {
 	public static String LOCATION_ANHUI = "安徽";
 
 	public OAFirstPage() {
-		this.search = new SearchingData();
+		this.queryCore = new QueryCore();
 	}
 
 	/**
@@ -57,16 +57,16 @@ public class OAFirstPage {
 		//		HashMap<String, Long> currentPSum = firstPage.getCurrentPlatformSum();
 		//		System.out.println(JsonUtils.toJson(currentPSum));
 		// 2、统计当天各类数据的进入量，其中day=0表示当天的数据
-		//		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
-		//		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
+		HashMap<String, Long> todayPlatformInputSum = firstPage.getTodayPlatformInputSum(0);
+		System.out.println(JsonUtils.toJson(todayPlatformInputSum));
 		// 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
 		//		HashMap<String, Long> todayWeibosSum = firstPage.getTodayWeibosSum(0, 6);
 		//		System.out.println(JsonUtils.toJson(todayWeibosSum));
 		//		List<SolrDocument> todayWeibos = firstPage.getTodayNegativeRecords(7, 50, "合肥");
 		//		System.out.println(JsonUtils.toJson(todayWeibos));
 		//		List<SolrDocument> negative = firstPage.getNegativeRecords(2, 0, 10);
-		List<SolrDocument> negative = firstPage.getNegativeRecords(3, 0, 10);
-		System.out.println(JsonUtils.toJson(negative));
+		//		List<SolrDocument> negative = firstPage.getNegativeRecords(3, 0, 10);
+		//		System.out.println(JsonUtils.toJson(negative));
 		firstPage.close();
 
 	}
@@ -80,7 +80,7 @@ public class OAFirstPage {
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);
 		queryParams.setFacetField("platform");
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		for (SimpleFacetInfo facetField : queryResult.getFacetFields()) {
 			if ("platform".equalsIgnoreCase(facetField.getName())) {
 				result = facetField.getValues();
@@ -106,9 +106,11 @@ public class OAFirstPage {
 		queryParams.setRows(0);
 		queryParams.setFacetField("platform");
 		// lasttime代表入solr时间，update_time更新时间
+		logger.info("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
+				+ TimeUtils.transToSolrDateStr(currentTime) + "]");
 		queryParams.setFq("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(currentTime) + "]");
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		for (SimpleFacetInfo facetField : queryResult.getFacetFields()) {
 			if ("platform".equalsIgnoreCase(facetField.getName())) {
 				result = facetField.getValues();
@@ -127,7 +129,7 @@ public class OAFirstPage {
 		queryParams.setRows(N);
 		queryParams.setFq("username:" + username);
 		queryParams.setSort("timestamp:desc");
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		result = queryResult.getResults();
 		return result;
 	}
@@ -151,9 +153,11 @@ public class OAFirstPage {
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(0);
 		queryParams.setFacetField("source_name");
+		logger.info("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
+				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
 		queryParams.setFq("lasttime:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(endTime) + "];platform:3");
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		for (SimpleFacetInfo facetField : queryResult.getFacetFields()) {
 			if ("source_name".equalsIgnoreCase(facetField.getName())) {
 				for (Entry<String, Long> t : facetField.getValues().entrySet()) {
@@ -215,7 +219,7 @@ public class OAFirstPage {
 		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(currentTime) + "]");
 		//		queryParams.setSort("timestamp:desc");
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		return queryResult.getResults();
 	}
 
@@ -228,7 +232,7 @@ public class OAFirstPage {
 		queryParams.setRows(N);
 		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(currentTime) + "];platform:" + platform + ";content:" + LOCATION_ANHUI);
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		return queryResult.getResults();
 	}
 
@@ -268,12 +272,12 @@ public class OAFirstPage {
 		queryParams.setRows(N);
 		queryParams.setFq("timestamp:[" + TimeUtils.transToSolrDateStr(startTime) + " TO "
 				+ TimeUtils.transToSolrDateStr(currentTime) + "];platform:" + platform + ";content:" + LOCATION_ANHUI);
-		QueryResult queryResult = search.queryData(queryParams, false);
+		QueryResult queryResult = queryCore.queryData(queryParams, false);
 		return queryResult.getResults();
 	}
 
 	public void close() {
-		search.close();
+		queryCore.close();
 	}
 
 }

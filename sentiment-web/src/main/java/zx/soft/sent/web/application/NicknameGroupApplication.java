@@ -13,7 +13,7 @@ import org.restlet.routing.Router;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.sent.web.resource.NicknameGroupResource;
 import zx.soft.utils.sort.InsertSort;
 
@@ -25,10 +25,10 @@ import zx.soft.utils.sort.InsertSort;
  */
 public class NicknameGroupApplication extends Application {
 
-	private final SearchingData searchingData;
+	private final QueryCore queryCore;
 
 	public NicknameGroupApplication() {
-		searchingData = new SearchingData();
+		queryCore = new QueryCore();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class NicknameGroupApplication extends Application {
 
 	public HashMap<String, Integer> queryData(QueryParams queryParams) {
 		long startTime = System.currentTimeMillis();
-		List<QueryResult> queryResults = searchingData.facetResult(queryParams, true);
+		List<QueryResult> queryResults = queryCore.facetResult(queryParams, true);
 		//		System.err.println(System.currentTimeMillis() - startTime);
 		//		startTime = System.currentTimeMillis();
 		for (String field : queryParams.getFacetField().split(",")) {
@@ -82,7 +82,7 @@ public class NicknameGroupApplication extends Application {
 	}
 
 	public void close() {
-		searchingData.close();
+		queryCore.close();
 	}
 
 }

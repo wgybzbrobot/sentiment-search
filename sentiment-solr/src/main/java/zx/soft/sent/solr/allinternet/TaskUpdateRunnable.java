@@ -7,7 +7,7 @@ import zx.soft.sent.dao.allinternet.AllInternet;
 import zx.soft.sent.dao.domain.allinternet.InternetTask;
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.utils.log.LogbackUtil;
 
 /**
@@ -21,7 +21,7 @@ public class TaskUpdateRunnable implements Runnable {
 	private static Logger logger = LoggerFactory.getLogger(TaskUpdateRunnable.class);
 
 	// 搜索查询类
-	private SearchingData search;
+	private QueryCore queryCore;
 	// 持久化类
 	private AllInternet allInternet;
 	// 一个任务信息
@@ -30,8 +30,8 @@ public class TaskUpdateRunnable implements Runnable {
 	// 全局计数器
 	//	private static final AtomicInteger COUNT = new AtomicInteger(0);
 
-	public TaskUpdateRunnable(SearchingData search, AllInternet allInternet, InternetTask task) {
-		this.search = search;
+	public TaskUpdateRunnable(QueryCore queryCore, AllInternet allInternet, InternetTask task) {
+		this.queryCore = queryCore;
 		this.allInternet = allInternet;
 		this.task = task;
 	}
@@ -49,12 +49,12 @@ public class TaskUpdateRunnable implements Runnable {
 			queryParams.setQ(task.getKeywords());
 			queryParams.setFq("first_time:[2000-01-01T00:00:00Z TO " + task.getStart_time() + "]");
 			queryParams.setRows(0);
-			QueryResult result = search.queryData(queryParams, true);
+			QueryResult result = queryCore.queryData(queryParams, true);
 			int localCount = (int) result.getNumFound();
 			// 元搜索总量
 			queryParams.setFq("first_time:[" + task.getStart_time() + " TO " + task.getEnd_time() + "];" + "source_id:"
 					+ task.getSource_ids());
-			result = search.queryData(queryParams, true);
+			result = queryCore.queryData(queryParams, true);
 			int autmCount = (int) result.getNumFound();
 
 			/*

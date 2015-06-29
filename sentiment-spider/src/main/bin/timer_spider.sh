@@ -1,10 +1,13 @@
 # !/bin/bash
 
 echo "Starting ..."
+
 bin/ctl.sh start sinaPublicWeibosSpider
+
 while (true)
 do
-    bin/ctl.sh restart sinaPublicWeibosSpider
     sleep 30m
+    bin/ctl.sh restart sinaPublicWeibosSpider
 done
+
 echo "Finishing ..."

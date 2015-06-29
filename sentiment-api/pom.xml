@@ -18,6 +18,11 @@
 			<artifactId>sentiment-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>info.hb</groupId>
+			<artifactId>riak-cluster</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<!-- Json包 -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

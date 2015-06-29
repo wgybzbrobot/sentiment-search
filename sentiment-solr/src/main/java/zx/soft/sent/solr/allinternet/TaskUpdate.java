@@ -14,7 +14,7 @@ import zx.soft.sent.dao.allinternet.AllInternet;
 import zx.soft.sent.dao.common.MybatisConfig;
 import zx.soft.sent.dao.domain.allinternet.InternetTask;
 import zx.soft.sent.dao.oracle.OracleJDBC;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.log.LogbackUtil;
 import zx.soft.utils.threads.ApplyThreadPool;
@@ -36,7 +36,7 @@ public class TaskUpdate {
 	// 读取Oracle中任务信息类
 	private OracleJDBC oracleJDBC;
 	// 搜索查询类
-	private SearchingData search;
+	private QueryCore queryCore;
 	// 持久化类
 	private AllInternet allInternet;
 
@@ -51,7 +51,7 @@ public class TaskUpdate {
 
 	public TaskUpdate() {
 		this.oracleJDBC = new OracleJDBC();
-		this.search = new SearchingData();
+		this.queryCore = new QueryCore();
 		this.allInternet = new AllInternet(MybatisConfig.ServerEnum.sentiment);
 		// 遇到异常平滑关闭线程池
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -113,7 +113,7 @@ public class TaskUpdate {
 			}
 			logger.info("Updating tasks' size={}", tasks.size());
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
-				pool.execute(new TaskUpdateRunnable(search, allInternet, tmp.getValue()));
+				pool.execute(new TaskUpdateRunnable(queryCore, allInternet, tmp.getValue()));
 			}
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
@@ -171,7 +171,7 @@ public class TaskUpdate {
 
 	public void close() {
 		oracleJDBC.close();
-		search.close();
+		queryCore.close();
 		pool.shutdown();
 		try {
 			pool.awaitTermination(300, TimeUnit.SECONDS);

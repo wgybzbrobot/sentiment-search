@@ -9,16 +9,16 @@ import org.restlet.routing.Router;
 
 import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.sent.web.domain.Task;
 import zx.soft.sent.web.resource.InternetTaskResource;
 
 public class InternetTaskApplication extends Application {
 
-	private final SearchingData searchingData;
+	private final QueryCore queryCore;
 
 	public InternetTaskApplication() {
-		searchingData = new SearchingData();
+		queryCore = new QueryCore();
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class InternetTaskApplication extends Application {
 			if (task.getFq().length() > 0) {
 				queryParams.setFq(task.getFq());
 			}
-			queryResult = searchingData.queryData(queryParams, Boolean.FALSE);
+			queryResult = queryCore.queryData(queryParams, Boolean.FALSE);
 			result.add(queryResult.getNumFound());
 		}
 		return result;
@@ -51,7 +51,7 @@ public class InternetTaskApplication extends Application {
 	@Override
 	public void stop() throws Exception {
 		super.stop();
-		searchingData.close();
+		queryCore.close();
 	}
 
 }

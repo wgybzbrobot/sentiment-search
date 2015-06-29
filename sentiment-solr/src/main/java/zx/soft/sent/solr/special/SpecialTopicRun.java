@@ -17,7 +17,7 @@ import zx.soft.sent.solr.domain.QueryParams;
 import zx.soft.sent.solr.domain.QueryResult;
 import zx.soft.sent.solr.domain.SimpleFacetInfo;
 import zx.soft.sent.solr.query.FacetSearch;
-import zx.soft.sent.solr.query.SearchingData;
+import zx.soft.sent.solr.query.QueryCore;
 import zx.soft.utils.codec.URLCodecUtils;
 import zx.soft.utils.json.JsonUtils;
 import zx.soft.utils.log.LogbackUtil;
@@ -50,7 +50,7 @@ public class SpecialTopicRun {
 		try {
 			logger.info("Running updating Tasks at:" + new Date().toString());
 			SpecialQuery specialQuery = new SpecialQuery(MybatisConfig.ServerEnum.sentiment);
-			SearchingData search = new SearchingData();
+			QueryCore queryCore = new QueryCore();
 			// 在OA专题查询缓存数据表oa_special_query_cache中查询所有活跃的专题identify
 			// 理论上，如果专题的end时间小于当天时间，那么就视为过期专题，不更新；只更新end时间大于等于今天的专题数据。
 			// 不过在这里，认为该专题在半个月之内未被查询的化，就认为是过期的，不更新；因为我们爬虫的数据暂时不还不够及时和准确。
@@ -96,7 +96,7 @@ public class SpecialTopicRun {
 									+ specialInfo.getHometype());
 						}
 						queryParams.setFacetField("platform");
-						pieResult = search.queryData(queryParams, false);
+						pieResult = queryCore.queryData(queryParams, false);
 						// 更新饼状图结果到数据库中
 						if (specialQuery.selectSpecialResult(identify, "pie") == null) {
 							specialQuery.insertSpecialResult(identify, "pie",
@@ -128,7 +128,7 @@ public class SpecialTopicRun {
 					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				}
 			}
-			search.close();
+			queryCore.close();
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
