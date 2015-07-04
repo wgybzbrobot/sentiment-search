@@ -14,7 +14,19 @@
 	<context:component-scan base-package="zx.soft.sent.api.controller" />
 	<context:component-scan base-package="zx.soft.sent.api.service" />
 
-	<bean id="oATaskAccess" class="zx.soft.sent.api.apply.OATasksAccess" />
+	<!-- mapper -->
+	<bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		abstract="true" lazy-init="true">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	<bean id="userMapper" parent="baseMapper">
+		<property name="mapperInterface" value="zx.soft.sent.api.dao.UserMapper" />
+	</bean>
+
+	<bean id="taskMapper" parent="baseMapper">
+		<property name="mapperInterface" value="zx.soft.sent.api.dao.TaskMapper" />
+	</bean>
 
 	<!-- 自定义对象映射 -->
 	<bean id="customObjectMapper" class="zx.soft.sent.api.utils.CustomObjectMapper" />
@@ -31,4 +43,25 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:zx/soft/sent/api/dao/*.xml" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${sent.db.url}" />
+		<property name="username" value="${sent.db.username}" />
+		<property name="password" value="${sent.db.password}" />
+		<property name="validationQuery" value="select 1" />
+	</bean>
+
+	<context:property-placeholder location="classpath:db.properties" />
+	
 </beans>

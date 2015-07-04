@@ -1,4 +1,4 @@
-package zx.soft.sent.dao.domain.allinternet;
+package zx.soft.sent.api.domain;
 
 import java.io.Serializable;
 
@@ -8,7 +8,6 @@ import java.io.Serializable;
  * @author wanggang
  *
  */
-@Deprecated
 public class TaskResult implements Serializable {
 
 	private static final long serialVersionUID = 4224722992054268127L;

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import zx.soft.sent.api.service.OATasksService;
-import zx.soft.sent.dao.domain.allinternet.TaskResult;
+import zx.soft.sent.api.domain.TaskResult;
+import zx.soft.sent.api.service.TaskService;
 
 /**
  * OA全网任务缓存查询控制类
@@ -30,10 +30,10 @@ import zx.soft.sent.dao.domain.allinternet.TaskResult;
  */
 @Controller
 @RequestMapping("/sentiment/oa")
-public class OATasksController {
+public class TaskController {
 
 	@Inject
-	private OATasksService oATasksService;
+	private TaskService taskService;
 
 	/**
 	 * 根据多个identify查询缓存结果
@@ -41,7 +41,7 @@ public class OATasksController {
 	@RequestMapping(value = "/tasks", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody HashMap<String, TaskResult> queryGenderByUid(@RequestBody List<String> identifys) {
-		return oATasksService.getQueryResults(identifys);
+		return taskService.getQueryResults(identifys);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class OATasksController {
 	@RequestMapping(value = "/tasks/{identify}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable String identify) {
-		oATasksService.deleteQueryResult(identify);
+		taskService.deleteQueryResult(identify);
 	}
 
 }

@@ -13,11 +13,7 @@
 	<name>Sentiment API</name>
 
 	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>sentiment-dao</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+		<!-- 本地包 -->
 		<dependency>
 			<groupId>info.hb</groupId>
 			<artifactId>riak-cluster</artifactId>
@@ -88,6 +84,23 @@
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<!-- Mybatis包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
 		</dependency>
 		<!-- 日志包 -->
 		<dependency>
