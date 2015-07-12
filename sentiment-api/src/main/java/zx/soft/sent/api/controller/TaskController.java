@@ -1,6 +1,5 @@
 package zx.soft.sent.api.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,43 +13,62 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import zx.soft.sent.api.domain.TaskResult;
+import zx.soft.sent.api.domain.Task;
 import zx.soft.sent.api.service.TaskService;
 
 /**
- * OA全网任务缓存查询控制类
+ * 全网任务控制类
  *
  * 接口说明：
- *       1、POST:   http://192.168.32.17:2900/sentiment/oa/tasks            返回缓存数据
- *         ["CE9402701D796B22E15D433EB17FA4FE","4E4E7BF57E3B57B9718549646D364964","76AC38F439C31812D71251EE024B316A"]
- *       2、DELETE: http://192.168.32.17:2900/sentiment/oa/tasks/{identify}  不返回数据
+ *       1、POST:   http://localhost:8888/tasks              List<Task>
+ *       2、DELETE: http://localhost:8888/tasks/{identifys}
+ *       3、GET：   http://localhost:8888/tasks/{identifys}
+ *       4、PUT：   http://localhost:8888/tasks              List<Task>
  *
  * @author wanggang
  *
  */
 @Controller
-@RequestMapping("/sentiment/oa")
+@RequestMapping("/tasks")
 public class TaskController {
 
 	@Inject
 	private TaskService taskService;
 
 	/**
-	 * 根据多个identify查询缓存结果
+	 * 多个任务添加
 	 */
-	@RequestMapping(value = "/tasks", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody HashMap<String, TaskResult> queryGenderByUid(@RequestBody List<String> identifys) {
-		return taskService.getQueryResults(identifys);
+	public void addTasks(@RequestBody List<Task> tasks) {
+		taskService.insertTasks(tasks);
 	}
 
 	/**
-	 * 删除单个任务缓存结果
+	 * 多个任务删除
 	 */
-	@RequestMapping(value = "/tasks/{identify}", method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable String identify) {
-		taskService.deleteQueryResult(identify);
+	@RequestMapping(value = "/{identifys}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	public void removeTasks(@PathVariable String identifys) {
+		taskService.deleteTasks(identifys);
+	}
+
+	/**
+	 * 多个任务查询
+	 */
+	@RequestMapping(value = "/{identifys}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody List<Task> retriveTasks(@PathVariable String identifys) {
+		return taskService.selectTasks(identifys);
+	}
+
+	/**
+	 * 多个任务更新
+	 */
+	@RequestMapping(method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
+	public void updateTasks(@RequestBody List<Task> tasks) {
+		taskService.updateTasks(tasks);
 	}
 
 }

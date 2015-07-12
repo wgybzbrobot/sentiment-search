@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author wanggang
  *
  */
-public class TaskResult implements Serializable {
+public class TaskStatisticResult implements Serializable {
 
 	private static final long serialVersionUID = 4224722992054268127L;
 

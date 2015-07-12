@@ -1,0 +1,17 @@
+
+1. POST
+
+curl -X POST http://localhost:8888/tasks --header 'Content-Type:application/json' --data '[{"identify":"671CC22D8FB5669A848B3E9CBE006D1F","keywords":"  维族人","source_ids":"8,220,590,216,7,583","start_time":"2014-06-10T15:31:28Z","end_time":"2015-03-12T19:15:51Z"},{"identify":"C714698D31BADD2921403693093E095A","keywords":"打死","source_ids":"216,8,220,7,583,590","start_time":"2014-07-04T08:57:02Z","end_time":"2015-03-12T19:15:51Z"}]'
+
+2. DELETE
+
+curl -X DELETE http://localhost:8888/tasks/671CC22D8FB5669A848B3E9CBE006D1F,C714698D31BADD2921403693093E095A
+
+3. GET
+
+curl -X GET http://localhost:8888/tasks/671CC22D8FB5669A848B3E9CBE006D1F,C714698D31BADD2921403693093E095A
+
+4. PUT
+
+curl -X PUT http://localhost:8888/tasks --header 'Content-Type:application/json' --data '[{"identify":"671CC22D8FB5669A848B3E9CBE006D1F","keywords":"维族人qqqq","source_ids":"qqqq","start_time":"2014-06-10T15:31:11Z","end_time":"2015-03-12T19:15:11Z"},{"identify":"C714698D31BADD2921403693093E095A","keywords":"打死1111","source_ids":"111","start_time":"2014-07-04T08:57:11Z","end_time":"2015-03-12T19:11:11Z"}]'
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zx.soft.task.api.dao.TaskMapper">
+
+	<!-- 插入微信公共帐号信息 -->
+	<insert id="insertTask" parameterType="zx.soft.task.api.domain.Task"
+		useGeneratedKeys="true" keyProperty="id" flushCache="true"
+		statementType="PREPARED">
+		INSERT INTO `internet_tasks`
+		(`identify`,`keywords`,`source_ids`,`start_time`,`end_time`,`lasttime`)
+		VALUES
+		(#{identify},#{keywords},#{source_ids},#{start_time},#{end_time},NOW());
+	</insert>
+	
+</mapper>

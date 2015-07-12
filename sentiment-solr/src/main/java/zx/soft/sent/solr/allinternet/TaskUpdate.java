@@ -157,6 +157,10 @@ public class TaskUpdate {
 			}
 			id = rs.getString("id");
 		}
+		// 任务为空
+		if ((task == null) || (result.size() == 0)) {
+			return null;
+		}
 		// 最后一个添加
 		if (result.get(task.getIdentify()) == null) {
 			result.put(task.getIdentify(), task);

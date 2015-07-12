@@ -3,12 +3,12 @@ package zx.soft.sent.api.domain;
 import java.io.Serializable;
 
 /**
- * OA全网搜索任务数据模型
+ * OA全网搜索任务统计数据模型
  *
  * @author wanggang
  *
  */
-public class InternetTask implements Serializable {
+public class TaskStatistic implements Serializable {
 
 	private static final long serialVersionUID = -3367601380930928682L;
 
@@ -21,11 +21,11 @@ public class InternetTask implements Serializable {
 	private int autm_count; // 元搜索搜索结果总数：关键词，时间段：创建时间-结束时间/当前时间，source_ids
 	private int all_count; // 总和：local_count+autm_count
 
-	public InternetTask() {
+	public TaskStatistic() {
 		//
 	}
 
-	public InternetTask(String identify, String keywords, String start_time, String end_time, String source_ids) {
+	public TaskStatistic(String identify, String keywords, String start_time, String end_time, String source_ids) {
 		super();
 		this.identify = identify;
 		this.keywords = keywords;
@@ -34,7 +34,7 @@ public class InternetTask implements Serializable {
 		this.source_ids = source_ids;
 	}
 
-	public InternetTask(String identify, String keywords, String start_time, String end_time, String source_ids,
+	public TaskStatistic(String identify, String keywords, String start_time, String end_time, String source_ids,
 			int local_count, int autm_count) {
 		super();
 		this.identify = identify;
