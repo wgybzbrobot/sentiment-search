@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -111,14 +113,42 @@ public class TaskUpdate {
 			if (tasks == null) {
 				return;
 			}
+			// 增加每个任务中source_id去重功能
+			tasks = duplicateTask(tasks);
+			// 插入任务，并更新数据
 			logger.info("Updating tasks' size={}", tasks.size());
+			int count = 1;
 			for (Entry<String, InternetTask> tmp : tasks.entrySet()) {
+				logger.info("Updating at: {}/{}", count++, tasks.size());
 				pool.execute(new TaskUpdateRunnable(queryCore, allInternet, tmp.getValue()));
 			}
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 			throw new RuntimeException(e);
 		}
+	}
+
+	private HashMap<String, InternetTask> duplicateTask(HashMap<String, InternetTask> tasks) {
+		HashMap<String, InternetTask> result = new HashMap<>();
+		InternetTask it = null;
+		Set<String> sids = null;
+		StringBuffer sb = null;
+		for (Entry<String, InternetTask> task : tasks.entrySet()) {
+			it = task.getValue();
+			sids = new TreeSet<>();
+			sb = new StringBuffer();
+			for (String sourceId : it.getSource_ids().split(",")) {
+				sids.add(sourceId);
+			}
+			for (String sid : sids) {
+				sb.append(sid).append(",");
+			}
+			result.put(
+					task.getKey(),
+					new InternetTask(it.getIdentify(), it.getKeywords(), it.getStart_time(), it.getEnd_time(), sb
+							.substring(0, sb.length() - 1)));
+		}
+		return result;
 	}
 
 	/**
