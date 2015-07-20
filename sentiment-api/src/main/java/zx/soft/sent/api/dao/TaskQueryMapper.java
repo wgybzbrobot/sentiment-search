@@ -13,7 +13,7 @@ import zx.soft.sent.api.domain.TaskStatistic;
 import zx.soft.sent.api.domain.TaskStatisticResult;
 
 /**
- * OA全网搜索任务接口
+ * OA全网搜索任务缓存查询结果接口
  *
  * @author wanggang
  *
