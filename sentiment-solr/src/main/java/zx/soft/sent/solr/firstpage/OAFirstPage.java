@@ -176,7 +176,10 @@ public class OAFirstPage {
 	 * @param platform:论坛-2,微博-3
 	 * @param day
 	 * @return
+	 *
+	 * TODO : 需要改进，将循环改成多线程
 	 */
+	@Deprecated
 	public List<SolrDocument> getNegativeRecords(int platform, int day, int N) {
 		logger.info("Getting today negative records ...");
 		List<SolrDocument> result = new ArrayList<>();
@@ -194,7 +197,10 @@ public class OAFirstPage {
 
 	/**
 	 * 根据关键词查询当天的有害信息
+	 *
+	 * TODO : 需要改进，将循环改成多线程
 	 */
+	@Deprecated
 	public List<SolrDocument> getTodayNegativeRecords(int interval, int N, String q) {
 		List<SolrDocument> result = new ArrayList<>();
 		List<SolrDocument> temp = null;
@@ -248,6 +254,10 @@ public class OAFirstPage {
 		return result;
 	}
 
+	/**
+	 * TODO : 需要改进，将循环改成多线程
+	 */
+	@Deprecated
 	public List<SolrDocument> getHarmfulRecords(String platform, int day, int N) {
 		logger.info("Getting today negative records ...");
 		List<SolrDocument> result = new ArrayList<>();
