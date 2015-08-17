@@ -11,7 +11,7 @@
   "in_reply_to_status_id" : "",
   "in_reply_to_user_id" : "",
   "in_reply_to_screen_name" : "",
-  "pic_urls" : "[]",
+  "pic_url" : "[SinaDomain{thumbnail_pic=http://ww2.sinaimg.cn/thumbnail/4b65f0e3jw1ev5prhilhhj209o0no417.jpg}, SinaDomain{thumbnail_pic=http://ww2.sinaimg.cn/thumbnail/4b65f0e3jw1ev5prhne8aj209o0mcack.jpg}, SinaDomain{thumbnail_pic=http://ww1.sinaimg.cn/thumbnail/4b65f0e3jw1ev5prhb28gj209p0l076k.jpg}]",
   "geo" : "null",
   "user" : {
     "id" : 2773285992,

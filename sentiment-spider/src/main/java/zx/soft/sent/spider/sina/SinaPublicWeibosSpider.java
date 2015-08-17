@@ -105,37 +105,56 @@ public class SinaPublicWeibosSpider {
 			logger.info("Spider sina_public_weibos at:{}, weibos'size={}", COUNT.addAndGet(1),
 					weibos.getFieldValues("statuses").size());
 			for (Object status : weibos.getFieldValues("statuses")) {
-				// 循环添加RecordInfo
-				weibo = (SinaDomain) status;
-				user = (SinaDomain) weibo.getFieldValue("user");
-				recordInfo = new RecordInfo();
-				recordInfo.setPlatform(3);
-				recordInfo.setSource_id(7);
-				recordInfo.setSource_name("新浪微博");
-				recordInfo.setLocation_code(110000);
-				recordInfo.setProvince_code(11);
-				recordInfo.setFirst_time(System.currentTimeMillis());
-				recordInfo.setUpdate_time(System.currentTimeMillis());
-				recordInfo.setLasttime(System.currentTimeMillis());
-				recordInfo.setIdentify_id(100L); // 表示本地
-				recordInfo.setCountry_code(1);
-				recordInfo.setIp("180.149.134.141");
-				recordInfo.setLocation("北京市 电信集团公司");
-				recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
-				recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
-				recordInfo.setId((CheckSumUtils.getMD5(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
-						+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()))).toUpperCase());
-				recordInfo.setUsername(user.getFieldValue("id").toString());
-				recordInfo.setNickname(user.getFieldValue("screen_name").toString());
-				recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
-						+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
-				recordInfo.setContent(weibo.getFieldValue("text").toString());
-				records.add(JsonUtils.toJsonWithoutPretty(recordInfo));
+				try {
+					// 循环添加RecordInfo
+					weibo = (SinaDomain) status;
+					user = (SinaDomain) weibo.getFieldValue("user");
+					recordInfo = new RecordInfo();
+					recordInfo.setPlatform(3);
+					recordInfo.setSource_id(7);
+					recordInfo.setSource_name("新浪微博");
+					recordInfo.setLocation_code(110000);
+					recordInfo.setProvince_code(11);
+					recordInfo.setFirst_time(System.currentTimeMillis());
+					recordInfo.setUpdate_time(System.currentTimeMillis());
+					recordInfo.setLasttime(System.currentTimeMillis());
+					recordInfo.setIdentify_id(100L); // 表示本地
+					recordInfo.setCountry_code(1);
+					recordInfo.setIp("180.149.134.141");
+					recordInfo.setLocation("北京市 电信集团公司");
+					recordInfo.setSource_type(Integer.parseInt(weibo.getFieldValue("source_type").toString()));
+					recordInfo.setTimestamp(getTime(weibo.getFieldValue("created_at").toString()));
+					recordInfo.setId((CheckSumUtils.getMD5(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
+							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()))).toUpperCase());
+					recordInfo.setUsername(user.getFieldValue("id").toString());
+					recordInfo.setNickname(user.getFieldValue("screen_name").toString());
+					recordInfo.setUrl(WEIBO_BASE_URL + user.getFieldValue("id").toString() + "/"
+							+ WidToMid.wid2mid(weibo.getFieldValue("id").toString()));
+					recordInfo.setContent(weibo.getFieldValue("text").toString());
+					// 增加图片地址列表
+					recordInfo.setPic_url(getPicUrls(weibo));
+					records.add(JsonUtils.toJsonWithoutPretty(recordInfo));
+				} catch (Exception e) {
+					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
+				}
 			}
 			redisMQ.addRecord(records.toArray(new String[records.size()]));
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private static String getPicUrls(SinaDomain weibo) {
+		if (weibo.getFieldValue("pic_urls").toString().length() < 10) {
+			return "";
+		}
+		List<SinaDomain> pics = (List<SinaDomain>) weibo.getFieldValue("pic_urls");
+		StringBuffer sb = new StringBuffer();
+		for (SinaDomain pic : pics) {
+			sb.append(pic.getFieldValue("thumbnail_pic").toString().replace("thumbnail", "bmiddle")).append(",");
+		}
+		return sb.substring(0, sb.length() - 1);
 	}
 
 	private static long getTime(String timeStr) {
