@@ -40,7 +40,7 @@ public class RemoveRedisReplicationData {
 		public void run() {
 			logger.info("Start Removing redis-replication data ...");
 			RedisMQ redisMQ = new RedisMQ();
-			redisMQ.deleteKey(SentimentConstant.SENT_KEY_INSERTED);
+			redisMQ.deleteKey(SentimentConstant.SENTIMENT_CACHE_KEY);
 			logger.info("Finish Removing redis-replication data ...");
 		}
 

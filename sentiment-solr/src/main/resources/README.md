@@ -5,7 +5,7 @@
 
 > 两台机器，其中，redis.rp.master和redis.rp.slave
 
-`master`:hefei09,用户读数据
+`master`:hefei09,用于读数据
 
 `slave`: hefei10,用于读数据
 
