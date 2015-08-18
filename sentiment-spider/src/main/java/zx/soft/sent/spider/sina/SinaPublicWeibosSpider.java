@@ -46,6 +46,16 @@ public class SinaPublicWeibosSpider {
 	 */
 	public static void main(String[] args) throws Exception {
 
+		RedisMQ redisMQ = new RedisMQ();
+		SinaPublicWeibosSentiment sinaPublicWeibos = new SinaPublicWeibosSentiment(new HttpClientDaoImpl());
+		AtomicInteger COUNT = new AtomicInteger(0);
+		while (true) {
+			spider(redisMQ, sinaPublicWeibos, COUNT);
+		}
+
+	}
+
+	public void run() {
 		final int cpuNum = 1;
 		final ThreadPoolExecutor pool = ApplyThreadPool.getThreadPoolExector(cpuNum);
 
@@ -71,7 +81,9 @@ public class SinaPublicWeibosSpider {
 			}
 		}
 
-		//		pool.shutdown();
+		// common-utils新版本中
+		//		ProcessAnalysis.killPid(ProcessAnalysis.getCurrentPidByLang());
+		//		System.err.println("Closed this processor......");
 	}
 
 	public static class SpiderRunnable implements Runnable {
