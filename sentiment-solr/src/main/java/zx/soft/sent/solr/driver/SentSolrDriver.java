@@ -5,9 +5,7 @@ import zx.soft.sent.solr.firstpage.FirstPageHarmfulRun;
 import zx.soft.sent.solr.firstpage.FirstPageRun;
 import zx.soft.sent.solr.index.ImportRedisToSC;
 import zx.soft.sent.solr.query.OracleToRedis;
-import zx.soft.sent.solr.query.RemoveRedisReplicationData;
-import zx.soft.sent.solr.query.RemoveSentiData;
-import zx.soft.sent.solr.query.RemoveWeiboData;
+import zx.soft.sent.solr.query.RemoveExpiredData;
 import zx.soft.sent.solr.special.SpecialTopicRun;
 import zx.soft.sent.solr.utils.RedisMQTest;
 import zx.soft.utils.driver.ProgramDriver;
@@ -38,12 +36,8 @@ public class SentSolrDriver {
 			pgd.addClass("firstPageHarmfulRun", FirstPageHarmfulRun.class, "OA首页负面信息数据定时统计");
 			// 在hefei08,hefei09,hefei10机器上运行
 			pgd.addClass("importRedisToSC", ImportRedisToSC.class, "将Redis中的数据所引到SolrCloud");
-			// 在hefei08机器上运行，需要启动
-			pgd.addClass("removeSentiData", RemoveSentiData.class, "定时删除过期舆情数据");
-			// 在hefei08机器上运行，已经停止，需要启动
-			pgd.addClass("removeWeiboData", RemoveWeiboData.class, "定时删除过期微博数据");
-			// 在hefei08机器上运行，已经停止，需要启动
-			pgd.addClass("removeRedisReplicationData", RemoveRedisReplicationData.class, "定时清理Redis去重数据");
+			// 在hefei08机器上运行
+			pgd.addClass("removeExpiredData", RemoveExpiredData.class, "定时每周删除过期舆情数据和Redis缓存数据");
 			// 在hefei10机器上运行
 			pgd.addClass("taskUpdate", TaskUpdate.class, "全网任务信息查询结果存储缓存信息");
 			// 测试
