@@ -34,7 +34,7 @@ public class SentSolrDriver {
 			pgd.addClass("firstPageRun", FirstPageRun.class, "OA首页数据统计——临时分析");
 			// 在hefei07机器上运行
 			pgd.addClass("firstPageHarmfulRun", FirstPageHarmfulRun.class, "OA首页负面信息数据定时统计");
-			// 在hefei08,hefei09,hefei10机器上运行
+			// 在hefei10机器上运行多个进程
 			pgd.addClass("importRedisToSC", ImportRedisToSC.class, "将Redis中的数据所引到SolrCloud");
 			// 在hefei08机器上运行
 			pgd.addClass("removeExpiredData", RemoveExpiredData.class, "定时每周删除过期舆情数据和Redis缓存数据");

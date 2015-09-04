@@ -56,16 +56,24 @@ public class FirstPageRun {
 		FirstPage firstPage = new FirstPage(MybatisConfig.ServerEnum.sentiment);
 		OAFirstPage oafirstPage = new OAFirstPage();
 		NegativeClassify negativeClassify = new NegativeClassify();
+		// 更新前一个小时的数据
+		final int NUM = -1;
 		/**
 		 * 1、统计当前时间各类数据的总量
 		 */
 		HashMap<String, Long> currentPlatformSum = oafirstPage.getCurrentPlatformSum();
-		firstPage.insertFirstPage(1, timeStrByHour(), JsonUtils.toJsonWithoutPretty(currentPlatformSum));
+		if (firstPage.selectFirstPage(1, timeStrByHour(0)) == null) {
+			firstPage.insertFirstPage(1, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(currentPlatformSum));
+		}
+		firstPage.updateFirstPage(1, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(currentPlatformSum));
 		/**
 		 * 2、统计当天各类数据的进入量，其中day=0表示当天的数据
 		 */
 		HashMap<String, Long> todayPlatformInputSum = oafirstPage.getTodayPlatformInputSum(0);
-		firstPage.insertFirstPage(2, timeStrByHour(), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
+		if (firstPage.selectFirstPage(2, timeStrByHour(0)) == null) {
+			firstPage.insertFirstPage(2, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
+		}
+		firstPage.updateFirstPage(2, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
 		/**
 		 * 4、根据当天的微博数据，分别统计0、3、6、9、12、15、18、21时刻的四大微博数据进入总量；
 		 * 即从0点开始，每隔3个小时统计以下，如果当前的小时在这几个时刻内就统计，否则不统计。
@@ -73,7 +81,10 @@ public class FirstPageRun {
 		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		if (hour % 3 == 0) {
 			HashMap<String, Long> todayWeibosSum = oafirstPage.getTodayWeibosSum(0, hour);
-			firstPage.insertFirstPage(4, timeStrByHour(), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
+			if (firstPage.selectFirstPage(4, timeStrByHour(0)) == null) {
+				firstPage.insertFirstPage(4, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
+			}
+			firstPage.updateFirstPage(4, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
 		}
 		/**
 		 * 5、对当天的论坛和微博进入数据进行负面评分，并按照分值推送最大的签20条内容，每小时推送一次。
@@ -83,8 +94,12 @@ public class FirstPageRun {
 		List<SolrDocument> negativeRecordsWeibo = oafirstPage.getNegativeRecords(3, 0, 10);
 		negativeRecordsForum = getTopNNegativeRecords(negativeClassify, negativeRecordsForum, 20);
 		negativeRecordsWeibo = getTopNNegativeRecords(negativeClassify, negativeRecordsWeibo, 20);
-		firstPage.insertFirstPage(52, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
-		firstPage.insertFirstPage(53, timeStrByHour(), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
+		if (firstPage.selectFirstPage(52, timeStrByHour(0)) == null) {
+			firstPage.insertFirstPage(52, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
+			firstPage.insertFirstPage(53, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
+		}
+		firstPage.updateFirstPage(52, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
+		firstPage.updateFirstPage(53, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
 		// 关闭资源
 		negativeClassify.cleanup();
 		oafirstPage.close();
@@ -93,9 +108,11 @@ public class FirstPageRun {
 
 	/**
 	 * 将当前的时间戳转换成小时精度，如："2014-09-05,14"
+	 * @param num 距离当前增加小时数
 	 */
-	public static String timeStrByHour() {
-		return FORMATTER.format(new Date());
+	public static String timeStrByHour(int num) {
+		Date date = new Date(System.currentTimeMillis() + num * 3600_000L);
+		return FORMATTER.format(date);
 	}
 
 	/**

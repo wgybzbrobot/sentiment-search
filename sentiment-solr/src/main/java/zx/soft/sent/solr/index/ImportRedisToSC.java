@@ -28,6 +28,7 @@ public class ImportRedisToSC {
 	private final IndexCloudSolr indexCloudSolr;
 
 	private final RedisMQ redisCache;
+	//	private final JedisClient redisCache;
 
 	private final RedisCacheExpired redisCacheExpired;
 
@@ -36,6 +37,7 @@ public class ImportRedisToSC {
 		redisCacheExpired = new RedisCacheExpired(7 * 86400);
 		indexCloudSolr = new IndexCloudSolr();
 		redisCache = new RedisMQ();
+		//		redisCache = new JedisClient();
 	}
 
 	/**
@@ -95,7 +97,7 @@ public class ImportRedisToSC {
 
 	public void close() {
 		indexCloudSolr.close();
-		redisCache.close();
+		//		redisCache.close();
 	}
 
 }

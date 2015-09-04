@@ -6,7 +6,7 @@ bin/ctl.sh start firstPageRun
 
 while (true)
 do
-    sleep 30m
+    sleep 5m
     bin/ctl.sh start firstPageRun
 done
 
