@@ -64,6 +64,8 @@ public class FirstPageRun {
 		HashMap<String, Long> currentPlatformSum = oafirstPage.getCurrentPlatformSum();
 		if (firstPage.selectFirstPage(1, timeStrByHour(0)) == null) {
 			firstPage.insertFirstPage(1, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(currentPlatformSum));
+		} else {
+			firstPage.updateFirstPage(1, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(currentPlatformSum));
 		}
 		firstPage.updateFirstPage(1, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(currentPlatformSum));
 		/**
@@ -72,6 +74,8 @@ public class FirstPageRun {
 		HashMap<String, Long> todayPlatformInputSum = oafirstPage.getTodayPlatformInputSum(0);
 		if (firstPage.selectFirstPage(2, timeStrByHour(0)) == null) {
 			firstPage.insertFirstPage(2, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
+		} else {
+			firstPage.updateFirstPage(2, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
 		}
 		firstPage.updateFirstPage(2, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(todayPlatformInputSum));
 		/**
@@ -83,6 +87,8 @@ public class FirstPageRun {
 			HashMap<String, Long> todayWeibosSum = oafirstPage.getTodayWeibosSum(0, hour);
 			if (firstPage.selectFirstPage(4, timeStrByHour(0)) == null) {
 				firstPage.insertFirstPage(4, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
+			} else {
+				firstPage.updateFirstPage(4, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
 			}
 			firstPage.updateFirstPage(4, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(todayWeibosSum));
 		}
@@ -97,6 +103,9 @@ public class FirstPageRun {
 		if (firstPage.selectFirstPage(52, timeStrByHour(0)) == null) {
 			firstPage.insertFirstPage(52, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 			firstPage.insertFirstPage(53, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
+		} else {
+			firstPage.updateFirstPage(52, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
+			firstPage.updateFirstPage(53, timeStrByHour(0), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
 		}
 		firstPage.updateFirstPage(52, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(negativeRecordsForum));
 		firstPage.updateFirstPage(53, timeStrByHour(NUM), JsonUtils.toJsonWithoutPretty(negativeRecordsWeibo));
