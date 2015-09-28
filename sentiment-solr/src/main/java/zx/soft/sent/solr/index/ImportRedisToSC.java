@@ -14,6 +14,9 @@ import zx.soft.utils.log.LogbackUtil;
 /**
  * 将Redis消息队列中的数据所引到SolrCloud：hefei09,hefei10运行
  *
+ * 缓存hefei09：hefei01~hefei05
+ * 缓存hefei10：hefei06,hefei08~hefei10
+ *
  * 运行目录：/home/zxdfs/run-work/index
  * 运行命令： cd sentiment-solr
  *         bin/ctl.sh start importRedisToSC
