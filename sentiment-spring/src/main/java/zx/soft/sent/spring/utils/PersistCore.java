@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.common.MybatisConfig;
-import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.dao.domain.sentiment.RecordInsert;
 import zx.soft.sent.dao.sentiment.SentimentRecord;
@@ -34,12 +33,8 @@ public class PersistCore {
 	public void persist(RedisMQ cache, RecordInfo record) {
 		try {
 			RecordInsert tRecord = transRecord(record);
-			if (!cache.sismember(SentimentConstant.SENT_KEY_INSERTED, record.getId())) {
-				// 下面两句顺序不可改变，否则会导致线程安全
-				cache.sadd(SentimentConstant.SENT_KEY_INSERTED, record.getId());
-				logger.info("Insert Record:{}", record.getId());
-				sentRecord.insertRecord(tRecord);
-			}
+			logger.info("Insert Record:{}", record.getId());
+			sentRecord.insertRecord(tRecord);
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}

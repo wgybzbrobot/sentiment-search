@@ -1,5 +1,6 @@
 package zx.soft.sent.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import zx.soft.sent.dao.common.SentimentConstant;
 import zx.soft.sent.dao.domain.platform.RecordInfo;
 import zx.soft.sent.solr.utils.RedisMQ;
 import zx.soft.sent.spring.domain.ErrorResponse;
@@ -54,16 +56,25 @@ public class IndexService {
 		logger.info("Records' Size:{}", postData.getRecords().size());
 		try {
 			if (postData.getRecords().size() > 0) {
-				//				System.out.println(JsonUtils.toJson(postData.getRecords()));
+
 				pool.execute(new Thread(new Runnable() {
 					@Override
 					public void run() {
+						// 去重处理
+						List<RecordInfo> recordsNew = new ArrayList<>();
+						for (RecordInfo record : postData.getRecords()) {
+							if (!redisMQ.sismember(SentimentConstant.SENT_KEY_INSERTED, record.getId())) {
+								redisMQ.sadd(SentimentConstant.SENT_KEY_INSERTED, record.getId());
+								recordsNew.add(record);
+							}
+						}
 						// 持久化到Redis
-						add2Redis(postData.getRecords());
+						add2Redis(recordsNew);
 						// 这里面以及包含了错误日志记录
-						persist(postData.getRecords());
+						//						persist(recordsNew);
 					}
 				}));
+
 			}
 			return new ErrorResponse.Builder(0, "ok").build();
 		} catch (Exception e) {
