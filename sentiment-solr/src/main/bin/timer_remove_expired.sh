@@ -6,7 +6,7 @@ bin/ctl.sh start removeExpiredData
 
 while (true)
 do
-    sleep 7d
+    sleep 1d
     bin/ctl.sh start removeExpiredData
 done
 
