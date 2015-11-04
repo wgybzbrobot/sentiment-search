@@ -69,7 +69,9 @@ public class IndexService {
 							}
 						}
 						// 持久化到Redis
-						add2Redis(recordsNew);
+						if (recordsNew.size() > 0) {
+							add2Redis(recordsNew);
+						}
 						// 这里面以及包含了错误日志记录
 						//						persist(recordsNew);
 					}
