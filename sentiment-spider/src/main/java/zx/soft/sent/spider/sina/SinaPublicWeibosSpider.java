@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import zx.soft.sent.dao.domain.platform.RecordInfo;
-import zx.soft.sent.solr.utils.RedisMQ;
+import zx.soft.sent.spider.utils.RedisMQ;
 import zx.soft.utils.checksum.CheckSumUtils;
 import zx.soft.utils.http.HttpClientDaoImpl;
 import zx.soft.utils.json.JsonUtils;
@@ -119,8 +119,12 @@ public class SinaPublicWeibosSpider {
 			for (Object status : weibos.getFieldValues("statuses")) {
 				try {
 					// 循环添加RecordInfo
-					weibo = (SinaDomain) status;
-					user = (SinaDomain) weibo.getFieldValue("user");
+					try {
+						weibo = (SinaDomain) status;
+						user = (SinaDomain) weibo.getFieldValue("user");
+					} catch (Exception e) {
+						continue;
+					}
 					recordInfo = new RecordInfo();
 					recordInfo.setPlatform(3);
 					recordInfo.setSource_id(7);
@@ -150,7 +154,9 @@ public class SinaPublicWeibosSpider {
 					logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 				}
 			}
-			redisMQ.addRecord(records.toArray(new String[records.size()]));
+			if (records.size() > 0) {
+				redisMQ.addRecord(records.toArray(new String[records.size()]));
+			}
 		} catch (Exception e) {
 			logger.error("Exception:{}", LogbackUtil.expection2Str(e));
 		}
