@@ -25,6 +25,8 @@ public class RedisMQ {
 
 	private static final ObjectMapper OBJECT_MAPPER = JsonUtils.getObjectMapper();
 
+	private int BATCH_COUNT;
+
 	public RedisMQ() {
 		init();
 	}
@@ -40,6 +42,7 @@ public class RedisMQ {
 		Properties props = ConfigUtil.getProps("cache-config.properties");
 		pool = new JedisPool(poolConfig, props.getProperty("redis.mq.server"), Integer.parseInt(props
 				.getProperty("redis.mq.port")), 30_000, props.getProperty("redis.password"));
+		BATCH_COUNT = Integer.parseInt(props.getProperty("batch.count"));
 	}
 
 	public synchronized static Jedis getJedis() {
@@ -124,7 +127,7 @@ public class RedisMQ {
 		}
 		try {
 			String value;
-			for (int i = 0; i < 10000; i++) {
+			for (int i = 0; i < BATCH_COUNT; i++) {
 				value = jedis.spop(SentimentConstant.SENTIMENT_CACHE_KEY);
 				if (value != null) {
 					records.add(value);
