@@ -19,7 +19,7 @@ public class SpiderDriver {
 		int exitCode = -1;
 		ProgramDriver pgd = new ProgramDriver();
 		try {
-			// 运行在hefei06机器上
+			// 运行在hefei05机器上
 			pgd.addClass("sinaPublicWeibosSpider", SinaPublicWeibosSpider.class, "新浪公共微博抓取");
 			pgd.driver(args);
 			// Success
