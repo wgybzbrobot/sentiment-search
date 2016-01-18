@@ -48,7 +48,7 @@ public class RemoveExpiredData {
 		logger.info("Start Removing expired data ...");
 		QueryCore queryCore = new QueryCore();
 		// 删除15天之前的微博数据
-		String end = TimeUtils.transToSolrDateStr(System.currentTimeMillis() - 15 * 86400_000L);
+		String end = TimeUtils.transToSolrDateStr(System.currentTimeMillis() - 20 * 86400_000L);
 		String query = "platform:3 AND lasttime:[1970-01-01T00:00:00Z TO " + end + "]";
 		queryCore.deleteQuery(query);
 		// 删除2个月之前的其他舆情数据
@@ -59,7 +59,7 @@ public class RemoveExpiredData {
 	}
 
 	private static void removeRedisReplicationData() {
-		// 情况Redis中的ID去重数据
+		// 清空Redis中的ID去重数据
 		logger.info("Start Removing redis-replication data ...");
 		RedisMQ redisMQ = new RedisMQ();
 		redisMQ.deleteKey(SentimentConstant.SENT_KEY_INSERTED);
